@@ -9,24 +9,21 @@ const pump = require('pump');
 const client = new WebTorrent()
 const parser = new TorrentNameParse()
 
-const a = 'magnet:?xt=urn:btih:1d06e6e2ec7922def8384a25cc901a4bf1a4cb6f&dn=Marvels.Agents.of.S.H.I.E.L.D.S04E09.HDTV.x264-LOL%5Bettv%5D&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Fzer0day.ch%3A1337&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Fpublic.popcorn-tracker.org%3A6969';
-
-function removeTorrents() {
-  client.torrents.forEach(torrent => torrent.destroy())
+function createTorrent(torrentId) {
+  return client.get(torrentId) || client.add(torrentId)
 }
 
 export function list(req, res) {
   const torrentId = atob(req.query.torrentId);
 
-  removeTorrents();
-
-  const torrent = client.add(torrentId);
+  const torrent = createTorrent(torrentId);
   torrent.on('ready', () => {
     res.json({
       torrentId: torrent.infoHash,
       files: torrent.files.map((file) => ({
         name: file.name,
-        size: prettyBytes(file.length)
+        size: prettyBytes(file.length),
+        type: mime.lookup(file.name)
       })),
       name: torrent.name,
       details: parser.parse(torrent.name)
@@ -35,9 +32,7 @@ export function list(req, res) {
 }
 
 export function download(req, res) {
-  const torrent = client.get(req.params.torrentId)
-
-  console.log(req)
+  const torrent = createTorrent(req.params.torrentId)
 
   if (!torrent) {
     res.statusCode = 404;

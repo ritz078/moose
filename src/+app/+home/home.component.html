@@ -19,6 +19,7 @@
         <th>#</th>
         <th>File Name</th>
         <th>Size</th>
+        <th></th>
         <th>Download</th>
       </tr>
       </thead>
@@ -27,7 +28,12 @@
         <td>{{i + 1}}</td>
         <td>{{file.name}}</td>
         <td>{{file.size}}</td>
-        <td><a target="_blank" [href]="'/download/' + torrentDetails.torrentId + '/' + i + '/' + file.name"><i class="fa fa-arrow-circle-o-down"></i></a></td>
+        <td><i class="material-icons">&#xE039;</i></td>
+        <td>
+          <a target="_blank" [href]="'/download/' + torrentDetails.torrentId + '/' + i + '/' + file.name">
+            <i class="material-icons">&#xE2C4;</i>
+          </a>
+        </td>
       </tr>
       </tbody>
     </table>

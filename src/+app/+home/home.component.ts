@@ -20,13 +20,15 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.torrentDetails = JSON.parse(localStorage.getItem('torrentDetails'))
   }
 
   public startStream (torrentId: string) {
     const torrentDetails$ = this.apiService.getTorrentsList(torrentId);
     torrentDetails$.subscribe(details => {
       this.urlInputRef.nativeElement.value = '';
-      this.torrentDetails = details
+      this.torrentDetails = details;
+      localStorage.setItem('torrentDetails', JSON.stringify(details))
     })
   }
 }

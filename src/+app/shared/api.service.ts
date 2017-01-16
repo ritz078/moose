@@ -5,9 +5,6 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import { CacheService  } from './cache.service';
-
-
 @Injectable()
 export class ApiService {
   constructor(public _http: Http) {
@@ -24,6 +21,11 @@ export class ApiService {
         console.log('Error: ', err);
         return Observable.throw(err);
       });
+  }
+
+  getTorrentsList(torrentId: string) {
+    return this._http.get(`/list?torrentId=${window.btoa(torrentId)}`)
+      .map(res => res.json())
   }
 
 }

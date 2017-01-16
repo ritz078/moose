@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, ViewChild, ElementRef } from '@angular/core';
 
-import { ModelService } from '../shared/model/model.service';
+import { ApiService } from '../shared/api.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Default,
@@ -9,19 +9,24 @@ import { ModelService } from '../shared/model/model.service';
   styleUrls: [ './home.component.css' ],
   templateUrl: './home.component.html'
 })
-export class HomeComponent {
-  data: any = {};
-  constructor(public model: ModelService) {
+export class HomeComponent implements OnInit {
 
-    // we need the data synchronously for the client to set the server response
-    // we create another method so we have more control for testing
-    this.universalInit();
+  @ViewChild('urlInput') urlInputRef: ElementRef;
+
+  private torrentDetails;
+  constructor(
+    private apiService: ApiService
+  ) {
   }
 
-  universalInit() {
-    this.model.get('/data.json').subscribe(data => {
-      this.data = data;
-    });
+  ngOnInit() {
   }
 
+  public startStream (torrentId: string) {
+    const torrentDetails$ = this.apiService.getTorrentsList(torrentId);
+    torrentDetails$.subscribe(details => {
+      this.urlInputRef.nativeElement.value = '';
+      this.torrentDetails = details
+    })
+  }
 }

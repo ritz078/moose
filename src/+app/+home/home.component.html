@@ -1,6 +1,35 @@
 <div class="home">
-  Home component
-  <strong>Async data call return value:</strong>
-  <pre>{{ data | json }}</pre>
-  <blockquote>{{ data.data }}</blockquote>
+  <form action="">
+    <div class="row">
+      <div class="column column-90">
+        <input type="text" class="form-control" #urlInput>
+      </div>
+      <div class="column column-10">
+        <button (click)="startStream(urlInput.value)">Stream</button>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="torrentDetails">
+    <h4 class="torrent-name">{{torrentDetails.name}}</h4>
+
+    <table>
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>File Name</th>
+        <th>Size</th>
+        <th>Download</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let file of torrentDetails.files; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{file.name}}</td>
+        <td>{{file.size}}</td>
+        <td><a target="_blank" [href]="'/download/' + torrentDetails.torrentId + '/' + i + '/' + file.name"><i class="fa fa-arrow-circle-o-down"></i></a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -1,8 +1,54 @@
-blockquote {
-  border-left:5px #158126 solid;
-  background:#fff;
-  padding:20px 20px 20px 40px;
+@import url('//cdnjs.cloudflare.com/ajax/libs/milligram/1.2.4/milligram.min.css');
+@import url('//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+
+.row {
+  width: 90%;
+  margin: 10px auto;
 }
-blockquote::before {
-  left: 1em;
+
+input {
+  border: 1px solid #eee;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 2px;
+  display: table;
+  outline: none;
+  color: #aaa;
+}
+
+input:focus {
+  color: #666;
+}
+
+input:focus {
+  border-color: cornflowerblue;
+}
+
+button {
+  background-color: cornflowerblue;
+  border-color: cornflowerblue;
+  width: 100%;
+}
+
+table {
+  width: 80%;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+td, th {
+  border-bottom: 0.1rem solid #f1f1f1;
+}
+
+.torrent-name {
+  text-align: center;
+  margin: 30px 30px 60px;
+}
+
+.fa-arrow-circle-o-down {
+  font-size: 30px;
+}
+
+td:last-child, th:last-child {
+  text-align: center;
 }

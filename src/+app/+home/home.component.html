@@ -2,10 +2,10 @@
   <form action="">
     <div class="row">
       <div class="column column-90">
-        <input type="text" class="form-control" #urlInput>
+        <input type="text" class="form-control" #urlInput />
       </div>
       <div class="column column-10">
-        <button (click)="startStream(urlInput.value)">Stream</button>
+        <button (click)="startStream(urlInput.value)">Add</button>
       </div>
     </div>
   </form>
@@ -17,6 +17,7 @@
       <thead>
       <tr>
         <th>#</th>
+        <th></th>
         <th>File Name</th>
         <th>Size</th>
         <th></th>
@@ -26,9 +27,12 @@
       <tbody>
       <tr *ngFor="let file of torrentDetails.files; let i = index">
         <td>{{i + 1}}</td>
+        <td><i class="material-icons salmon" *ngIf="file.type.indexOf('video') >= 0">&#xE02C;</i></td>
         <td>{{file.name}}</td>
         <td>{{file.size}}</td>
-        <td><i class="material-icons">&#xE039;</i></td>
+        <td>
+          <span *ngIf="file.type.indexOf('video') >= 0"><i class="material-icons">&#xE039;</i></span>
+        </td>
         <td>
           <a target="_blank" [href]="'/download/' + torrentDetails.torrentId + '/' + i + '/' + file.name">
             <i class="material-icons">&#xE2C4;</i>

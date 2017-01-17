@@ -52,3 +52,11 @@ td, th {
 td:last-child, th:last-child {
   text-align: center;
 }
+
+.material-icons{
+  vertical-align: middle;
+}
+
+.material-icons.salmon {
+  color: #f95f4d;
+}

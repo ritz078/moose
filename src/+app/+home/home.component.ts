@@ -1,34 +1,64 @@
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, ViewChild, ElementRef,
+} from '@angular/core';
 
 import { ApiService } from '../shared/api.service';
+import { isBrowser } from 'angular2-universal';
+
+let plyr;
+if(isBrowser) {
+  plyr = require('plyr');
+}
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Default,
   encapsulation: ViewEncapsulation.Emulated,
   selector: 'home',
-  styleUrls: [ './home.component.css' ],
+  styleUrls: ['./home.component.css'],
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
 
   @ViewChild('urlInput') urlInputRef: ElementRef;
+  @ViewChild('videoRef') videoRef: ElementRef;
 
   private torrentDetails;
-  constructor(
-    private apiService: ApiService
-  ) {
+  public showModal = false;
+  public videoUrl: string;
+
+  constructor(private apiService: ApiService) {
   }
 
   ngOnInit() {
-    this.torrentDetails = JSON.parse(localStorage.getItem('torrentDetails'))
+    if (isBrowser) {
+      const magnetURI = window.localStorage.getItem('magnetURI');
+      if (magnetURI) {
+        this.startProcessing(magnetURI);
+      }
+    }
   }
 
-  public startStream (torrentId: string) {
+  public startProcessing(torrentId: string) {
     const torrentDetails$ = this.apiService.getTorrentsList(torrentId);
     torrentDetails$.subscribe(details => {
       this.urlInputRef.nativeElement.value = '';
       this.torrentDetails = details;
-      localStorage.setItem('torrentDetails', JSON.stringify(details))
+      if (isBrowser) {
+        window.localStorage.setItem('magnetURI', details.magnetURI)
+      }
     })
+  }
+
+  public closeModal() {
+    this.showModal = false;
+  }
+
+  isSupported(mime: string) {
+    return document.createElement('video').canPlayType(mime) || mime === 'video/x-matroska'
+  }
+
+  public startStream(torrentId: string, fileId: number, fileName: string) {
+    this.showModal = true;
+    this.videoUrl = `/download/${torrentId}/${fileId}/${fileName}`;
   }
 }

@@ -64,11 +64,10 @@ app.use(cacheControl, express.static(path.join(ROOT, 'dist/client'), {index: fal
 /////////////////////////
 // ** Example API
 // Notice API should be in a separate process
-import { getRtcConfig, listTorrent, downloadTorrent } from './backend/api';
+import { listTorrent, downloadTorrent } from './backend/api';
 // Our API for demos only
 app.get('/list', listTorrent);
 app.get('/download/:torrentId/:fileId/:fileName', downloadTorrent);
-app.get('/rtcConfig', getRtcConfig);
 
 process.on('uncaughtException', function (err) {
   console.error('Catching uncaught errors to avoid process crash', err);

@@ -1,33 +1,47 @@
-@import url('//cdnjs.cloudflare.com/ajax/libs/milligram/1.2.4/milligram.min.css');
+@import url("https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.1.31/spectre.min.css");
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.column {
+  float: left;
+}
+
+.column-90 {
+  width: 90%;
+}
+
+.column-10 {
+  width: 10%;
+}
+
+.home {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
 
 .row {
   width: 90%;
   margin: 10px auto;
+  overflow: auto;
 }
 
-input {
+.form-control {
   border: 1px solid #eee;
   font-size: 14px;
-  padding: 6px 10px;
+  padding: 10px;
   border-radius: 2px;
   display: table;
   outline: none;
   color: #aaa;
+  width: 98%;
 }
 
 input:focus {
   color: #666;
-}
-
-input:focus {
-  border-color: cornflowerblue;
-}
-
-button {
-  background-color: cornflowerblue;
-  border-color: cornflowerblue;
-  width: 100%;
 }
 
 table {
@@ -36,13 +50,25 @@ table {
   font-weight: 400;
 }
 
+.add-btn, .url-input {
+  height: 4.2rem;
+  padding: 0 20px;
+  font-family: inherit;
+}
+
+.form-input {
+  border: .1rem solid #e8e8e8;
+}
+
 td, th {
   border-bottom: 0.1rem solid #f1f1f1;
+  padding: 10px;
+  text-align: left;
 }
 
 .torrent-name {
   text-align: center;
-  margin: 30px 30px 60px;
+  margin: 60px;
 }
 
 .fa-arrow-circle-o-down, .fa-play-circle-o {
@@ -59,4 +85,37 @@ td:last-child, th:last-child {
 
 .material-icons.salmon {
   color: #f95f4d;
+}
+
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+
+.start-stream {
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+}
+
+.modal video {
+  margin: 80px auto;
+  display: flex;
+}
+
+.close-modal {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  font-size: 36px;
+  cursor: pointer;
+}
+
+.video-container {
+  width: 90%;
+  margin: 80px auto;
 }

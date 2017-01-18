@@ -1,11 +1,9 @@
 <div class="home">
   <form action="">
     <div class="row">
-      <div class="column column-90">
-        <input type="text" class="form-control" #urlInput />
-      </div>
-      <div class="column column-10">
-        <button (click)="startStream(urlInput.value)">Add</button>
+      <div class="input-group">
+        <input type="text" class="form-input url-input" placeholder="site name" #urlInput/>
+        <button class="btn btn-primary input-group-btn add-btn" (click)="startProcessing(urlInput.value)">Submit</button>
       </div>
     </div>
   </form>
@@ -13,7 +11,7 @@
   <div *ngIf="torrentDetails">
     <h4 class="torrent-name">{{torrentDetails.name}}</h4>
 
-    <table>
+    <table class="table table-striped table-hover">
       <thead>
       <tr>
         <th>#</th>
@@ -31,15 +29,23 @@
         <td>{{file.name}}</td>
         <td>{{file.size}}</td>
         <td>
-          <span *ngIf="file.type.indexOf('video') >= 0"><i class="material-icons">&#xE039;</i></span>
+          <span class="start-stream" *ngIf="isSupported(file.type)" (click)="startStream(torrentDetails.torrentId, i, file.name)"><i
+            class="material-icons">&#xE039;</i></span>
         </td>
         <td>
-          <a target="_blank" [href]="'/download/' + torrentDetails.torrentId + '/' + i + '/' + file.name">
+          <a target="_blank" [href]="'/download/' + torrentDetails.torrentId + '/' + i + '/' + file.name" download>
             <i class="material-icons">&#xE2C4;</i>
           </a>
         </td>
       </tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="modal active" *ngIf="showModal">
+    <i class="material-icons md-light close-modal" (click)="closeModal()">close</i>
+    <div class="video-container">
+      <plyr [src]="videoUrl"></plyr>
+    </div>
   </div>
 </div>

@@ -24,8 +24,8 @@ export class ApiService {
   }
 
   getTorrentsList(torrentId: string) {
-    return this._http.get(`/list?torrentId=${window.btoa(torrentId)}`)
-      .map(res => res.json())
+    return this._http.get(`/list?torrentId=${window.btoa(torrentId)}&timestamp=${new Date().getTime()}`)
+      .map(res => res.json());
   }
 
 }

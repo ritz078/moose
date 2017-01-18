@@ -2,32 +2,40 @@ const mime = require('mime');
 const rangeParser = require('range-parser');
 const WebTorrent = require('webtorrent');
 const prettyBytes = require('pretty-bytes');
-const TorrentNameParse = require('torrent-name-parse');
 const atob = require('atob');
 const pump = require('pump');
 
 const client = new WebTorrent()
-const parser = new TorrentNameParse()
 
 function createTorrent(torrentId) {
   return client.get(torrentId) || client.add(torrentId)
 }
 
+function destroyAllTorrents() {
+  return client.torrents.forEach(torrent => torrent.destroy())
+}
+
 export function list(req, res) {
   const torrentId = atob(req.query.torrentId);
 
-  const torrent = createTorrent(torrentId);
+  destroyAllTorrents();
+
+  const torrent = client.add(torrentId);
   torrent.on('ready', () => {
     res.json({
       torrentId: torrent.infoHash,
+      magnetURI: torrent.magnetURI,
       files: torrent.files.map((file) => ({
         name: file.name,
         size: prettyBytes(file.length),
         type: mime.lookup(file.name)
       })),
-      name: torrent.name,
-      details: parser.parse(torrent.name)
+      name: torrent.name
     })
+  })
+
+  torrent.on('error', () => {
+    res.status(408).end('Request timed out')
   })
 }
 
@@ -55,7 +63,7 @@ export function download(req, res) {
 
   let range = rangeParser(file.length, req.headers.range || '');
 
-  if(Array.isArray(range)) {
+  if (Array.isArray(range)) {
     range = range[0];
     res.statusCode = 206;
     res.setHeader(
@@ -71,6 +79,8 @@ export function download(req, res) {
   if (req.method === 'HEAD') {
     return res.end()
   }
+
+  res.on('close', res.end)
 
   return pump(file.createReadStream(range), res)
 }

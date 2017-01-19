@@ -115,4 +115,3 @@ app.get('*', function(req, res) {
 let server = app.listen(app.get('port'), () => {
   console.log(`Listening on: http://localhost:${server.address().port}`);
 });
-

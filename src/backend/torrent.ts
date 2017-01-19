@@ -5,37 +5,47 @@ const prettyBytes = require('pretty-bytes');
 const atob = require('atob');
 const pump = require('pump');
 
-const client = new WebTorrent()
+let client = new WebTorrent()
 
 function createTorrent(torrentId) {
-  return client.get(torrentId) || client.add(torrentId)
+  if(client) {
+    return client.get(torrentId) || client.add(torrentId)
+  } else {
+    client = new WebTorrent()
+    return client.add(torrentId)
+  }
 }
 
-function destroyAllTorrents() {
-  return client.torrents.forEach(torrent => torrent.destroy())
+function destroyAllTorrents(cb) {
+  if (!client.destroyed) {
+    client.destroy(cb)
+  } else {
+    cb()
+  }
 }
 
 export function list(req, res) {
   const torrentId = atob(req.query.torrentId);
 
-  destroyAllTorrents();
-
-  const torrent = client.add(torrentId);
-  torrent.on('ready', () => {
-    res.json({
-      torrentId: torrent.infoHash,
-      magnetURI: torrent.magnetURI,
-      files: torrent.files.map((file) => ({
-        name: file.name,
-        size: prettyBytes(file.length),
-        type: mime.lookup(file.name)
-      })),
-      name: torrent.name
+  destroyAllTorrents(() => {
+    client = new WebTorrent()
+    const torrent = client.add(torrentId);
+    torrent.on('ready', () => {
+      res.json({
+        torrentId: torrent.infoHash,
+        magnetURI: torrent.magnetURI,
+        files: torrent.files.map((file) => ({
+          name: file.name,
+          size: prettyBytes(file.length),
+          type: mime.lookup(file.name)
+        })),
+        name: torrent.name
+      })
     })
-  })
 
-  torrent.on('error', () => {
-    res.status(408).end('Request timed out')
+    torrent.on('error', () => {
+      res.status(408).end('Request timed out')
+    })
   })
 }
 

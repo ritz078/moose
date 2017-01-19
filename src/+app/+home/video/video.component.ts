@@ -27,7 +27,7 @@ if (isBrowser) {
   }
   
   .none{
-  display: none;
+    display: none;
   }
 `]
 })

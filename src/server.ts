@@ -12,6 +12,8 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as morgan from 'morgan';
 import * as compression from 'compression';
+import * as session from 'express-session';
+import * as Webtorrent from 'webtorrent';
 
 // Angular 2
 import { enableProdMode } from '@angular/core';
@@ -45,10 +47,14 @@ app.set('views', __dirname);
 app.set('view engine', 'html');
 app.set('json spaces', 2);
 
-app.use(cookieParser('Angular 2 Universal'));
 app.use(bodyParser.json());
 app.use(compression());
-
+app.use(session({
+  secret: 's3cr3t',
+  name: 'session:name',
+  resave: false,
+  saveUninitialized: true
+}))
 app.use(morgan('dev'));
 
 function cacheControl(req, res, next) {
@@ -59,6 +65,20 @@ function cacheControl(req, res, next) {
 // Serve static files
 app.use('/assets', cacheControl, express.static(path.join(__dirname, 'assets'), {maxAge: 30}));
 app.use(cacheControl, express.static(path.join(ROOT, 'dist/client'), {index: false}));
+
+
+app.use((req, res, next) => {
+  const session: any = req.session;
+
+  let sessionExists = session.sessionExists;
+
+  if(!sessionExists) {
+    // new session
+    session.sessionExists = true;
+  }
+
+  next()
+})
 
 //
 /////////////////////////

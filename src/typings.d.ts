@@ -46,11 +46,6 @@ declare var ENV: string;
 declare var HMR: boolean;
 declare var Zone: {current: any};
 
-declare module 'video.js' {
-  let x: any;
-  export = x;
-}
-
 interface GlobalEnvironment {
   ENV;
   HMR;
@@ -82,6 +77,3 @@ interface WebpackRequire {
 interface NodeRequire extends WebpackRequire {}
 interface NodeModule extends WebpackModule {}
 interface Global extends GlobalEnvironment  {}
-
-
-declare module 'connect-timeout'

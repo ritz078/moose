@@ -25,13 +25,19 @@ export const torrentStore = {
     }
   },
 
-  removeTorrents(sid, infoHash?: string) {
+  getInfoHashFromTorrentId(torrentId: string) {
+    return parseTorrent(torrentId).infoHash;
+  },
+
+  removeTorrents(sid, infoHash?: string, cb?: Function) {
     const client = this.clients[sid];
     client.torrents.forEach(torrent => {
-      console.log(torrent.infoHash, infoHash)
       if(torrent.infoHash !== infoHash) {
         console.log(torrent.name);
-        rimraf(`${BASE_PATH}/${sid}/${torrent.name}`, () => debug(`removed all torrents except ${infoHash}`))
+        rimraf(`${BASE_PATH}/${sid}/${torrent.name}`, () => {
+          debug(`removed all torrents except ${infoHash}`);
+          cb()
+        })
       }
     })
   },

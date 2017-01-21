@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
   private torrentDetails;
   public showModal = false;
   public videoUrl: string;
+  public selectedTorrentId: string;
 
   constructor(private apiService: ApiService) {
   }
@@ -63,6 +64,9 @@ export class HomeComponent implements OnInit {
 
   public closeModal() {
     this.showModal = false;
+    this.apiService.deleteTempFiles(this.selectedTorrentId)
+      .subscribe(msg => console.log(msg));
+    this.selectedTorrentId = null;
   }
 
   isSupported(mime: string) {
@@ -72,5 +76,6 @@ export class HomeComponent implements OnInit {
   public startStream(torrentId: string, fileId: number, fileName: string) {
     this.showModal = true;
     this.videoUrl = `/download/${torrentId}/${fileId}/${fileName}`;
+    this.selectedTorrentId = torrentId;
   }
 }

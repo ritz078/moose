@@ -99,5 +99,9 @@ export function download(req, res) {
   }
 }
 
+export function deleteTorr(req, res) {
+  const sessionId = req.sessionID;
 
-
+  torrentStore.removeTorrents(sessionId);
+  res.status(200).end('Torrent file deleted'); // for saving space on server.
+}

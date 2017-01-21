@@ -28,4 +28,8 @@ export class ApiService {
       .map(res => res.json());
   }
 
+  deleteTempFiles(torrentId: string) {
+    return this._http.get(`/delete/${window.btoa(torrentId)}`, {withCredentials: true})
+      .map(res => res.json());
+  }
 }

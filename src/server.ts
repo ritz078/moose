@@ -15,11 +15,9 @@ import * as compression from 'compression';
 import * as session from 'express-session';
 import * as qs from 'query-string';
 import * as _ from 'lodash';
+import { socketIo } from './backend/helpers/socket';
 
 const http = require('http');
-
-const socket = require('socket.io');
-const debug = require('debug')('socket');
 
 // Angular 2
 import { enableProdMode } from '@angular/core';
@@ -32,7 +30,7 @@ import { MainModule } from './node.module';
 // Routes
 import { routes } from './server.routes';
 
-import {torrentStore} from './backend/helpers/torrentStore';
+import { torrentStore } from './backend/helpers/torrentStore';
 
 // enable prod for faster renders
 enableProdMode();
@@ -82,13 +80,12 @@ function cacheControl(req, res, next) {
 app.use('/assets', cacheControl, express.static(path.join(__dirname, 'assets'), {maxAge: 30}));
 app.use(cacheControl, express.static(path.join(ROOT, 'dist/client'), {index: false}));
 
-
 app.use((req, res, next) => {
   const session: any = req.session;
 
   let sessionExists = session.sessionExists;
 
-  if(!sessionExists) {
+  if (!sessionExists) {
     // new session
     session.sessionExists = true;
   }
@@ -111,13 +108,13 @@ process.on('uncaughtException', function (err) {
 
 function ngApp(req, res) {
 
-  function onHandleError(parentZoneDelegate, currentZone, targetZone, error)  {
+  function onHandleError(parentZoneDelegate, currentZone, targetZone, error) {
     console.warn('Error in SSR, serving for direct CSR');
     res.sendFile('index.html', {root: './src'});
     return false;
   }
 
-  Zone.current.fork({ name: 'CSR fallback', onHandleError }).run(() => {
+  Zone.current.fork({name: 'CSR fallback', onHandleError}).run(() => {
     res.render('index', {
       req,
       res,
@@ -140,9 +137,9 @@ routes.forEach(route => {
   app.get(`/${route}/*`, ngApp);
 });
 
-app.get('*', function(req, res) {
+app.get('*', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
-  const pojo = { status: 404, message: 'No Content' };
+  const pojo = {status: 404, message: 'No Content'};
   const json = JSON.stringify(pojo, null, 2);
   res.status(404).send(json);
 });
@@ -150,7 +147,7 @@ app.get('*', function(req, res) {
 // Server
 let server = http.createServer(app);
 
-const sio = socket.listen(server);
+const sio = socketIo.create(server);
 
 sio.set('authorization', (data, accept) => {
   // check if there's a cookie header
@@ -169,24 +166,23 @@ sio.set('authorization', (data, accept) => {
   accept(null, true);
 })
 
-sio.sockets.on("connection", function(socket) {
+sio.sockets.on("connection", function (socket) {
   const sessionID = socket.handshake.headers.sessionID;
 
   let mapping: any = socketToSessionMapping[sessionID];
 
-  if(mapping) {
+  if (mapping) {
     socketToSessionMapping[sessionID].push(socket.id)
   } else {
     socketToSessionMapping[sessionID] = [socket.id]
   }
 
   socket.on('disconnect', () => {
-    if(socketToSessionMapping[sessionID]) {
+    if (socketToSessionMapping[sessionID]) {
       _.remove(socketToSessionMapping[sessionID], n => n === socket.id);
-      if(socketToSessionMapping[sessionID].length === 0) {
-        // destroy everything related to that session
-        debug('Session has been destroyed: ', sessionID);
 
+      if (socketToSessionMapping[sessionID].length === 0) {
+        // destroy everything related to that session
         torrentStore.destroyClient(sessionID);
         delete socketToSessionMapping[sessionID];
       }

@@ -3,21 +3,27 @@ const rangeParser = require('range-parser');
 const prettyBytes = require('pretty-bytes');
 const atob = require('atob');
 const pump = require('pump');
+const cookie = require('cookie');
 
 import { torrentStore } from './helpers/torrentStore';
+
+function deselectAllFiles(torrent) {
+  torrent.files.forEach(file => file.deselect())
+}
 
 export function list(req, res) {
   const torrentId = atob(req.query.torrentId);
 
   const torrent = torrentStore.getTorrent(req.sessionID, torrentId);
 
-  if (torrent.ready) {
+  if (torrent.files && torrent.files.length) {
     onReady()
   } else {
-    torrent.on('ready', onReady)
+    torrent.on('metadata', onReady)
   }
 
   function onReady() {
+    deselectAllFiles(torrent)
     res.json({
       torrentId: torrent.infoHash,
       magnetURI: torrent.magnetURI,
@@ -32,6 +38,10 @@ export function list(req, res) {
 
   torrent.on('error', () => {
     res.status(408).end('Request timed out')
+  })
+
+  torrent.on('download', () => {
+    console.log(torrent.path, torrent.downloaded)
   })
 }
 
@@ -84,6 +94,8 @@ export function download(req, res) {
     }
 
     res.on('close', res.end)
+
+    console.log(range);
 
     return pump(file.createReadStream(range), res)
   }

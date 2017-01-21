@@ -107,7 +107,6 @@
     "@types/webtorrent": "*",
     "angular2-template-loader": "^0.4.0",
     "awesome-typescript-loader": "^2.2.4",
-    "cookie-parser": "^1.4.3",
     "css-loader": "^0.26.1",
     "imports-loader": "^0.6.5",
     "json-loader": "^0.5.4",

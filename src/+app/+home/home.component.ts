@@ -4,10 +4,12 @@ import {
 
 import { ApiService } from '../shared/api.service';
 import { isBrowser } from 'angular2-universal';
+import * as cookie from 'js-cookie';
 
-let plyr;
+let plyr, io;
 if(isBrowser) {
   plyr = require('plyr');
+  io = require('socket.io-client')
 }
 
 @Component({
@@ -31,6 +33,16 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     if (isBrowser) {
+      const socket = io.connect(`${window.location.protocol}//${window.location.host}?session_name=${cookie.get('session_name')}`)
+
+      socket.on('connect', () => {
+        cookie.set('socket_id', socket.id);
+      })
+
+      socket.on('message', (x) => {
+        console.log(x);
+      })
+
       const magnetURI = window.localStorage.getItem('magnetURI');
       if (magnetURI) {
         this.startProcessing(magnetURI);

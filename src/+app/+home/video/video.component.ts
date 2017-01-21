@@ -1,5 +1,5 @@
 import {
-  Component, Inject, ChangeDetectionStrategy, ViewEncapsulation, OnInit, Input,
+  Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, Input,
   ElementRef, ViewChild
 } from '@angular/core';
 import { isBrowser } from 'angular2-universal';

@@ -39,10 +39,6 @@ export function list(req, res) {
   torrent.on('error', () => {
     res.status(408).end('Request timed out')
   })
-
-  torrent.on('download', () => {
-    console.log(torrent.path, torrent.downloaded)
-  })
 }
 
 export function download(req, res) {
@@ -60,7 +56,9 @@ export function download(req, res) {
   }
 
   function onReady() {
-    const file = torrent.files[+req.params.fileId]
+    const file = torrent.files[+req.params.fileId];
+
+    torrentStore.removeTorrents(req.sessionID, torrent.infoHash)
 
     res.setHeader('Accept-Ranges', 'bytes')
     res.setHeader('Content-Type', mime.lookup(file.name))

@@ -77,3 +77,7 @@ interface WebpackRequire {
 interface NodeRequire extends WebpackRequire {}
 interface NodeModule extends WebpackModule {}
 interface Global extends GlobalEnvironment  {}
+
+declare module 'cookie-signature';
+declare module 'js-cookie';
+declare module 'query-string';

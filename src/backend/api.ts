@@ -1,4 +1,4 @@
-import { list, download } from './torrent';
+import { list, download } from './torrentController';
 const util = require('util');
 
 // you would use cookies/token etc

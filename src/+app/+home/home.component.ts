@@ -4,10 +4,12 @@ import {
 
 import { ApiService } from '../shared/api.service';
 import { isBrowser } from 'angular2-universal';
+import * as cookie from 'js-cookie';
 
-let plyr;
+let plyr, io;
 if(isBrowser) {
   plyr = require('plyr');
+  io = require('socket.io-client')
 }
 
 @Component({
@@ -35,6 +37,12 @@ export class HomeComponent implements OnInit {
       if (magnetURI) {
         this.startProcessing(magnetURI);
       }
+
+      const socket = io.connect(`ws://${window.location.host}?session_name=${cookie.get('session_name')}`)
+
+      socket.on('open', () => {
+        console.log('connection made')
+      })
     }
   }
 

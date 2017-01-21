@@ -1,59 +1,42 @@
 const mime = require('mime');
 const rangeParser = require('range-parser');
-const WebTorrent = require('webtorrent');
 const prettyBytes = require('pretty-bytes');
 const atob = require('atob');
 const pump = require('pump');
 
-
-let clientInstances = {}
-
-function createTorrent(sessionID, torrentId) {
-  if (clientInstances[sessionID] && !clientInstances[sessionID].destroyed) {
-    const client = clientInstances[sessionID];
-    return client.get(torrentId) || client.add(torrentId)
-  } else {
-    const client = new WebTorrent();
-    clientInstances[sessionID] = client;
-    return client.add(torrentId);
-  }
-}
-
-function destroyAllTorrents(sessionID, cb) {
-  const client = clientInstances[sessionID];
-  if (client && !client.destroyed) {
-    client.destroy(cb)
-  } else {
-    cb()
-  }
-}
+import { torrentStore } from './helpers/torrentStore';
 
 export function list(req, res) {
   const torrentId = atob(req.query.torrentId);
 
-  destroyAllTorrents(req.sessionID, () => {
-    const torrent = createTorrent(req.sessionID, torrentId);
-    torrent.on('ready', () => {
-      res.json({
-        torrentId: torrent.infoHash,
-        magnetURI: torrent.magnetURI,
-        files: torrent.files.map((file) => ({
-          name: file.name,
-          size: prettyBytes(file.length),
-          type: mime.lookup(file.name)
-        })),
-        name: torrent.name
-      })
-    })
+  const torrent = torrentStore.getTorrent(req.sessionID, torrentId);
 
-    torrent.on('error', () => {
-      res.status(408).end('Request timed out')
+  if (torrent.ready) {
+    onReady()
+  } else {
+    torrent.on('ready', onReady)
+  }
+
+  function onReady() {
+    res.json({
+      torrentId: torrent.infoHash,
+      magnetURI: torrent.magnetURI,
+      files: torrent.files.map((file) => ({
+        name: file.name,
+        size: prettyBytes(file.length),
+        type: mime.lookup(file.name)
+      })),
+      name: torrent.name
     })
+  }
+
+  torrent.on('error', () => {
+    res.status(408).end('Request timed out')
   })
 }
 
 export function download(req, res) {
-  const torrent = createTorrent(req.sessionID, req.params.torrentId)
+  const torrent = torrentStore.getTorrent(req.sessionID, req.params.torrentId)
 
   if (!torrent) {
     res.statusCode = 404;

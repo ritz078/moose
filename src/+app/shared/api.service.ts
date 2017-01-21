@@ -11,9 +11,9 @@ export class ApiService {
 
   }
 
- /**
-  * whatever domain/feature method name
-  */
+  /**
+   * whatever domain/feature method name
+   */
   get(url: string, options?: any) {
     return this._http.get(url, options)
       .map(res => res.json())
@@ -24,7 +24,7 @@ export class ApiService {
   }
 
   getTorrentsList(torrentId: string) {
-    return this._http.get(`/list?torrentId=${window.btoa(torrentId)}&timestamp=${new Date().getTime()}`)
+    return this._http.get(`/list?torrentId=${window.btoa(torrentId)}&timestamp=${new Date().getTime()}`, {withCredentials: true})
       .map(res => res.json());
   }
 

@@ -1,22 +1,145 @@
-import React from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
 import Helmet from 'react-helmet';
-import { safeConfigGet } from '../../../utils/config';
+import Modal from 'react-modal';
+import * as io from 'socket.io-client';
+import * as cookie from 'js-cookie';
 
-function Home() {
-  return (
-    <article>
-      <Helmet title="Home" />
+export default class Home extends Component {
+  constructor(props) {
+    super(props);
 
-      <h2>{safeConfigGet(['welcomeMessage'])}</h2>
+    this.state = {
+      torrentDetails: null,
+      streaming: false,
+    };
 
-      <p>
-        This starter kit contains all the build tooling and configuration you
-        need to kick off your next universal React project, whilst containing a
-        minimal project set up allowing you to make your own architecture
-        decisions (Redux/Mobx etc).
-      </p>
-    </article>
-  );
+    this.listTorrent = this.listTorrent.bind(this);
+    this.getTorrentList = this.getTorrentList.bind(this);
+    this.startStream = this.startStream.bind(this);
+    this.getStreamModal = this.getStreamModal.bind(this);
+  }
+
+  async componentDidMount() {
+    const socket = io.connect(`${window.location.protocol}//${window.location.host}?session_name=${cookie.get('session_name')}`);
+
+    socket.on('connect', () => {
+      cookie.set('socket_id', socket.id);
+    });
+
+    const magnetURI = window.localStorage.getItem('magnetURI');
+    if (magnetURI) {
+      await this.listTorrent(magnetURI);
+    }
+  }
+
+  async listTorrent(id) {
+    const torrentId = this.inputRef.value || id;
+
+    const { data } = await axios.get(`/list?torrentId=${window.btoa(torrentId)}&timestamp=${new Date().getTime()}`, { withCredentials: true });
+    window.localStorage.setItem('magnetURI', data.magnetURI);
+
+    this.setState({
+      torrentDetails: data,
+    });
+  }
+
+  static isSupported(mime) {
+    return document.createElement('video').canPlayType(mime) || mime === 'video/x-matroska';
+  }
+
+  startStream() {
+    this.setState({ streaming: true });
+  }
+
+  getStreamModal() {
+    return (
+      <Modal
+        isOpen={this.state.streaming}
+      >
+        hello
+      </Modal>
+    );
+  }
+
+  getTorrentList() {
+    const { torrentDetails } = this.state;
+
+    return (
+      <table className="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th />
+            <th>File Name</th>
+            <th>Size</th>
+            <th />
+            <th>Download</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+          torrentDetails.files.map((file, i) => (
+            <tr>
+              <td>{i + 1}</td>
+              <td>{file.type.indexOf('video') >= 0 && <i className="mdi mdi-movie salmon" />}</td>
+              <td>{file.name}</td>
+              <td>{file.size}</td>
+              <td>
+                {Home.isSupported(file.type) &&
+                <span
+                  className="start-stream"
+                >
+                  <i className="mdi mdi-play-circle-outline" onClick={this.startStream} />
+                  </span>}
+              </td>
+              <td>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`/download/${torrentDetails.torrentId}/${i}/${file.name}`}
+                  download
+                >
+                  <i className="mdi mdi-download" />
+                </a>
+              </td>
+            </tr>
+          ))
+        }
+        </tbody>
+      </table>
+    );
+  }
+
+  render() {
+    const { torrentDetails } = this.state;
+
+    return (
+      <article>
+        <Helmet title="Home" />
+
+        <div className="row">
+          <div className="input-group">
+            <input
+              type="text"
+              className="form-input url-input"
+              placeholder="paste your magnet url"
+              ref={x => (this.inputRef = x)}
+            />
+            <button className="btn btn-primary input-group-btn add-btn" onClick={this.listTorrent}>Submit</button>
+          </div>
+        </div>
+
+        {torrentDetails &&
+        <div>
+          <h4 className="torrent-name">{torrentDetails.name}</h4>
+
+          {this.getTorrentList()}
+        </div>
+        }
+
+        {this.getStreamModal()}
+      </article>
+    );
+  }
 }
-
-export default Home;

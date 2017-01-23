@@ -1,0 +1,112 @@
+@import "~spectre.css/dist/spectre.css";
+
+.column {
+  float: left;
+}
+
+.column-90 {
+  width: 90%;
+}
+
+.column-10 {
+  width: 10%;
+}
+
+.home {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+table {
+  width: 80% !important;
+  margin: 0 auto;
+  font-weight: 400 !important;
+}
+
+.add-btn, .url-input {
+  height: 4.2rem;
+  padding: 0 20px;
+  font-family: inherit;
+}
+
+.form-input {
+  border: .1rem solid #e8e8e8;
+}
+
+td, th {
+  border-bottom: 0.1rem solid #f1f1f1 !important;
+  padding: 10px !important;
+  text-align: left !important;
+}
+
+.torrent-name {
+  text-align: center;
+  margin: 60px;
+}
+
+.fa-arrow-circle-o-down, .fa-play-circle-o {
+  font-size: 30px;
+}
+
+td:last-child, th:last-child {
+  text-align: center !important;
+}
+
+.mdi{
+  vertical-align: middle;
+  font-size: 22px;
+}
+
+.mdi.salmon {
+  color: #f95f4d;
+}
+
+.mdi.md-light { color: rgba(255, 255, 255, 1); }
+
+.start-stream {
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+}
+
+.modal video {
+  margin: 80px auto;
+  display: flex;
+}
+
+.close-modal {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  font-size: 36px;
+  cursor: pointer;
+}
+
+.video-container {
+  width: 90%;
+  margin: 80px auto;
+}
+
+footer {
+  text-align: center;
+  background-color: #f5f5f5;
+  line-height: 46px;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  border-top: 1px solid #eee;
+}
+
+footer a {
+  text-decoration: none;
+}
+
+footer .mdi-heart {
+  color: red;
+}

@@ -2,10 +2,10 @@ import React from 'react';
 import { Match, Miss } from 'react-router';
 import Helmet from 'react-helmet';
 import { CodeSplit } from 'code-split-component';
-import 'normalize.css/normalize.css';
 import './globals.css';
 import Error404 from './Error404';
 import Header from './Header';
+import Footer from './Footer';
 import { safeConfigGet } from '../../utils/config';
 
 function DemoApp() {
@@ -46,6 +46,8 @@ function DemoApp() {
       />
 
       <Miss component={Error404} />
+
+      <Footer />
     </div>
   );
 }

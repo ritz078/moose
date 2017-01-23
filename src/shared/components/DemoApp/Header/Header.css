@@ -1,0 +1,20 @@
+.row {
+  width: 90%;
+  margin: 10px auto;
+  overflow: auto;
+}
+
+.form-control {
+  border: 1px solid #eee;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 2px;
+  display: table;
+  outline: none;
+  color: #aaa;
+  width: 98%;
+}
+
+input:focus {
+  color: #666;
+}

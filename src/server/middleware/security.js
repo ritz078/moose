@@ -17,7 +17,7 @@ const cspConfig = {
       // need the following:
       // 'data:',
     ],
-    fontSrc: ["'self'"],
+    fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
     objectSrc: ["'self'"],
     mediaSrc: ["'self'"],
     manifestSrc: ["'self'"],
@@ -34,7 +34,7 @@ const cspConfig = {
       (req, res) => `'nonce-${res.locals.nonce}'`,
       // This is a know workaround for browsers that don't support nonces.
       // It will be ignored by browsers that do support nonces as they will
-      // recognise that we have also provided a nonce configuration and 
+      // recognise that we have also provided a nonce configuration and
       // use the stricter rule.
       "'unsafe-inline'",
     ],
@@ -42,6 +42,7 @@ const cspConfig = {
       "'self'",
       // Webpack generates JS that loads our CSS, so this is needed:
       "'unsafe-inline'",
+      'https://fonts.gstatic.com',
       'blob:',
     ],
   },

@@ -1,4 +1,4 @@
-@import "~spectre.css/dist/spectre.css";
+@import "../Video/Video.css";
 
 .column {
   float: left;
@@ -109,4 +109,12 @@ footer a {
 
 footer .mdi-heart {
   color: red;
+}
+
+.close-modal{
+  color: #9c9c9c;
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  font-size: 32px;
 }

@@ -74,7 +74,7 @@ export function download(req, res) {
         'Content-Range',
         `bytes ${range.start}-${range.end}/${file.length}`,
       );
-      res.setHeader('Content-Length', range.end - (range.start + 1));
+      res.setHeader('Content-Length', (range.end - range.start) + 1);
     } else {
       range = null;
       res.setHeader('Content-Length', file.length);

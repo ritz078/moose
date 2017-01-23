@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import Modal from 'react-modal';
 import * as io from 'socket.io-client';
 import * as cookie from 'js-cookie';
+import Video from '../Video/Video';
 
 export default class Home extends Component {
   constructor(props) {
@@ -12,12 +13,14 @@ export default class Home extends Component {
     this.state = {
       torrentDetails: null,
       streaming: false,
+      selectedIndex: null,
     };
 
     this.listTorrent = this.listTorrent.bind(this);
     this.getTorrentList = this.getTorrentList.bind(this);
     this.startStream = this.startStream.bind(this);
     this.getStreamModal = this.getStreamModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   async componentDidMount() {
@@ -36,7 +39,7 @@ export default class Home extends Component {
   async listTorrent(id) {
     const torrentId = this.inputRef.value || id;
 
-    const { data } = await axios.get(`/list?torrentId=${window.btoa(torrentId)}&timestamp=${new Date().getTime()}`, { withCredentials: true });
+    const {data} = await axios.get(`/list?torrentId=${window.btoa(torrentId)}&timestamp=${new Date().getTime()}`, {withCredentials: true});
     window.localStorage.setItem('magnetURI', data.magnetURI);
 
     this.setState({
@@ -48,41 +51,69 @@ export default class Home extends Component {
     return document.createElement('video').canPlayType(mime) || mime === 'video/x-matroska';
   }
 
-  startStream() {
-    this.setState({ streaming: true });
+  startStream(e) {
+    this.setState({
+      streaming: true,
+      selectedIndex: e.target.dataset.id
+    });
+  }
+
+  closeModal() {
+    this.setState({streaming: false});
   }
 
   getStreamModal() {
+    const style = {
+      overlay: {
+        backgroundColor: 'rgba(0,0,0,0.95)',
+      },
+      content: {
+        background: '#000',
+        border: 'none',
+      },
+    };
+
+    let selectedTorrent;
+
+    if (this.state.torrentDetails && this.state.selectedIndex) {
+      selectedTorrent = this.state.torrentDetails.files[this.state.selectedIndex];
+    } else {
+      return <div/>;
+    }
+
+    const src = `/download/${this.state.torrentDetails.torrentId}/${this.state.selectedIndex}/${selectedTorrent.name}`
     return (
       <Modal
+        style={style}
         isOpen={this.state.streaming}
       >
-        hello
+        <i onClick={this.closeModal} className='mdi mdi-close close-modal'/>
+        <Video src={src}/>
       </Modal>
     );
   }
 
   getTorrentList() {
-    const { torrentDetails } = this.state;
+    const {torrentDetails} = this.state;
 
     return (
       <table className="table table-striped table-hover">
         <thead>
-          <tr>
-            <th>#</th>
-            <th />
-            <th>File Name</th>
-            <th>Size</th>
-            <th />
-            <th>Download</th>
-          </tr>
+        <tr>
+          <th>#</th>
+          <th />
+          <th>File Name</th>
+          <th>Size</th>
+          <th />
+          <th>Download</th>
+        </tr>
         </thead>
         <tbody>
-          {
+        {
           torrentDetails.files.map((file, i) => (
             <tr>
               <td>{i + 1}</td>
-              <td>{file.type.indexOf('video') >= 0 && <i className="mdi mdi-movie salmon" />}</td>
+              <td>{file.type.indexOf('video') >= 0 && <i className="mdi mdi-movie salmon"/>}</td>
               <td>{file.name}</td>
               <td>{file.size}</td>
               <td>
@@ -90,7 +121,7 @@ export default class Home extends Component {
                 <span
                   className="start-stream"
                 >
-                  <i className="mdi mdi-play-circle-outline" onClick={this.startStream} />
+                  <i className="mdi mdi-play-circle-outline" data-id={i} onClick={this.startStream}/>
                   </span>}
               </td>
               <td>
@@ -100,7 +131,7 @@ export default class Home extends Component {
                   href={`/download/${torrentDetails.torrentId}/${i}/${file.name}`}
                   download
                 >
-                  <i className="mdi mdi-download" />
+                  <i className="mdi mdi-download"/>
                 </a>
               </td>
             </tr>
@@ -112,11 +143,11 @@ export default class Home extends Component {
   }
 
   render() {
-    const { torrentDetails } = this.state;
+    const {torrentDetails} = this.state;
 
     return (
       <article>
-        <Helmet title="Home" />
+        <Helmet title="Home"/>
 
         <div className="row">
           <div className="input-group">

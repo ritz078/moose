@@ -14,6 +14,7 @@
     "analyze": "babel-node tools/scripts/analyze",
     "start": "cross-env NODE_ENV=production node build/server",
     "deploy": "babel-node tools/scripts/deploy",
+    "debug": "node --inspect --debug-brk -r babel-register ./build/server",
     "lint": "eslint src",
     "test": "jest",
     "test:coverage": "jest --coverage"

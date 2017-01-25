@@ -2,10 +2,6 @@ import React, { PropTypes } from 'react';
 import * as videojs from 'video.js';
 
 class Video extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     videojs(this.videoRef, this.props.options, () => {
       this.props.onInit();
@@ -37,10 +33,10 @@ Video.propTypes = {
 };
 
 Video.defaultProps = {
-  onInit(){
+  onInit() {
   },
   options: {
-    fluid: true
+    fluid: true,
   },
 };
 

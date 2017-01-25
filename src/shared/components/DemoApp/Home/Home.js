@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import * as axios from 'axios';
 import Helmet from 'react-helmet';
 import Modal from 'react-modal';
 import * as io from 'socket.io-client';
@@ -39,8 +39,10 @@ export default class Home extends Component {
   async listTorrent(id) {
     const torrentId = this.inputRef.value || id;
 
-    const {data} = await axios.get(`/list?torrentId=${window.btoa(torrentId)}&timestamp=${new Date().getTime()}`, {withCredentials: true});
+    const { data } = await axios.get(`/list?torrentId=${window.btoa(torrentId)}&timestamp=${new Date().getTime()}`, { withCredentials: true });
     window.localStorage.setItem('magnetURI', data.magnetURI);
+
+    this.inputRef.value = '';
 
     this.setState({
       torrentDetails: data,
@@ -54,12 +56,12 @@ export default class Home extends Component {
   startStream(e) {
     this.setState({
       streaming: true,
-      selectedIndex: e.target.dataset.id
+      selectedIndex: e.target.dataset.id,
     });
   }
 
   closeModal() {
-    this.setState({streaming: false});
+    this.setState({ streaming: false });
   }
 
   getStreamModal() {
@@ -78,42 +80,43 @@ export default class Home extends Component {
     if (this.state.torrentDetails && this.state.selectedIndex) {
       selectedTorrent = this.state.torrentDetails.files[this.state.selectedIndex];
     } else {
-      return <div/>;
+      return <div />;
     }
 
-    const src = `/download/${this.state.torrentDetails.torrentId}/${this.state.selectedIndex}/${selectedTorrent.name}`
+    const src = `/download/${this.state.torrentDetails.torrentId}/${this.state.selectedIndex}/${selectedTorrent.name}`;
     return (
       <Modal
         style={style}
         isOpen={this.state.streaming}
+        contentLabel={selectedTorrent.name}
       >
-        <i onClick={this.closeModal} className='mdi mdi-close close-modal'/>
-        <Video src={src}/>
+        <i onClick={this.closeModal} className="mdi mdi-close close-modal" />
+        <Video src={src} />
       </Modal>
     );
   }
 
   getTorrentList() {
-    const {torrentDetails} = this.state;
+    const { torrentDetails } = this.state;
 
     return (
       <table className="table table-striped table-hover">
         <thead>
-        <tr>
-          <th>#</th>
-          <th />
-          <th>File Name</th>
-          <th>Size</th>
-          <th />
-          <th>Download</th>
-        </tr>
+          <tr>
+            <th>#</th>
+            <th />
+            <th>File Name</th>
+            <th>Size</th>
+            <th />
+            <th>Download</th>
+          </tr>
         </thead>
         <tbody>
-        {
+          {
           torrentDetails.files.map((file, i) => (
-            <tr>
+            <tr key={file.name}>
               <td>{i + 1}</td>
-              <td>{file.type.indexOf('video') >= 0 && <i className="mdi mdi-movie salmon"/>}</td>
+              <td>{file.type.indexOf('video') >= 0 && <i className="mdi mdi-movie salmon" />}</td>
               <td>{file.name}</td>
               <td>{file.size}</td>
               <td>
@@ -121,7 +124,7 @@ export default class Home extends Component {
                 <span
                   className="start-stream"
                 >
-                  <i className="mdi mdi-play-circle-outline" data-id={i} onClick={this.startStream}/>
+                  <i className="mdi mdi-play-circle-outline" data-id={i} onClick={this.startStream} />
                   </span>}
               </td>
               <td>
@@ -131,7 +134,7 @@ export default class Home extends Component {
                   href={`/download/${torrentDetails.torrentId}/${i}/${file.name}`}
                   download
                 >
-                  <i className="mdi mdi-download"/>
+                  <i className="mdi mdi-download" />
                 </a>
               </td>
             </tr>
@@ -143,11 +146,11 @@ export default class Home extends Component {
   }
 
   render() {
-    const {torrentDetails} = this.state;
+    const { torrentDetails } = this.state;
 
     return (
       <article>
-        <Helmet title="Home"/>
+        <Helmet title="Home" />
 
         <div className="row">
           <div className="input-group">

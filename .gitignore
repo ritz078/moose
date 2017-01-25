@@ -41,3 +41,5 @@ flow-coverage/
 
 # Happypack
 .happypack
+
+.env.development

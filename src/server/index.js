@@ -20,6 +20,8 @@ import torrentStore from './middleware/helpers/torrentStore';
 import socketIo from './middleware/helpers/socketIo';
 import { download, list, deleteTorr } from './middleware/torrent';
 
+const MongoStore = require('connect-mongo')(session);
+
 const socketToSessionMapping = {};
 
 // Create our express based server.
@@ -39,25 +41,15 @@ const sessionMiddleware = session({
   name: 'session_name',
   resave: false,
   saveUninitialized: true,
+  store: new MongoStore({
+    url: 'mongodb://localhost/blizzard',
+  }),
   cookie: {
     httpOnly: false,
   },
 });
 
 app.use(sessionMiddleware);
-
-app.use((req, res, next) => {
-  const sess = req.session;
-
-  const sessionExists = sess.sessionExists;
-
-  if (!sessionExists) {
-    // new session
-    sess.sessionExists = true;
-  }
-
-  next();
-});
 
 
 // When in production mode, we will serve our service worker which was generated

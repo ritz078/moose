@@ -5,7 +5,7 @@ import { ServerRouter, createServerRenderContext } from 'react-router';
 import { CodeSplitProvider, createRenderContext } from 'code-split-component';
 import Helmet from 'react-helmet';
 import generateHTML from './generateHTML';
-import DemoApp from '../../../shared/components/DemoApp';
+import Blizzard from '../../../shared/components/Blizzard';
 import config from '../../../../config';
 
 /**
@@ -49,7 +49,7 @@ function reactApplicationMiddleware(request, response) {
   const reactAppString = renderToString(
     <CodeSplitProvider context={codeSplitContext}>
       <ServerRouter location={request.url} context={reactRouterContext}>
-        <DemoApp />
+        <Blizzard />
       </ServerRouter>
     </CodeSplitProvider>,
   );

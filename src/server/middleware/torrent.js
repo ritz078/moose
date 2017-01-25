@@ -1,10 +1,9 @@
+import * as mime from 'mime';
+import * as rangeParser from 'range-parser';
+import * as prettyBytes from 'pretty-bytes';
+import * as atob from 'atob';
+import * as pump from 'pump';
 import torrentStore from './helpers/torrentStore';
-
-const mime = require('mime');
-const rangeParser = require('range-parser');
-const prettyBytes = require('pretty-bytes');
-const atob = require('atob');
-const pump = require('pump');
 
 function deselectAllFiles(torrent) {
   torrent.files.forEach(file => file.deselect());

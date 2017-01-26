@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import Modal from 'react-modal';
 import * as io from 'socket.io-client';
 import * as cookie from 'js-cookie';
+import * as store from 'store2';
 import Video from '../Video';
 
 export default class Home extends Component {
@@ -21,12 +22,13 @@ export default class Home extends Component {
     this.startStream = this.startStream.bind(this);
     this.getStreamModal = this.getStreamModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.getSelectedTorrent = this.getSelectedTorrent.bind(this);
   }
 
   async componentDidMount() {
     io.connect(`${window.location.protocol}//${window.location.host}?session_name=${cookie.get('session_name')}`);
 
-    const magnetURI = window.localStorage.getItem('magnetURI');
+    const magnetURI = store('magnetURI');
     if (magnetURI) {
       await this.listTorrent(magnetURI);
     }
@@ -36,12 +38,13 @@ export default class Home extends Component {
     const torrentId = this.inputRef.value || id;
 
     const { data } = await axios.get(`/list?torrentId=${window.btoa(torrentId)}&timestamp=${new Date().getTime()}`, { withCredentials: true });
-    window.localStorage.setItem('magnetURI', data.magnetURI);
+    store('magnetURI', data.magnetURI);
 
     this.inputRef.value = '';
 
     this.setState({
       torrentDetails: data,
+      selectedIndex: null,
     });
   }
 
@@ -58,6 +61,11 @@ export default class Home extends Component {
 
   closeModal() {
     this.setState({ streaming: false });
+    axios.get(`/delete/${this.state.torrentDetails.torrentId}`);
+  }
+
+  getSelectedTorrent() {
+    return this.state.torrentDetails.files[+this.state.selectedIndex];
   }
 
   getStreamModal() {
@@ -74,12 +82,13 @@ export default class Home extends Component {
     let selectedTorrent;
 
     if (this.state.torrentDetails && this.state.selectedIndex) {
-      selectedTorrent = this.state.torrentDetails.files[this.state.selectedIndex];
+      selectedTorrent = this.getSelectedTorrent();
     } else {
       return <div />;
     }
 
     const src = `/download/${this.state.torrentDetails.torrentId}/${this.state.selectedIndex}/${selectedTorrent.name}`;
+
     return (
       <Modal
         style={style}
@@ -108,38 +117,31 @@ export default class Home extends Component {
         </tr>
         </thead>
         <tbody>
-        {
-          torrentDetails.files.map((file, i) => (
-            <tr key={file.name}>
-              <td>{i + 1}</td>
-              <td>{file.type.indexOf('video') >= 0 && <i className="mdi mdi-movie salmon" />}</td>
-              <td>{file.name}</td>
-              <td>{file.size}</td>
-              <td>
-                {
-                  Home.isSupported(file.type) &&
-                  <span className="start-stream">
-                  <i
-                    className="mdi mdi-play-circle-outline"
-                    data-id={i}
-                    onClick={this.startStream}
-                  />
+        {torrentDetails.files.map((file, i) => (
+          <tr key={file.name}>
+            <td>{i + 1}</td>
+            <td>{file.type.indexOf('video') >= 0 && <i className="mdi mdi-movie salmon" />}</td>
+            <td>{file.name}</td>
+            <td>{file.size}</td>
+            <td>
+              {Home.isSupported(file.type) &&
+              <span className="start-stream">
+                    <i className="mdi mdi-play-circle-outline" data-id={i} onClick={this.startStream} />
                   </span>
-                }
-              </td>
-              <td>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={`/download/${torrentDetails.torrentId}/${i}/${file.name}`}
-                  download
-                >
-                  <i className="mdi mdi-download" />
-                </a>
-              </td>
-            </tr>
-          ))
-        }
+              }
+            </td>
+            <td>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`/download/${torrentDetails.torrentId}/${i}/${file.name}`}
+                download
+              >
+                <i className="mdi mdi-download" />
+              </a>
+            </td>
+          </tr>
+        ))}
         </tbody>
       </table>
     );

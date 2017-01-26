@@ -1921,6 +1921,10 @@ decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
 
+decko@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/decko/-/decko-1.1.3.tgz#b0406160d775d586b0d25888838ccd99b59e6261"
+
 deep-equal@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
@@ -2516,13 +2520,6 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
-express-mongo@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/express-mongo/-/express-mongo-0.3.0.tgz#90ad05b0fd523681ae1e41cb050fab2aad5d43e8"
-  dependencies:
-    express "^4.10.1"
-    mongoskin "^1.4.4"
-
 express-session@^1.14.2:
   version "1.15.0"
   resolved "https://registry.yarnpkg.com/express-session/-/express-session-1.15.0.tgz#67131dd5b78a42bc57b50af0a14880265c03f919"
@@ -2537,7 +2534,7 @@ express-session@^1.14.2:
     uid-safe "~2.1.3"
     utils-merge "1.0.0"
 
-express@4.14.0, express@^4.10.1, express@^4.14.0:
+express@4.14.0, express@^4.14.0:
   version "4.14.0"
   resolved "https://registry.yarnpkg.com/express/-/express-4.14.0.tgz#c1ee3f42cdc891fb3dc650a8922d51ec847d0d66"
   dependencies:
@@ -4348,10 +4345,6 @@ mongodb-core@2.1.7:
     mongodb-core "2.1.7"
     readable-stream "2.1.5"
 
-mongoskin@^1.4.4:
-  version "1.4.13"
-  resolved "https://registry.yarnpkg.com/mongoskin/-/mongoskin-1.4.13.tgz#1deec5b5dcc25180a9a19c59956c098f8c12ee7d"
-
 mp4-box-encoding@^1.1.0, mp4-box-encoding@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/mp4-box-encoding/-/mp4-box-encoding-1.1.2.tgz#39850ee05ba5370460070b3a2acbd07616e2d831"
@@ -4524,10 +4517,6 @@ normalize-url@^1.4.0:
     prepend-http "^1.0.0"
     query-string "^4.1.0"
     sort-keys "^1.0.0"
-
-normalize.css@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-5.0.0.tgz#7cec875ce8178a5333c4de80b68ea9c18b9d7c37"
 
 npmlog@^4.0.1:
   version "4.0.2"
@@ -6026,6 +6015,10 @@ standalone-react-addons-pure-render-mixin@^0.1.1:
 "statuses@>= 1.3.1 < 2", statuses@~1.3.0, statuses@~1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.3.1.tgz#faf51b9eb74aaef3b3acf4ad5f61abf24cb7b93e"
+
+store2@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/store2/-/store2-2.5.0.tgz#fe70f3aa8b82828c84858663471935605b49dee1"
 
 stream-browserify@^2.0.1:
   version "2.0.1"

@@ -1921,10 +1921,6 @@ decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
 
-decko@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/decko/-/decko-1.1.3.tgz#b0406160d775d586b0d25888838ccd99b59e6261"
-
 deep-equal@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
@@ -4056,7 +4052,7 @@ lodash.istypedarray@^3.0.0:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/lodash.istypedarray/-/lodash.istypedarray-3.0.6.tgz#c9a477498607501d8e8494d283b87c39281cef62"
 
-lodash.keys@^3.0.0:
+lodash.keys@^3.0.0, lodash.keys@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/lodash.keys/-/lodash.keys-3.1.2.tgz#4dbc0472b156be50a0b286855d1bd0b0c656098a"
   dependencies:
@@ -4337,7 +4333,7 @@ mongodb-core@2.1.7:
     bson "~1.0.4"
     require_optional "~1.0.0"
 
-"mongodb@>= 1.2.0 <3.0.0", mongodb@^2.2.22:
+"mongodb@>= 1.2.0 <3.0.0":
   version "2.2.22"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-2.2.22.tgz#d67c588fc08f922db19754b1d2e03e2d7d1319fb"
   dependencies:
@@ -5362,6 +5358,12 @@ react-hot-loader@3.0.0-beta.6:
     redbox-react "^1.2.5"
     source-map "^0.4.4"
 
+react-loading-bar@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/react-loading-bar/-/react-loading-bar-0.0.3.tgz#386aa992c9ee3a3b64c20d54e65f0f84d950feea"
+  dependencies:
+    shallowequal "^0.2.2"
+
 react-modal@^1.6.5:
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-1.6.5.tgz#f720d99bd81b1def5c2c32e0ffaa48bdaf484862"
@@ -5810,6 +5812,12 @@ sha.js@^2.3.6:
   dependencies:
     inherits "^2.0.1"
 
+shallowequal@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-0.2.2.tgz#1e32fd5bcab6ad688a4812cb0cc04efc75c7014e"
+  dependencies:
+    lodash.keys "^3.1.2"
+
 shelljs@^0.7.0, shelljs@^0.7.5:
   version "0.7.6"
   resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.7.6.tgz#379cccfb56b91c8601e4793356eb5382924de9ad"
@@ -5920,10 +5928,6 @@ socket.io@^1.7.2:
     socket.io-adapter "0.5.0"
     socket.io-client "1.7.2"
     socket.io-parser "2.3.1"
-
-socket.js@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/socket.js/-/socket.js-0.1.4.tgz#f427da6853d75673ec3365f691800ca294360a3e"
 
 sort-keys@^1.0.0:
   version "1.1.2"

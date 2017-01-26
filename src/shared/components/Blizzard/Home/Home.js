@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import * as io from 'socket.io-client';
 import * as cookie from 'js-cookie';
 import * as store from 'store2';
+import Loading from 'react-loading-bar';
 import Video from '../Video';
 
 export default class Home extends Component {
@@ -15,6 +16,7 @@ export default class Home extends Component {
       torrentDetails: null,
       streaming: false,
       selectedIndex: null,
+      showStubs: false,
     };
 
     this.listTorrent = this.listTorrent.bind(this);
@@ -37,6 +39,8 @@ export default class Home extends Component {
   async listTorrent(id) {
     const torrentId = this.inputRef.value || id;
 
+    this.setState({ showStubs: true })
+
     const { data } = await axios.get(`/list?torrentId=${window.btoa(torrentId)}&timestamp=${new Date().getTime()}`, { withCredentials: true });
     store('magnetURI', data.magnetURI);
 
@@ -45,6 +49,7 @@ export default class Home extends Component {
     this.setState({
       torrentDetails: data,
       selectedIndex: null,
+      showStubs: false,
     });
   }
 
@@ -95,10 +100,13 @@ export default class Home extends Component {
         isOpen={this.state.streaming}
         contentLabel={'Modal'}
       >
-        <i onClick={this.closeModal} className="mdi mdi-close close-modal" />
+        <div className="modal-control">
+          <i className="mdi mdi-window-minimize" />
+          <i onClick={this.closeModal} className="mdi mdi-close close-modal" />
+        </div>
         {selectedTorrent.type.indexOf('video') >= 0 && <Video src={src} />}
         {selectedTorrent.type.indexOf('image') >= 0 &&
-          <div className="image-lightbox" style={{ backgroundImage: `url(${src})` }} />
+        <div className="image-lightbox" style={{ backgroundImage: `url(${src})` }} />
         }
       </Modal>
     );
@@ -110,41 +118,41 @@ export default class Home extends Component {
     return (
       <table className="table table-striped table-hover">
         <thead>
-          <tr>
-            <th>#</th>
-            <th />
-            <th>File Name</th>
-            <th>Size</th>
-            <th />
-            <th>Download</th>
-          </tr>
+        <tr>
+          <th>#</th>
+          <th />
+          <th>File Name</th>
+          <th>Size</th>
+          <th />
+          <th>Download</th>
+        </tr>
         </thead>
         <tbody>
-          {torrentDetails.files.map((file, i) => (
-            <tr key={file.name}>
-              <td>{i + 1}</td>
-              <td>{file.type.indexOf('video') >= 0 && <i className="mdi mdi-movie salmon" />}</td>
-              <td>{file.name}</td>
-              <td>{file.size}</td>
-              <td>
-                {Home.isSupported(file.type) &&
-                <span className="start-stream">
+        {torrentDetails.files.map((file, i) => (
+          <tr key={file.name}>
+            <td>{i + 1}</td>
+            <td>{file.type.indexOf('video') >= 0 && <i className="mdi mdi-movie salmon" />}</td>
+            <td>{file.name}</td>
+            <td>{file.size}</td>
+            <td>
+              {Home.isSupported(file.type) &&
+              <span className="start-stream">
                   <i className="mdi mdi-play-circle-outline" data-id={i} onClick={this.startStream} />
                 </span>
               }
-                {file.type.indexOf('image') >= 0 && <i className="mdi mdi-eye" data-id={i} onClick={this.startStream} />}
-              </td>
-              <td>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={`/download/${torrentDetails.torrentId}/${i}/${file.name}`}
-                  download
-                >
-                  <i className="mdi mdi-download" />
-                </a>
-              </td>
-            </tr>
+              {file.type.indexOf('image') >= 0 && <i className="mdi mdi-eye" data-id={i} onClick={this.startStream} />}
+            </td>
+            <td>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`/download/${torrentDetails.torrentId}/${i}/${file.name}`}
+                download
+              >
+                <i className="mdi mdi-download" />
+              </a>
+            </td>
+          </tr>
         ))}
         </tbody>
       </table>
@@ -152,7 +160,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const { torrentDetails } = this.state;
+    const { torrentDetails, showStubs } = this.state;
 
     return (
       <article>
@@ -174,6 +182,8 @@ export default class Home extends Component {
             </button>
           </div>
         </div>
+
+        <Loading show={showStubs} color='#5764c6'/>
 
         {torrentDetails &&
         <div>

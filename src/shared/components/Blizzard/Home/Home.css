@@ -1,3 +1,5 @@
+@import '~react-loading-bar/dist/index.css';
+
 @import "../Video/Video.css";
 
 .column {
@@ -81,14 +83,6 @@ td:last-child, th:last-child {
   display: flex;
 }
 
-.close-modal {
-  position: fixed;
-  right: 20px;
-  top: 20px;
-  font-size: 36px;
-  cursor: pointer;
-}
-
 .video-container {
   width: 90%;
   margin: 80px auto;
@@ -113,12 +107,12 @@ footer .mdi-heart {
   color: red;
 }
 
-.close-modal{
+.modal-control {
   color: #9c9c9c;
   position: fixed;
   top: 5px;
   right: 5px;
-  font-size: 32px;
+  font-size: 20px;
 }
 
 .close-modal:hover {

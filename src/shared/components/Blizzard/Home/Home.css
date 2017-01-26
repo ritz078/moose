@@ -120,3 +120,23 @@ footer .mdi-heart {
   right: 5px;
   font-size: 32px;
 }
+
+.close-modal:hover {
+  color: #ffffff;
+}
+
+.image-lightbox {
+  display: flex;
+  height: 100%;
+  background-size:contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.mdi.mdi-eye{
+  cursor: pointer;
+}
+
+.ReactModal__Body--open {
+  overflow: hidden;
+}

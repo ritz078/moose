@@ -93,10 +93,13 @@ export default class Home extends Component {
       <Modal
         style={style}
         isOpen={this.state.streaming}
-        contentLabel={selectedTorrent.name}
+        contentLabel={'Modal'}
       >
         <i onClick={this.closeModal} className="mdi mdi-close close-modal" />
-        <Video src={src} />
+        {selectedTorrent.type.indexOf('video') >= 0 && <Video src={src} />}
+        {selectedTorrent.type.indexOf('image') >= 0 &&
+          <div className="image-lightbox" style={{ backgroundImage: `url(${src})` }} />
+        }
       </Modal>
     );
   }
@@ -107,40 +110,41 @@ export default class Home extends Component {
     return (
       <table className="table table-striped table-hover">
         <thead>
-        <tr>
-          <th>#</th>
-          <th />
-          <th>File Name</th>
-          <th>Size</th>
-          <th />
-          <th>Download</th>
-        </tr>
+          <tr>
+            <th>#</th>
+            <th />
+            <th>File Name</th>
+            <th>Size</th>
+            <th />
+            <th>Download</th>
+          </tr>
         </thead>
         <tbody>
-        {torrentDetails.files.map((file, i) => (
-          <tr key={file.name}>
-            <td>{i + 1}</td>
-            <td>{file.type.indexOf('video') >= 0 && <i className="mdi mdi-movie salmon" />}</td>
-            <td>{file.name}</td>
-            <td>{file.size}</td>
-            <td>
-              {Home.isSupported(file.type) &&
-              <span className="start-stream">
-                    <i className="mdi mdi-play-circle-outline" data-id={i} onClick={this.startStream} />
-                  </span>
+          {torrentDetails.files.map((file, i) => (
+            <tr key={file.name}>
+              <td>{i + 1}</td>
+              <td>{file.type.indexOf('video') >= 0 && <i className="mdi mdi-movie salmon" />}</td>
+              <td>{file.name}</td>
+              <td>{file.size}</td>
+              <td>
+                {Home.isSupported(file.type) &&
+                <span className="start-stream">
+                  <i className="mdi mdi-play-circle-outline" data-id={i} onClick={this.startStream} />
+                </span>
               }
-            </td>
-            <td>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={`/download/${torrentDetails.torrentId}/${i}/${file.name}`}
-                download
-              >
-                <i className="mdi mdi-download" />
-              </a>
-            </td>
-          </tr>
+                {file.type.indexOf('image') >= 0 && <i className="mdi mdi-eye" data-id={i} onClick={this.startStream} />}
+              </td>
+              <td>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`/download/${torrentDetails.torrentId}/${i}/${file.name}`}
+                  download
+                >
+                  <i className="mdi mdi-download" />
+                </a>
+              </td>
+            </tr>
         ))}
         </tbody>
       </table>

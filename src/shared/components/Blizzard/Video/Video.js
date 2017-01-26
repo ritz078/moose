@@ -10,7 +10,7 @@ class Video extends React.Component {
 
   render() {
     return (
-      <div style={{display: 'flex', height: '100%'}}>
+      <div style={{ display: 'flex', height: '100%' }}>
         <div className="video-wrapper">
           <video
             className="video-js vjs-default-skin"

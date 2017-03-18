@@ -1,14 +1,7 @@
-// We use the .babelrc here to help transpile our tools and support tooling
-// (such as testing libs).
-// I would recommend that you keep this file in feature parity with
-// the config/babelConfigResolver. That way you get to use the same level of
-// javascript syntax across the entire project.
-// It's nice not having to worry/think about what level of javascript syntax
-// is supported for each context.
 {
   "presets": [
     ["env", { "targets": { "node": true } }],
-    "stage-3",
+    "stage-1",
     "react"
   ]
 }

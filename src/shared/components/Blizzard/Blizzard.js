@@ -5,12 +5,11 @@ import { CodeSplit } from 'code-split-component';
 import './globals.css';
 import Error404 from './Error404';
 import Header from './Header';
-import Footer from './Footer';
 import { safeConfigGet } from '../../utils/config';
 
 function DemoApp() {
   return (
-    <div style={{ padding: '10px' }}>
+    <div>
       {/*
         All of the following will be injected into our page header.
         @see https://github.com/nfl/react-helmet
@@ -46,8 +45,6 @@ function DemoApp() {
       />
 
       <Miss component={Error404} />
-
-      <Footer />
     </div>
   );
 }

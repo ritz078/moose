@@ -1,7 +1,10 @@
-.row {
-  width: 90%;
-  margin: 10px auto;
-  overflow: auto;
+header {
+  width: 100%;
+  padding: 10px 5%;
+  position: fixed;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+  z-index: 99;
+  background-color: white;
 }
 
 .form-control {

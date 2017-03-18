@@ -18,9 +18,7 @@ import errorHandlers from './middleware/errorHandlers';
 import config from '../../config';
 import torrentStore from './middleware/helpers/torrentStore';
 import socketIo from './middleware/helpers/socketIo';
-import { download, list, deleteTorr } from './middleware/torrent';
-
-const MongoStore = require('connect-mongo')(session);
+import { download, list, deleteTorr, searchTorrent } from './middleware/torrent';
 
 const socketToSessionMapping = {};
 
@@ -41,9 +39,6 @@ const sessionMiddleware = session({
   name: 'session_name',
   resave: false,
   saveUninitialized: true,
-  store: new MongoStore({
-    url: 'mongodb://localhost/blizzard',
-  }),
   cookie: {
     httpOnly: false,
   },
@@ -66,9 +61,10 @@ if (process.env.NODE_ENV === 'production'
   );
 }
 
-app.get('/list', list);
-app.get('/download/:torrentId/:fileId/:fileName', download);
-app.get('/delete/:torrentId', deleteTorr);
+app.get('/api/list', list);
+app.get('/api/download/:torrentId/:fileId/:fileName', download);
+app.get('/api/delete/:torrentId', deleteTorr);
+app.get('/api/search/:searchTerm', searchTorrent);
 
 // Configure serving of our client bundle.
 app.use(config.bundles.client.webPath, clientBundle);

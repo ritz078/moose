@@ -3,6 +3,7 @@ import * as rangeParser from 'range-parser';
 import * as prettyBytes from 'pretty-bytes';
 import * as atob from 'atob';
 import * as pump from 'pump';
+import PirateBay from 'thepiratebay';
 import torrentStore from './helpers/torrentStore';
 
 function deselectAllFiles(torrent) {
@@ -99,4 +100,12 @@ export function deleteTorr(req, res) {
 
   torrentStore.removeTorrents(sessionId);
   res.status(200).end('Torrent file deleted'); // for saving space on server.
+}
+
+export function searchTorrent(req, res) {
+  PirateBay.search(req.params.searchTerm, {
+    orderBy: 'seeds'
+  })
+    .then(results => res.json(results))
+    .catch(err => res.json(err))
 }

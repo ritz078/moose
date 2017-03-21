@@ -104,8 +104,11 @@ export function deleteTorr(req, res) {
 
 export function searchTorrent(req, res) {
   PirateBay.search(req.params.searchTerm, {
-    orderBy: 'seeds'
+    orderBy: req.query.orderBy || 'seeds',
+    sortBy: req.query.sortBy || 'desc',
+    page: req.query.page || 0,
+    category: req.query.category || 'all',
   })
     .then(results => res.json(results))
-    .catch(err => res.json(err))
+    .catch(err => res.json(err));
 }

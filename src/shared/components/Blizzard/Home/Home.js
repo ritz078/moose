@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import * as axios from 'axios';
 import Helmet from 'react-helmet';
-import Modal from 'react-modal';
 import * as io from 'socket.io-client';
 import * as cookie from 'js-cookie';
 import * as store from 'store2';
 import Loading from 'react-loading-bar';
 import classNames from 'classnames';
-import Video from '../Video';
+import Description from '../Description/Description';
 
 export default class Home extends Component {
   constructor(props) {
@@ -15,17 +14,12 @@ export default class Home extends Component {
 
     this.state = {
       torrentDetails: null,
-      streaming: false,
-      selectedIndex: null,
       showStubs: false,
       searchResult: null,
+      selectedTorrentId: null,
     };
 
     this.listTorrent = this.listTorrent.bind(this);
-    this.getTorrentList = this.getTorrentList.bind(this);
-    this.startStream = this.startStream.bind(this);
-    this.getStreamModal = this.getStreamModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
     this.getSelectedTorrent = this.getSelectedTorrent.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.getResultsList = this.getResultsList.bind(this);
@@ -84,59 +78,8 @@ export default class Home extends Component {
     return document.createElement('video').canPlayType(mime) || mime === 'video/x-matroska';
   }
 
-  startStream(e) {
-    this.setState({
-      streaming: true,
-      selectedIndex: e.target.dataset.id,
-    });
-  }
-
-  closeModal() {
-    this.setState({ streaming: false });
-    axios.get(`/api/delete/${this.state.torrentDetails.torrentId}`);
-  }
-
   getSelectedTorrent() {
     return this.state.torrentDetails.files[+this.state.selectedIndex];
-  }
-
-  getStreamModal() {
-    const style = {
-      overlay: {
-        backgroundColor: 'rgba(0,0,0,0.95)',
-      },
-      content: {
-        background: '#000',
-        border: 'none',
-      },
-    };
-
-    let selectedTorrent;
-
-    if (this.state.torrentDetails && this.state.selectedIndex) {
-      selectedTorrent = this.getSelectedTorrent();
-    } else {
-      return <div />;
-    }
-
-    const src = `/api/download/${this.state.torrentDetails.torrentId}/${this.state.selectedIndex}/${selectedTorrent.name}`;
-
-    return (
-      <Modal
-        style={style}
-        isOpen={this.state.streaming}
-        contentLabel={'Modal'}
-      >
-        <div className="modal-control">
-          <i className="mdi mdi-window-minimize" />
-          <i onClick={this.closeModal} className="mdi mdi-close close-modal" />
-        </div>
-        {selectedTorrent.type.indexOf('video') >= 0 && <Video src={src} />}
-        {selectedTorrent.type.indexOf('image') >= 0 &&
-        <div className="image-lightbox" style={{ backgroundImage: `url(${src})` }} />
-        }
-      </Modal>
-    );
   }
 
   getTorrentList() {
@@ -208,7 +151,7 @@ export default class Home extends Component {
                 active: result.verified,
               });
               return (
-                <tr key={result.id}>
+                <tr key={result.id} onClick={() => (this.setState({ selectedTorrentId: result.magnetLink }))}>
                   <td>{i + 1}</td>
                   <td>
                     <div>
@@ -274,19 +217,8 @@ export default class Home extends Component {
             }
           </div>
           <div className="right-part col-5">
-            <div className="panel fixed">
-              <div className="panel-header">
-                <div className="panel-title">Comments</div>
-              </div>
-              <div className="panel-nav">
-              </div>
-              <div className="panel-body">
-              </div>
-              <div className="panel-footer">
-              </div>
-            </div>
+            <Description torrentId={this.state.selectedTorrentId} />
           </div>
-          {this.getStreamModal()}
         </article>
       </div>
     );

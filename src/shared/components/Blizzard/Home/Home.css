@@ -175,4 +175,11 @@ td:last-child, th:last-child {
 }
 
 .right-part{
+  padding: 0 20px;
+  flex: 0 1 460px;
+}
+
+.right-part > div {
+  width: 420px;
+  max-height: calc(100vh - 110px);
 }

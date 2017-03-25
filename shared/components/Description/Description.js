@@ -25,9 +25,6 @@ export default class Description extends PureComponent {
       streaming: false,
       selectedIndex: null,
     };
-
-    this.startStream = this.startStream.bind(this);
-    this.closeModal = this.closeModal.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -36,14 +33,14 @@ export default class Description extends PureComponent {
     }
   }
 
-  startStream(e) {
+  startStream = (e) => {
     this.setState({
       streaming: true,
       selectedIndex: e.target.dataset.id,
     });
   }
 
-  closeModal() {
+  closeModal = () => {
     this.setState({ streaming: false });
     axios.get(`/api/delete/${this.state.torrentDetails.torrentId}`);
   }
@@ -150,7 +147,7 @@ export default class Description extends PureComponent {
         </div>
         <div className="panel-nav" />
         <div className="panel-body">
-          {this.getFiles()}{this.getFiles()}
+          {this.getFiles()}
         </div>
         <div className="panel-footer" />
         {this.getStreamModal()}

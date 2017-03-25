@@ -1,16 +1,17 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import * as axios from 'axios';
+import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import * as io from 'socket.io-client';
 import * as cookie from 'js-cookie';
-import * as store from 'store2';
 import Loading from 'react-loading-bar';
 import classNames from 'classnames';
 import Description from '../Description/Description';
 
-export default class Home extends Component {
+@connect(({ results }) => ({ results }))
+export default class Home extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -21,38 +22,10 @@ export default class Home extends Component {
       selectedTorrentId: null,
       searchTerm: null,
     };
-
-    this.listTorrent = this.listTorrent.bind(this);
-    this.getSelectedTorrent = this.getSelectedTorrent.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-    this.getResultsList = this.getResultsList.bind(this);
   }
 
   async componentDidMount() {
     io.connect(`${window.location.protocol}//${window.location.host}?session_name=${cookie.get('session_name')}`);
-
-    const magnetURI = store('magnetURI');
-    if (magnetURI) {
-      await this.listTorrent(magnetURI);
-    }
-  }
-
-  async listTorrent() {
-    const torrentId = this.inputRef.value;
-    if (!torrentId) return;
-
-    this.setState({ showStubs: true });
-
-    const { data } = await axios.get(`/api/list?torrentId=${window.btoa(torrentId)}&timestamp=${new Date().getTime()}`, { withCredentials: true });
-    store('magnetURI', data.magnetURI);
-
-    this.inputRef.value = '';
-
-    this.setState({
-      torrentDetails: data,
-      selectedIndex: null,
-      showStubs: false,
-    });
   }
 
   async searchTorrent(input) {
@@ -67,44 +40,28 @@ export default class Home extends Component {
     });
   }
 
-  handleSearch(e) {
-    if (e.type === 'keypress' && e.which !== 13) return;
-
-    const input = this.inputRef.value;
-
-    this.setState({
-      searchTerm: input,
-    });
-
-    if (input.match(/magnet:\?xt=urn:[a-z0-9]{20,50}/i) != null) {
-      this.listTorrent(input);
-    } else {
-      this.searchTorrent(input);
-    }
-  }
-
-  getSelectedTorrent() {
+  getSelectedTorrent = () => {
     return this.state.torrentDetails.files[+this.state.selectedIndex];
   }
 
-  getResultsList() {
-    const { searchResult } = this.state;
+  getResultsList = () => {
+    const { results } = this.props;
 
     return (
       <div>
         <table className="table table-striped">
           <thead>
-            <tr>
-              <th>#</th>
-              <th >Name</th>
-              <th>File Size</th>
-              <th>Seeders</th>
-              <th>Leechers</th>
-            </tr>
+          <tr>
+            <th>#</th>
+            <th >Name</th>
+            <th>File Size</th>
+            <th>Seeders</th>
+            <th>Leechers</th>
+          </tr>
           </thead>
           <tbody>
-            {
-            searchResult.map((result, i) => {
+          {
+            results.map((result, i) => {
               const verifyClass = classNames('mdi mdi-verified verified-icon tooltip tooltip-bottom', {
                 active: result.verified,
               });
@@ -138,34 +95,18 @@ export default class Home extends Component {
   }
 
   render() {
-    const { showStubs, searchResult } = this.state;
+    const { showStubs } = this.state;
+    const { results }  = this.props;
 
     return (
       <div className="main">
-        <header className="row">
-          <div className="input-group">
-            <input
-              type="text"
-              className="form-input url-input"
-              placeholder="paste your magnet url"
-              ref={x => (this.inputRef = x)}
-              onKeyPress={this.handleSearch}
-            />
-            <button
-              className="btn btn-primary input-group-btn add-btn"
-              onClick={this.handleSearch}
-            >
-              Submit
-            </button>
-          </div>
-        </header>
         <article className="content">
           <Helmet title="Home" />
 
           <Loading show={showStubs} color="#5764c6" />
 
           <div className="left-part col-7">
-            {searchResult &&
+            {results && !!results.length &&
             <div>
               <h6>Results for search term <b>{this.state.searchTerm}</b></h6>
               {this.getResultsList()}

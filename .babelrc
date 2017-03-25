@@ -1,7 +1,8 @@
 {
   "presets": [
     ["env", { "targets": { "node": true } }],
-    "stage-1",
+    "stage-3",
     "react"
-  ]
+  ],
+  "plugins": ["transform-class-properties", "transform-decorators-legacy"]
 }

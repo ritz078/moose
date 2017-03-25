@@ -1,14 +1,15 @@
-
 import React from 'react';
 import Helmet from 'react-helmet';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { withAsyncComponents } from 'react-async-component';
+import { Provider } from 'react-redux';
 
 import config from '../../../config';
 
 import ServerHTML from './ServerHTML';
 import App from '../../../shared/components';
+import configureStore from '../../../config/configureStore';
 
 /**
  * React application middleware, supports server side rendering.
@@ -41,9 +42,11 @@ export default function reactApplicationMiddleware(request, response) {
 
   // Declare our React application.
   const app = (
-    <StaticRouter location={request.url} context={reactRouterContext}>
-      <App />
-    </StaticRouter>
+    <Provider store={configureStore()}>
+      <StaticRouter location={request.url} context={reactRouterContext}>
+        <App />
+      </StaticRouter>
+    </Provider>
   );
 
   // Pass our app into the react-async-component helper so that any async

@@ -10,6 +10,9 @@
     "node": true,
     "jest": true
   },
+  "globals": {
+    "idx": true
+  },
   "ecmaFeatures": {
     "defaultParams": true
   },

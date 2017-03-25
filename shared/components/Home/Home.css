@@ -30,19 +30,6 @@ table {
   font-weight: 400 !important;
 }
 
-.add-btn, .url-input {
-  height: 4.2rem;
-  padding: 0 20px;
-  font-family: inherit;
-}
-
-.url-input{
-  background-color: #f7f7f7;
-  border: 1px solid #f3f3f3;
-}
-
-
-
 td, th {
   border-bottom: 0.1rem solid #f1f1f1 !important;
   padding: 6px 10px !important;
@@ -169,15 +156,6 @@ td:last-child, th:last-child {
 
 .result {
   cursor: pointer;
-}
-
-header {
-  width: 100%;
-  padding: 10px 5%;
-  position: fixed;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.15);
-  z-index: 99;
-  background-color: white;
 }
 
 .form-control {

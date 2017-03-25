@@ -4,13 +4,10 @@ import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { withAsyncComponents } from 'react-async-component';
-import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import { createEpicMiddleware } from 'redux-observable';
-import epics from '../shared/epics';
-import reducer from '../shared/reducers';
 
 import App from '../shared/components';
+import configureStore from '../config/configureStore';
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector('#app');
@@ -22,27 +19,8 @@ const supportsHistory = 'pushState' in window.history;
  * Renders the given React Application component.
  */
 function renderApp(TheApp) {
-  // Firstly, define our full application component, wrapping the given
-  // component app with a browser based version of react router.
-
-  // //////////////////////////////////////////////////////////
-// 1. reducer to keep the location in redux state
-
-  const epicMiddleware = createEpicMiddleware(epics);
-
-  const enhancer = compose(
-    applyMiddleware(epicMiddleware),
-// eslint-disable-next-line no-underscore-dangle
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  );
-
-  const store = createStore(
-    reducer,
-    enhancer,
-  );
-
   const app = (
-    <Provider store={store}>
+    <Provider store={configureStore()}>
       <BrowserRouter forceRefresh={!supportsHistory}>
         <TheApp />
       </BrowserRouter>
@@ -71,7 +49,7 @@ if (process.env.BUILD_FLAG_IS_DEV && module.hot) {
   module.hot.accept('./index.js');
   // Any changes to our App will cause a hotload re-render.
   module.hot.accept(
-    '../shared/components/app',
+    '../shared/components',
     () => renderApp(require('../shared/components').default),
   );
 }

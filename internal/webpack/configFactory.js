@@ -383,6 +383,8 @@ export default function webpackConfigFactory(buildOptions) {
                 // React that the subtree hasn’t changed so React can completely
                 // skip it when reconciling.
                 ifOptimize('transform-react-constant-elements'),
+                'transform-class-properties',
+                'transform-decorators-legacy',
               ].filter(x => x != null),
             },
             buildOptions,

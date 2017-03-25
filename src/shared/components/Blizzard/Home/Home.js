@@ -64,7 +64,9 @@ export default class Home extends Component {
     });
   }
 
-  handleSearch() {
+  handleSearch(e) {
+    if (e.type === 'keypress' && e.which !== 13) return;
+
     const input = this.inputRef.value;
 
     if (input.match(/magnet:\?xt=urn:[a-z0-9]{20,50}/i) != null) {
@@ -74,59 +76,8 @@ export default class Home extends Component {
     }
   }
 
-  static isSupported(mime) {
-    return document.createElement('video').canPlayType(mime) || mime === 'video/x-matroska';
-  }
-
   getSelectedTorrent() {
     return this.state.torrentDetails.files[+this.state.selectedIndex];
-  }
-
-  getTorrentList() {
-    const { torrentDetails } = this.state;
-
-    return (
-      <table className="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th />
-            <th>File Name</th>
-            <th>Size</th>
-            <th />
-            <th>Download</th>
-          </tr>
-        </thead>
-        <tbody>
-          {torrentDetails.files.map((file, i) => (
-            <tr key={file.name}>
-              <td>{i + 1}</td>
-              <td>{file.type.indexOf('video') >= 0 && <i className="mdi mdi-movie salmon" />}</td>
-              <td>{file.name}</td>
-              <td>{file.size}</td>
-              <td>
-                {Home.isSupported(file.type) &&
-                <span className="start-stream">
-                  <i className="mdi mdi-play-circle-outline" data-id={i} onClick={this.startStream} />
-                </span>
-              }
-                {file.type.indexOf('image') >= 0 && <i className="mdi mdi-eye" data-id={i} onClick={this.startStream} />}
-              </td>
-              <td>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={`/api/download/${torrentDetails.torrentId}/${i}/${file.name}`}
-                  download
-                >
-                  <i className="mdi mdi-download" />
-                </a>
-              </td>
-            </tr>
-        ))}
-        </tbody>
-      </table>
-    );
   }
 
   getResultsList() {
@@ -136,22 +87,26 @@ export default class Home extends Component {
       <div>
         <table className="table table-striped">
           <thead>
-            <tr>
-              <th>#</th>
-              <th >Name</th>
-              <th>File Size</th>
-              <th>Seeders</th>
-              <th>Leechers</th>
-            </tr>
+          <tr>
+            <th>#</th>
+            <th >Name</th>
+            <th>File Size</th>
+            <th>Seeders</th>
+            <th>Leechers</th>
+          </tr>
           </thead>
           <tbody>
-            {
+          {
             searchResult.map((result, i) => {
               const verifyClass = classNames('mdi mdi-verified verified-icon tooltip tooltip-bottom', {
                 active: result.verified,
               });
               return (
-                <tr key={result.id} onClick={() => (this.setState({ selectedTorrentId: result.magnetLink }))}>
+                <tr
+                  className={'result'}
+                  key={result.id}
+                  onClick={() => (this.setState({ selectedTorrentId: result.magnetLink }))}
+                >
                   <td>{i + 1}</td>
                   <td>
                     <div>
@@ -176,7 +131,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const { torrentDetails, showStubs, searchResult } = this.state;
+    const { showStubs, searchResult } = this.state;
 
     return (
       <div className="main">
@@ -187,6 +142,7 @@ export default class Home extends Component {
               className="form-input url-input"
               placeholder="paste your magnet url"
               ref={x => (this.inputRef = x)}
+              onKeyPress={this.handleSearch}
             />
             <button
               className="btn btn-primary input-group-btn add-btn"
@@ -206,13 +162,6 @@ export default class Home extends Component {
             <div>
               <h6>Results for search term x</h6>
               {this.getResultsList()}
-            </div>
-            }
-
-            {torrentDetails &&
-            <div>
-              <h4 className="torrent-name">{torrentDetails.name}</h4>
-              {this.getTorrentList()}
             </div>
             }
           </div>

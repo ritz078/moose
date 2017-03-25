@@ -133,6 +133,7 @@
     "chokidar": "1.6.1",
     "cross-env": "3.1.4",
     "css-loader": "0.26.1",
+    "cz-conventional-changelog": "^2.0.0",
     "enzyme": "2.7.0",
     "enzyme-to-json": "1.4.5",
     "eslint": "3.13.0",
@@ -161,5 +162,10 @@
     "webpack-hot-middleware": "2.15.0",
     "webpack-md5-hash": "0.0.5",
     "webpack-node-externals": "1.5.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
   }
 }

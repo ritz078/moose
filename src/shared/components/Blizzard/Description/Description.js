@@ -76,6 +76,7 @@ export default class Description extends PureComponent {
             <div className="tile-meta">{file.size} · {file.type}</div>
           </div>
           <div className="tile-action">
+            {Description.isSupported(file.type) &&
             <button className="btn btn-link">
               <i
                 className="mdi mdi-play-circle-outline tooltip tooltip-bottom"
@@ -84,9 +85,14 @@ export default class Description extends PureComponent {
                 onClick={this.startStream}
               />
             </button>
+            }
           </div>
         </div>
       ));
+  }
+
+  static isSupported(mime) {
+    return document.createElement('video').canPlayType(mime) || mime === 'video/x-matroska';
   }
 
   getStreamModal() {
@@ -131,6 +137,8 @@ export default class Description extends PureComponent {
 
   render() {
     const { selectedTorrentDetails } = this.state;
+
+    if (!selectedTorrentDetails) return <div />
 
     return (
       <div className="panel fixed">

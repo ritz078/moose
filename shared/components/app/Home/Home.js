@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+
 import React, { Component } from 'react';
 import * as axios from 'axios';
 import Helmet from 'react-helmet';
@@ -17,7 +19,7 @@ export default class Home extends Component {
       showStubs: false,
       searchResult: null,
       selectedTorrentId: null,
-      searchTerm: null
+      searchTerm: null,
     };
 
     this.listTorrent = this.listTorrent.bind(this);
@@ -92,16 +94,16 @@ export default class Home extends Component {
       <div>
         <table className="table table-striped">
           <thead>
-          <tr>
-            <th>#</th>
-            <th >Name</th>
-            <th>File Size</th>
-            <th>Seeders</th>
-            <th>Leechers</th>
-          </tr>
+            <tr>
+              <th>#</th>
+              <th >Name</th>
+              <th>File Size</th>
+              <th>Seeders</th>
+              <th>Leechers</th>
+            </tr>
           </thead>
           <tbody>
-          {
+            {
             searchResult.map((result, i) => {
               const verifyClass = classNames('mdi mdi-verified verified-icon tooltip tooltip-bottom', {
                 active: result.verified,

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import * as mime from 'mime';
 import * as rangeParser from 'range-parser';
 import * as prettyBytes from 'pretty-bytes';

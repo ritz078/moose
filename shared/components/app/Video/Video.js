@@ -29,6 +29,7 @@ class Video extends React.Component {
 Video.propTypes = {
   src: PropTypes.string.isRequired,
   onInit: PropTypes.func,
+// eslint-disable-next-line react/forbid-prop-types
   options: PropTypes.object,
 };
 

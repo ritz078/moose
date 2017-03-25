@@ -2,8 +2,13 @@
 
 import React from 'react';
 import { render } from 'react-dom';
-import BrowserRouter from 'react-router-dom/BrowserRouter';
+import { BrowserRouter } from 'react-router-dom';
 import { withAsyncComponents } from 'react-async-component';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
+import { createEpicMiddleware } from 'redux-observable';
+import epics from '../shared/epics';
+import reducer from '../shared/reducers';
 
 import App from '../shared/components/app';
 
@@ -19,12 +24,29 @@ const supportsHistory = 'pushState' in window.history;
 function renderApp(TheApp) {
   // Firstly, define our full application component, wrapping the given
   // component app with a browser based version of react router.
+
+  // //////////////////////////////////////////////////////////
+// 1. reducer to keep the location in redux state
+
+  const epicMiddleware = createEpicMiddleware(epics);
+
+  const enhancer = compose(
+    applyMiddleware(epicMiddleware),
+// eslint-disable-next-line no-underscore-dangle
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  );
+
+  const store = createStore(
+    reducer,
+    enhancer,
+  );
+
   const app = (
-    // If the user's browser doesn't support the HTML5 history API then we
-    // will force full page refreshes on each page change.
-    <BrowserRouter forceRefresh={!supportsHistory}>
-      <TheApp />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter forceRefresh={!supportsHistory}>
+        <TheApp />
+      </BrowserRouter>
+    </Provider>
   );
 
   // We use the react-async-component in order to support code splitting of

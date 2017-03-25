@@ -6,9 +6,9 @@ import './globals.css';
 
 import Error404 from './Error404';
 import Header from './Header';
-import Home from './Home'
+import Home from './Home';
 
-function DemoApp() {
+function App() {
   return (
     <div>
       <Header />
@@ -20,4 +20,4 @@ function DemoApp() {
   );
 }
 
-export default DemoApp;
+export default App;

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { PureComponent, PropTypes } from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
@@ -65,29 +66,31 @@ export default class Description extends PureComponent {
     const torrents = this.state.selectedTorrentDetails;
 
     return torrents && torrents.files.map((file, i) => (
-        <div className="tile tile-centered">
-          <div className="tile-icon">
-            <TileWrapper color="#e64a19">
-              <i className="mdi mdi-movie centered" />
-            </TileWrapper>
-          </div>
-          <div className="tile-content">
-            <div className="tile-title">{file.name}</div>
-            <div className="tile-meta">{file.size} · {file.type}</div>
-          </div>
-          <div className="tile-action">
-            {Description.isSupported(file.type) &&
-            <button className="btn btn-link">
+      <div className="tile tile-centered">
+        <div className="tile-icon">
+          <TileWrapper color="#e64a19">
+            <i className="mdi mdi-movie centered" />
+          </TileWrapper>
+        </div>
+        <div className="tile-content">
+          <div className="tile-title">{file.name}</div>
+          <div className="tile-meta">{file.size} · {file.type}</div>
+        </div>
+        <div className="tile-action">
+          {Description.isSupported(file.type) &&
+            <button
+              className="btn btn-link"
+              onClick={this.startStream}
+            >
               <i
                 className="mdi mdi-play-circle-outline tooltip tooltip-bottom"
                 data-tooltip="Play Video"
                 data-id={i}
-                onClick={this.startStream}
               />
             </button>
             }
-          </div>
         </div>
+      </div>
       ));
   }
 
@@ -138,25 +141,24 @@ export default class Description extends PureComponent {
   render() {
     const { selectedTorrentDetails } = this.state;
 
-    if (!selectedTorrentDetails) return <div />
+    if (!selectedTorrentDetails) return <div />;
 
     return (
       <div className="panel fixed">
         <div className="panel-header">
           <div className="panel-title">{selectedTorrentDetails && selectedTorrentDetails.name}</div>
         </div>
-        <div className="panel-nav"></div>
+        <div className="panel-nav" />
         <div className="panel-body">
           {this.getFiles()}{this.getFiles()}
         </div>
-        <div className="panel-footer">
-        </div>
+        <div className="panel-footer" />
         {this.getStreamModal()}
       </div>
-    )
+    );
   }
 }
 
 Description.propTypes = {
-  torrentId: PropTypes.string
-}
+  torrentId: PropTypes.string.isRequired,
+};

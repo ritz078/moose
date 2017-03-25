@@ -85,6 +85,7 @@ sio.set('authorization', (data, accept) => {
     const sessionName = qs.parse(data.url.split('?')[1]).session_name;
 
     // if there is, parse the cookie
+// eslint-disable-next-line no-param-reassign
     data.headers.sessionID = cookie.unsign(sessionName.slice(2), 'secret'); // hacky from source code
   } else {
     // if there isn't, turn down the connection with a message

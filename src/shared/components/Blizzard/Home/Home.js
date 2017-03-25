@@ -17,6 +17,7 @@ export default class Home extends Component {
       showStubs: false,
       searchResult: null,
       selectedTorrentId: null,
+      searchTerm: null
     };
 
     this.listTorrent = this.listTorrent.bind(this);
@@ -68,6 +69,10 @@ export default class Home extends Component {
     if (e.type === 'keypress' && e.which !== 13) return;
 
     const input = this.inputRef.value;
+
+    this.setState({
+      searchTerm: input,
+    });
 
     if (input.match(/magnet:\?xt=urn:[a-z0-9]{20,50}/i) != null) {
       this.listTorrent(input);
@@ -160,7 +165,7 @@ export default class Home extends Component {
           <div className="left-part col-7">
             {searchResult &&
             <div>
-              <h6>Results for search term x</h6>
+              <h6>Results for search term <b>{this.state.searchTerm}</b></h6>
               {this.getResultsList()}
             </div>
             }

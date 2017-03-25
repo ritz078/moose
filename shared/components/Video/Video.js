@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import * as videojs from 'video.js';
+import * as videojs from 'Video.js';
 
 class Video extends React.Component {
   componentDidMount() {

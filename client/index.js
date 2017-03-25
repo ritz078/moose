@@ -10,7 +10,7 @@ import { createEpicMiddleware } from 'redux-observable';
 import epics from '../shared/epics';
 import reducer from '../shared/reducers';
 
-import App from '../shared/components/app';
+import App from '../shared/components';
 
 // Get the DOM Element that will host our React application.
 const container = document.querySelector('#app');
@@ -72,6 +72,6 @@ if (process.env.BUILD_FLAG_IS_DEV && module.hot) {
   // Any changes to our App will cause a hotload re-render.
   module.hot.accept(
     '../shared/components/app',
-    () => renderApp(require('../shared/components/app').default),
+    () => renderApp(require('../shared/components').default),
   );
 }

@@ -1,4 +1,4 @@
-@import '~react-loading-bar/dist/index.css';
+@import '../../../node_modules/react-loading-bar/dist/index.css';
 
 @import "../Video/Video.css";
 

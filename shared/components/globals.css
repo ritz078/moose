@@ -1,7 +1,7 @@
-@import "~spectre.css/dist/spectre.css";
-@import "~mdi/css/materialdesignicons.css";
+@import "../../node_modules/spectre.css/dist/spectre.css";
+@import "../../node_modules/mdi/css/materialdesignicons.css";
 
-@import "./Home/Home.css";
+@import "Home/Home.css";
 
 html {
   box-sizing: border-box;

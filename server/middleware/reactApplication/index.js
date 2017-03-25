@@ -8,7 +8,7 @@ import { withAsyncComponents } from 'react-async-component';
 import config from '../../../config';
 
 import ServerHTML from './ServerHTML';
-import App from '../../../shared/components/app';
+import App from '../../../shared/components';
 
 /**
  * React application middleware, supports server side rendering.

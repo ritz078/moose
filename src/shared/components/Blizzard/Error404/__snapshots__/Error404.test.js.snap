@@ -1,5 +1,0 @@
-exports[`<Error404 /> renders 1`] = `
-<div>
-  Sorry, that page was not found.
-</div>
-`;

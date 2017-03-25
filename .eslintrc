@@ -21,8 +21,6 @@
     // This rule struggles with flow and class properties.
     "react/sort-comp": 0,
     // We use global requires in various places, e.g. code splitting instances.
-    "global-require": 0,
-    "no-param-reassign": 0,
-    "jsx-a11y/no-static-element-interactions": 0
+    "global-require": 0
   }
 }

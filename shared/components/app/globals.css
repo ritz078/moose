@@ -1,0 +1,19 @@
+@import "~spectre.css/dist/spectre.css";
+@import "~mdi/css/materialdesignicons.css";
+
+@import "./Home/Home.css";
+
+html {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+

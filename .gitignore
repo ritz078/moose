@@ -42,4 +42,7 @@ flow-coverage/
 # Happypack
 .happypack
 
-.env.development
+# OSX Files
+.DS_Store
+
+yarn-error.log

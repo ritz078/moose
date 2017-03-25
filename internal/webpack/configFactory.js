@@ -153,28 +153,7 @@ export default function webpackConfigFactory(buildOptions) {
 
     resolve: {
       // These extensions are tried when resolving a file.
-      extensions: config('bundleSrcTypes').map(ext => `.${ext}`),
-
-      // This is required for the modernizr-loader
-      // @see https://github.com/peerigon/modernizr-loader
-      alias: mergeDeep(
-        {
-          modernizr$: path.resolve(appRootDir.get(), './.modernizrrc'),
-        },
-        // For our optimised builds we will alias to the optimised versions
-        // of React and ReactDOM.
-        ifOptimize({
-          react$: path.resolve(
-            appRootDir.get(), './node_modules/react/dist/react.min.js',
-          ),
-          'react-dom$': path.resolve(
-            appRootDir.get(), './node_modules/react-dom/dist/react-dom.min.js',
-          ),
-          'react-dom/server$': path.resolve(
-            appRootDir.get(), './node_modules/react-dom/dist/react-dom-server.min.js',
-          ),
-        }),
-      ),
+      extensions: config('bundleSrcTypes').map(ext => `.${ext}`)
     },
 
     // We don't want our node_modules to be bundled with any bundle that is
@@ -506,20 +485,7 @@ export default function webpackConfigFactory(buildOptions) {
             // the correct asset URLs.
             emitFile: isClient,
           },
-        })),
-
-        // MODERNIZR
-        // This allows you to do feature detection.
-        // @see https://modernizr.com/docs
-        // @see https://github.com/peerigon/modernizr-loader
-        ifClient({
-          test: /\.modernizrrc.js$/,
-          loader: 'modernizr-loader',
-        }),
-        ifClient({
-          test: /\.modernizrrc(\.json)?$/,
-          loader: 'modernizr-loader!json-loader',
-        }),
+        }))
       ]),
     },
   };

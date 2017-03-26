@@ -1,5 +1,15 @@
 import React, { PropTypes, PureComponent } from 'react';
+import styled from 'styled-components';
 import * as videojs from 'video.js';
+
+const VideoWrapper = styled.div`
+  max-width: 95%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+`;
 
 class Video extends PureComponent {
   componentDidMount() {
@@ -11,7 +21,7 @@ class Video extends PureComponent {
   render() {
     return (
       <div style={{ display: 'flex', height: '100%' }}>
-        <div className="video-wrapper">
+        <VideoWrapper>
           <video
             className="video-js vjs-default-skin"
             controls
@@ -20,7 +30,7 @@ class Video extends PureComponent {
             ref={x => (this.videoRef = x)}
             autoPlay
           />
-        </div>
+        </VideoWrapper>
       </div>
     );
   }

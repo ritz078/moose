@@ -1,10 +1,10 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import './globals.css';
+import '../components/globals.css';
 
 import Error404 from './Error404';
-import Header from './Header';
+import Header from '../components/Header';
 import Home from './Home';
 
 function App() {

@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { withAsyncComponents } from 'react-async-component';
 import { Provider } from 'react-redux';
 
-import App from '../shared/components';
+import App from '../shared/views';
 import configureStore from '../config/configureStore';
 
 // Get the DOM Element that will host our React application.
@@ -46,10 +46,10 @@ require('./registerServiceWorker');
 // The following is needed so that we can support hot reloading our application.
 if (process.env.BUILD_FLAG_IS_DEV && module.hot) {
   // Accept changes to this file for hot reloading.
-  module.hot.accept('./index.js');
+  module.hot.accept('../views/Error404.js');
   // Any changes to our App will cause a hotload re-render.
   module.hot.accept(
     '../shared/components',
-    () => renderApp(require('../shared/components').default),
+    () => renderApp(require('../shared/views').default),
   );
 }

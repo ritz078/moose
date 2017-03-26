@@ -7,8 +7,8 @@ import * as io from 'socket.io-client';
 import * as cookie from 'js-cookie';
 import styled from 'styled-components';
 import Loading from 'react-loading-bar';
-import Results from '../Results';
-import Description from '../Description/Description';
+import Results from '../components/Results';
+import Description from '../components/Description/Description';
 
 const Left = styled.div`
   flex: 1;

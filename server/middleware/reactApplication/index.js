@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import config from '../../../config';
 
 import ServerHTML from './ServerHTML';
-import App from '../../../shared/components';
+import App from '../../../shared/views';
 import configureStore from '../../../config/configureStore';
 
 /**

@@ -1,6 +1,7 @@
 import React, { PropTypes, PureComponent } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import Pagination from './Pagination';
 
 const Verified = styled.i`
   font-size: 14px;
@@ -12,7 +13,7 @@ const Verified = styled.i`
 const UploadIcon = styled.i`
   color: #565656;
   margin-right: 8px;
-  vertical-align: sub;
+  vertical-align: middle;
   font-size: 18px;
 `;
 
@@ -24,6 +25,7 @@ const ResultDesc = styled.div`
 const Table = styled.div`
   display: table;
   width: 100%;
+  margin-top: 20px;
 `;
 
 const Td = styled.div`
@@ -45,7 +47,7 @@ const Tr = styled.div`
   }
 `;
 
-@connect(({ results }) => ({ results }))
+@connect(({ results, params }) => ({ results, params }))
 export default class Results extends PureComponent {
   static propTypes = {
     results: PropTypes.arrayOf(
@@ -58,6 +60,9 @@ export default class Results extends PureComponent {
       }),
     ).isRequired,
     dispatch: PropTypes.isRequired,
+    params: PropTypes.shape({
+      page: PropTypes.number,
+    }).isRequired,
   }
 
   constructor(props) {
@@ -99,18 +104,57 @@ export default class Results extends PureComponent {
     ));
   }
 
+  onNextClick = () => {
+    this.props.dispatch({ type: 'SET_PAGE', payload: this.props.params.page + 1 });
+    this.fetchResults();
+  }
+
+  onPrevClick = () => {
+    this.props.dispatch({ type: 'SET_PAGE', payload: this.props.params.page - 1 });
+    this.fetchResults();
+  }
+
+  fetchResults = () => {
+    this.props.dispatch({
+      type: 'FETCH_RESULTS',
+    });
+  }
+
   render() {
+    const { params } = this.props;
+
     return (
-      <Table>
-        <Tr>
-          <Td>#</Td>
-          <Td >Name</Td>
-          <Td>File Size</Td>
-          <Td>Seeders</Td>
-          <Td>Leechers</Td>
-        </Tr>
-        {this.getResults()}
-      </Table>
+      <div>
+        <div className="clearfix">
+          <h5 className="float-left">Results for search term <b>{this.props.results.searchTerm}</b></h5>
+          <div className="float-right">
+            <Pagination
+              onNextClick={this.onNextClick}
+              onPrevClick={this.onPrevClick}
+              currentPage={params.page}
+            />
+          </div>
+        </div>
+
+        <Table>
+          <Tr>
+            <Td>#</Td>
+            <Td >Name</Td>
+            <Td>File Size</Td>
+            <Td>Seeders</Td>
+            <Td>Leechers</Td>
+          </Tr>
+          {this.getResults()}
+        </Table>
+
+        <div className="float-right mt-10">
+          <Pagination
+            onNextClick={this.onNextClick}
+            onPrevClick={this.onPrevClick}
+            currentPage={params.page}
+          />
+        </div>
+      </div>
     );
   }
 }

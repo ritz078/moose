@@ -26,11 +26,6 @@ html {
   font-size: 30px;
 }
 
-.mdi{
-  vertical-align: middle;
-  font-size: 22px;
-}
-
 .mdi.salmon {
   color: #f95f4d;
 }
@@ -70,5 +65,9 @@ html {
 
 .ReactModal__Body--open {
   overflow: hidden;
+}
+
+.fs-22 {
+  font-size: 22px;
 }
 

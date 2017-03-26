@@ -46,10 +46,10 @@ require('./registerServiceWorker');
 // The following is needed so that we can support hot reloading our application.
 if (process.env.BUILD_FLAG_IS_DEV && module.hot) {
   // Accept changes to this file for hot reloading.
-  module.hot.accept('../views/Error404.js');
+  module.hot.accept('../shared/views/Error404.js');
   // Any changes to our App will cause a hotload re-render.
   module.hot.accept(
-    '../shared/components',
+    '../shared/views',
     () => renderApp(require('../shared/views').default),
   );
 }

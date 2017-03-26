@@ -19,19 +19,20 @@ const Right = styled.div`
   flex: 0 1 480px;
   & > div {
     width: 480px;
+    max-height: calc(100vh - 110px);
   }
 `;
 
 const Content = styled.div`
   padding: 20px 5% 0;
   display: flex;
-  padding-top: 100px;
+  padding-top: 85px;
+  padding-bottom: 30px;
 `;
 
 const Main = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
 `;
 
 @connect(({ results, loading }) => ({ results, loading }))
@@ -61,12 +62,7 @@ export default class Home extends PureComponent {
           <Helmet title="Home" />
           <Loading show={loading} color="#5764c6" />
           <Left className="col-7">
-            {results.data && !!results.data.length &&
-            <div>
-              <h5>Results for search term <b>{results.searchTerm}</b></h5>
-              <Results />
-            </div>
-            }
+            {results.data && !!results.data.length && <Results />}
           </Left>
           <Right className="col-5">
             <Description />

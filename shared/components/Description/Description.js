@@ -3,7 +3,7 @@ import React, { PureComponent, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Modal from 'react-modal';
-import * as axios from 'axios';
+import { ajax } from 'rxjs/observable/dom/ajax';
 import Video from '../Video';
 
 const TileWrapper = styled.div`
@@ -73,7 +73,7 @@ export default class Description extends PureComponent {
 
   closeModal = () => {
     this.setState({ streaming: false });
-    axios.get(`/api/delete/${this.props.details.torrentId}`);
+    ajax.getJSON(`/api/delete/${this.props.details.torrentId}`);
   }
 
   listTorrent = ({ torrentId }) => {
@@ -104,7 +104,7 @@ export default class Description extends PureComponent {
               onClick={this.startStream}
             >
               <i
-                className="mdi mdi-play-circle-outline tooltip tooltip-bottom"
+                className="mdi mdi-play-circle-outline tooltip tooltip-bottom fs-22"
                 data-tooltip="Play Video"
                 data-id={i}
               />
@@ -126,7 +126,7 @@ export default class Description extends PureComponent {
         zIndex: 99,
       },
       content: {
-        background: '#000',
+        background: 'transparent',
         border: 'none',
       },
     };
@@ -164,7 +164,7 @@ export default class Description extends PureComponent {
   render() {
     const { details } = this.props;
 
-    if (!details) return <div />;
+    if (!details.name) return <div />;
 
     return (
       <div className="panel fixed">

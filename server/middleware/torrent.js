@@ -110,6 +110,9 @@ export function searchTorrent(req, res) {
     page: req.query.page || 0,
     category: req.query.category || 'all',
   })
-    .then(results => res.json(results))
+    .then(results => res.json({
+      data: results,
+      page: req.query.page,
+    }))
     .catch(err => res.json(err));
 }

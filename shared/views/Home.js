@@ -53,8 +53,20 @@ export default class Home extends PureComponent {
     io.connect(`${window.location.protocol}//${window.location.host}?session_name=${cookie.get('session_name')}`);
   }
 
+  isMagnetUrl = () => this.props.results.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null
+
   render() {
     const { results, loading } = this.props;
+
+    if (this.isMagnetUrl()) {
+      return (
+        <Main>
+          <Content>
+            <div className="centered"><Description /></div>
+          </Content>
+        </Main>
+      );
+    }
 
     return (
       <Main>
@@ -65,7 +77,7 @@ export default class Home extends PureComponent {
             {results.data && !!results.data.length && <Results />}
           </Left>
           <Right className="col-5">
-            <Description />
+            <Description fixed />
           </Right>
         </Content>
       </Main>

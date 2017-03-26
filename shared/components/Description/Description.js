@@ -47,12 +47,14 @@ export default class Description extends PureComponent {
         size: PropTypes.string,
       }),
     }),
+    fixed: PropTypes.bool,
   }
 
   static defaultProps = {
     dispatch() {
     },
     details: {},
+    fixed: false,
   }
 
   constructor(props) {
@@ -162,12 +164,14 @@ export default class Description extends PureComponent {
   }
 
   render() {
-    const { details } = this.props;
+    const { details, fixed } = this.props;
 
     if (!details.name) return <div />;
 
+    const mainClass = fixed ? 'panel fixed' : 'panel';
+
     return (
-      <div className="panel fixed">
+      <div className={mainClass}>
         <div className="panel-header">
           <div className="panel-title">{details && details.name}</div>
         </div>

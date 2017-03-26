@@ -71,3 +71,7 @@ html {
   font-size: 22px;
 }
 
+:focus {
+  box-shadow: none;
+}
+

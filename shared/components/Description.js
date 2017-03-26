@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Modal from 'react-modal';
 import { ajax } from 'rxjs/observable/dom/ajax';
-import Video from '../Video';
+import Video from './Video';
 
 const TileWrapper = styled.div`
   background-color: ${props => props.color};

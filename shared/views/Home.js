@@ -8,7 +8,7 @@ import * as cookie from 'js-cookie';
 import styled from 'styled-components';
 import Loading from 'react-loading-bar';
 import Results from '../components/Results';
-import Description from '../components/Description/Description';
+import Description from '../components/Description';
 
 const Left = styled.div`
   flex: 1;
@@ -53,7 +53,7 @@ export default class Home extends PureComponent {
     io.connect(`${window.location.protocol}//${window.location.host}?session_name=${cookie.get('session_name')}`);
   }
 
-  isMagnetUrl = () => this.props.results.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null
+  isMagnetUrl = () => this.props.results.searchTerm && this.props.results.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null
 
   render() {
     const { results, loading } = this.props;

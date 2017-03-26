@@ -19,17 +19,6 @@
   padding-bottom: 80px;
 }
 
-table {
-  margin: 0 auto;
-  font-weight: 400 !important;
-}
-
-td, th {
-  border-bottom: 0.1rem solid #f1f1f1 !important;
-  padding: 6px 10px !important;
-  text-align: left !important;
-}
-
 .torrent-name {
   text-align: center;
   margin: 60px;
@@ -37,10 +26,6 @@ td, th {
 
 .fa-arrow-circle-o-down, .fa-play-circle-o {
   font-size: 30px;
-}
-
-td:last-child, th:last-child {
-  text-align: center !important;
 }
 
 .mdi{
@@ -89,10 +74,7 @@ td:last-child, th:last-child {
   overflow: hidden;
 }
 
-.right-part > div {
-  width: 460px;
-  max-height: calc(100vh - 110px);
-}
+
 
 input:focus {
   color: #666;

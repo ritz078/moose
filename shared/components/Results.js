@@ -21,6 +21,30 @@ const ResultDesc = styled.div`
   color: #848484;
 `;
 
+const Table = styled.div`
+  display: table;
+  width: 100%;
+`;
+
+const Td = styled.div`
+  display: table-cell;
+  border-bottom: 0.1rem solid #f1f1f1;
+  padding: 6px 10px;
+  text-align: left;
+  vertical-align: middle;
+`;
+
+const Tr = styled.div`
+  display: table-row;
+  cursor: pointer;
+  &:nth-of-type(2n){
+    background-color: #f8f8f8
+  }
+  &:first-of-type {
+    font-weight: bold;
+  }
+`;
+
 @connect(({ results }) => ({ results }))
 export default class Results extends PureComponent {
   static propTypes = {
@@ -48,16 +72,15 @@ export default class Results extends PureComponent {
     const { results, dispatch } = this.props;
 
     return results.data.map((result, i) => (
-      <tr
-        style={{ cursor: 'pointer' }}
+      <Tr
         key={result.id}
         onClick={() => dispatch({
           type: 'FETCH_DETAILS',
           payload: result.magnetLink,
         })}
       >
-        <td>{i + 1}</td>
-        <td>
+        <Td>{i + 1}</Td>
+        <Td>
           <div>{result.name}</div>
           <ResultDesc>
             <Verified
@@ -68,30 +91,26 @@ export default class Results extends PureComponent {
             <UploadIcon className="mdi mdi-folder-upload" />
             <span>{result.uploadDate}</span>
           </ResultDesc>
-        </td>
-        <td>{result.size}</td>
-        <td>{result.seeders}</td>
-        <td>{result.leechers}</td>
-      </tr>
+        </Td>
+        <Td>{result.size}</Td>
+        <Td>{result.seeders}</Td>
+        <Td>{result.leechers}</Td>
+      </Tr>
     ));
   }
 
   render() {
     return (
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th >Name</th>
-            <th>File Size</th>
-            <th>Seeders</th>
-            <th>Leechers</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.getResults()}
-        </tbody>
-      </table>
+      <Table>
+        <Tr>
+          <Td>#</Td>
+          <Td >Name</Td>
+          <Td>File Size</Td>
+          <Td>Seeders</Td>
+          <Td>Leechers</Td>
+        </Tr>
+        {this.getResults()}
+      </Table>
     );
   }
 }

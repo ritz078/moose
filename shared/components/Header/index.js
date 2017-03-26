@@ -46,7 +46,10 @@ export default class Header extends PureComponent {
     });
 
     if (input.match(/magnet:\?xt=urn:[a-z0-9]{20,50}/i) != null) {
-      this.listTorrent(input);
+      this.props.dispatch({
+        type: 'FETCH_DETAILS',
+        payload: input,
+      });
     } else {
       this.props.dispatch({
         type: 'FETCH_RESULTS',

@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { PureComponent, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Modal from 'react-modal';
 import * as axios from 'axios';
@@ -16,21 +17,51 @@ const TileWrapper = styled.div`
   align-content: space-around;
 `;
 
+const ImageLightbox = styled.div`
+  display: flex;
+  height: 100%;
+  background-size:contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: ${props => `url${props.src}`};
+`;
+
+const ModalControl = styled.div`
+  color: #9c9c9c;
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  font-size: 20px;
+`;
+
+@connect(({ details }) => ({ details }))
 export default class Description extends PureComponent {
+  static propTypes = {
+    dispatch: PropTypes.func,
+    details: PropTypes.shape({
+      name: PropTypes.string,
+      torrentId: PropTypes.string,
+      files: PropTypes.shape({
+        name: PropTypes.string,
+        type: PropTypes.string,
+        size: PropTypes.string,
+      }),
+    }),
+  }
+
+  static defaultProps = {
+    dispatch() {
+    },
+    details: {},
+  }
+
   constructor(props) {
     super(props);
 
     this.state = {
-      selectedTorrentDetails: null,
       streaming: false,
       selectedIndex: null,
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.torrentId !== nextProps.torrentId) {
-      this.listTorrent(nextProps);
-    }
   }
 
   startStream = (e) => {
@@ -42,27 +73,20 @@ export default class Description extends PureComponent {
 
   closeModal = () => {
     this.setState({ streaming: false });
-    axios.get(`/api/delete/${this.state.torrentDetails.torrentId}`);
+    axios.get(`/api/delete/${this.props.details.torrentId}`);
   }
 
-  async listTorrent(props) {
-    const torrentId = props.torrentId;
-    if (!torrentId) return;
-
-    this.setState({ showStubs: true });
-
-    const { data } = await axios.get(`/api/list?torrentId=${window.btoa(torrentId)}&timestamp=${new Date().getTime()}`, { withCredentials: true });
-
-    this.setState({
-      selectedTorrentDetails: data,
-      showStubs: false,
+  listTorrent = ({ torrentId }) => {
+    this.props.dispatch({
+      type: 'FETCH_DETAILS',
+      payload: torrentId,
     });
   }
 
   getFiles() {
-    const torrents = this.state.selectedTorrentDetails;
+    const { details } = this.props;
 
-    return torrents && torrents.files.map((file, i) => (
+    return details && details.files && details.files.map((file, i) => (
       <div className="tile tile-centered">
         <div className="tile-icon">
           <TileWrapper color="#e64a19">
@@ -109,13 +133,15 @@ export default class Description extends PureComponent {
 
     let selectedTorrent;
 
-    if (this.state.selectedTorrentDetails && this.state.selectedIndex) {
-      selectedTorrent = this.state.selectedTorrentDetails.files[this.state.selectedIndex];
+    const { details } = this.props;
+
+    if (details && this.state.selectedIndex) {
+      selectedTorrent = details.files[this.state.selectedIndex];
     } else {
       return <div />;
     }
 
-    const src = `/api/download/${this.state.selectedTorrentDetails.torrentId}/${+this.state.selectedIndex}/${selectedTorrent.name}`;
+    const src = `/api/download/${details.torrentId}/${+this.state.selectedIndex}/${selectedTorrent.name}`;
 
     return (
       <Modal
@@ -123,27 +149,27 @@ export default class Description extends PureComponent {
         isOpen={this.state.streaming}
         contentLabel={'Modal'}
       >
-        <div className="modal-control">
+        <ModalControl>
           <i className="mdi mdi-window-minimize" />
           <i onClick={this.closeModal} className="mdi mdi-close close-modal" />
-        </div>
+        </ModalControl>
         {selectedTorrent.type.indexOf('video') >= 0 && <Video src={src} />}
         {selectedTorrent.type.indexOf('image') >= 0 &&
-        <div className="image-lightbox" style={{ backgroundImage: `url(${src})` }} />
+        <ImageLightbox src={src} />
         }
       </Modal>
     );
   }
 
   render() {
-    const { selectedTorrentDetails } = this.state;
+    const { details } = this.props;
 
-    if (!selectedTorrentDetails) return <div />;
+    if (!details) return <div />;
 
     return (
       <div className="panel fixed">
         <div className="panel-header">
-          <div className="panel-title">{selectedTorrentDetails && selectedTorrentDetails.name}</div>
+          <div className="panel-title">{details && details.name}</div>
         </div>
         <div className="panel-nav" />
         <div className="panel-body">
@@ -155,7 +181,3 @@ export default class Description extends PureComponent {
     );
   }
 }
-
-Description.propTypes = {
-  torrentId: PropTypes.string.isRequired,
-};

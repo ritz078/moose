@@ -56,7 +56,6 @@
     "axios": "^0.15.3",
     "babel-preset-stage-1": "^6.22.0",
     "bufferutil": "1",
-    "classnames": "^2.2.5",
     "colors": "1.1.2",
     "compression": "1.6.2",
     "cookie-signature": "^1.0.6",

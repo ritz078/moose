@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
-import resultsReducer from './results';
+import results from './results';
+import details from './details';
+import loading from './loading';
 
 export default combineReducers({
-  results: resultsReducer,
+  results,
+  details,
+  loading,
 });

@@ -153,7 +153,7 @@ export default function webpackConfigFactory(buildOptions) {
 
     resolve: {
       // These extensions are tried when resolving a file.
-      extensions: config('bundleSrcTypes').map(ext => `.${ext}`)
+      extensions: config('bundleSrcTypes').map(ext => `.${ext}`),
     },
 
     // We don't want our node_modules to be bundled with any bundle that is
@@ -487,7 +487,7 @@ export default function webpackConfigFactory(buildOptions) {
             // the correct asset URLs.
             emitFile: isClient,
           },
-        }))
+        })),
       ]),
     },
   };

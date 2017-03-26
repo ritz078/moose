@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react';
-import * as videojs from 'Video.js';
+import React, { PropTypes, PureComponent } from 'react';
+import * as videojs from 'video.js';
 
-class Video extends React.Component {
+class Video extends PureComponent {
   componentDidMount() {
     videojs(this.videoRef, this.props.options, () => {
       this.props.onInit();

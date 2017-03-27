@@ -1,4 +1,5 @@
 import 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { ajax } from 'rxjs/observable/dom/ajax';
 
 export function fetchDetails(action$, { dispatch }) {
@@ -10,6 +11,7 @@ export function fetchDetails(action$, { dispatch }) {
           withCredentials: true,
         })
           .retry(3)
+          .timeout(6000)
           .switchMap(payload => (
             [{
               type: 'SET_DETAILS',
@@ -18,6 +20,9 @@ export function fetchDetails(action$, { dispatch }) {
               type: 'STOP_LOADING',
             }]
           ))
+          .catch(() => (Observable.of({
+            type: 'STOP_LOADING',
+          })))
       );
     });
 }

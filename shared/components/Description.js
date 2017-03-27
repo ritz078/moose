@@ -2,9 +2,9 @@
 import React, { PureComponent, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import Modal from 'react-modal';
 import { ajax } from 'rxjs/observable/dom/ajax';
-import Video from './Video';
+import MediaModal from './MediaModal';
+import fileType from '../utils/logic/fileType';
 
 const TileWrapper = styled.div`
   background-color: ${props => props.color};
@@ -15,23 +15,6 @@ const TileWrapper = styled.div`
   display: flex;
   align-items: center;
   align-content: space-around;
-`;
-
-const ImageLightbox = styled.div`
-  display: flex;
-  height: 100%;
-  background-size:contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-image: ${props => `url${props.src}`};
-`;
-
-const ModalControl = styled.div`
-  color: #9c9c9c;
-  position: fixed;
-  top: 5px;
-  right: 5px;
-  font-size: 20px;
 `;
 
 @connect(({ details }) => ({ details }))
@@ -85,15 +68,42 @@ export default class Description extends PureComponent {
     });
   }
 
+  getFileIcon = (mime) => {
+    let icon;
+
+    switch (fileType(mime)) {
+      case 'audio':
+        icon = 'mdi-music-note';
+        break;
+      case 'video':
+        icon = 'mdi-movie';
+        break;
+      case 'application':
+        icon = 'mdi-application';
+        break;
+      case 'zip':
+        icon = 'mdi-zip-box';
+        break;
+      case 'image':
+        icon = 'mdi-file-image';
+        break;
+      default:
+        icon = 'mdi-file-document';
+    }
+    return (
+      <TileWrapper color={'#9a9a9a'}>
+        <i className={`mdi ${icon} centered fs-22`} />
+      </TileWrapper>
+    );
+  }
+
   getFiles() {
     const { details } = this.props;
 
     return details && details.files && details.files.map((file, i) => (
       <div className="tile tile-centered">
         <div className="tile-icon">
-          <TileWrapper color="#e64a19">
-            <i className="mdi mdi-movie centered" />
-          </TileWrapper>
+          {this.getFileIcon(file.type)}
         </div>
         <div className="tile-content">
           <div className="tile-title">{file.name}</div>
@@ -106,7 +116,7 @@ export default class Description extends PureComponent {
               onClick={this.startStream}
             >
               <i
-                className="mdi mdi-play-circle-outline tooltip tooltip-bottom fs-22"
+                className="mdi mdi-play-circle-outline tooltip tooltip-left fs-22"
                 data-tooltip="Play Video"
                 data-id={i}
               />
@@ -121,48 +131,6 @@ export default class Description extends PureComponent {
     return document.createElement('video').canPlayType(mime) || mime === 'video/x-matroska';
   }
 
-  getStreamModal() {
-    const style = {
-      overlay: {
-        backgroundColor: 'rgba(0,0,0,0.95)',
-        zIndex: 99,
-      },
-      content: {
-        background: 'transparent',
-        border: 'none',
-      },
-    };
-
-    let selectedTorrent;
-
-    const { details } = this.props;
-
-    if (details && this.state.selectedIndex) {
-      selectedTorrent = details.files[this.state.selectedIndex];
-    } else {
-      return <div />;
-    }
-
-    const src = `/api/download/${details.torrentId}/${+this.state.selectedIndex}/${selectedTorrent.name}`;
-
-    return (
-      <Modal
-        style={style}
-        isOpen={this.state.streaming}
-        contentLabel={'Modal'}
-      >
-        <ModalControl>
-          <i className="mdi mdi-window-minimize" />
-          <i onClick={this.closeModal} className="mdi mdi-close close-modal" />
-        </ModalControl>
-        {selectedTorrent.type.indexOf('video') >= 0 && <Video src={src} />}
-        {selectedTorrent.type.indexOf('image') >= 0 &&
-        <ImageLightbox src={src} />
-        }
-      </Modal>
-    );
-  }
-
   render() {
     const { details, fixed } = this.props;
 
@@ -173,14 +141,22 @@ export default class Description extends PureComponent {
     return (
       <div className={mainClass}>
         <div className="panel-header">
-          <div className="panel-title">{details && details.name}</div>
+          <div className="panel-title text-ellipsis">{details && details.name}</div>
         </div>
         <div className="panel-nav" />
         <div className="panel-body">
           {this.getFiles()}
         </div>
         <div className="panel-footer" />
-        {this.getStreamModal()}
+        {
+          <MediaModal
+            infoHash={details.torrentId}
+            fileIndex={this.state.selectedIndex}
+            showModal={this.state.streaming}
+            file={details.files[this.state.selectedIndex]}
+            onCloseClick={this.closeModal}
+          />
+        }
       </div>
     );
   }

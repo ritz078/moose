@@ -23,6 +23,9 @@ export default function (action$, { dispatch, getState }) {
           }, {
             type: 'STOP_LOADING',
           }]))
+          .catch(() => ([{
+            type: 'STOP_LOADING',
+          }]))
       );
     });
 }

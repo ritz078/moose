@@ -8,7 +8,10 @@ const initialState = {
 
 const paramsReducer = createReducer(initialState, {
   SET_PAGE: (state, action) => Object.assign({}, state, { page: action.payload }),
-  SET_SORT_ORDER: (state, action) => action.payload,
+  SET_SORT_ORDER: (state, action) => Object.assign({}, state, {
+    sortBy: action.payload.sortBy,
+    orderBy: action.payload.orderBy,
+  }),
 });
 
 export default paramsReducer;

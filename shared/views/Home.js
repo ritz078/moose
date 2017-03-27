@@ -18,7 +18,7 @@ const Right = styled.div`
   padding: 0 0 0 20px;
   flex: 0 1 480px;
   & > div {
-    width: 480px;
+    width: 460px;
     max-height: calc(100vh - 110px);
   }
 `;

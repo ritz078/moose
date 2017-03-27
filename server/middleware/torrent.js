@@ -107,12 +107,15 @@ export function searchTorrent(req, res) {
   PirateBay.search(req.params.searchTerm, {
     orderBy: req.query.orderBy || 'seeds',
     sortBy: req.query.sortBy || 'desc',
-    page: req.query.page || 0,
+    page: (req.query.page - 1) || 0,
     category: req.query.category || 'all',
   })
-    .then(results => res.json({
-      data: results,
-      page: req.query.page,
-    }))
+    .then((results) => {
+      if (results && !results.length) res.send(500, { error: 'Unable to fetch data' });
+      return res.json({
+        data: results,
+        page: req.query.page,
+      });
+    })
     .catch(err => res.json(err));
 }

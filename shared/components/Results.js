@@ -2,24 +2,12 @@ import React, { PropTypes, PureComponent } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Pagination from './Pagination';
+import sortOrder from '../constants/sortOrder';
 
 const Verified = styled.i`
   font-size: 14px;
   vertical-align: top;
-  margin-right: 8px;
   color: ${props => (props.active ? 'limegreen' : '#bdbdbd')};
-`;
-
-const UploadIcon = styled.i`
-  color: #565656;
-  margin-right: 8px;
-  vertical-align: middle;
-  font-size: 18px;
-`;
-
-const ResultDesc = styled.div`
-  font-size: 12px;
-  color: #848484;
 `;
 
 const Table = styled.div`
@@ -45,6 +33,18 @@ const Tr = styled.div`
   &:first-of-type {
     font-weight: bold;
   }
+`;
+
+const SortOrder = styled.select`
+  border-color: #f1f1f1;
+  height: 42px !important;
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+`;
+
+const FiltersWrapper = styled.div`
+  width: 330px;
 `;
 
 @connect(({ results, params }) => ({ results, params }))
@@ -86,16 +86,17 @@ export default class Results extends PureComponent {
       >
         <Td>{i + 1}</Td>
         <Td>
-          <div>{result.name}</div>
-          <ResultDesc>
-            <Verified
-              data-tooltip={result.verified ? 'Verified' : 'Not verified'}
-              className="mdi mdi-verified tooltip tooltip-bottom"
-              active={result.verified}
-            />
-            <UploadIcon className="mdi mdi-folder-upload" />
-            <span>{result.uploadDate}</span>
-          </ResultDesc>
+          <div className="tile tile-centered m-0">
+            <div className="tile-content">
+              <div className="tile-title">{result.name}</div>
+              <div className="tile-meta">
+                <Verified
+                  data-tooltip={result.verified ? 'Verified' : 'Not verified'}
+                  className="mdi mdi-verified tooltip tooltip-right"
+                  active={result.verified}
+                /> · {result.uploadDate} · {result.category.name} · {result.subcategory.name}</div>
+            </div>
+          </div>
         </Td>
         <Td>{result.size}</Td>
         <Td>{result.seeders}</Td>
@@ -120,6 +121,15 @@ export default class Results extends PureComponent {
     });
   }
 
+  setSortOrder = (e: MouseEvent | KeyboardEvent) => {
+    this.props.dispatch({
+      type: 'SET_SORT_ORDER',
+      payload: sortOrder[e.target.value],
+    });
+
+    this.fetchResults();
+  }
+
   render() {
     const { params } = this.props;
 
@@ -127,13 +137,22 @@ export default class Results extends PureComponent {
       <div>
         <div className="clearfix">
           <h5 className="float-left">Results for search term <b>{this.props.results.searchTerm}</b></h5>
-          <div className="float-right">
-            <Pagination
-              onNextClick={this.onNextClick}
-              onPrevClick={this.onPrevClick}
-              currentPage={params.page}
-            />
-          </div>
+          <FiltersWrapper className="float-right">
+            <div className="form-group inline-block">
+              <SortOrder className="form-select" onChange={this.setSortOrder}>
+                {sortOrder.map((s, i) => (
+                  <option value={i}>{s.label}</option>
+                ))}
+              </SortOrder>
+            </div>
+            <div className="form-group inline-block">
+              <Pagination
+                onNextClick={this.onNextClick}
+                onPrevClick={this.onPrevClick}
+                currentPage={params.page}
+              />
+            </div>
+          </FiltersWrapper>
         </div>
 
         <Table>

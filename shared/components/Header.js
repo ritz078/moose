@@ -52,6 +52,10 @@ export default class Header extends PureComponent {
 
     if (input.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null) {
       this.props.dispatch({
+        type: 'SET_SEARCHTERM',
+        payload: input,
+      });
+      this.props.dispatch({
         type: 'FETCH_DETAILS',
         payload: input,
       });

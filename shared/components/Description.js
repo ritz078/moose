@@ -127,7 +127,7 @@ export default class Description extends PureComponent {
               >
                 <i
                   className={streamIcon}
-                  data-tooltip={fileType === 'audio' ? 'Play Video' : 'View Image'}
+                  data-tooltip={fileType === 'video' ? 'Play Video' : 'View Image'}
                   data-id={i}
                 />
               </button>

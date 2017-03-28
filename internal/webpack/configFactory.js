@@ -122,16 +122,16 @@ export default function webpackConfigFactory(buildOptions) {
 
     // Source map settings.
     devtool: ifElse(
-        // Include source maps for ANY node bundle so that we can support
-        // nice stack traces for errors (the source maps get consumed by
-        // the `node-source-map-support` module to allow for this).
-        isNode
-        // Always include source maps for any development build.
-        || isDev
-        // Allow for the following flag to force source maps even for production
-        // builds.
-        || config('includeSourceMapsForOptimisedClientBundle'),
-      )(
+      // Include source maps for ANY node bundle so that we can support
+      // nice stack traces for errors (the source maps get consumed by
+      // the `node-source-map-support` module to allow for this).
+      isNode
+      // Always include source maps for any development build.
+      || isDev
+      // Allow for the following flag to force source maps even for production
+      // builds.
+      || config('includeSourceMapsForOptimisedClientBundle'),
+    )(
       // Produces an external source map (lives next to bundle output files).
       'source-map',
       // Produces no source map.
@@ -169,20 +169,19 @@ export default function webpackConfigFactory(buildOptions) {
           // For these cases please make sure that the file extensions are
           // registered within the following configuration setting.
           {
-            whitelist:
-              removeNil([
-                // We always want the source-map-support included in
-                // our node target bundles.
-                'source-map-support/register',
-                // We want react bundled with our node bundles for the optimised
-                // builds as we are going to resolve to the optmised versions
-                // of react via the webpack alias configuration.
-                ifOptimize('react'),
-                ifOptimize('react-dom'),
-                ifOptimize('react-dom/server'),
-              ])
-              // And any items that have been whitelisted in the config need
-              // to be included in the bundling process too.
+            whitelist: removeNil([
+              // We always want the source-map-support included in
+              // our node target bundles.
+              'source-map-support/register',
+              // We want react bundled with our node bundles for the optimised
+              // builds as we are going to resolve to the optmised versions
+              // of react via the webpack alias configuration.
+              ifOptimize('react'),
+              ifOptimize('react-dom'),
+              ifOptimize('react-dom/server'),
+            ])
+            // And any items that have been whitelisted in the config need
+            // to be included in the bundling process too.
               .concat(config('nodeExternalsFileTypeWhitelist') || []),
           },
         ),
@@ -251,6 +250,7 @@ export default function webpackConfigFactory(buildOptions) {
         'process.env.BUILD_FLAG_IS_NODE': JSON.stringify(isNode),
         // Is this a development build?
         'process.env.BUILD_FLAG_IS_DEV': JSON.stringify(isDev),
+        'process.env.NODE_ENV': JSON.stringify(isDev ? 'development' : 'production'),
       }),
 
       // Generates a JSON file containing a map of all the output files for

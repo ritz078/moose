@@ -9,7 +9,7 @@
   "scripts": {
     "analyze:client": "babel-node internal/scripts/analyze --client",
     "analyze:server": "babel-node internal/scripts/analyze --server",
-    "build": "NODE_ENV=production babel-node internal/scripts/build --optimize",
+    "build": "babel-node internal/scripts/build --optimize",
     "build:dev": "babel-node internal/scripts/build",
     "clean": "babel-node internal/scripts/clean",
     "deploy": "babel-node internal/scripts/deploy",

@@ -11,10 +11,12 @@ const cli = meow(`
     $ snape <command> [options]
   Commands:
     serve  starts the local server
+      --port 
+      --host 
   Example:
 	  snape serve
 `);
 
 if (cli.input[0] === 'serve') {
-  shell.exec('npm start');
+  shell.exec(`PORT=${cli.flags.port || 3000} HOST=${cli.flags.host || 'localhost'} npm start`);
 }

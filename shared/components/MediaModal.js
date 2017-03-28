@@ -11,9 +11,10 @@ const ModalControl = styled.div`
   font-size: 20px;
 `;
 
-const ImageLightbox = styled.div`
+const ImageLightbox = styled.img`
   display: flex;
   height: 100%;
+  margin: 0 auto;
   background-size:contain;
   background-repeat: no-repeat;
   background-position: center;

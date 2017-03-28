@@ -88,7 +88,7 @@ export default class Results extends PureComponent {
         <Td>
           <div className="tile tile-centered m-0">
             <div className="tile-content">
-              <div className="tile-title">{result.name}</div>
+              <div className="tile-title" style={{ maxWidth: '500px' }}>{result.name}</div>
               <div className="tile-meta">
                 <Verified
                   data-tooltip={result.verified ? 'Verified' : 'Not verified'}

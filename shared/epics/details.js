@@ -2,7 +2,7 @@ import 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { ajax } from 'rxjs/observable/dom/ajax';
 
-export function fetchDetails(action$, { dispatch }) {
+export default function fetchDetails(action$, { dispatch }) {
   return action$.ofType('FETCH_DETAILS')
     .mergeMap((action) => {
       dispatch({ type: 'START_LOADING' });

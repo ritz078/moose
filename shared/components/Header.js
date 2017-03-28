@@ -70,7 +70,7 @@ export default class Header extends PureComponent {
           <SearchInput
             type="text"
             className="form-input"
-            placeholder="paste your magnet url"
+            placeholder="Search or paste your magnet url"
             innerRef={x => (this.inputRef = x)}
             onKeyPress={this.handleSearch}
           />

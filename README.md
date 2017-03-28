@@ -4,6 +4,10 @@
 
 > A torrent client for web with search and stream functionality.
 
+<p align="center">
+  <img src="./demo.png" align="center" alt="" width="600"/>
+</p>
+
 ### Features
 - [x] Search a torrent. 
 - [x] Stream videos and view images.

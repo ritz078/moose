@@ -2,7 +2,6 @@
 
 import React, { PureComponent, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
 import * as io from 'socket.io-client';
 import * as cookie from 'js-cookie';
 import styled from 'styled-components';
@@ -71,7 +70,6 @@ export default class Home extends PureComponent {
     return (
       <Main>
         <Content>
-          <Helmet title="Home" />
           <Loading show={loading} color="#5764c6" />
           <Left className="col-7">
             {results.data && !!results.data.length && <Results />}

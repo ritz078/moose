@@ -7,7 +7,7 @@ export default function fetchDetails(action$, { dispatch }) {
     .mergeMap((action) => {
       dispatch({ type: 'START_LOADING' });
       return (
-        ajax.getJSON(`/api/list?torrentId=${window.btoa(action.payload)}&timestamp=${new Date().getTime()}`, {
+        ajax.getJSON(`http://localhost:${SERVER_PORT}/api/list?torrentId=${window.btoa(action.payload)}&timestamp=${new Date().getTime()}`, {
           withCredentials: true,
         })
           .retry(3)

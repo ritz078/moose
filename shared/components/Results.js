@@ -1,6 +1,7 @@
 import React, { PropTypes, PureComponent } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+import withRedux from 'next-redux-wrapper';
+import initStore from '../../store';
 import Pagination from './Pagination';
 import sortOrder from '../constants/sortOrder';
 
@@ -47,7 +48,7 @@ const FiltersWrapper = styled.div`
   width: 330px;
 `;
 
-@connect(({ results, params }) => ({ results, params }))
+@withRedux(initStore, ({ results, params }) => ({ results, params }))
 export default class Results extends PureComponent {
   static propTypes = {
     results: PropTypes.arrayOf(

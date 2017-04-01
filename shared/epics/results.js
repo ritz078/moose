@@ -10,8 +10,9 @@ export default function (action$, { dispatch, getState }) {
       const searchTerm = action.payload || getState().results.searchTerm;
       const stringifiedParams = qs.stringify(params);
       dispatch({ type: 'START_LOADING' });
+
       return (
-        ajax.getJSON(`/api/search/${searchTerm}?${stringifiedParams}`)
+        ajax.getJSON(`http://localhost:${SERVER_PORT}/api/search/${searchTerm}?${stringifiedParams}`)
           .retry(3)
           .switchMap(data => ([{
             type: 'SET_RESULTS',

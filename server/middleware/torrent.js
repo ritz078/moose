@@ -2,7 +2,7 @@
 import * as mime from 'mime';
 import * as rangeParser from 'range-parser';
 import * as prettyBytes from 'pretty-bytes';
-import * as atob from 'atob';
+import atob from 'atob';
 import * as pump from 'pump';
 import PirateBay from 'thepiratebay';
 import torrentStore from './helpers/torrentStore';
@@ -111,7 +111,7 @@ export function searchTorrent(req, res) {
     category: req.query.category || 'all',
   })
     .then((results) => {
-      if (results && !results.length) res.send(500, { error: 'Unable to fetch data' });
+      if (results && !results.length) res.status(500).body({ error: 'Unable to fetch data' });
       return res.json({
         data: results,
         page: req.query.page,

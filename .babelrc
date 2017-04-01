@@ -1,8 +1,19 @@
 {
   "presets": [
-    ["env", { "targets": { "node": true } }],
-    "stage-3",
-    "react"
+    "next/babel"
   ],
-  "plugins": ["transform-class-properties", "transform-decorators-legacy"]
+  "plugins": [
+    [
+      "wrap-in-js",
+      {
+        "extensions": [
+          "css$",
+          "scss$"
+        ]
+      }
+    ],
+    "transform-class-properties",
+    "transform-decorators-legacy",
+    ["transform-define", "./env-config.js"]
+  ]
 }

@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import React, { PureComponent, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import * as io from 'socket.io-client';
 import * as cookie from 'js-cookie';
+import withRedux from 'next-redux-wrapper';
 import styled from 'styled-components';
 import Loading from 'react-loading-bar';
+import initStore from '../../store';
 import Results from '../components/Results';
 import Description from '../components/Description';
 
@@ -34,7 +35,7 @@ const Main = styled.div`
   flex-direction: column;
 `;
 
-@connect(({ results, loading }) => ({ results, loading }))
+@withRedux(initStore, ({ results, loading }) => ({ results, loading }))
 export default class Home extends PureComponent {
   static propTypes = {
     results: PropTypes.shape({

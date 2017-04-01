@@ -1,6 +1,7 @@
 import React, { PureComponent, PropTypes } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+import withRedux from 'next-redux-wrapper';
+import initStore from '../../store';
 
 const HeaderWrapper = styled.header`
   width: 100%;
@@ -25,7 +26,7 @@ const SearchButton = styled.button`
   font-family: inherit;
 `;
 
-@connect()
+@withRedux(initStore)
 export default class Header extends PureComponent {
   static propTypes = {
     dispatch: PropTypes.func,

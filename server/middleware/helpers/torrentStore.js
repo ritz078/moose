@@ -1,4 +1,4 @@
-import * as WebTorrent from 'webtorrent';
+import WebTorrent from 'webtorrent';
 
 const debug = require('debug')('torrentStore');
 const rimraf = require('rimraf');

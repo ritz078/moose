@@ -34,7 +34,7 @@ const Main = styled.div`
   flex-direction: column;
 `;
 
-@withRedux(initStore, ({ results, loading }) => ({ results, loading }))
+@withRedux(initStore, ({ results, loading, details }) => ({ results, loading, details }))
 export default class Home extends PureComponent {
   static propTypes = {
     results: PropTypes.shape({
@@ -42,10 +42,22 @@ export default class Home extends PureComponent {
       searchTerm: PropTypes.string,
     }),
     loading: PropTypes.bool.isRequired,
+    details: PropTypes.shape({
+      name: PropTypes.string,
+      torrentId: PropTypes.string,
+      files: PropTypes.shape({
+        name: PropTypes.string,
+        type: PropTypes.string,
+        size: PropTypes.string,
+      }),
+    }),
+    dispatch: PropTypes.func,
   }
 
   static defaultProps = {
     results: {},
+    dispatch() {
+    },
   }
 
   componentDidMount() {
@@ -53,13 +65,13 @@ export default class Home extends PureComponent {
   }
 
   getContent() {
-    const { results, loading } = this.props;
+    const { results, loading, details, dispatch } = this.props;
 
     if (this.isMagnetUrl()) {
       return (
         <Main>
           <Content>
-            <div className="centered"><Description /></div>
+            <div className="centered"><Description details={details} dispatch={dispatch} /></div>
           </Content>
         </Main>
       );
@@ -73,7 +85,7 @@ export default class Home extends PureComponent {
             {results.data && !!results.data.length && <Results />}
           </Left>
           <Right className="col-5">
-            <Description fixed />
+            <Description fixed details={details} dispatch={dispatch} />
           </Right>
         </Content>
       </Main>

@@ -33,10 +33,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _nextReduxWrapper = require('next-redux-wrapper');
-
-var _nextReduxWrapper2 = _interopRequireDefault(_nextReduxWrapper);
-
 var _styledComponents = require('styled-components');
 
 var _styledComponents2 = _interopRequireDefault(_styledComponents);
@@ -51,10 +47,6 @@ var _MediaModal = require('./MediaModal');
 
 var _MediaModal2 = _interopRequireDefault(_MediaModal);
 
-var _store = require('../../store');
-
-var _store2 = _interopRequireDefault(_store);
-
 var _fileType = require('../utils/logic/fileType');
 
 var _fileType2 = _interopRequireDefault(_fileType);
@@ -65,9 +57,7 @@ var _colors2 = _interopRequireDefault(_colors);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _dec,
-    _class,
-    _jsxFileName = '/Users/ritz078/projects/blizzard/shared/components/Description.js';
+var _jsxFileName = '/Users/ritz078/projects/blizzard/shared/components/Description.js';
 
 var _templateObject = (0, _taggedTemplateLiteral3.default)(['\n  background-color: ', ';\n  border-radius: .2rem;\n  color: #fff;\n  height: 4rem;\n  width: 4rem;\n  display: flex;\n  align-items: center;\n  align-content: space-around;\n'], ['\n  background-color: ', ';\n  border-radius: .2rem;\n  color: #fff;\n  height: 4rem;\n  width: 4rem;\n  display: flex;\n  align-items: center;\n  align-content: space-around;\n']);
 
@@ -78,10 +68,7 @@ var TileWrapper = _styledComponents2.default.div(_templateObject, function (prop
   return props.color;
 });
 
-var Description = (_dec = (0, _nextReduxWrapper2.default)(_store2.default, function (_ref) {
-  var details = _ref.details;
-  return { details: details };
-}), _dec(_class = function (_PureComponent) {
+var Description = function (_PureComponent) {
   (0, _inherits3.default)(Description, _PureComponent);
 
   function Description(props) {
@@ -101,8 +88,8 @@ var Description = (_dec = (0, _nextReduxWrapper2.default)(_store2.default, funct
       _ajax.ajax.getJSON('/api/delete/' + _this.props.details.torrentId);
     };
 
-    _this.listTorrent = function (_ref2) {
-      var torrentId = _ref2.torrentId;
+    _this.listTorrent = function (_ref) {
+      var torrentId = _ref.torrentId;
 
       _this.props.dispatch({
         type: 'FETCH_DETAILS',
@@ -134,11 +121,11 @@ var Description = (_dec = (0, _nextReduxWrapper2.default)(_store2.default, funct
       }
       return _react2.default.createElement(TileWrapper, { color: _colors2.default.primary, __source: {
           fileName: _jsxFileName,
-          lineNumber: 98
+          lineNumber: 95
         }
       }, _react2.default.createElement('i', { className: 'mdi ' + icon + ' centered fs-22', __source: {
           fileName: _jsxFileName,
-          lineNumber: 99
+          lineNumber: 96
         }
       }));
     };
@@ -166,34 +153,34 @@ var Description = (_dec = (0, _nextReduxWrapper2.default)(_store2.default, funct
 
         return _react2.default.createElement('div', { className: 'tile tile-centered', __source: {
             fileName: _jsxFileName,
-            lineNumber: 115
+            lineNumber: 112
           }
         }, _react2.default.createElement('div', { className: 'tile-icon', __source: {
             fileName: _jsxFileName,
-            lineNumber: 116
+            lineNumber: 113
           }
         }, _this2.getFileIcon(file.type)), _react2.default.createElement('div', { className: 'tile-content', __source: {
             fileName: _jsxFileName,
-            lineNumber: 119
+            lineNumber: 116
           }
         }, _react2.default.createElement('div', { className: 'tile-title', __source: {
             fileName: _jsxFileName,
-            lineNumber: 120
+            lineNumber: 117
           }
         }, file.name), _react2.default.createElement('div', { className: 'tile-meta', __source: {
             fileName: _jsxFileName,
-            lineNumber: 121
+            lineNumber: 118
           }
         }, file.size, ' \xB7 ', file.type)), _react2.default.createElement('div', { className: 'tile-action', __source: {
             fileName: _jsxFileName,
-            lineNumber: 123
+            lineNumber: 120
           }
         }, Description.isSupported(file.type) && _react2.default.createElement('button', {
           className: 'btn btn-link',
           onClick: _this2.startStream,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 125
+            lineNumber: 122
           }
         }, _react2.default.createElement('i', {
           className: streamIcon,
@@ -201,7 +188,7 @@ var Description = (_dec = (0, _nextReduxWrapper2.default)(_store2.default, funct
           'data-id': i,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 129
+            lineNumber: 126
           }
         }))));
       });
@@ -216,7 +203,7 @@ var Description = (_dec = (0, _nextReduxWrapper2.default)(_store2.default, funct
       if (!details.name) return _react2.default.createElement('div', {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 149
+          lineNumber: 146
         }
       });
 
@@ -224,27 +211,27 @@ var Description = (_dec = (0, _nextReduxWrapper2.default)(_store2.default, funct
 
       return _react2.default.createElement('div', { className: mainClass, __source: {
           fileName: _jsxFileName,
-          lineNumber: 154
+          lineNumber: 151
         }
       }, _react2.default.createElement('div', { className: 'panel-header', __source: {
           fileName: _jsxFileName,
-          lineNumber: 155
+          lineNumber: 152
         }
       }, _react2.default.createElement('div', { className: 'panel-title text-ellipsis', __source: {
           fileName: _jsxFileName,
-          lineNumber: 156
+          lineNumber: 153
         }
       }, details && details.name)), _react2.default.createElement('div', { className: 'panel-nav', __source: {
           fileName: _jsxFileName,
-          lineNumber: 158
+          lineNumber: 155
         }
       }), _react2.default.createElement('div', { className: 'panel-body', __source: {
           fileName: _jsxFileName,
-          lineNumber: 159
+          lineNumber: 156
         }
       }, this.getFiles()), _react2.default.createElement('div', { className: 'panel-footer', __source: {
           fileName: _jsxFileName,
-          lineNumber: 162
+          lineNumber: 159
         }
       }), _react2.default.createElement(_MediaModal2.default, {
         infoHash: details.torrentId,
@@ -254,7 +241,7 @@ var Description = (_dec = (0, _nextReduxWrapper2.default)(_store2.default, funct
         onCloseClick: this.closeModal,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 163
+          lineNumber: 160
         }
       }));
     }
@@ -266,9 +253,11 @@ var Description = (_dec = (0, _nextReduxWrapper2.default)(_store2.default, funct
   }]);
 
   return Description;
-}(_react.PureComponent)) || _class);
+}(_react.PureComponent);
+
 Description.propTypes = {
   dispatch: _react.PropTypes.func,
+  fixed: _react.PropTypes.bool,
   details: _react.PropTypes.shape({
     name: _react.PropTypes.string,
     torrentId: _react.PropTypes.string,
@@ -277,8 +266,7 @@ Description.propTypes = {
       type: _react.PropTypes.string,
       size: _react.PropTypes.string
     })
-  }),
-  fixed: _react.PropTypes.bool
+  })
 };
 Description.defaultProps = {
   dispatch: function dispatch() {},

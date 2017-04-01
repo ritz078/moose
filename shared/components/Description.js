@@ -1,11 +1,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { PureComponent, PropTypes } from 'react';
-import withRedux from 'next-redux-wrapper';
 import styled from 'styled-components';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import classNames from 'classnames';
 import MediaModal from './MediaModal';
-import initStore from '../../store';
 import getFileType from '../utils/logic/fileType';
 import colors from '../constants/colors';
 
@@ -21,10 +19,10 @@ const TileWrapper = styled.div`
   align-content: space-around;
 `;
 
-@withRedux(initStore, ({ details }) => ({ details }))
 export default class Description extends PureComponent {
   static propTypes = {
     dispatch: PropTypes.func,
+    fixed: PropTypes.bool,
     details: PropTypes.shape({
       name: PropTypes.string,
       torrentId: PropTypes.string,
@@ -34,7 +32,6 @@ export default class Description extends PureComponent {
         size: PropTypes.string,
       }),
     }),
-    fixed: PropTypes.bool,
   }
 
   static defaultProps = {

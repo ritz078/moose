@@ -92,8 +92,9 @@ var Main = _styledComponents2.default.div(_templateObject4);
 
 var Home = (_dec = (0, _nextReduxWrapper2.default)(_store2.default, function (_ref) {
   var results = _ref.results,
-      loading = _ref.loading;
-  return { results: results, loading: loading };
+      loading = _ref.loading,
+      details = _ref.details;
+  return { results: results, loading: loading, details: details };
 }), _dec(_class = function (_PureComponent) {
   (0, _inherits3.default)(Home, _PureComponent);
 
@@ -123,27 +124,28 @@ var Home = (_dec = (0, _nextReduxWrapper2.default)(_store2.default, function (_r
     value: function getContent() {
       var _props = this.props,
           results = _props.results,
-          loading = _props.loading;
+          loading = _props.loading,
+          details = _props.details,
+          dispatch = _props.dispatch;
 
       if (this.isMagnetUrl()) {
         return _react2.default.createElement(Main, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 60
+            lineNumber: 72
           }
         }, _react2.default.createElement(Content, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 61
+            lineNumber: 73
           }
         }, _react2.default.createElement('div', { className: 'centered', __source: {
             fileName: _jsxFileName,
-            lineNumber: 62
+            lineNumber: 74
           }
-        }, _react2.default.createElement(_Description2.default, {
-          __source: {
+        }, _react2.default.createElement(_Description2.default, { details: details, dispatch: dispatch, __source: {
             fileName: _jsxFileName,
-            lineNumber: 62
+            lineNumber: 74
           }
         }))));
       }
@@ -151,33 +153,33 @@ var Home = (_dec = (0, _nextReduxWrapper2.default)(_store2.default, function (_r
       return _react2.default.createElement(Main, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 69
+          lineNumber: 81
         }
       }, _react2.default.createElement(Content, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 70
+          lineNumber: 82
         }
       }, _react2.default.createElement(_reactLoadingBar2.default, { show: loading, color: '#5764c6', __source: {
           fileName: _jsxFileName,
-          lineNumber: 71
+          lineNumber: 83
         }
       }), _react2.default.createElement(Left, { className: 'col-7', __source: {
           fileName: _jsxFileName,
-          lineNumber: 72
+          lineNumber: 84
         }
       }, results.data && !!results.data.length && _react2.default.createElement(_Results2.default, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 73
+          lineNumber: 85
         }
       })), _react2.default.createElement(Right, { className: 'col-5', __source: {
           fileName: _jsxFileName,
-          lineNumber: 75
+          lineNumber: 87
         }
-      }, _react2.default.createElement(_Description2.default, { fixed: true, __source: {
+      }, _react2.default.createElement(_Description2.default, { fixed: true, details: details, dispatch: dispatch, __source: {
           fileName: _jsxFileName,
-          lineNumber: 76
+          lineNumber: 88
         }
       }))));
     }
@@ -187,7 +189,7 @@ var Home = (_dec = (0, _nextReduxWrapper2.default)(_store2.default, function (_r
       return _react2.default.createElement(_Layout2.default, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 87
+          lineNumber: 99
         }
       }, this.getContent());
     }
@@ -200,9 +202,20 @@ Home.propTypes = {
     data: _react.PropTypes.array,
     searchTerm: _react.PropTypes.string
   }),
-  loading: _react.PropTypes.bool.isRequired
+  loading: _react.PropTypes.bool.isRequired,
+  details: _react.PropTypes.shape({
+    name: _react.PropTypes.string,
+    torrentId: _react.PropTypes.string,
+    files: _react.PropTypes.shape({
+      name: _react.PropTypes.string,
+      type: _react.PropTypes.string,
+      size: _react.PropTypes.string
+    })
+  }),
+  dispatch: _react.PropTypes.func
 };
 Home.defaultProps = {
-  results: {}
+  results: {},
+  dispatch: function dispatch() {}
 };
 exports.default = Home;

@@ -44,3 +44,5 @@ flow-coverage/
 
 yarn-error.log
 .env
+
+.next

@@ -1424,6 +1424,13 @@ buffer@^5.0.2:
     base64-js "^1.0.2"
     ieee754 "^1.1.4"
 
+bufferutil@1:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/bufferutil/-/bufferutil-1.3.0.tgz#69fdf13ad9d91222baee109945faadc431534f86"
+  dependencies:
+    bindings "~1.2.1"
+    nan "~2.4.0"
+
 bufferutil@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/bufferutil/-/bufferutil-3.0.0.tgz#afbb831c47229accf0b1f207d4a9942841b0ab0f"
@@ -2061,13 +2068,13 @@ debug@2.3.3:
   dependencies:
     ms "0.7.2"
 
-debug@2.6.1, debug@^2.1.1, debug@^2.2.0:
+debug@2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.1.tgz#79855090ba2c4e3115cc7d8769491d58f0491351"
   dependencies:
     ms "0.7.2"
 
-debug@2.6.3, debug@^2.0.0, debug@^2.1.0, debug@^2.1.3, debug@^2.5.2:
+debug@2.6.3, debug@^2.0.0, debug@^2.1.0, debug@^2.1.1, debug@^2.1.3, debug@^2.2.0, debug@^2.5.2, debug@^2.6.3:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.3.tgz#0f7eb8c30965ec08c72accfa0130c8b79984141d"
   dependencies:
@@ -4625,7 +4632,7 @@ mz@2.6.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-nan@^2.3.0:
+nan@^2.3.0, nan@~2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.4.0.tgz#fb3c59d45fe4effe215f0b890f8adf6eb32d2232"
 
@@ -7147,9 +7154,9 @@ webpack@2.3.1:
     webpack-sources "^0.2.0"
     yargs "^6.0.0"
 
-webtorrent@^0.98.3:
-  version "0.98.14"
-  resolved "https://registry.yarnpkg.com/webtorrent/-/webtorrent-0.98.14.tgz#2cb22b4c4928875b624bb7c34b3b841a034326cd"
+webtorrent@^0.98.15:
+  version "0.98.15"
+  resolved "https://registry.yarnpkg.com/webtorrent/-/webtorrent-0.98.15.tgz#db07e6e82269935f5d3855ca71be00dff8b38efb"
   dependencies:
     addr-to-ip-port "^1.4.2"
     bitfield "^1.1.2"

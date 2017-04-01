@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
-import * as mime from 'mime';
-import * as rangeParser from 'range-parser';
-import * as prettyBytes from 'pretty-bytes';
+import mime from 'mime';
+import rangeParser from 'range-parser';
+import prettyBytes from 'pretty-bytes';
 import atob from 'atob';
-import * as pump from 'pump';
+import pump from 'pump';
 import PirateBay from 'thepiratebay';
 import torrentStore from './helpers/torrentStore';
 

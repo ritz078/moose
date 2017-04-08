@@ -1,7 +1,6 @@
 import React, { PureComponent, PropTypes } from 'react';
 import withRedux from 'next-redux-wrapper';
 import styled from 'styled-components';
-import cookie from 'js-cookie';
 import initStore from '../store';
 import Results from '../shared/components/Results';
 import Layout from '../shared/components/Layout';

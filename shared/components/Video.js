@@ -13,6 +13,14 @@ const VideoWrapper = styled.div`
 
 class Video extends PureComponent {
   componentDidMount() {
+    this.init();
+  }
+
+  componentWillReceiveProps() {
+    this.init();
+  }
+
+  init = () => {
     videojs(this.videoRef, this.props.options, () => {
       this.props.onInit();
     });

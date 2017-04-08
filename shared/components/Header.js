@@ -13,16 +13,16 @@ const HeaderWrapper = styled.header`
 `;
 
 const SearchInput = styled.input`
-  height: 4.2rem;
-  padding: 0 20px;
+  height: 4.2rem !important;
+  padding: 0 20px !important;
   font-family: inherit;
-  background-color: #f7f7f7;
-  border: 1px solid #f3f3f3;
+  background-color: #f7f7f7 !important;
+  border: 1px solid #f3f3f3 !important;
 `;
 
 const SearchButton = styled.button`
-  height: 4.2rem;
-  padding: 0 20px;
+  height: 4.2rem !important;
+  padding: 0 20px !important;
   font-family: inherit;
 `;
 

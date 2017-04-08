@@ -37,7 +37,7 @@ const Tr = styled.div`
 `;
 
 const SortOrder = styled.select`
-  border-color: #f1f1f1;
+  border-color: #f1f1f1 !important;
   height: 42px !important;
   display: inline-block;
   margin-right: 10px;

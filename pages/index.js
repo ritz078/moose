@@ -2,8 +2,7 @@ import React, { PureComponent, PropTypes } from 'react';
 import withRedux from 'next-redux-wrapper';
 import styled from 'styled-components';
 import * as io from 'socket.io-client';
-import * as cookie from 'js-cookie';
-import Loading from 'react-loading-bar';
+import cookie from 'js-cookie';
 import initStore from '../store';
 import Results from '../shared/components/Results';
 import Layout from '../shared/components/Layout';
@@ -65,7 +64,7 @@ export default class Home extends PureComponent {
   }
 
   getContent() {
-    const { results, loading, details, dispatch } = this.props;
+    const { results, details, dispatch } = this.props;
 
     if (this.isMagnetUrl()) {
       return (
@@ -80,7 +79,6 @@ export default class Home extends PureComponent {
     return (
       <Main>
         <Content>
-          <Loading show={loading} color="#5764c6" />
           <Left className="col-7">
             {results.data && !!results.data.length && <Results />}
           </Left>
@@ -96,7 +94,7 @@ export default class Home extends PureComponent {
 
   render() {
     return (
-      <Layout>{this.getContent()}</Layout>
+      <Layout loading={this.props.loading}>{this.getContent()}</Layout>
     );
   }
 }

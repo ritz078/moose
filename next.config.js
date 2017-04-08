@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 module.exports = {
   webpack: (config) => {
     config.module.rules.push(
@@ -14,6 +15,12 @@ module.exports = {
         test: /\.(css)$/,
         use: ['babel-loader', 'raw-loader', 'css-loader'],
       });
+
+    config.resolve.alias = {
+      react: 'preact-compat/dist/preact-compat',
+      'react-dom': 'preact-compat/dist/preact-compat',
+    };
+
     return config;
   },
 };

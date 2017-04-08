@@ -1,6 +1,6 @@
 import React, { PropTypes, PureComponent } from 'react';
 import styled from 'styled-components';
-import * as videojs from 'video.js';
+import videojs from 'video.js';
 
 const VideoWrapper = styled.div`
   max-width: 95%;

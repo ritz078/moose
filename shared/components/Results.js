@@ -42,6 +42,7 @@ const SortOrder = styled.select`
   display: inline-block;
   margin-right: 10px;
   cursor: pointer;
+  appearance: none;
 `;
 
 const FiltersWrapper = styled.div`

@@ -43,6 +43,5 @@ flow-coverage/
 .DS_Store
 
 yarn-error.log
-.env
 
 .next

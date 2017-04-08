@@ -1,10 +1,11 @@
 import WebTorrent from 'webtorrent';
+import tempy from 'tempy';
 
 const debug = require('debug')('torrentStore');
 const rimraf = require('rimraf');
 const parseTorrent = require('parse-torrent');
 
-const BASE_PATH = '/tmp/blizzard/';
+const BASE_PATH = tempy.directory();
 
 export default {
   clients: {},

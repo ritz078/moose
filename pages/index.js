@@ -1,7 +1,6 @@
 import React, { PureComponent, PropTypes } from 'react';
 import withRedux from 'next-redux-wrapper';
 import styled from 'styled-components';
-import * as io from 'socket.io-client';
 import cookie from 'js-cookie';
 import initStore from '../store';
 import Results from '../shared/components/Results';
@@ -57,10 +56,6 @@ export default class Home extends PureComponent {
     results: {},
     dispatch() {
     },
-  }
-
-  componentDidMount() {
-    io.connect(`http://localhost:${SERVER_PORT}?session_name=${cookie.get('session_name')}`);
   }
 
   getContent() {

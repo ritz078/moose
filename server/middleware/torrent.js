@@ -14,7 +14,7 @@ function deselectAllFiles(torrent) {
 export function list(req, res) {
   const torrentId = atob(req.query.torrentId);
 
-  const torrent = torrentStore.getTorrent(req.sessionID, torrentId);
+  const torrent = torrentStore.getTorrent(torrentId);
 
   function onReady() {
     deselectAllFiles(torrent);
@@ -42,7 +42,7 @@ export function list(req, res) {
 }
 
 export function download(req, res) {
-  const torrent = torrentStore.getTorrent(req.sessionID, req.params.torrentId);
+  const torrent = torrentStore.getTorrent(req.params.torrentId);
 
   if (!torrent) {
     res.statusCode = 404;
@@ -52,7 +52,7 @@ export function download(req, res) {
   function onReady() {
     const file = torrent.files[+req.params.fileId];
 
-    torrentStore.removeTorrents(req.sessionID, torrent.infoHash);
+    torrentStore.removeTorrents(torrent.infoHash);
 
     res.setHeader('Accept-Ranges', 'bytes');
     res.setHeader('Content-Type', mime.lookup(file.name));
@@ -97,9 +97,7 @@ export function download(req, res) {
 }
 
 export function deleteTorr(req, res) {
-  const sessionId = req.sessionID;
-
-  torrentStore.removeTorrents(sessionId);
+  torrentStore.removeTorrents();
   res.status(200).end('Torrent file deleted'); // for saving space on server.
 }
 

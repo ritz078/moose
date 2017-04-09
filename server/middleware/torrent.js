@@ -105,7 +105,7 @@ export function deleteTorr(req, res) {
 export function searchTorrent(req, res) {
   req.query.page = (req.query.page - 1) || 0;
 
-  search(req.params.searchTerm, res.query)
+  search(req.params.searchTerm, req.query)
     .then((results) => {
       if (results && !results.length) res.status(500).body({ error: 'Unable to fetch data' });
       return res.json({

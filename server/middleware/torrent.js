@@ -6,6 +6,7 @@ import atob from 'atob';
 import pump from 'pump';
 import PirateBay from 'thepiratebay';
 import torrentStore from './helpers/torrentStore';
+import search from './helpers/search';
 
 function deselectAllFiles(torrent) {
   torrent.files.forEach(file => file.deselect());
@@ -102,12 +103,9 @@ export function deleteTorr(req, res) {
 }
 
 export function searchTorrent(req, res) {
-  PirateBay.search(req.params.searchTerm, {
-    orderBy: req.query.orderBy || 'seeds',
-    sortBy: req.query.sortBy || 'desc',
-    page: (req.query.page - 1) || 0,
-    category: req.query.category || 'all',
-  })
+  req.query.page = (req.query.page - 1) || 0;
+
+  search(req.params.searchTerm, res.query)
     .then((results) => {
       if (results && !results.length) res.status(500).body({ error: 'Unable to fetch data' });
       return res.json({

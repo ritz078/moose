@@ -1,7 +1,7 @@
 {
   "name": "snape",
   "version": "0.1.0",
-  "description": "A web app to simplify the use of torrents.",
+  "description": "A web application to search and stream torrents.",
   "main": "build/server/index.js",
   "engines": {
     "node": ">=6"
@@ -11,10 +11,13 @@
     "lintfix": "eslint --fix client server shared config internal",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "dev": "next",
-    "build": "next build",
-    "start": "next start",
-    "server": "nodemon --watch server server/index.js --exec babel-node --inspect --presets es2015,latest"
+    "dev:client": "next",
+    "build:client": "next build",
+    "start:server": "babel-node server/index.js --presets es2015,latest",
+    "start:client": "next start",
+    "start": "concurrently -k \"npm run start:client\" \"npm run start:server\"",
+    "dev:server": "nodemon --watch server server/index.js --exec babel-node --inspect --presets es2015,latest",
+    "prepublish": "npm run build:client"
   },
   "repository": {
     "type": "git",
@@ -50,6 +53,7 @@
     "babel-register": "^6.24.1",
     "classnames": "^2.2.5",
     "colors": "1.1.2",
+    "concurrently": "^3.4.0",
     "cors": "^2.8.3",
     "css-ripple-effect": "^1.0.5",
     "debug": "^2.6.3",

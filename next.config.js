@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 module.exports = {
+  distDir: 'dist',
   webpack: (config) => {
     config.module.rules.push(
       {

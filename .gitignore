@@ -45,3 +45,4 @@ flow-coverage/
 yarn-error.log
 
 .next
+dist

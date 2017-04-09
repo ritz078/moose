@@ -18,15 +18,6 @@ export default {
     return this.client;
   },
 
-  destroyClient() {
-    if (this.client) {
-      this.client.destroy(() => {
-        delete this.client;
-        rimraf(`${BASE_PATH}`, () => debug(`all torrents/client deleted`));
-      });
-    }
-  },
-
   removeTorrents(infoHash, cb) {
     const client = this.client;
     client.torrents.forEach((torrent) => {

@@ -78,3 +78,21 @@ html {
 .m-0{
   margin: 0;
 }
+
+.show-sm-inline {
+  display: none;
+}
+@media screen and (max-width: 600px) {
+  .show-sm-inline {
+    display: inline !important;
+  }
+}
+
+.hide-sm-inline {
+  display: inline;
+}
+@media screen and (max-width: 600px) {
+  .hide-sm-inline {
+    display: none !important;
+  }
+}

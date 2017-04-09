@@ -8,27 +8,53 @@ import Description from '../shared/components/Description';
 
 const Left = styled.div`
   flex: 1;
+  
+  @media screen and (max-width: 1220px) {
+    width: 100%;
+  }
 `;
 
 const Right = styled.div`
   padding: 0 0 0 20px;
-  flex: 0 1 480px;
+  flex: 0 1 430px;
   & > div {
-    width: 460px;
+    width: 410px;
     max-height: calc(100vh - 110px);
+  }
+  
+  @media screen and (max-width: 1220px) {
+    padding: 0;
+    width: 100% !important;
+    flex: none;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.3);
+    max-height: 40vh;
+    & > div {
+      position: relative;
+      width: 100%;
+      background-color: #fff;
+    }
   }
 `;
 
 const Content = styled.div`
-  padding: 20px 5% 0;
   display: flex;
   padding-top: 85px;
   padding-bottom: 30px;
+  width: 100%;
+  max-width: 1220px;
+  margin:0 auto;
+  @media screen and (max-width: 1220px) {
+    padding-bottom: 40vh;
+  }
 `;
 
 const Main = styled.div`
   display: flex;
   flex-direction: column;
+  padding:0 20px;
 `;
 
 @withRedux(initStore, ({ results, loading, details }) => ({ results, loading, details }))
@@ -73,7 +99,7 @@ export default class Home extends PureComponent {
     return (
       <Main>
         <Content>
-          <Left className="col-7">
+          <Left className="col-7 col-lg-12">
             {results.data && !!results.data.length && <Results />}
           </Left>
           <Right className="col-5">

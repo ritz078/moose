@@ -5,7 +5,7 @@ import initStore from '../../store';
 
 const HeaderWrapper = styled.header`
   width: 100%;
-  padding: 10px 5%;
+  padding: 10px 20px;
   position: fixed;
   box-shadow: 0 1px 1px rgba(0,0,0,0.15);
   z-index: 99;
@@ -22,8 +22,14 @@ const SearchInput = styled.input`
 
 const SearchButton = styled.button`
   height: 4.2rem !important;
-  padding: 0 20px !important;
+  padding: 0 12px !important;
   font-family: inherit;
+`;
+
+const SearchWrapper = styled.div`
+  max-width: 1220px;
+  width: 100%;
+  margin:0 auto;
 `;
 
 @withRedux(initStore)
@@ -71,7 +77,7 @@ export default class Header extends PureComponent {
   render() {
     return (
       <HeaderWrapper className="row">
-        <div className="input-group">
+        <SearchWrapper className="input-group">
           <SearchInput
             type="text"
             className="form-input"
@@ -83,9 +89,9 @@ export default class Header extends PureComponent {
             className="btn btn-primary input-group-btn"
             onClick={this.handleSearch}
           >
-            Submit
+            <i className="mdi mdi-magnify" style={{ fontSize: 22, verticalAlign: 'middle' }}></i>
           </SearchButton>
-        </div>
+        </SearchWrapper>
       </HeaderWrapper>
     );
   }

@@ -42,6 +42,14 @@ export default function MediaModal(props) {
     },
   };
 
+  const mq = window.matchMedia('(max-width: 1220px)');
+
+  if (mq.matches) {
+    style.content.left = 0;
+    style.content.right = 0;
+    style.content.padding = 0;
+  }
+
   const src = `http://localhost:${SERVER_PORT}/api/download/${infoHash}/${+fileIndex}/${file.name}`;
 
   return (

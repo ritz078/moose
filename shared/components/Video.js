@@ -9,6 +9,9 @@ const VideoWrapper = styled.div`
   flex-direction: column;
   flex-grow: 1;
   justify-content: center;
+  @media screen and (max-width: 1220px) {
+    max-width: 100%;
+  }
 `;
 
 class Video extends PureComponent {

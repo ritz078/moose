@@ -14,7 +14,11 @@ const Verified = styled.i`
 const Table = styled.div`
   display: table;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 10px;
+  @media screen and (max-width: 600px) {
+    display: block;
+    overflow: hidden;
+  }
 `;
 
 const Td = styled.div`
@@ -23,6 +27,9 @@ const Td = styled.div`
   padding: 6px 10px;
   text-align: left;
   vertical-align: middle;
+  @media screen and (max-width: 600px) {
+    display: block;
+  }
 `;
 
 const Tr = styled.div`
@@ -34,19 +41,29 @@ const Tr = styled.div`
   &:first-of-type {
     font-weight: bold;
   }
+  @media screen and (max-width: 600px) {
+    display: block;
+  }
 `;
 
 const SortOrder = styled.select`
   border-color: #f1f1f1 !important;
   height: 42px !important;
   display: inline-block;
-  margin-right: 10px;
   cursor: pointer;
   appearance: none;
 `;
 
 const FiltersWrapper = styled.div`
-  width: 330px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ResultTitle = styled.div`
+  max-width: 440px;
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 @withRedux(initStore, ({ results, params }) => ({ results, params }))
@@ -76,7 +93,7 @@ export default class Results extends PureComponent {
   }
 
   getResults = () => {
-    const { results, dispatch } = this.props;
+    const { results, dispatch, params } = this.props;
 
     return results.data.map((result, i) => (
       <Tr
@@ -86,23 +103,30 @@ export default class Results extends PureComponent {
           payload: result.magnetLink,
         })}
       >
-        <Td>{i + 1}</Td>
+        <Td className="hide-sm">{((params.page - 1) * 30) + (i + 1)}</Td>
         <Td>
           <div className="tile tile-centered m-0">
             <div className="tile-content">
-              <div className="tile-title" style={{ maxWidth: '500px' }}>{result.name}</div>
+              <ResultTitle className="tile-title">
+                <span className="show-sm-inline">{((params.page - 1) * 30) + (i + 1)}. </span>
+                {result.name}
+              </ResultTitle>
               <div className="tile-meta">
                 <Verified
                   data-tooltip={result.verified ? 'Verified' : 'Not verified'}
                   className="mdi mdi-verified tooltip tooltip-right"
                   active={result.verified}
-                /> · {result.uploadDate} · {result.category.name} · {result.subcategory.name}</div>
+                /> <span className="show-sm-inline">· {result.size} ·</span>
+                <span className="show-sm-inline"> {result.seeders} Seeders · </span>
+                {result.uploadDate}
+                <span className="hide-sm-inline">· {result.category.name} · {result.subcategory.name}</span>
+              </div>
             </div>
           </div>
         </Td>
-        <Td>{result.size}</Td>
-        <Td>{result.seeders}</Td>
-        <Td>{result.leechers}</Td>
+        <Td className="hide-md">{result.size}</Td>
+        <Td className="hide-sm">{result.seeders}</Td>
+        <Td className="hide-md">{result.leechers}</Td>
       </Tr>
     ));
   }
@@ -138,7 +162,7 @@ export default class Results extends PureComponent {
     return (
       <div>
         <div className="clearfix">
-          <h5 className="float-left">Results for search term <b>{this.props.results.searchTerm}</b></h5>
+          <h6 className="float-left hide-sm">Results for search term <b>{this.props.results.searchTerm}</b></h6>
           <FiltersWrapper className="float-right">
             <div className="form-group inline-block">
               <SortOrder className="form-select" onChange={this.setSortOrder}>
@@ -147,23 +171,16 @@ export default class Results extends PureComponent {
                 ))}
               </SortOrder>
             </div>
-            <div className="form-group inline-block">
-              <Pagination
-                onNextClick={this.onNextClick}
-                onPrevClick={this.onPrevClick}
-                currentPage={params.page}
-              />
-            </div>
           </FiltersWrapper>
         </div>
 
         <Table>
           <Tr>
-            <Td>#</Td>
+            <Td className="hide-sm">#</Td>
             <Td >Name</Td>
-            <Td>File Size</Td>
-            <Td>Seeders</Td>
-            <Td>Leechers</Td>
+            <Td className="hide-md">File Size</Td>
+            <Td className="hide-sm">Seeders</Td>
+            <Td className="hide-md">Leechers</Td>
           </Tr>
           {this.getResults()}
         </Table>

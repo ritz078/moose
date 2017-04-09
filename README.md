@@ -31,3 +31,16 @@ snape serve
 ```
 
 and the server starts on `localhost:3000`
+
+### Development
+
+To start the development server run `npm run start:dev`
+This will start the client server (next.js) and the API server in parallel.
+
+### Credits
+
+The logo has been designed by [Jacqueline Fernandes](https://thenounproject.com/jacquelinefernandes/)
+
+### License 
+MIT
+

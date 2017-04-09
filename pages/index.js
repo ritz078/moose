@@ -30,11 +30,11 @@ const Right = styled.div`
     left: 0;
     bottom: 0;
     box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.3);
-    max-height: 40vh;
     & > div {
       position: relative;
       width: 100%;
       background-color: #fff;
+      max-height: 40vh;
     }
   }
 `;

@@ -19,6 +19,11 @@ const ImageLightbox = styled.img`
   background-repeat: no-repeat;
   background-position: center;
   background-image: ${props => `url${props.src}`};
+  @media screen and (max-width: 1220px) {
+    height: auto;
+    width: 100%;
+    align-self: center;
+  }
 `;
 
 const CloseIcon = styled.i`

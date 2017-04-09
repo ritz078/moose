@@ -4,7 +4,6 @@ import rangeParser from 'range-parser';
 import prettyBytes from 'pretty-bytes';
 import atob from 'atob';
 import pump from 'pump';
-import PirateBay from 'thepiratebay';
 import torrentStore from './helpers/torrentStore';
 import search from './helpers/search';
 

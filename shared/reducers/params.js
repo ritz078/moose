@@ -12,6 +12,10 @@ const paramsReducer = createReducer(initialState, {
     sortBy: action.payload.sortBy,
     orderBy: action.payload.orderBy,
   }),
+  DECODE_FILTER: (state, action) => Object.assign({}, state, action.payload),
+  SET_SEARCHTERM: (state, action) => Object.assign({}, state, {
+    searchTerm: action.payload,
+  }),
 });
 
 export default paramsReducer;

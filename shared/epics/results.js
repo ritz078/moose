@@ -1,6 +1,7 @@
 import 'rxjs';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import qs from 'query-string';
+import Router from 'next/router';
 import { showToast } from '../components/Toast';
 
 export default function (action$, { dispatch, getState }) {
@@ -8,9 +9,16 @@ export default function (action$, { dispatch, getState }) {
     .mergeMap((action) => {
       const params = getState().params;
 
-      const searchTerm = action.payload || getState().results.searchTerm;
+      const searchTerm = action.payload || getState().params.searchTerm;
       const stringifiedParams = qs.stringify(params);
       dispatch({ type: 'START_LOADING' });
+
+      Router.push({
+        pathname: '/',
+        query: {
+          f: btoa(JSON.stringify(params)),
+        },
+      });
 
       return (
         ajax.getJSON(`http://localhost:${SERVER_PORT}/api/search/${searchTerm}?${stringifiedParams}`)

@@ -1,6 +1,8 @@
+/* eslint-disable react/no-did-mount-set-state */
 import React, { PureComponent, PropTypes } from 'react';
 import withRedux from 'next-redux-wrapper';
 import styled from 'styled-components';
+import qs from 'query-string';
 import initStore from '../store';
 import Results from '../shared/components/Results';
 import Layout from '../shared/components/Layout';
@@ -57,7 +59,9 @@ const Main = styled.div`
   padding:0 20px;
 `;
 
-@withRedux(initStore, ({ results, loading, details }) => ({ results, loading, details }))
+@withRedux(initStore,
+  ({ results, loading, details, params }) => ({ results, loading, details, params }),
+)
 export default class Home extends PureComponent {
   static propTypes = {
     results: PropTypes.shape({
@@ -73,14 +77,59 @@ export default class Home extends PureComponent {
         type: PropTypes.string,
         size: PropTypes.string,
       }),
-    }),
+    }).isRequired,
     dispatch: PropTypes.func,
+    params: PropTypes.shape({
+      searchTerm: PropTypes.string,
+    }).isRequired,
   }
 
   static defaultProps = {
     results: {},
     dispatch() {
     },
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      url: '',
+    };
+  }
+
+  componentDidMount() {
+    this.decodeFilter();
+
+    this.setState({
+      url: window.location.href,
+    });
+  }
+
+  componentWillReceiveProps() {
+    if (this.state.url !== window.location.href) {
+      this.decodeFilter(true);
+    }
+
+    this.setState({
+      url: window.location.href,
+    });
+  }
+
+  decodeFilter(fetch = false) {
+    const { f } = qs.parse(window.location.search);
+    if (f) {
+      this.props.dispatch({
+        type: 'DECODE_FILTER',
+        payload: JSON.parse(atob(f)),
+      });
+    }
+
+    if (fetch) {
+      this.props.dispatch({
+        type: 'FETCH_RESULTS',
+      });
+    }
   }
 
   getContent() {
@@ -110,7 +159,7 @@ export default class Home extends PureComponent {
     );
   }
 
-  isMagnetUrl = () => this.props.results.searchTerm && this.props.results.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null
+  isMagnetUrl = () => this.props.params.searchTerm && this.props.params.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null
 
   render() {
     return (

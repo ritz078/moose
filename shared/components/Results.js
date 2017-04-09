@@ -81,6 +81,7 @@ export default class Results extends PureComponent {
     dispatch: PropTypes.isRequired,
     params: PropTypes.shape({
       page: PropTypes.number,
+      searchTerm: PropTypes.string,
     }).isRequired,
   }
 
@@ -162,7 +163,7 @@ export default class Results extends PureComponent {
     return (
       <div>
         <div className="clearfix">
-          <h6 className="float-left hide-sm">Results for search term <b>{this.props.results.searchTerm}</b></h6>
+          <h6 className="float-left hide-sm">Results for search term <b>{this.props.params.searchTerm}</b></h6>
           <FiltersWrapper className="float-right">
             <div className="form-group inline-block">
               <SortOrder className="form-select" onChange={this.setSortOrder}>

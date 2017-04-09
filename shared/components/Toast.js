@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import cn from 'classnames';
+import { toast } from 'react-toastify';
 
 export default function Toast(props) {
   const mainClass = cn('toast', {
@@ -25,3 +26,7 @@ Toast.propTypes = {
 Toast.defaultProps = {
   type: 'default',
 };
+
+export function showToast(text, type) {
+  toast(<Toast text={text} type={type} />);
+}

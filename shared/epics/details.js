@@ -1,9 +1,7 @@
-import React from 'react';
 import 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { ajax } from 'rxjs/observable/dom/ajax';
-import { toast } from 'react-toastify';
-import Toast from '../components/Toast';
+import { showToast } from '../components/Toast';
 
 export default function fetchDetails(action$, { dispatch }) {
   return action$.ofType('FETCH_DETAILS')
@@ -24,7 +22,7 @@ export default function fetchDetails(action$, { dispatch }) {
             }]
           ))
           .catch((err) => {
-            toast(<Toast text={err.message} type={'error'} />);
+            showToast(err.message, 'error');
             return (Observable.of({
               type: 'STOP_LOADING',
             }));

@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
-import * as mime from 'mime';
-import * as rangeParser from 'range-parser';
-import * as prettyBytes from 'pretty-bytes';
-import * as atob from 'atob';
-import * as pump from 'pump';
+import mime from 'mime';
+import rangeParser from 'range-parser';
+import prettyBytes from 'pretty-bytes';
+import atob from 'atob';
+import pump from 'pump';
 import PirateBay from 'thepiratebay';
 import torrentStore from './helpers/torrentStore';
 
@@ -14,7 +14,7 @@ function deselectAllFiles(torrent) {
 export function list(req, res) {
   const torrentId = atob(req.query.torrentId);
 
-  const torrent = torrentStore.getTorrent(req.sessionID, torrentId);
+  const torrent = torrentStore.getTorrent(torrentId);
 
   function onReady() {
     deselectAllFiles(torrent);
@@ -42,7 +42,7 @@ export function list(req, res) {
 }
 
 export function download(req, res) {
-  const torrent = torrentStore.getTorrent(req.sessionID, req.params.torrentId);
+  const torrent = torrentStore.getTorrent(req.params.torrentId);
 
   if (!torrent) {
     res.statusCode = 404;
@@ -52,7 +52,7 @@ export function download(req, res) {
   function onReady() {
     const file = torrent.files[+req.params.fileId];
 
-    torrentStore.removeTorrents(req.sessionID, torrent.infoHash);
+    torrentStore.removeTorrents(torrent.infoHash);
 
     res.setHeader('Accept-Ranges', 'bytes');
     res.setHeader('Content-Type', mime.lookup(file.name));
@@ -97,9 +97,7 @@ export function download(req, res) {
 }
 
 export function deleteTorr(req, res) {
-  const sessionId = req.sessionID;
-
-  torrentStore.removeTorrents(sessionId);
+  torrentStore.removeTorrents();
   res.status(200).end('Torrent file deleted'); // for saving space on server.
 }
 
@@ -111,7 +109,7 @@ export function searchTorrent(req, res) {
     category: req.query.category || 'all',
   })
     .then((results) => {
-      if (results && !results.length) res.send(500, { error: 'Unable to fetch data' });
+      if (results && !results.length) res.status(500).body({ error: 'Unable to fetch data' });
       return res.json({
         data: results,
         page: req.query.page,

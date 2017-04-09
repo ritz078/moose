@@ -1,10 +1,9 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-
 import { createEpicMiddleware } from 'redux-observable';
-import epics from '../shared/epics';
-import reducer from '../shared/reducers';
+import epics from './shared/epics';
+import reducer from './shared/reducers';
 
-export default function () {
+const initStore = (initialState) => {
   const epicMiddleware = createEpicMiddleware(epics);
 
   // eslint-disable-next-line no-underscore-dangle
@@ -16,6 +15,9 @@ export default function () {
 
   return createStore(
     reducer,
+    initialState,
     enhancer,
   );
-}
+};
+
+export default initStore;

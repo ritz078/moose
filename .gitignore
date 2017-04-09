@@ -39,10 +39,9 @@ flow-typed/
 # Flow Coverage Report
 flow-coverage/
 
-# Happypack
-.happypack
-
 # OSX Files
 .DS_Store
 
 yarn-error.log
+
+.next

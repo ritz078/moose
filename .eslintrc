@@ -11,7 +11,7 @@
     "jest": true
   },
   "globals": {
-    "idx": true
+    "SERVER_PORT": true
   },
   "ecmaFeatures": {
     "defaultParams": true

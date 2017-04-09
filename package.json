@@ -25,13 +25,11 @@
     "url": "git+https://github.com/ritz078/snape.git"
   },
   "keywords": [
-    "react",
-    "boilerplate",
-    "starter kit",
-    "universal",
-    "javascript",
-    "express",
-    "webpack"
+    "torrent",
+    "webtorrent",
+    "stream",
+    "download",
+    "video"
   ],
   "license": "MIT",
   "bugs": {

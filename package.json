@@ -7,7 +7,7 @@
     "node": ">=6"
   },
   "scripts": {
-    "lint": "eslint client server shared config internal",
+    "lint": "eslint pages server shared",
     "lintfix": "eslint --fix client server shared config internal",
     "test": "jest",
     "test:coverage": "jest --coverage",
@@ -17,6 +17,7 @@
     "start:client": "next start",
     "start": "concurrently -k \"npm run start:client\" \"npm run start:server\"",
     "dev:server": "nodemon --watch server server/index.js --exec babel-node --inspect --presets es2015,latest",
+    "start:dev": "concurrently -k \"npm run dev:client\" \"npm run dev:server\"",
     "prepublish": "npm run build:client"
   },
   "repository": {

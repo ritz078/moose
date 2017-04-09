@@ -5,7 +5,7 @@
 > A torrent client for web with search and stream functionality.
 
 <p align="center">
-  <img src="./demo.png" align="center" alt="" width="600"/>
+  <img src="./demo.png" align="center"/>
 </p>
 
 ### Features

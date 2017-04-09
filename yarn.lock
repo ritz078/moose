@@ -1763,6 +1763,10 @@ css-loader@^0.28.0:
     postcss-modules-values "^1.1.0"
     source-list-map "^0.1.7"
 
+css-ripple-effect@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/css-ripple-effect/-/css-ripple-effect-1.0.5.tgz#6963b752aaf59babbd3fea3ec0da5d44e9122efb"
+
 css-select@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/css-select/-/css-select-1.2.0.tgz#2b3a110539c5355f1cd8d314623e870b121ec858"
@@ -4621,6 +4625,15 @@ object.omit@^2.0.0:
     for-own "^0.1.4"
     is-extendable "^0.1.1"
 
+object.values@^1.0.3:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/object.values/-/object.values-1.0.4.tgz#e524da09b4f66ff05df457546ec72ac99f13069a"
+  dependencies:
+    define-properties "^1.1.2"
+    es-abstract "^1.6.1"
+    function-bind "^1.1.0"
+    has "^1.0.1"
+
 on-finished@~2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/on-finished/-/on-finished-2.3.0.tgz#20f1336481b083cd75337992a16971aa2d906947"
@@ -5347,6 +5360,13 @@ react-addons-test-utils@^15.5.0:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
+react-addons-transition-group@^15.3.2:
+  version "15.5.2"
+  resolved "https://registry.yarnpkg.com/react-addons-transition-group/-/react-addons-transition-group-15.5.2.tgz#da6989d9cffe27dffacaedc862000ffb09ae2206"
+  dependencies:
+    fbjs "^0.8.4"
+    object-assign "^4.1.0"
+
 react-deep-force-update@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-2.0.1.tgz#4f7f6c12c3e7de42f345992a3c518236fa1ecad3"
@@ -5401,7 +5421,15 @@ react-redux@^5.0.3:
     lodash-es "^4.2.0"
     loose-envify "^1.1.0"
 
-react@^15.5.3:
+react-toastify@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-1.2.2.tgz#2a3e12f6c53433e20807fb4f4b7f0ccb4be9a8eb"
+  dependencies:
+    object.values "^1.0.3"
+    react "^15.3.2"
+    react-addons-transition-group "^15.3.2"
+
+react@^15.3.2, react@^15.5.3:
   version "15.5.3"
   resolved "https://registry.yarnpkg.com/react/-/react-15.5.3.tgz#84055382c025dec4e3b902bb61a8697cc79c1258"
   dependencies:

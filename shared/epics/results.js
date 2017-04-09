@@ -1,6 +1,9 @@
+import React from 'react';
 import 'rxjs';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import qs from 'query-string';
+import { toast } from 'react-toastify';
+import Toast from '../components/Toast';
 
 export default function (action$, { dispatch, getState }) {
   return action$.ofType('FETCH_RESULTS')
@@ -24,9 +27,12 @@ export default function (action$, { dispatch, getState }) {
           }, {
             type: 'STOP_LOADING',
           }]))
-          .catch(() => ([{
-            type: 'STOP_LOADING',
-          }]))
+          .catch((err) => {
+            toast(<Toast text={err.message} type={'error'} />);
+            return ([{
+              type: 'STOP_LOADING',
+            }]);
+          })
       );
     });
 }

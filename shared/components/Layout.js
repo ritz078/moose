@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Head from 'next/head';
 import Loading from 'react-loading-bar';
+import { ToastContainer } from 'react-toastify';
 
 import stylesheet from '../../styles/index.less';
 import Header from './Header';
@@ -17,6 +18,8 @@ export default function Layout({ children, loading }) {
     <Header />
 
     { children }
+
+    <ToastContainer autoClose={3000} position="bottom-center" />
   </div>);
 }
 

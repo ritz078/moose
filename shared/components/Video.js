@@ -7,7 +7,8 @@ const VideoWrapper = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  flex: 1;
+  align-items: center;
   justify-content: center;
   @media screen and (max-width: 1220px) {
     max-width: 100%;
@@ -31,18 +32,16 @@ class Video extends PureComponent {
 
   render() {
     return (
-      <div style={{ display: 'flex', height: '100%' }}>
-        <VideoWrapper>
-          <video
-            className="video-js vjs-default-skin"
-            controls
-            preload="auto"
-            src={this.props.src}
-            ref={x => (this.videoRef = x)}
-            autoPlay
-          />
-        </VideoWrapper>
-      </div>
+      <VideoWrapper>
+        <video
+          className="video-js vjs-default-skin"
+          controls
+          preload="auto"
+          src={this.props.src}
+          ref={x => (this.videoRef = x)}
+          autoPlay
+        />
+      </VideoWrapper>
     );
   }
 }

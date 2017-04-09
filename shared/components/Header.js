@@ -30,6 +30,16 @@ const SearchWrapper = styled.div`
   max-width: 1220px;
   width: 100%;
   margin:0 auto;
+  position: relative;
+`;
+
+const ClearInput = styled.i`
+  position: absolute;
+  right: 58px;
+  top: 9px;
+  font-size: 18px;
+  color: #777;
+  cursor: pointer;
 `;
 
 @withRedux(initStore)
@@ -41,6 +51,14 @@ export default class Header extends PureComponent {
   static defaultProps = {
     dispatch() {
     },
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchTerm: '',
+    };
   }
 
   handleSearch = (e: (KeyboardEvent | MouseEvent)) => {
@@ -74,6 +92,13 @@ export default class Header extends PureComponent {
     }
   }
 
+  clearInput = () => {
+    this.inputRef.value = '';
+    this.setState({
+      searchTerm: '',
+    });
+  }
+
   render() {
     return (
       <HeaderWrapper className="row">
@@ -85,11 +110,12 @@ export default class Header extends PureComponent {
             innerRef={x => (this.inputRef = x)}
             onKeyPress={this.handleSearch}
           />
+          {this.state.searchTerm && <ClearInput className="mdi mdi-close-circle" onClick={this.clearInput} />}
           <SearchButton
             className="btn btn-primary input-group-btn"
             onClick={this.handleSearch}
           >
-            <i className="mdi mdi-magnify" style={{ fontSize: 22, verticalAlign: 'middle' }}></i>
+            <i className="mdi mdi-magnify" style={{ fontSize: 22, verticalAlign: 'middle' }} />
           </SearchButton>
         </SearchWrapper>
       </HeaderWrapper>

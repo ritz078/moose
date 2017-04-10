@@ -1,6 +1,6 @@
 {
   "name": "snape",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A web application to search and stream torrents.",
   "main": "build/server/index.js",
   "engines": {
@@ -85,6 +85,7 @@
     "styled-components": "^1.4.4",
     "tempy": "^0.1.0",
     "thepiratebay": "^1.4.0",
+    "update-notifier": "^2.1.0",
     "url-loader": "^0.5.8",
     "video.js": "^5.19.1",
     "webtorrent": "^0.98.16"

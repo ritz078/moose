@@ -47,7 +47,7 @@ export default function MediaModal(props) {
     },
   };
 
-  const src = `http://localhost:${SERVER_PORT}/api/download/${infoHash}/${+fileIndex}/${file.name}`;
+  const src = `http://${window.location.hostname}:${SERVER_PORT}/api/download/${infoHash}/${+fileIndex}/${file.name}`;
 
   return (
     <Modal

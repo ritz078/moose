@@ -15,7 +15,7 @@ export default function Layout({ children, loading }) {
       <link rel="shortcut icon" type="image/png" href="./static/images/favicon.png" />
       <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
     </Head>
-    <Loading show={loading} color="#3f51b5" />
+    <Loading show={loading} showSpinner={false} color="#3f51b5" />
     <Header />
 
     { children }

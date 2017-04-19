@@ -15,6 +15,7 @@ const Table = styled.div`
   display: table;
   width: 100%;
   margin-top: 10px;
+  font-size: 13px;
   @media screen and (max-width: 600px) {
     display: block;
     overflow: hidden;

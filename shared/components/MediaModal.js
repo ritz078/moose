@@ -13,17 +13,13 @@ const ModalControl = styled.div`
 
 const ImageLightbox = styled.img`
   display: flex;
-  height: 100%;
-  margin: 0 auto;
   background-size:contain;
   background-repeat: no-repeat;
   background-position: center;
   background-image: ${props => `url${props.src}`};
-  @media screen and (max-width: 1220px) {
-    height: auto;
-    width: 100%;
-    align-self: center;
-  }
+  height: auto;
+  width: 100%;
+  align-self: center;
 `;
 
 const CloseIcon = styled.i`
@@ -47,7 +43,7 @@ export default function MediaModal(props) {
     },
   };
 
-  const src = `http://${window.location.hostname}:${SERVER_PORT}/api/download/${infoHash}/${+fileIndex}/${file.name}`;
+  const src = `http://${window.location.hostname}:7500/api/download/${infoHash}/${+fileIndex}/${file.name}`;
 
   return (
     <Modal

@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import videojs from 'video.js';
 
 const VideoWrapper = styled.div`
-  max-width: 95%;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -40,6 +38,7 @@ class Video extends PureComponent {
           src={this.props.src}
           ref={x => (this.videoRef = x)}
           autoPlay
+          cast
         />
       </VideoWrapper>
     );

@@ -11,6 +11,7 @@ const HeaderWrapper = styled.header`
   z-index: 99;
   background-color: white;
   display: flex;
+  -webkit-app-region: drag;
 `;
 
 const SearchInput = styled.input`
@@ -41,14 +42,6 @@ const ClearInput = styled.i`
   font-size: 18px;
   color: #777;
   cursor: pointer;
-`;
-
-const Logo = styled.img`
-  width: 40px;
-  height: 40px;
-  display:block;
-  margin-right: 20px;
-  filter: grayscale(100%) contrast(50%);
 `;
 
 @withRedux(initStore)
@@ -113,8 +106,6 @@ export default class Header extends PureComponent {
     return (
       <HeaderWrapper className="row">
         <SearchWrapper className="input-group">
-          <Logo src="./static/images/snape.png" alt="" className="hide-sm" />
-
           <SearchInput
             type="text"
             className="form-input"

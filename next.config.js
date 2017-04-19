@@ -1,7 +1,9 @@
 /* eslint-disable no-param-reassign */
 module.exports = {
-  distDir: 'dist',
+  distDir: 'dist/client',
   webpack: (config) => {
+    config.target = 'electron-renderer';
+
     config.module.rules.push(
       {
         test: /\.(css|scss|less)/,

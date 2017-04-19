@@ -1,17 +1,17 @@
 /* eslint-disable no-param-reassign */
-import mime from 'mime';
-import rangeParser from 'range-parser';
-import prettyBytes from 'pretty-bytes';
-import atob from 'atob';
-import pump from 'pump';
-import torrentStore from './helpers/torrentStore';
-import search from './helpers/search';
+const mime = require('mime');
+const rangeParser = require('range-parser');
+const prettyBytes = require('pretty-bytes');
+const atob = require('atob');
+const pump = require('pump');
+const torrentStore = require('./helpers/torrentStore');
+const search = require('./helpers/search');
 
 function deselectAllFiles(torrent) {
   torrent.files.forEach(file => file.deselect());
 }
 
-export function list(req, res) {
+function list(req, res) {
   const torrentId = atob(req.query.torrentId);
 
   const torrent = torrentStore.getTorrent(torrentId);
@@ -41,7 +41,7 @@ export function list(req, res) {
   });
 }
 
-export function download(req, res) {
+function download(req, res) {
   const torrent = torrentStore.getTorrent(req.params.torrentId);
 
   if (!torrent) {
@@ -63,7 +63,7 @@ export function download(req, res) {
     res.setHeader('transferMode.dlna.org', 'Streaming');
     res.setHeader(
       'contentFeatures.dlna.org',
-      'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000',
+      'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000'
     );
 
     let range = rangeParser(file.length, req.headers.range || '');
@@ -73,7 +73,7 @@ export function download(req, res) {
       res.statusCode = 206;
       res.setHeader(
         'Content-Range',
-        `bytes ${range.start}-${range.end}/${file.length}`,
+        `bytes ${range.start}-${range.end}/${file.length}`
       );
       res.setHeader('Content-Length', (range.end - range.start) + 1);
     } else {
@@ -96,12 +96,12 @@ export function download(req, res) {
   return torrent.on('ready', onReady);
 }
 
-export function deleteTorr(req, res) {
+function deleteTorr(req, res) {
   torrentStore.removeTorrents();
   res.status(200).end('Torrent file deleted'); // for saving space on server.
 }
 
-export function searchTorrent(req, res) {
+function searchTorrent(req, res) {
   req.query.page = (req.query.page - 1) || 0;
 
   search(req.params.searchTerm, req.query)
@@ -114,3 +114,10 @@ export function searchTorrent(req, res) {
     })
     .catch(err => res.json(err));
 }
+
+module.exports = {
+  list,
+  deleteTorr,
+  download,
+  searchTorrent,
+};

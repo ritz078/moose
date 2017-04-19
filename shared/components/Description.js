@@ -17,6 +17,7 @@ const TileWrapper = styled.div`
   display: flex;
   align-items: center;
   align-content: space-around;
+  font-size: 13px;
 `;
 
 export default class Description extends PureComponent {

@@ -1,5 +1,5 @@
-import WebTorrent from 'webtorrent';
-import tempy from 'tempy';
+const WebTorrent = require('webtorrent');
+const tempy = require('tempy');
 
 const debug = require('debug')('torrentStore');
 const rimraf = require('rimraf');
@@ -7,7 +7,7 @@ const parseTorrent = require('parse-torrent');
 
 const BASE_PATH = tempy.directory();
 
-export default {
+module.exports = {
   client: null,
 
   getClient() {

@@ -21,7 +21,7 @@ export default function (action$, { dispatch, getState }) {
       });
 
       return (
-        ajax.getJSON(`http://${window.location.hostname}:${SERVER_PORT}/api/search/${searchTerm}?${stringifiedParams}`)
+        ajax.getJSON(`http://${window.location.hostname}:7500/api/search/${searchTerm}?${stringifiedParams}`)
           .retry(3)
           .switchMap(data => ([{
             type: 'SET_RESULTS',

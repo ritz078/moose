@@ -1,5 +1,4 @@
 const { app, BrowserWindow } = require('electron');
-const { createServer } = require('http');
 const express = require('express');
 const next = require('next');
 const getPort = require('get-port');
@@ -33,6 +32,9 @@ function createWindow() {
           win = new BrowserWindow({
             height: 768,
             width: 1024,
+            maxWidth: 1220,
+            minWidth: 400,
+            minHeight: 450,
           });
 
           win.webContents.openDevTools();

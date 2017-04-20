@@ -1,5 +1,6 @@
 /* eslint-disable react/no-did-mount-set-state */
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 import styled from 'styled-components';
 import qs from 'query-string';

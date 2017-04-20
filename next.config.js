@@ -19,7 +19,7 @@ module.exports = {
       {
         test: /\.(css)$/,
         use: ['babel-loader', 'raw-loader', 'css-loader'],
-      },
+      }
     );
 
     return config;

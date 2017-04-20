@@ -6284,6 +6284,12 @@ prop-types@^15.5.2, prop-types@^15.5.4, prop-types@~15.5.0:
   dependencies:
     fbjs "^0.8.9"
 
+prop-types@^15.5.8:
+  version "15.5.8"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.8.tgz#6b7b2e141083be38c8595aa51fc55775c7199394"
+  dependencies:
+    fbjs "^0.8.9"
+
 protobufjs@^6.7.3:
   version "6.7.3"
   resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-6.7.3.tgz#9270aa5d75dfe4d37df1dec87c444a72140d0e1c"

@@ -63,7 +63,7 @@ function download(req, res) {
     res.setHeader('transferMode.dlna.org', 'Streaming');
     res.setHeader(
       'contentFeatures.dlna.org',
-      'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000',
+      'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000'
     );
 
     let range = rangeParser(file.length, req.headers.range || '');

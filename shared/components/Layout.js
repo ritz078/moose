@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Loading from 'react-loading-bar';
 import { ToastContainer } from 'react-toastify';

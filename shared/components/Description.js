@@ -30,15 +30,15 @@ export default class Description extends PureComponent {
       files: PropTypes.shape({
         name: PropTypes.string,
         type: PropTypes.string,
-        size: PropTypes.string,
-      }),
-    }),
+        size: PropTypes.string
+      })
+    })
   };
 
   static defaultProps = {
     dispatch() {},
     details: {},
-    fixed: false,
+    fixed: false
   };
 
   constructor(props) {
@@ -46,14 +46,14 @@ export default class Description extends PureComponent {
 
     this.state = {
       streaming: false,
-      selectedIndex: null,
+      selectedIndex: null
     };
   }
 
   startStream = (e) => {
     this.setState({
       streaming: true,
-      selectedIndex: e.target.dataset.id,
+      selectedIndex: e.target.dataset.id
     });
   };
 
@@ -65,7 +65,7 @@ export default class Description extends PureComponent {
   listTorrent = ({ torrentId }) => {
     this.props.dispatch({
       type: 'FETCH_DETAILS',
-      payload: torrentId,
+      payload: torrentId
     });
   };
 
@@ -108,7 +108,7 @@ export default class Description extends PureComponent {
         const fileType = getFileType(file.type);
         const streamIcon = classNames('mdi tooltip tooltip-left fs-22', {
           'mdi-play-circle-outline': fileType === 'video',
-          'mdi-eye': fileType === 'image',
+          'mdi-eye': fileType === 'image'
         });
 
         return (

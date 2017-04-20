@@ -24,9 +24,9 @@ function list(req, res) {
       files: torrent.files.map(file => ({
         name: file.name,
         size: prettyBytes(file.length),
-        type: mime.lookup(file.name),
+        type: mime.lookup(file.name)
       })),
-      name: torrent.name,
+      name: torrent.name
     });
   }
 
@@ -106,7 +106,7 @@ function searchTorrent(req, res) {
       if (results && !results.length) res.status(500).body({ error: 'Unable to fetch data' });
       return res.json({
         data: results,
-        page: req.query.page,
+        page: req.query.page
       });
     })
     .catch(err => res.json(err));
@@ -116,5 +116,5 @@ module.exports = {
   list,
   deleteTorr,
   download,
-  searchTorrent,
+  searchTorrent
 };

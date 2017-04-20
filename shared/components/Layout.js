@@ -29,9 +29,9 @@ export default function Layout({ children, loading }) {
 
 Layout.propTypes = {
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 Layout.defaultProps = {
-  children: [],
+  children: []
 };

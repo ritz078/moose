@@ -78,14 +78,14 @@ export default class Results extends PureComponent {
         verified: PropTypes.bool,
         size: PropTypes.string,
         seeders: PropTypes.number,
-        leechers: PropTypes.number,
-      }),
+        leechers: PropTypes.number
+      })
     ).isRequired,
     dispatch: PropTypes.isRequired,
     params: PropTypes.shape({
       page: PropTypes.number,
-      searchTerm: PropTypes.string,
-    }).isRequired,
+      searchTerm: PropTypes.string
+    }).isRequired
   };
 
   constructor(props) {
@@ -93,7 +93,7 @@ export default class Results extends PureComponent {
 
     this.state = {
       selectedTorrentId: null,
-      loadedRowsMap: {},
+      loadedRowsMap: {}
     };
   }
 
@@ -106,7 +106,7 @@ export default class Results extends PureComponent {
         onClick={() =>
           dispatch({
             type: 'FETCH_DETAILS',
-            payload: result.magnetLink,
+            payload: result.magnetLink
           })}
       >
         <Td className="hide-sm">{(params.page - 1) * 30 + (i + 1)}</Td>
@@ -143,14 +143,14 @@ export default class Results extends PureComponent {
 
   fetchResults = () => {
     this.props.dispatch({
-      type: 'FETCH_RESULTS',
+      type: 'FETCH_RESULTS'
     });
   };
 
   setSortOrder = (e: MouseEvent | KeyboardEvent) => {
     this.props.dispatch({
       type: 'SET_SORT_ORDER',
-      payload: sortOrder[e.target.value],
+      payload: sortOrder[e.target.value]
     });
 
     this.fetchResults();

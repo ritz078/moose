@@ -50,13 +50,13 @@ const Main = styled.div`
   results,
   loading,
   details,
-  params,
+  params
 }))
 export default class Home extends PureComponent {
   static propTypes = {
     results: PropTypes.shape({
       data: PropTypes.array,
-      searchTerm: PropTypes.string,
+      searchTerm: PropTypes.string
     }),
     loading: PropTypes.bool.isRequired,
     details: PropTypes.shape({
@@ -65,25 +65,25 @@ export default class Home extends PureComponent {
       files: PropTypes.shape({
         name: PropTypes.string,
         type: PropTypes.string,
-        size: PropTypes.string,
-      }),
+        size: PropTypes.string
+      })
     }).isRequired,
     dispatch: PropTypes.func,
     params: PropTypes.shape({
-      searchTerm: PropTypes.string,
-    }).isRequired,
+      searchTerm: PropTypes.string
+    }).isRequired
   };
 
   static defaultProps = {
     results: {},
-    dispatch() {},
+    dispatch() {}
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      url: '',
+      url: ''
     };
   }
 
@@ -91,7 +91,7 @@ export default class Home extends PureComponent {
     this.decodeFilter();
 
     this.setState({
-      url: window.location.href,
+      url: window.location.href
     });
   }
 
@@ -101,7 +101,7 @@ export default class Home extends PureComponent {
     }
 
     this.setState({
-      url: window.location.href,
+      url: window.location.href
     });
   }
 
@@ -110,13 +110,13 @@ export default class Home extends PureComponent {
     if (f) {
       this.props.dispatch({
         type: 'DECODE_FILTER',
-        payload: JSON.parse(atob(f)),
+        payload: JSON.parse(atob(f))
       });
     }
 
     if (fetch) {
       this.props.dispatch({
-        type: 'FETCH_RESULTS',
+        type: 'FETCH_RESULTS'
       });
     }
   }

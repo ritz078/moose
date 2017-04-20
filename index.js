@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron');
+const { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer');
 const express = require('express');
 const next = require('next');
 const getPort = require('get-port');
@@ -19,7 +20,6 @@ function createWindow() {
     .prepare()
     .then(() => {
       getPort(7000).then((port) => {
-
         const server = express();
 
         server.get('*', (req, res) => handler(req, res));
@@ -35,7 +35,11 @@ function createWindow() {
             maxWidth: 1220,
             minWidth: 400,
             minHeight: 450,
+            fullscreenable: false,
           });
+
+          installExtension(REACT_DEVELOPER_TOOLS);
+          installExtension(REDUX_DEVTOOLS);
 
           win.webContents.openDevTools();
 

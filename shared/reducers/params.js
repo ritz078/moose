@@ -12,7 +12,9 @@ const paramsReducer = createReducer(initialState, {
     sortBy: action.payload.sortBy,
     orderBy: action.payload.orderBy,
   }),
-  DECODE_FILTER: (state, action) => Object.assign({}, state, action.payload),
+  DECODE_FILTER: (state, action) => Object.assign({}, state, action.payload, {
+    page: 1,
+  }),
   SET_SEARCHTERM: (state, action) => Object.assign({}, state, {
     searchTerm: action.payload,
   }),

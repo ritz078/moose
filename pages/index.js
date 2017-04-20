@@ -17,27 +17,18 @@ const Left = styled.div`
 `;
 
 const Right = styled.div`
-  padding: 0 0 0 20px;
-  flex: 0 1 430px;
+  padding: 0;
+  width: 100% !important;
+  flex: none;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.3);
   & > div {
-    width: 410px;
-    max-height: calc(100vh - 110px);
-  }
-  
-  @media screen and (max-width: 1220px) {
-    padding: 0;
-    width: 100% !important;
-    flex: none;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.3);
-    & > div {
-      position: relative;
-      width: 100%;
-      background-color: #fff;
-      max-height: 40vh;
-    }
+    position: relative;
+    width: 100%;
+    background-color: #fff;
+    max-height: 40vh;
   }
 `;
 
@@ -48,15 +39,10 @@ const Content = styled.div`
   width: 100%;
   max-width: 1220px;
   margin:0 auto;
-  @media screen and (max-width: 1220px) {
-    padding-bottom: 40vh;
-  }
 `;
 
 const Main = styled.div`
   display: flex;
-  flex-direction: column;
-  padding:0 20px;
 `;
 
 @withRedux(initStore,

@@ -1,8 +1,8 @@
 import React, { PropTypes, PureComponent } from 'react';
 import styled from 'styled-components';
 import withRedux from 'next-redux-wrapper';
+import { InfiniteLoader, List, AutoSizer } from 'react-virtualized';
 import initStore from '../../store';
-import Pagination from './Pagination';
 import sortOrder from '../constants/sortOrder';
 
 const Verified = styled.i`
@@ -16,6 +16,7 @@ const Table = styled.div`
   width: 100%;
   margin-top: 10px;
   font-size: 13px;
+  height: 100vh;
   @media screen and (max-width: 600px) {
     display: block;
     overflow: hidden;
@@ -91,6 +92,7 @@ export default class Results extends PureComponent {
 
     this.state = {
       selectedTorrentId: null,
+      loadedRowsMap: {},
     };
   }
 
@@ -111,36 +113,26 @@ export default class Results extends PureComponent {
             <div className="tile-content">
               <ResultTitle className="tile-title">
                 <span className="show-sm-inline">{((params.page - 1) * 30) + (i + 1)}. </span>
-                {result.name}
-              </ResultTitle>
-              <div className="tile-meta">
                 <Verified
                   data-tooltip={result.verified ? 'Verified' : 'Not verified'}
                   className="mdi mdi-verified tooltip tooltip-right"
                   active={result.verified}
-                /> <span className="show-sm-inline">· {result.size} ·</span>
+                /> {result.name}
+              </ResultTitle>
+              <div className="tile-meta">
+                <span className="show-sm-inline">{result.size} ·</span>
                 <span className="show-sm-inline"> {result.seeders} Seeders · </span>
-                {result.uploadDate}
-                <span className="hide-sm-inline">· {result.category.name} · {result.subcategory.name}</span>
+                <span className="show-sm-inline">{result.category.name} · {result.subcategory.name}</span>
               </div>
             </div>
           </div>
         </Td>
+        <Td className="hide-md">{result.uploadDate}</Td>
         <Td className="hide-md">{result.size}</Td>
         <Td className="hide-sm">{result.seeders}</Td>
         <Td className="hide-md">{result.leechers}</Td>
       </Tr>
     ));
-  }
-
-  onNextClick = () => {
-    this.props.dispatch({ type: 'SET_PAGE', payload: this.props.params.page + 1 });
-    this.fetchResults();
-  }
-
-  onPrevClick = () => {
-    this.props.dispatch({ type: 'SET_PAGE', payload: this.props.params.page - 1 });
-    this.fetchResults();
   }
 
   fetchResults = () => {
@@ -158,9 +150,33 @@ export default class Results extends PureComponent {
     this.fetchResults();
   }
 
-  render() {
-    const { params } = this.props;
+  loadMoreRows = () => {
+    this.props.dispatch({ type: 'SET_PAGE', payload: this.props.params.page + 1 });
+    this.fetchResults();
+  }
 
+  rowRenderer = ({ index }) => {
+    if (index === 0) {
+      return (
+        <Tr>
+          <Td className="hide-sm">#</Td>
+          <Td >Name</Td>
+          <Td className="hide-md">Uploaded</Td>
+          <Td className="hide-md">File Size</Td>
+          <Td className="hide-sm mdi mdi-arrow-down-bold" />
+          <Td className="hide-md mdi mdi-arrow-up-bold" />
+        </Tr>
+      );
+    }
+    return this.getResults();
+  }
+
+  isRowLoaded = ({ index }) => {
+    const { loadedRowsMap } = this.state;
+    return !!loadedRowsMap[index]; // STATUS_LOADING or STATUS_LOADED
+  }
+
+  render() {
     return (
       <div>
         <div className="clearfix">
@@ -177,23 +193,31 @@ export default class Results extends PureComponent {
         </div>
 
         <Table>
-          <Tr>
-            <Td className="hide-sm">#</Td>
-            <Td >Name</Td>
-            <Td className="hide-md">File Size</Td>
-            <Td className="hide-sm">Seeders</Td>
-            <Td className="hide-md">Leechers</Td>
-          </Tr>
-          {this.getResults()}
-        </Table>
+          <InfiniteLoader
+            isRowLoaded={this.isRowLoaded}
+            loadMoreRows={this.loadMoreRows}
+            rowCount={100}
+          >
+            {({ onRowsRendered, registerChild }) => (
+              <AutoSizer>
+                {({ height, width }) => (
+                  <List
+                    ref={registerChild}
+                    onRowsRendered={onRowsRendered}
+                    className={'results-list'}
+                    rowCount={50}
+                    height={height}
+                    width={width}
+                    rowHeight={43}
+                    rowRenderer={this.rowRenderer}
+                  />
+                )}
+              </AutoSizer>
+            )}
+          </InfiniteLoader>
 
-        <div className="float-right mt-10">
-          <Pagination
-            onNextClick={this.onNextClick}
-            onPrevClick={this.onPrevClick}
-            currentPage={params.page}
-          />
-        </div>
+
+        </Table>
       </div>
     );
   }

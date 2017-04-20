@@ -46,17 +46,12 @@ export default function MediaModal(props) {
   const src = `http://${window.location.hostname}:7500/api/download/${infoHash}/${+fileIndex}/${file.name}`;
 
   return (
-    <Modal
-      style={style}
-      isOpen={showModal}
-      contentLabel={'Modal'}
-    >
+    <Modal style={style} isOpen={showModal} contentLabel={'Modal'}>
       <ModalControl>
         <CloseIcon onClick={onCloseClick} className="mdi mdi-close close-modal" />
       </ModalControl>
       {file.type.indexOf('video') >= 0 && <Video src={src} />}
-      {file.type.indexOf('image') >= 0 && <ImageLightbox src={src} />
-      }
+      {file.type.indexOf('image') >= 0 && <ImageLightbox src={src} />}
     </Modal>
   );
 }

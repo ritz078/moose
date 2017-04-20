@@ -45,9 +45,12 @@ const Main = styled.div`
   display: flex;
 `;
 
-@withRedux(initStore,
-  ({ results, loading, details, params }) => ({ results, loading, details, params }),
-)
+@withRedux(initStore, ({ results, loading, details, params }) => ({
+  results,
+  loading,
+  details,
+  params,
+}))
 export default class Home extends PureComponent {
   static propTypes = {
     results: PropTypes.shape({
@@ -68,13 +71,12 @@ export default class Home extends PureComponent {
     params: PropTypes.shape({
       searchTerm: PropTypes.string,
     }).isRequired,
-  }
+  };
 
   static defaultProps = {
     results: {},
-    dispatch() {
-    },
-  }
+    dispatch() {},
+  };
 
   constructor(props) {
     super(props);
@@ -145,11 +147,11 @@ export default class Home extends PureComponent {
     );
   }
 
-  isMagnetUrl = () => this.props.params.searchTerm && this.props.params.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null
+  isMagnetUrl = () =>
+    this.props.params.searchTerm &&
+    this.props.params.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null;
 
   render() {
-    return (
-      <Layout loading={this.props.loading}>{this.getContent()}</Layout>
-    );
+    return <Layout loading={this.props.loading}>{this.getContent()}</Layout>;
   }
 }

@@ -48,12 +48,11 @@ const ClearInput = styled.i`
 export default class Header extends PureComponent {
   static propTypes = {
     dispatch: PropTypes.func,
-  }
+  };
 
   static defaultProps = {
-    dispatch() {
-    },
-  }
+    dispatch() {},
+  };
 
   constructor(props) {
     super(props);
@@ -63,7 +62,7 @@ export default class Header extends PureComponent {
     };
   }
 
-  handleSearch = (e: (KeyboardEvent | MouseEvent)) => {
+  handleSearch = (e: KeyboardEvent | MouseEvent) => {
     if (e.type === 'keypress' && e.which !== 13) return;
 
     const input: string = this.inputRef.value;
@@ -93,14 +92,14 @@ export default class Header extends PureComponent {
         payload: input,
       });
     }
-  }
+  };
 
   clearInput = () => {
     this.inputRef.value = '';
     this.setState({
       searchTerm: '',
     });
-  }
+  };
 
   render() {
     return (
@@ -113,11 +112,9 @@ export default class Header extends PureComponent {
             innerRef={x => (this.inputRef = x)}
             onKeyPress={this.handleSearch}
           />
-          {this.state.searchTerm && <ClearInput className="mdi mdi-close-circle" onClick={this.clearInput} />}
-          <SearchButton
-            className="btn btn-primary input-group-btn"
-            onClick={this.handleSearch}
-          >
+          {this.state.searchTerm &&
+            <ClearInput className="mdi mdi-close-circle" onClick={this.clearInput} />}
+          <SearchButton className="btn btn-primary input-group-btn" onClick={this.handleSearch}>
             <i className="mdi mdi-magnify" style={{ fontSize: 22, verticalAlign: 'middle' }} />
           </SearchButton>
         </SearchWrapper>

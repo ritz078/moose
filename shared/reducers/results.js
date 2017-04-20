@@ -15,7 +15,7 @@ const resultsReducer = createReducer(initialState, {
       newState.page = action.payload.page;
       return newState;
     }
-    return (action.payload);
+    return action.payload;
   },
 });
 

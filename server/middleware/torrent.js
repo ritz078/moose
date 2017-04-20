@@ -63,7 +63,7 @@ function download(req, res) {
     res.setHeader('transferMode.dlna.org', 'Streaming');
     res.setHeader(
       'contentFeatures.dlna.org',
-      'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000'
+      'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000',
     );
 
     let range = rangeParser(file.length, req.headers.range || '');
@@ -71,11 +71,8 @@ function download(req, res) {
     if (Array.isArray(range)) {
       range = range[0];
       res.statusCode = 206;
-      res.setHeader(
-        'Content-Range',
-        `bytes ${range.start}-${range.end}/${file.length}`
-      );
-      res.setHeader('Content-Length', (range.end - range.start) + 1);
+      res.setHeader('Content-Range', `bytes ${range.start}-${range.end}/${file.length}`);
+      res.setHeader('Content-Length', range.end - range.start + 1);
     } else {
       range = null;
       res.setHeader('Content-Length', file.length);
@@ -102,7 +99,7 @@ function deleteTorr(req, res) {
 }
 
 function searchTorrent(req, res) {
-  req.query.page = (req.query.page - 1) || 0;
+  req.query.page = req.query.page - 1 || 0;
 
   search(req.params.searchTerm, req.query)
     .then((results) => {

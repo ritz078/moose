@@ -85,7 +85,7 @@ export default class Results extends PureComponent {
       page: PropTypes.number,
       searchTerm: PropTypes.string,
     }).isRequired,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -102,27 +102,32 @@ export default class Results extends PureComponent {
     return results.data.map((result, i) => (
       <Tr
         key={result.id}
-        onClick={() => dispatch({
-          type: 'FETCH_DETAILS',
-          payload: result.magnetLink,
-        })}
+        onClick={() =>
+          dispatch({
+            type: 'FETCH_DETAILS',
+            payload: result.magnetLink,
+          })}
       >
-        <Td className="hide-sm">{((params.page - 1) * 30) + (i + 1)}</Td>
+        <Td className="hide-sm">{(params.page - 1) * 30 + (i + 1)}</Td>
         <Td>
           <div className="tile tile-centered m-0">
             <div className="tile-content">
               <ResultTitle className="tile-title">
-                <span className="show-sm-inline">{((params.page - 1) * 30) + (i + 1)}. </span>
+                <span className="show-sm-inline">{(params.page - 1) * 30 + (i + 1)}. </span>
                 <Verified
                   data-tooltip={result.verified ? 'Verified' : 'Not verified'}
                   className="mdi mdi-verified tooltip tooltip-right"
                   active={result.verified}
-                /> {result.name}
+                />
+                {' '}
+                {result.name}
               </ResultTitle>
               <div className="tile-meta">
                 <span className="show-sm-inline">{result.size} ·</span>
                 <span className="show-sm-inline"> {result.seeders} Seeders · </span>
-                <span className="show-sm-inline">{result.category.name} · {result.subcategory.name}</span>
+                <span className="show-sm-inline">
+                  {result.category.name} · {result.subcategory.name}
+                </span>
               </div>
             </div>
           </div>
@@ -133,13 +138,13 @@ export default class Results extends PureComponent {
         <Td className="hide-md">{result.leechers}</Td>
       </Tr>
     ));
-  }
+  };
 
   fetchResults = () => {
     this.props.dispatch({
       type: 'FETCH_RESULTS',
     });
-  }
+  };
 
   setSortOrder = (e: MouseEvent | KeyboardEvent) => {
     this.props.dispatch({
@@ -148,19 +153,19 @@ export default class Results extends PureComponent {
     });
 
     this.fetchResults();
-  }
+  };
 
   loadMoreRows = () => {
     this.props.dispatch({ type: 'SET_PAGE', payload: this.props.params.page + 1 });
     this.fetchResults();
-  }
+  };
 
   rowRenderer = ({ index }) => {
     if (index === 0) {
       return (
         <Tr>
           <Td className="hide-sm">#</Td>
-          <Td >Name</Td>
+          <Td>Name</Td>
           <Td className="hide-md">Uploaded</Td>
           <Td className="hide-md">File Size</Td>
           <Td className="hide-sm mdi mdi-arrow-down-bold" />
@@ -169,24 +174,24 @@ export default class Results extends PureComponent {
       );
     }
     return this.getResults();
-  }
+  };
 
   isRowLoaded = ({ index }) => {
     const { loadedRowsMap } = this.state;
     return !!loadedRowsMap[index]; // STATUS_LOADING or STATUS_LOADED
-  }
+  };
 
   render() {
     return (
       <div>
         <div className="clearfix">
-          <h6 className="float-left hide-sm">Results for search term <b>{this.props.params.searchTerm}</b></h6>
+          <h6 className="float-left hide-sm">
+            Results for search term <b>{this.props.params.searchTerm}</b>
+          </h6>
           <FiltersWrapper className="float-right">
             <div className="form-group inline-block">
               <SortOrder className="form-select" onChange={this.setSortOrder}>
-                {sortOrder.map((s, i) => (
-                  <option value={i}>{s.label}</option>
-                ))}
+                {sortOrder.map((s, i) => <option value={i}>{s.label}</option>)}
               </SortOrder>
             </div>
           </FiltersWrapper>
@@ -215,7 +220,6 @@ export default class Results extends PureComponent {
               </AutoSizer>
             )}
           </InfiniteLoader>
-
 
         </Table>
       </div>

@@ -1,5 +1,9 @@
 const { app, BrowserWindow } = require('electron');
-const { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer');
+const {
+  default: installExtension,
+  REACT_DEVELOPER_TOOLS,
+  REDUX_DEVTOOLS,
+} = require('electron-devtools-installer');
 const express = require('express');
 const next = require('next');
 const getPort = require('get-port');
@@ -16,47 +20,44 @@ const handler = nextApp.getRequestHandler();
 let win;
 
 function createWindow() {
-  nextApp
-    .prepare()
-    .then(() => {
-      getPort(7000).then((port) => {
-        const server = express();
+  nextApp.prepare().then(() => {
+    getPort(7000).then((port) => {
+      const server = express();
 
-        server.get('*', (req, res) => handler(req, res));
+      server.get('*', (req, res) => handler(req, res));
 
-        const x = server.listen(port, (error) => {
-          if (error) throw error;
+      const x = server.listen(port, (error) => {
+        if (error) throw error;
 
-          // after the server starts create the electron browser window
-          // start building the next.js app
-          win = new BrowserWindow({
-            height: 768,
-            width: 1024,
-            maxWidth: 1220,
-            minWidth: 400,
-            minHeight: 450,
-            fullscreenable: false,
-          });
-
-          installExtension(REACT_DEVELOPER_TOOLS);
-          installExtension(REDUX_DEVTOOLS);
-
-          win.webContents.openDevTools();
-
-          // open our server URL
-          win.loadURL(`http://127.0.0.1:${port}`);
-
-
-          win.on('close', () => {
-            // when the windows is closed clear the `win` variable and close the server
-            win = null;
-            x.close();
-          });
+        // after the server starts create the electron browser window
+        // start building the next.js app
+        win = new BrowserWindow({
+          height: 768,
+          width: 1024,
+          maxWidth: 1220,
+          minWidth: 400,
+          minHeight: 450,
+          fullscreenable: false,
         });
 
-        backendServer();
+        installExtension(REACT_DEVELOPER_TOOLS);
+        installExtension(REDUX_DEVTOOLS);
+
+        win.webContents.openDevTools();
+
+        // open our server URL
+        win.loadURL(`http://127.0.0.1:${port}`);
+
+        win.on('close', () => {
+          // when the windows is closed clear the `win` variable and close the server
+          win = null;
+          x.close();
+        });
       });
+
+      backendServer();
     });
+  });
 }
 
 app.on('ready', createWindow);
@@ -72,4 +73,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-

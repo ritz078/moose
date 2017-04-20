@@ -14,7 +14,8 @@
     "start": "NODE_ENV=production electron .",
     "build:client": "next build",
     "build": "npm run build:client && electron-packager . --out=package --darwin --overwrite",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "prettier": "prettier-eslint --write shared/**/*.js pages/**/*.js server/**/*.js *.js"
   },
   "repository": {
     "type": "git",

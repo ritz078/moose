@@ -26,7 +26,7 @@ class Video extends PureComponent {
     videojs(this.videoRef, this.props.options, () => {
       this.props.onInit();
     });
-  }
+  };
 
   render() {
     return (
@@ -48,13 +48,12 @@ class Video extends PureComponent {
 Video.propTypes = {
   src: PropTypes.string.isRequired,
   onInit: PropTypes.func,
-// eslint-disable-next-line react/forbid-prop-types
+  // eslint-disable-next-line react/forbid-prop-types
   options: PropTypes.object,
 };
 
 Video.defaultProps = {
-  onInit() {
-  },
+  onInit() {},
   options: {
     fluid: true,
   },

@@ -7,7 +7,6 @@ import MediaModal from './MediaModal';
 import getFileType from '../utils/logic/fileType';
 import colors from '../constants/colors';
 
-
 const TileWrapper = styled.div`
   background-color: ${props => props.color};
   border-radius: .2rem;
@@ -33,14 +32,13 @@ export default class Description extends PureComponent {
         size: PropTypes.string,
       }),
     }),
-  }
+  };
 
   static defaultProps = {
-    dispatch() {
-    },
+    dispatch() {},
     details: {},
     fixed: false,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -56,19 +54,19 @@ export default class Description extends PureComponent {
       streaming: true,
       selectedIndex: e.target.dataset.id,
     });
-  }
+  };
 
   closeModal = () => {
     this.setState({ streaming: false });
     ajax.getJSON(`/api/delete/${this.props.details.torrentId}`);
-  }
+  };
 
   listTorrent = ({ torrentId }) => {
     this.props.dispatch({
       type: 'FETCH_DETAILS',
       payload: torrentId,
     });
-  }
+  };
 
   getFileIcon = (mime) => {
     let icon;
@@ -97,48 +95,52 @@ export default class Description extends PureComponent {
         <i className={`mdi ${icon} centered fs-22`} />
       </TileWrapper>
     );
-  }
+  };
 
   getFiles() {
     const { details } = this.props;
 
-    return details && details.files && details.files.map((file, i) => {
-      const fileType = getFileType(file.type);
-      const streamIcon = classNames('mdi tooltip tooltip-left fs-22', {
-        'mdi-play-circle-outline': fileType === 'video',
-        'mdi-eye': fileType === 'image',
-      });
+    return (
+      details &&
+      details.files &&
+      details.files.map((file, i) => {
+        const fileType = getFileType(file.type);
+        const streamIcon = classNames('mdi tooltip tooltip-left fs-22', {
+          'mdi-play-circle-outline': fileType === 'video',
+          'mdi-eye': fileType === 'image',
+        });
 
-      return (
-        <div className="tile tile-centered">
-          <div className="tile-icon">
-            {this.getFileIcon(file.type)}
+        return (
+          <div className="tile tile-centered">
+            <div className="tile-icon">
+              {this.getFileIcon(file.type)}
+            </div>
+            <div className="tile-content">
+              <div className="tile-title">{file.name}</div>
+              <div className="tile-meta">{file.size} · {file.type}</div>
+            </div>
+            <div className="tile-action">
+              {Description.isSupported(file.type) &&
+                <button className="btn btn-link" onClick={this.startStream}>
+                  <i
+                    className={streamIcon}
+                    data-tooltip={fileType === 'video' ? 'Play Video' : 'View Image'}
+                    data-id={i}
+                  />
+                </button>}
+            </div>
           </div>
-          <div className="tile-content">
-            <div className="tile-title">{file.name}</div>
-            <div className="tile-meta">{file.size} · {file.type}</div>
-          </div>
-          <div className="tile-action">
-            {Description.isSupported(file.type) &&
-              <button
-                className="btn btn-link"
-                onClick={this.startStream}
-              >
-                <i
-                  className={streamIcon}
-                  data-tooltip={fileType === 'video' ? 'Play Video' : 'View Image'}
-                  data-id={i}
-                />
-              </button>
-              }
-          </div>
-        </div>
-      );
-    });
+        );
+      })
+    );
   }
 
   static isSupported(mime) {
-    return document.createElement('video').canPlayType(mime) || (mime === 'video/x-matroska') || (getFileType(mime) === 'image');
+    return (
+      document.createElement('video').canPlayType(mime) ||
+      mime === 'video/x-matroska' ||
+      getFileType(mime) === 'image'
+    );
   }
 
   render() {

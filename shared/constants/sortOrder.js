@@ -2,26 +2,26 @@ export default [
   {
     label: 'Seeds High to Low',
     sortBy: 'desc',
-    orderBy: 'seeds',
+    orderBy: 'seeds'
   },
   {
     label: 'Seeds Low To High',
     sortBy: 'asc',
-    orderBy: 'seeds',
+    orderBy: 'seeds'
   },
   {
     label: 'Size High To Low',
     sortBy: 'desc',
-    orderBy: 'size',
+    orderBy: 'size'
   },
   {
     label: 'Size Low To High',
     sortBy: 'asc',
-    orderBy: 'size',
+    orderBy: 'size'
   },
   {
     label: 'Recent First',
     sortBy: 'desc',
-    orderBy: 'date',
-  },
+    orderBy: 'date'
+  }
 ];

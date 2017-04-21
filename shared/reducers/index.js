@@ -8,5 +8,5 @@ export default combineReducers({
   results,
   details,
   loading,
-  params,
+  params
 });

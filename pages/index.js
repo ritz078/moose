@@ -1,21 +1,12 @@
 /* eslint-disable react/no-did-mount-set-state */
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import withRedux from 'next-redux-wrapper';
-import styled from 'styled-components';
-import qs from 'query-string';
-import initStore from '../store';
-import Results from '../shared/components/Results';
-import Layout from '../shared/components/Layout';
-import Description from '../shared/components/Description';
-
-const Left = styled.div`
-  flex: 1;
-  
-  @media screen and (max-width: 1220px) {
-    width: 100%;
-  }
-`;
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import withRedux from 'next-redux-wrapper'
+import styled from 'styled-components'
+import initStore from '../store'
+import Results from '../shared/components/Results'
+import Layout from '../shared/components/Layout'
+import Description from '../shared/components/Description'
 
 const Right = styled.div`
   padding: 0;
@@ -31,22 +22,16 @@ const Right = styled.div`
     background-color: #fff;
     max-height: 40vh;
   }
-`;
+`
 
 const Content = styled.div`
   display: flex;
-  padding-top: 85px;
-  padding-bottom: 30px;
-  width: 100%;
-  max-width: 1220px;
-  margin:0 auto;
-`;
+  flex: 1;
+  overflow: hidden;
+  padding-top: 20px;
+`
 
-const Main = styled.div`
-  display: flex;
-`;
-
-@withRedux(initStore, ({ results, loading, details, params }) => ({
+@withRedux(initStore, ({results, loading, details, params}) => ({
   results,
   loading,
   details,
@@ -72,87 +57,37 @@ export default class Home extends PureComponent {
     params: PropTypes.shape({
       searchTerm: PropTypes.string
     }).isRequired
-  };
+  }
 
   static defaultProps = {
     results: {},
     dispatch() {}
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      url: ''
-    };
   }
 
-  componentDidMount() {
-    this.decodeFilter();
-
-    this.setState({
-      url: window.location.href
-    });
-  }
-
-  componentWillReceiveProps() {
-    if (this.state.url !== window.location.href) {
-      this.decodeFilter(true);
-    }
-
-    this.setState({
-      url: window.location.href
-    });
-  }
-
-  decodeFilter(fetch = false) {
-    const { f } = qs.parse(window.location.search);
-    if (f) {
-      this.props.dispatch({
-        type: 'DECODE_FILTER',
-        payload: JSON.parse(atob(f))
-      });
-    }
-
-    if (fetch) {
-      this.props.dispatch({
-        type: 'FETCH_RESULTS'
-      });
-    }
-  }
-
-  getContent() {
-    const { results, details, dispatch } = this.props;
+  getContent () {
+    const {results, details, dispatch} = this.props
 
     if (this.isMagnetUrl()) {
       return (
-        <Main>
-          <Content>
-            <div className="centered"><Description details={details} dispatch={dispatch} /></div>
-          </Content>
-        </Main>
-      );
+        <Content>
+          <div className="centered"><Description details={details} dispatch={dispatch} /></div>
+        </Content>
+      )
     }
 
     return (
-      <Main>
-        <Content>
-          <Left className="col-7 col-lg-12">
-            {results.data && !!results.data.length && <Results />}
-          </Left>
-          <Right className="col-5">
-            <Description fixed details={details} dispatch={dispatch} />
-          </Right>
-        </Content>
-      </Main>
-    );
+      <Content>
+        {results.data && !!results.data.length && <Results />}
+        <Description details={details} dispatch={dispatch} />
+      </Content>
+    )
   }
 
   isMagnetUrl = () =>
-    this.props.params.searchTerm &&
-    this.props.params.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null;
+  this.props.params.searchTerm &&
+  this.props.params.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null
 
-  render() {
-    return <Layout loading={this.props.loading}>{this.getContent()}</Layout>;
+  render () {
+    return <Layout loading={this.props.loading}>{this.getContent()}</Layout>
   }
 }

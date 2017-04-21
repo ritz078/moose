@@ -25,6 +25,7 @@
     "react/sort-comp": 0,
     // We use global requires in various places, e.g. code splitting instances.
     "global-require": 0,
-    "comma-dangle": 0
+    "comma-dangle": 0,
+    "semi": 0
   }
 }

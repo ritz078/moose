@@ -10,24 +10,24 @@ export default function fetchDetails(action$, { dispatch }) {
       .getJSON(
         `http://${window.location.hostname}:7500/api/list?torrentId=${window.btoa(action.payload)}&timestamp=${new Date().getTime()}`,
       {
-        withCredentials: true,
-      },
+        withCredentials: true
+      }
       )
       .retry(3)
       .timeout(6000)
       .switchMap(payload => [
         {
           type: 'SET_DETAILS',
-          payload,
+          payload
         },
         {
-          type: 'STOP_LOADING',
-        },
+          type: 'STOP_LOADING'
+        }
       ])
       .catch((err) => {
         showToast(err.message, 'error');
         return Observable.of({
-          type: 'STOP_LOADING',
+          type: 'STOP_LOADING'
         });
       });
   });

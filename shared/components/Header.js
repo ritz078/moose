@@ -7,8 +7,7 @@ import initStore from '../../store';
 const HeaderWrapper = styled.header`
   width: 100%;
   padding: 10px 20px;
-  position: fixed;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.10);
   z-index: 99;
   background-color: white;
   display: flex;

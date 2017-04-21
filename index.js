@@ -2,7 +2,7 @@ const { app, BrowserWindow } = require('electron');
 const {
   default: installExtension,
   REACT_DEVELOPER_TOOLS,
-  REDUX_DEVTOOLS,
+  REDUX_DEVTOOLS
 } = require('electron-devtools-installer');
 const express = require('express');
 const next = require('next');
@@ -32,12 +32,12 @@ function createWindow() {
         // after the server starts create the electron browser window
         // start building the next.js app
         win = new BrowserWindow({
-          height: 768,
-          width: 1024,
-          maxWidth: 1220,
-          minWidth: 400,
-          minHeight: 450,
+          height: 800,
+          width: 1000,
+          resizable: false,
           fullscreenable: false,
+          frame: false,
+          vibrancy: 'light'
         });
 
         installExtension(REACT_DEVELOPER_TOOLS);

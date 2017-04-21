@@ -3,13 +3,20 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Loading from 'react-loading-bar';
 import { ToastContainer } from 'react-toastify';
+import styled from 'styled-components'
 
 import stylesheet from '../../styles/index.less';
 import Header from './Header';
 
+const Container = styled.div`
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+`
+
 export default function Layout({ children, loading }) {
   return (
-    <div>
+    <Container>
       <Head>
         <title>Snape : A web application to search and stream torrents.</title>
         <meta charSet="utf-8" />
@@ -23,7 +30,7 @@ export default function Layout({ children, loading }) {
       {children}
 
       <ToastContainer autoClose={3000} position="bottom-center" />
-    </div>
+    </Container>
   );
 }
 

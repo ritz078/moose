@@ -23,7 +23,6 @@ const TileWrapper = styled.div`
 export default class Description extends PureComponent {
   static propTypes = {
     dispatch: PropTypes.func,
-    fixed: PropTypes.bool,
     details: PropTypes.shape({
       name: PropTypes.string,
       torrentId: PropTypes.string,
@@ -48,6 +47,10 @@ export default class Description extends PureComponent {
       streaming: false,
       selectedIndex: null
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps, this.props)
   }
 
   startStream = (e) => {
@@ -145,14 +148,12 @@ export default class Description extends PureComponent {
   }
 
   render() {
-    const { details, fixed } = this.props;
+    const { details } = this.props;
 
     if (!details.name) return <div />;
 
-    const mainClass = fixed ? 'panel fixed' : 'panel';
-
     return (
-      <div className={mainClass}>
+      <div className="panel">
         <div className="panel-header">
           <div className="panel-title text-ellipsis">{details && details.name}</div>
         </div>

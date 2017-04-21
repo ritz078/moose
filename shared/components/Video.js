@@ -39,7 +39,6 @@ class Video extends PureComponent {
           src={this.props.src}
           ref={x => (this.videoRef = x)}
           autoPlay
-          cast
         />
       </VideoWrapper>
     );

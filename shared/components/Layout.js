@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Loading from 'react-loading-bar';
 import { ToastContainer } from 'react-toastify';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 import stylesheet from '../../styles/index.less';
 import Header from './Header';
@@ -12,7 +12,7 @@ const Container = styled.div`
   display: flex;
   height: 100vh;
   flex-direction: column;
-`
+`;
 
 export default function Layout({ children, loading }) {
   return (

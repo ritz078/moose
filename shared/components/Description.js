@@ -50,7 +50,7 @@ export default class Description extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps, this.props)
+    console.log(nextProps, this.props);
   }
 
   startStream = (e) => {

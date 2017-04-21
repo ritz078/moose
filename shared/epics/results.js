@@ -1,18 +1,18 @@
-import 'rxjs'
-import { ajax } from 'rxjs/observable/dom/ajax'
-import qs from 'query-string'
-import { showToast } from '../components/Toast'
+import 'rxjs';
+import { ajax } from 'rxjs/observable/dom/ajax';
+import qs from 'query-string';
+import { showToast } from '../components/Toast';
 
-export default function (action$, {dispatch, getState}) {
+export default function (action$, { dispatch, getState }) {
   return action$.ofType('FETCH_RESULTS').mergeMap((action) => {
-    const params = Object.assign({}, getState().params)
+    const params = Object.assign({}, getState().params);
 
-    const searchTerm = action.payload || getState().params.searchTerm
-    const stringifiedParams = qs.stringify(params)
-    dispatch({type: 'START_LOADING'})
+    const searchTerm = action.payload || getState().params.searchTerm;
+    const stringifiedParams = qs.stringify(params);
+    dispatch({ type: 'START_LOADING' });
 
     if (params.page === 1) {
-      dispatch({type: 'RESET_RESULTS'})
+      dispatch({ type: 'RESET_RESULTS' });
     }
 
     return ajax
@@ -34,12 +34,12 @@ export default function (action$, {dispatch, getState}) {
         }
       ])
       .catch((err) => {
-        showToast(err.message, 'error')
+        showToast(err.message, 'error');
         return [
           {
             type: 'STOP_LOADING'
           }
-        ]
-      })
-  })
+        ];
+      });
+  });
 }

@@ -1,21 +1,21 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import withRedux from 'next-redux-wrapper'
-import { InfiniteLoader, List } from 'react-virtualized'
-import initStore from '../../store'
-import sortOrder from '../constants/sortOrder'
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import withRedux from 'next-redux-wrapper';
+import { InfiniteLoader, List } from 'react-virtualized';
+import initStore from '../../store';
+import sortOrder from '../constants/sortOrder';
 
 const Verified = styled.i`
   font-size: 14px;
   vertical-align: top;
   color: ${props => (props.active ? 'limegreen' : '#bdbdbd')};
-`
+`;
 
 const Table = styled.div`
   flex: 1;
   font-size: 13px;
-`
+`;
 
 const Td = styled.div`
   border-bottom: 0.1rem solid #f1f1f1;
@@ -23,7 +23,7 @@ const Td = styled.div`
   text-align: left;
   vertical-align: middle;
   flex: ${props => props.flex};
-`
+`;
 
 const Tr = styled.div`
   cursor: pointer;
@@ -32,7 +32,7 @@ const Tr = styled.div`
   &:nth-of-type(2n){
     background-color: #f8f8f8
   }
-`
+`;
 
 const SortOrder = styled.select`
   border-color: #f1f1f1 !important;
@@ -40,18 +40,18 @@ const SortOrder = styled.select`
   display: inline-block;
   cursor: pointer;
   appearance: none;
-`
+`;
 
 const FiltersWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-`
+`;
 
 const ResultTitle = styled.div`
   max-width: 500px;
-`
+`;
 
-@withRedux(initStore, ({results, params, loading}) => ({results, params, loading}))
+@withRedux(initStore, ({ results, params, loading }) => ({ results, params, loading }))
 export default class Results extends PureComponent {
   static propTypes = {
     results: PropTypes.arrayOf(
@@ -68,21 +68,21 @@ export default class Results extends PureComponent {
       page: PropTypes.number,
       searchTerm: PropTypes.string
     }).isRequired
-  }
+  };
 
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
 
     this.state = {
       selectedTorrentId: null,
       loadedRowsMap: {}
-    }
+    };
   }
 
   getResult = (index, style) => {
-    const {results, dispatch} = this.props
+    const { results, dispatch } = this.props;
 
-    const result = results.data[index]
+    const result = results.data[index];
 
     return (
       <Tr
@@ -112,49 +112,47 @@ export default class Results extends PureComponent {
         <Td flex={1}>{result.seeders}</Td>
         <Td flex={1}>{result.leechers}</Td>
       </Tr>
-    )
-  }
+    );
+  };
 
   fetchResults = () => {
     this.props.dispatch({
       type: 'FETCH_RESULTS'
-    })
-  }
+    });
+  };
 
   setSortOrder = (e: MouseEvent | KeyboardEvent) => {
     this.props.dispatch({
       type: 'SET_SORT_ORDER',
       payload: sortOrder[e.target.value]
-    })
+    });
 
-    this.fetchResults()
-  }
+    this.fetchResults();
+  };
 
   loadMoreRows = () => {
-    if (this.props.loading) return
-    this.props.dispatch({type: 'SET_PAGE', payload: this.props.params.page + 1})
-    if (this.props.params.page > 1) this.fetchResults()
-  }
+    if (this.props.loading) return;
+    this.props.dispatch({ type: 'SET_PAGE', payload: this.props.params.page + 1 });
+    if (this.props.params.page > 1) this.fetchResults();
+  };
 
-  rowRenderer = ({index, style}) => {
+  rowRenderer = ({ index, style }) => {
     if (this.props.results.data[index]) {
-      return this.getResult(index, style)
+      return this.getResult(index, style);
     }
-    return (
-      <div style={style} className="loading" />
-    )
-  }
+    return <div style={style} className="loading" />;
+  };
 
-  isRowLoaded = ({index}) => {
-    const {results} = this.props
-    return !!results.data[index]
-  }
+  isRowLoaded = ({ index }) => {
+    const { results } = this.props;
+    return !!results.data[index];
+  };
 
-  render () {
-    const rowCount = this.props.results.data.length + 1
+  render() {
+    const rowCount = this.props.results.data.length + 1;
     return (
       <Table>
-        <Tr style={{padding: '0 20px'}} className="text-bold">
+        <Tr style={{ padding: '0 20px' }} className="text-bold">
           <Td flex={0.5}>#</Td>
           <Td flex={10}>Name</Td>
           <Td flex={2}>Uploaded</Td>
@@ -169,7 +167,7 @@ export default class Results extends PureComponent {
           minimumBatchSize={1}
           threshold={1}
         >
-          {({onRowsRendered, registerChild}) => (
+          {({ onRowsRendered, registerChild }) => (
             <List
               ref={registerChild}
               height={678}
@@ -185,6 +183,6 @@ export default class Results extends PureComponent {
           )}
         </InfiniteLoader>
       </Table>
-    )
+    );
   }
 }

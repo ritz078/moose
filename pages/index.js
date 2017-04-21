@@ -1,12 +1,12 @@
 /* eslint-disable react/no-did-mount-set-state */
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import withRedux from 'next-redux-wrapper'
-import styled from 'styled-components'
-import initStore from '../store'
-import Results from '../shared/components/Results'
-import Layout from '../shared/components/Layout'
-import Description from '../shared/components/Description'
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import withRedux from 'next-redux-wrapper';
+import styled from 'styled-components';
+import initStore from '../store';
+import Results from '../shared/components/Results';
+import Layout from '../shared/components/Layout';
+import Description from '../shared/components/Description';
 
 const Right = styled.div`
   padding: 0;
@@ -22,16 +22,16 @@ const Right = styled.div`
     background-color: #fff;
     max-height: 40vh;
   }
-`
+`;
 
 const Content = styled.div`
   display: flex;
   flex: 1;
   overflow: hidden;
   padding-top: 20px;
-`
+`;
 
-@withRedux(initStore, ({results, loading, details, params}) => ({
+@withRedux(initStore, ({ results, loading, details, params }) => ({
   results,
   loading,
   details,
@@ -57,22 +57,22 @@ export default class Home extends PureComponent {
     params: PropTypes.shape({
       searchTerm: PropTypes.string
     }).isRequired
-  }
+  };
 
   static defaultProps = {
     results: {},
     dispatch() {}
-  }
+  };
 
-  getContent () {
-    const {results, details, dispatch} = this.props
+  getContent() {
+    const { results, details, dispatch } = this.props;
 
     if (this.isMagnetUrl()) {
       return (
         <Content>
           <div className="centered"><Description details={details} dispatch={dispatch} /></div>
         </Content>
-      )
+      );
     }
 
     return (
@@ -80,14 +80,14 @@ export default class Home extends PureComponent {
         {results.data && !!results.data.length && <Results />}
         <Description details={details} dispatch={dispatch} />
       </Content>
-    )
+    );
   }
 
   isMagnetUrl = () =>
-  this.props.params.searchTerm &&
-  this.props.params.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null
+    this.props.params.searchTerm &&
+    this.props.params.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null;
 
-  render () {
-    return <Layout loading={this.props.loading}>{this.getContent()}</Layout>
+  render() {
+    return <Layout loading={this.props.loading}>{this.getContent()}</Layout>;
   }
 }

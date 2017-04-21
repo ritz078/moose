@@ -18,10 +18,11 @@ const resultsReducer = createReducer(initialState, {
     return action.payload;
   },
 
-  RESET_RESULTS: state => Object.assign({}, state, {
-    data: [],
-    searchTerm: ''
-  })
+  RESET_RESULTS: state =>
+    Object.assign({}, state, {
+      data: [],
+      searchTerm: ''
+    })
 });
 
 export default resultsReducer;

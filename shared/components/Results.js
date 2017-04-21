@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import withRedux from 'next-redux-wrapper';
-import { InfiniteLoader, List } from 'react-virtualized';
+import { InfiniteLoader, List, AutoSizer } from 'react-virtualized';
 import initStore from '../../store';
 import sortOrder from '../constants/sortOrder';
 
@@ -15,6 +15,8 @@ const Verified = styled.i`
 const Table = styled.div`
   flex: 1;
   font-size: 13px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Td = styled.div`
@@ -160,28 +162,34 @@ export default class Results extends PureComponent {
           <Td flex={1} className="mdi mdi-arrow-down-bold" />
           <Td flex={1} className="mdi mdi-arrow-up-bold" />
         </Tr>
-        <InfiniteLoader
-          isRowLoaded={this.isRowLoaded}
-          loadMoreRows={this.loadMoreRows}
-          rowCount={rowCount}
-          minimumBatchSize={1}
-          threshold={1}
-        >
-          {({ onRowsRendered, registerChild }) => (
-            <List
-              ref={registerChild}
-              height={678}
-              onRowsRendered={onRowsRendered}
-              className={'results-list'}
-              rowCount={rowCount}
-              width={1000}
-              rowHeight={41}
-              overscanRowCount={5}
-              rowRenderer={this.rowRenderer}
-              estimatedRowSize={41}
-            />
-          )}
-        </InfiniteLoader>
+        <div style={{ flex: 1 }}>
+          <InfiniteLoader
+            isRowLoaded={this.isRowLoaded}
+            loadMoreRows={this.loadMoreRows}
+            rowCount={rowCount}
+            minimumBatchSize={1}
+            threshold={1}
+          >
+            {({ onRowsRendered, registerChild }) => (
+              <AutoSizer>
+                {({ width, height }) => (
+                  <List
+                    ref={registerChild}
+                    height={height}
+                    onRowsRendered={onRowsRendered}
+                    className={'results-list'}
+                    rowCount={rowCount}
+                    width={width}
+                    rowHeight={41}
+                    overscanRowCount={5}
+                    rowRenderer={this.rowRenderer}
+                    estimatedRowSize={41}
+                  />
+                )}
+              </AutoSizer>
+            )}
+          </InfiniteLoader>
+        </div>
       </Table>
     );
   }

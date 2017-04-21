@@ -36,7 +36,6 @@ function createWindow() {
           width: 1000,
           resizable: false,
           fullscreenable: false,
-          frame: false,
           vibrancy: 'light'
         });
 

@@ -83,7 +83,7 @@
     "redux-observable": "^0.14.1",
     "rimraf": "^2.5.4",
     "rxjs": "^5.3.0",
-    "spectre.css": "0.2.9",
+    "spectre.css": "^0.2.13",
     "styled-components": "^1.4.5",
     "tempy": "^0.1.0",
     "thepiratebay": "^1.4.0",

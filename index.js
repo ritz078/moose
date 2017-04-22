@@ -35,7 +35,8 @@ function createWindow () {
         win = new BrowserWindow({
           height: 800,
           width: 1000,
-          vibrancy: 'light'
+          vibrancy: 'light',
+          titleBarStyle: 'hidden-inset'
         })
 
         if (dev) {

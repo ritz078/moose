@@ -1032,11 +1032,11 @@ babylon@7.0.0-beta.8:
   version "7.0.0-beta.8"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-7.0.0-beta.8.tgz#2bdc5ae366041442c27e068cce6f0d7c06ea9949"
 
-babylon@^6.11.0, babylon@^6.13.0, babylon@^6.15.0:
+babylon@^6.11.0:
   version "6.16.1"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.16.1.tgz#30c5a22f481978a9e7f8cdfdf496b11d94b404d3"
 
-babylon@^6.17.0:
+babylon@^6.13.0, babylon@^6.15.0, babylon@^6.17.0:
   version "6.17.0"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.17.0.tgz#37da948878488b9c4e3c4038893fa3314b3fc932"
 
@@ -6541,9 +6541,9 @@ spdx-license-ids@^1.0.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-1.2.2.tgz#c9df7a3424594ade6bd11900d596696dc06bac57"
 
-spectre.css@0.2.9:
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/spectre.css/-/spectre.css-0.2.9.tgz#301b69465131426f4e5a9211a68729c4d95ae112"
+spectre.css@^0.2.13:
+  version "0.2.13"
+  resolved "https://registry.yarnpkg.com/spectre.css/-/spectre.css-0.2.13.tgz#facee4e14f353ef7cd0ada36c8d191940e70970d"
 
 speedometer@^1.0.0:
   version "1.0.0"

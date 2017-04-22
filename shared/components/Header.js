@@ -11,7 +11,6 @@ const HeaderWrapper = styled.header`
   z-index: 99;
   background-color: white;
   display: flex;
-  -webkit-app-region: drag;
 `;
 
 const SearchInput = styled.input`

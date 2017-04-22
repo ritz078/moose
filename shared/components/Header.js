@@ -1,4 +1,5 @@
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import withRedux from 'next-redux-wrapper';
 import initStore from '../../store';
@@ -6,8 +7,7 @@ import initStore from '../../store';
 const HeaderWrapper = styled.header`
   width: 100%;
   padding: 10px 20px;
-  position: fixed;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.10);
   z-index: 99;
   background-color: white;
   display: flex;
@@ -29,7 +29,6 @@ const SearchButton = styled.button`
 `;
 
 const SearchWrapper = styled.div`
-  max-width: 1220px;
   width: 100%;
   margin:0 auto;
   position: relative;
@@ -47,60 +46,59 @@ const ClearInput = styled.i`
 @withRedux(initStore)
 export default class Header extends PureComponent {
   static propTypes = {
-    dispatch: PropTypes.func,
-  }
+    dispatch: PropTypes.func
+  };
 
   static defaultProps = {
-    dispatch() {
-    },
-  }
+    dispatch() {}
+  };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      searchTerm: '',
+      searchTerm: ''
     };
   }
 
-  handleSearch = (e: (KeyboardEvent | MouseEvent)) => {
+  handleSearch = (e: KeyboardEvent | MouseEvent) => {
     if (e.type === 'keypress' && e.which !== 13) return;
 
     const input: string = this.inputRef.value;
 
     this.setState({
-      searchTerm: input,
+      searchTerm: input
     });
 
     this.props.dispatch({
       type: 'SET_PAGE',
-      payload: 1,
+      payload: 1
     });
 
     this.props.dispatch({
       type: 'SET_SEARCHTERM',
-      payload: input,
+      payload: input
     });
 
     if (input.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null) {
       this.props.dispatch({
         type: 'FETCH_DETAILS',
-        payload: input,
+        payload: input
       });
     } else {
       this.props.dispatch({
         type: 'FETCH_RESULTS',
-        payload: input,
+        payload: input
       });
     }
-  }
+  };
 
   clearInput = () => {
     this.inputRef.value = '';
     this.setState({
-      searchTerm: '',
+      searchTerm: ''
     });
-  }
+  };
 
   render() {
     return (
@@ -113,11 +111,9 @@ export default class Header extends PureComponent {
             innerRef={x => (this.inputRef = x)}
             onKeyPress={this.handleSearch}
           />
-          {this.state.searchTerm && <ClearInput className="mdi mdi-close-circle" onClick={this.clearInput} />}
-          <SearchButton
-            className="btn btn-primary input-group-btn"
-            onClick={this.handleSearch}
-          >
+          {this.state.searchTerm &&
+            <ClearInput className="mdi mdi-close-circle" onClick={this.clearInput} />}
+          <SearchButton className="btn btn-primary input-group-btn" onClick={this.handleSearch}>
             <i className="mdi mdi-magnify" style={{ fontSize: 22, verticalAlign: 'middle' }} />
           </SearchButton>
         </SearchWrapper>

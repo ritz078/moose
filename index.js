@@ -1,71 +1,75 @@
-const { app, BrowserWindow } = require('electron');
-const express = require('express');
-const next = require('next');
-const getPort = require('get-port');
+const {app, BrowserWindow} = require('electron')
+const {
+  default: installExtension,
+  REACT_DEVELOPER_TOOLS,
+  REDUX_DEVTOOLS
+} = require('electron-devtools-installer')
+const express = require('express')
+const next = require('next')
+const getPort = require('get-port')
+
 // adds debug features like hotkeys for triggering dev tools and reload
-require('electron-debug')();
+require('electron-debug')()
 
-const backendServer = require('./server');
+const backendServer = require('./server')
 
-const dev = process.env.NODE_ENV !== 'production';
+const dev = process.env.NODE_ENV !== 'production'
 
-const nextApp = next({ dev });
-const handler = nextApp.getRequestHandler();
+const nextApp = next({dev})
+const handler = nextApp.getRequestHandler()
 
-let win;
+let win
 
-function createWindow() {
-  nextApp
-    .prepare()
-    .then(() => {
-      getPort(7000).then((port) => {
+function createWindow () {
+  nextApp.prepare().then(() => {
+    getPort(7000).then((port) => {
+      const server = express()
 
-        const server = express();
+      server.get('*', (req, res) => handler(req, res))
 
-        server.get('*', (req, res) => handler(req, res));
+      const x = server.listen(port, (error) => {
+        if (error) throw error
 
-        const x = server.listen(port, (error) => {
-          if (error) throw error;
+        // after the server starts create the electron browser window
+        // start building the next.js app
+        win = new BrowserWindow({
+          height: 800,
+          width: 1000,
+          vibrancy: 'light'
+        })
 
-          // after the server starts create the electron browser window
-          // start building the next.js app
-          win = new BrowserWindow({
-            height: 768,
-            width: 1024,
-            maxWidth: 1220,
-            minWidth: 400,
-            minHeight: 450,
-          });
+        if (dev) {
+          installExtension(REACT_DEVELOPER_TOOLS)
+          installExtension(REDUX_DEVTOOLS)
 
-          win.webContents.openDevTools();
+          win.webContents.openDevTools()
+        }
 
-          // open our server URL
-          win.loadURL(`http://127.0.0.1:${port}`);
+        // open our server URL
+        win.loadURL(`http://127.0.0.1:${port}`)
 
+        win.on('close', () => {
+          // when the windows is closed clear the `win` variable and close the server
+          win = null
+          x.close()
+        })
+      })
 
-          win.on('close', () => {
-            // when the windows is closed clear the `win` variable and close the server
-            win = null;
-            x.close();
-          });
-        });
-
-        backendServer();
-      });
-    });
+      backendServer()
+    })
+  })
 }
 
-app.on('ready', createWindow);
+app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit();
+    app.quit()
   }
-});
+})
 
 app.on('activate', () => {
   if (win === null) {
-    createWindow();
+    createWindow()
   }
-});
-
+})

@@ -1,18 +1,29 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import classNames from 'classnames';
+import withRedux from 'next-redux-wrapper';
+import initStore from '../../store';
 import MediaModal from './MediaModal';
 import getFileType from '../utils/logic/fileType';
 import colors from '../constants/colors';
 
+const Wrapper = styled.div`
+  width: 100%;
+  background-color: white;
+  bottom: 0;
+  flex:1;
+  border-bottom: 1px solid #eee;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+`;
 
 const TileWrapper = styled.div`
-  background-color: ${props => props.color};
-  border-radius: .2rem;
-  color: #fff;
-  height: 4rem;
+  color: ${props => props.color};
+  height: 3rem;
   width: 4rem;
   display: flex;
   align-items: center;
@@ -20,55 +31,73 @@ const TileWrapper = styled.div`
   font-size: 13px;
 `;
 
+const Table = styled.table`
+  overflow: scroll;
+  flex: 1;
+  width: 100%;
+`;
+
+const Files = styled.div`
+  flex: 0.6;
+  padding-top: 10px;
+  overflow: scroll;
+`;
+
+const Info = styled.div`
+  flex: 0.4;
+`;
+
+@withRedux(initStore, ({ details, loading }) => ({
+  details,
+  loading
+}))
 export default class Description extends PureComponent {
   static propTypes = {
     dispatch: PropTypes.func,
-    fixed: PropTypes.bool,
     details: PropTypes.shape({
       name: PropTypes.string,
       torrentId: PropTypes.string,
       files: PropTypes.shape({
         name: PropTypes.string,
         type: PropTypes.string,
-        size: PropTypes.string,
-      }),
-    }),
-  }
+        size: PropTypes.string
+      })
+    })
+  };
 
   static defaultProps = {
-    dispatch() {
-    },
+    dispatch() {},
     details: {},
-    fixed: false,
-  }
+    fixed: false
+  };
 
   constructor(props) {
     super(props);
 
     this.state = {
       streaming: false,
-      selectedIndex: null,
+      selectedIndex: null
     };
   }
 
   startStream = (e) => {
     this.setState({
       streaming: true,
-      selectedIndex: e.target.dataset.id,
+      selectedIndex: e.target.dataset.id
     });
-  }
+  };
 
   closeModal = () => {
     this.setState({ streaming: false });
     ajax.getJSON(`/api/delete/${this.props.details.torrentId}`);
-  }
+  };
 
   listTorrent = ({ torrentId }) => {
     this.props.dispatch({
       type: 'FETCH_DETAILS',
-      payload: torrentId,
+      payload: torrentId
     });
-  }
+  };
 
   getFileIcon = (mime) => {
     let icon;
@@ -94,70 +123,65 @@ export default class Description extends PureComponent {
     }
     return (
       <TileWrapper color={colors.primary}>
-        <i className={`mdi ${icon} centered fs-22`} />
+        <i style={{ fontSize: '18px' }} className={`mdi ${icon} centered`} />
       </TileWrapper>
     );
-  }
+  };
 
   getFiles() {
     const { details } = this.props;
 
-    return details && details.files && details.files.map((file, i) => {
-      const fileType = getFileType(file.type);
-      const streamIcon = classNames('mdi tooltip tooltip-left fs-22', {
-        'mdi-play-circle-outline': fileType === 'video',
-        'mdi-eye': fileType === 'image',
+    const x =
+      details &&
+      details.files &&
+      details.files.map((file, i) => {
+        const fileType = getFileType(file.type);
+        const streamIcon = classNames('mdi tooltip tooltip-left fs-18', {
+          'mdi-play-circle-outline': fileType === 'video',
+          'mdi-eye': fileType === 'image'
+        });
+
+        return (
+          <tr>
+            <td>{this.getFileIcon(file.type)}</td>
+            <td style={{ maxWidth: '275px' }} className="text-ellipsis">{file.name}</td>
+            <td>{file.size}</td>
+            <td>
+              {Description.isSupported(file.type) &&
+                <button className="btn btn-link" onClick={this.startStream}>
+                  <i
+                    className={streamIcon}
+                    data-tooltip={fileType === 'video' ? 'Play Video' : 'View Image'}
+                    data-id={i}
+                  />
+                </button>}
+            </td>
+          </tr>
+        );
       });
 
-      return (
-        <div className="tile tile-centered">
-          <div className="tile-icon">
-            {this.getFileIcon(file.type)}
-          </div>
-          <div className="tile-content">
-            <div className="tile-title">{file.name}</div>
-            <div className="tile-meta">{file.size} · {file.type}</div>
-          </div>
-          <div className="tile-action">
-            {Description.isSupported(file.type) &&
-              <button
-                className="btn btn-link"
-                onClick={this.startStream}
-              >
-                <i
-                  className={streamIcon}
-                  data-tooltip={fileType === 'video' ? 'Play Video' : 'View Image'}
-                  data-id={i}
-                />
-              </button>
-              }
-          </div>
-        </div>
-      );
-    });
+    return <Files><Table><tbody>{x}</tbody></Table></Files>;
   }
 
   static isSupported(mime) {
-    return document.createElement('video').canPlayType(mime) || (mime === 'video/x-matroska') || (getFileType(mime) === 'image');
+    return (
+      document.createElement('video').canPlayType(mime) ||
+      mime === 'video/x-matroska' ||
+      getFileType(mime) === 'image'
+    );
   }
 
   render() {
-    const { details, fixed } = this.props;
+    const { details, loading } = this.props;
 
     if (!details.name) return <div />;
 
-    const mainClass = fixed ? 'panel fixed' : 'panel';
+    if (loading) return <Wrapper><div className="loading" /></Wrapper>;
 
     return (
-      <div className={mainClass}>
-        <div className="panel-header">
-          <div className="panel-title text-ellipsis">{details && details.name}</div>
-        </div>
-        <div className="panel-nav" />
-        <div className="panel-body">
-          {this.getFiles()}
-        </div>
-        <div className="panel-footer" />
+      <Wrapper>
+        <Info />
+        {this.getFiles()}
         <MediaModal
           infoHash={details.torrentId}
           fileIndex={this.state.selectedIndex}
@@ -165,7 +189,7 @@ export default class Description extends PureComponent {
           file={details.files[this.state.selectedIndex]}
           onCloseClick={this.closeModal}
         />
-      </div>
+      </Wrapper>
     );
   }
 }

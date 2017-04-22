@@ -1,5 +1,4 @@
 @import "~spectre.css/spectre.less";
-@import url("https://cdnjs.cloudflare.com/ajax/libs/video.js/5.19.1/alt/video-js-cdn.min.css");
 @import url(//cdn.materialdesignicons.com/1.8.36/css/materialdesignicons.min.css);
 @import (less) '~react-loading-bar/dist/index.css';
 @import (less) '~react-toastify/dist/ReactToastify.min.css';
@@ -69,8 +68,8 @@ html {
   overflow: hidden;
 }
 
-.fs-22 {
-  font-size: 22px;
+.fs-18 {
+  font-size: 18px;
 }
 
 :focus {
@@ -79,24 +78,6 @@ html {
 
 .m-0 {
   margin: 0;
-}
-
-.show-sm-inline {
-  display: none;
-}
-
-.hide-sm-inline {
-  display: inline;
-}
-
-@media screen and (max-width: 600px) {
-  .show-sm-inline {
-    display: inline !important;
-  }
-
-  .hide-sm-inline {
-    display: none !important;
-  }
 }
 
 .ReactModal__Content--after-open {
@@ -123,4 +104,14 @@ html {
 .toast-error {
   background-color: #ff4d48;
   border-color: #ff4d48;
+}
+
+.ReactVirtualized__Grid__innerScrollContainer{
+  display: table;
+  width: 100% !important;
+}
+
+.results-list{
+  padding: 0 20px;
+  height: 43px;
 }

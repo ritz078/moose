@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import Video from './Video';
@@ -35,28 +36,23 @@ export default function MediaModal(props) {
   const style = {
     overlay: {
       backgroundColor: 'rgba(0,0,0,0.95)',
-      zIndex: 99,
+      zIndex: 99
     },
     content: {
       background: 'transparent',
-      border: 'none',
-    },
+      border: 'none'
+    }
   };
 
   const src = `http://${window.location.hostname}:7500/api/download/${infoHash}/${+fileIndex}/${file.name}`;
 
   return (
-    <Modal
-      style={style}
-      isOpen={showModal}
-      contentLabel={'Modal'}
-    >
+    <Modal style={style} isOpen={showModal} contentLabel={'Modal'}>
       <ModalControl>
         <CloseIcon onClick={onCloseClick} className="mdi mdi-close close-modal" />
       </ModalControl>
       {file.type.indexOf('video') >= 0 && <Video src={src} />}
-      {file.type.indexOf('image') >= 0 && <ImageLightbox src={src} />
-      }
+      {file.type.indexOf('image') >= 0 && <ImageLightbox src={src} />}
     </Modal>
   );
 }
@@ -67,7 +63,7 @@ MediaModal.propTypes = {
   showModal: PropTypes.bool.isRequired,
   file: PropTypes.shape({
     name: PropTypes.string,
-    type: PropTypes.string,
+    type: PropTypes.string
   }).isRequired,
-  onCloseClick: PropTypes.func.isRequired,
+  onCloseClick: PropTypes.func.isRequired
 };

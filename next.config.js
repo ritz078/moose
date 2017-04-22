@@ -9,16 +9,19 @@ module.exports = {
         test: /\.(css|scss|less)/,
         loader: 'emit-file-loader',
         options: {
-          name: 'dist/[path][name].[ext]',
-        },
-      }, {
+          name: 'dist/[path][name].[ext]'
+        }
+      },
+      {
         test: /\.(less)$/,
-        use: ['babel-loader', 'raw-loader', 'less-loader'],
-      }, {
+        use: ['babel-loader', 'raw-loader', 'less-loader']
+      },
+      {
         test: /\.(css)$/,
-        use: ['babel-loader', 'raw-loader', 'css-loader'],
-      });
+        use: ['babel-loader', 'raw-loader', 'css-loader']
+      }
+    );
 
     return config;
-  },
+  }
 };

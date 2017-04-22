@@ -24,9 +24,9 @@ function list(req, res) {
       files: torrent.files.map(file => ({
         name: file.name,
         size: prettyBytes(file.length),
-        type: mime.lookup(file.name),
+        type: mime.lookup(file.name)
       })),
-      name: torrent.name,
+      name: torrent.name
     });
   }
 
@@ -71,11 +71,8 @@ function download(req, res) {
     if (Array.isArray(range)) {
       range = range[0];
       res.statusCode = 206;
-      res.setHeader(
-        'Content-Range',
-        `bytes ${range.start}-${range.end}/${file.length}`
-      );
-      res.setHeader('Content-Length', (range.end - range.start) + 1);
+      res.setHeader('Content-Range', `bytes ${range.start}-${range.end}/${file.length}`);
+      res.setHeader('Content-Length', range.end - range.start + 1);
     } else {
       range = null;
       res.setHeader('Content-Length', file.length);
@@ -102,14 +99,14 @@ function deleteTorr(req, res) {
 }
 
 function searchTorrent(req, res) {
-  req.query.page = (req.query.page - 1) || 0;
+  req.query.page = req.query.page - 1 || 0;
 
   search(req.params.searchTerm, req.query)
     .then((results) => {
       if (results && !results.length) res.status(500).body({ error: 'Unable to fetch data' });
       return res.json({
         data: results,
-        page: req.query.page,
+        page: req.query.page
       });
     })
     .catch(err => res.json(err));
@@ -119,5 +116,5 @@ module.exports = {
   list,
   deleteTorr,
   download,
-  searchTorrent,
+  searchTorrent
 };

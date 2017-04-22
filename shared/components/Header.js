@@ -29,7 +29,6 @@ const SearchButton = styled.button`
 `;
 
 const SearchWrapper = styled.div`
-  max-width: 1220px;
   width: 100%;
   margin:0 auto;
   position: relative;

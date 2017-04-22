@@ -77,7 +77,7 @@ export default class Results extends PureComponent {
   }
 
   getResult = (index, style) => {
-    const { results, dispatch, details } = this.props;
+    const { results, dispatch } = this.props;
     const { selectedIndex } = this.state;
 
     const result = results.data[index];

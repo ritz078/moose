@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import videojs from 'video.js';
 
 const VideoWrapper = styled.div`
   display: flex;
@@ -9,31 +8,16 @@ const VideoWrapper = styled.div`
   flex: 1;
   align-items: center;
   justify-content: center;
-  @media screen and (max-width: 1220px) {
-    max-width: 100%;
+  & > video {
+    width: 100%;
   }
 `;
 
 class Video extends PureComponent {
-  componentDidMount() {
-    this.init();
-  }
-
-  componentWillReceiveProps() {
-    this.init();
-  }
-
-  init = () => {
-    videojs(this.videoRef, this.props.options, () => {
-      this.props.onInit();
-    });
-  };
-
   render() {
     return (
       <VideoWrapper>
         <video
-          className="video-js vjs-default-skin"
           controls
           preload="auto"
           src={this.props.src}

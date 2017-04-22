@@ -8,22 +8,6 @@ import Results from '../shared/components/Results';
 import Layout from '../shared/components/Layout';
 import Description from '../shared/components/Description';
 
-const Right = styled.div`
-  padding: 0;
-  width: 100% !important;
-  flex: none;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.3);
-  & > div {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    max-height: 40vh;
-  }
-`;
-
 const Content = styled.div`
   display: flex;
   flex: 1;
@@ -78,7 +62,6 @@ export default class Home extends PureComponent {
     return (
       <Content>
         {results.data && !!results.data.length && <Results />}
-        <Description details={details} dispatch={dispatch} />
       </Content>
     );
   }

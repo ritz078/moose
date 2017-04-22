@@ -5,6 +5,7 @@ import withRedux from 'next-redux-wrapper';
 import { InfiniteLoader, List, AutoSizer } from 'react-virtualized';
 import initStore from '../../store';
 import sortOrder from '../constants/sortOrder';
+import Description from './Description';
 
 const Verified = styled.i`
   font-size: 14px;
@@ -30,89 +31,95 @@ const Td = styled.div`
 const Tr = styled.div`
   cursor: pointer;
   display: flex;
-  flex-direction: row;
+  flex-direction: ${props => props.direction || 'column'};
   &:nth-of-type(2n){
     background-color: #f8f8f8
   }
-`;
-
-const SortOrder = styled.select`
-  border-color: #f1f1f1 !important;
-  height: 42px !important;
-  display: inline-block;
-  cursor: pointer;
-  appearance: none;
-`;
-
-const FiltersWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
 `;
 
 const ResultTitle = styled.div`
   max-width: 500px;
 `;
 
-@withRedux(initStore, ({ results, params, loading }) => ({ results, params, loading }))
+@withRedux(initStore, ({ results, params, loading, details }) => ({
+  results,
+  params,
+  loading,
+  details
+}))
 export default class Results extends PureComponent {
   static propTypes = {
-    results: PropTypes.arrayOf(
-      PropTypes.shape({
-        magnetLink: PropTypes.string,
-        verified: PropTypes.bool,
-        size: PropTypes.string,
-        seeders: PropTypes.number,
-        leechers: PropTypes.number
-      })
-    ).isRequired,
+    results: PropTypes.shape({
+      data: PropTypes.arrayOf(
+        PropTypes.shape({
+          magnetLink: PropTypes.string,
+          verified: PropTypes.bool,
+          size: PropTypes.string,
+          seeders: PropTypes.number,
+          leechers: PropTypes.number
+        })
+      )
+    }).isRequired,
     dispatch: PropTypes.isRequired,
     params: PropTypes.shape({
       page: PropTypes.number,
       searchTerm: PropTypes.string
-    }).isRequired
+    }).isRequired,
+    loading: PropTypes.bool.isRequired
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      selectedTorrentId: null,
-      loadedRowsMap: {}
+      selectedIndex: null
     };
   }
 
   getResult = (index, style) => {
-    const { results, dispatch } = this.props;
+    const { results, dispatch, details } = this.props;
+    const { selectedIndex } = this.state;
 
     const result = results.data[index];
 
     return (
-      <Tr
-        key={result.id}
-        data-id={result.id}
-        style={style}
-        onClick={() =>
-          dispatch({
-            type: 'FETCH_DETAILS',
-            payload: result.magnetLink
-          })}
-      >
-        <Td flex={0.5}>{index + 1}</Td>
-        <Td flex={10}>
-          <ResultTitle className="tile-title text-ellipsis">
-            <Verified
-              data-tooltip={result.verified ? 'Verified' : 'Not verified'}
-              className="mdi mdi-verified tooltip tooltip-right"
-              active={result.verified}
-            />
-            {' '}
-            {result.name}
-          </ResultTitle>
-        </Td>
-        <Td flex={2}>{result.uploadDate}</Td>
-        <Td flex={2}>{result.size}</Td>
-        <Td flex={1}>{result.seeders}</Td>
-        <Td flex={1}>{result.leechers}</Td>
+      <Tr key={result.id} data-id={result.id} style={style}>
+        <div
+          style={{ display: 'flex', flexDirection: 'row' }}
+          onClick={() => {
+            this.setState(
+              {
+                selectedIndex: index
+              },
+              () => {
+                const i = Math.min(index, selectedIndex);
+                return this.listRef.recomputeRowHeights(i);
+              }
+            );
+            return dispatch({
+              type: 'FETCH_DETAILS',
+              payload: result.magnetLink
+            });
+          }}
+        >
+          <Td flex={0.5}>{index + 1}</Td>
+          <Td flex={10}>
+            <ResultTitle className="tile-title text-ellipsis">
+              <Verified
+                data-tooltip={result.verified ? 'Verified' : 'Not verified'}
+                className="mdi mdi-verified tooltip tooltip-right"
+                active={result.verified}
+              />
+              {' '}
+              {result.name}
+            </ResultTitle>
+          </Td>
+          <Td flex={2}>{result.uploadDate}</Td>
+          <Td flex={2}>{result.size}</Td>
+          <Td flex={1}>{result.seeders}</Td>
+          <Td flex={1}>{result.leechers}</Td>
+        </div>
+        {this.state.selectedIndex === index && <Description />}
       </Tr>
     );
   };
@@ -150,11 +157,16 @@ export default class Results extends PureComponent {
     return !!results.data[index];
   };
 
+  getHeight = ({ index }) => {
+    if (index === this.state.selectedIndex) return 350;
+    return 41;
+  };
+
   render() {
     const rowCount = this.props.results.data.length + 1;
     return (
       <Table>
-        <Tr style={{ padding: '0 20px' }} className="text-bold">
+        <Tr direction="row" style={{ padding: '0 20px' }} className="text-bold">
           <Td flex={0.5}>#</Td>
           <Td flex={10}>Name</Td>
           <Td flex={2}>Uploaded</Td>
@@ -174,16 +186,18 @@ export default class Results extends PureComponent {
               <AutoSizer>
                 {({ width, height }) => (
                   <List
-                    ref={registerChild}
+                    ref={(x) => {
+                      this.listRef = x;
+                      registerChild(x);
+                    }}
                     height={height}
                     onRowsRendered={onRowsRendered}
                     className={'results-list'}
                     rowCount={rowCount}
                     width={width}
-                    rowHeight={41}
+                    rowHeight={this.getHeight}
                     overscanRowCount={5}
                     rowRenderer={this.rowRenderer}
-                    estimatedRowSize={41}
                   />
                 )}
               </AutoSizer>

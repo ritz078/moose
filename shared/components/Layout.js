@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import stylesheet from '../../styles/index.less';
 import Header from './Header';
 import MenuBar from './MenuBar';
+import Controls from './Controls';
 
 const Container = styled.div`
   display: flex;
@@ -15,7 +16,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-export default function Layout({ children, loading }) {
+export default function Layout({ children, loading, cast }) {
   return (
     <Container>
       <Head>
@@ -30,6 +31,7 @@ export default function Layout({ children, loading }) {
       <Header />
 
       {children}
+      {cast.streamingMedia && <Controls />}
 
       <ToastContainer autoClose={3000} position="bottom-center" />
     </Container>

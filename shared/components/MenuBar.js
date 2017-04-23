@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
+import Cast from './Cast';
 
 const Wrapper = styled.div`
   height: 40px;
@@ -23,27 +24,37 @@ const Icon = styled.i`
   }
 `;
 
-export default function MenuBar() {
-  return (
-    <Wrapper>
-      <div className="popover popover-bottom">
-        <Icon className="mdi mdi-menu" />
-        <div className="popover-container">
-          <ul className="menu">
-            <li className="menu-item">
-              <Link href="#">
-                <div><i className="mdi mdi-home fs-18" /> Home</div>
-              </Link>
-            </li>
-            <li className="divider" />
-            <li className="menu-item">
-              <Link href="#">
-                <div><i className="mdi mdi-download fs-18" /> Downloads</div>
-              </Link>
-            </li>
-          </ul>
+const Li = styled.li`
+  cursor: pointer;
+  &:hover {
+    color: purple;
+  }
+`;
+
+export default class MenuBar extends PureComponent {
+  render() {
+    return (
+      <Wrapper>
+        <div className="popover popover-bottom">
+          <Icon className="mdi mdi-menu" />
+          <div className="popover-container">
+            <ul className="menu">
+              <Li className="menu-item">
+                <Link href="#">
+                  <div><i className="mdi mdi-home fs-18" /> Home</div>
+                </Link>
+              </Li>
+              <Li className="divider" />
+              <Li className="menu-item">
+                <Link href="#">
+                  <div><i className="mdi mdi-download fs-18" /> Downloads</div>
+                </Link>
+              </Li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </Wrapper>
-  );
+        <Cast />
+      </Wrapper>
+    );
+  }
 }

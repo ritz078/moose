@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+
 module.exports = {
   distDir: 'dist/client',
   webpack: (config) => {
@@ -21,6 +22,15 @@ module.exports = {
         use: ['babel-loader', 'raw-loader', 'css-loader']
       }
     );
+
+    config.resolve.alias = {
+      Long: 'long',
+      ByteBuffer: 'bytebuffer'
+    }
+
+    config.stats = {
+      errorDetails: true
+    }
 
     return config;
   }

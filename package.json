@@ -6,16 +6,17 @@
     "node": ">=6"
   },
   "scripts": {
-    "lint": "eslint pages server shared",
-    "lintfix": "eslint --fix client server shared config internal",
+    "lint": "eslint {shared,pages,server}/**/*.js",
+    "lintfix": "eslint --fix {shared,pages,server}/**/*.js",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "dev": "electron .",
-    "start": "NODE_ENV=production electron .",
+    "start": "NODE_ENV=production npm run build:client && electron .",
     "build:client": "next build",
     "build": "npm run build:client && electron-packager . --out=package --darwin --overwrite",
     "precommit": "lint-staged",
-    "prettier": "prettier-eslint --write {shared,pages,server}/**/*.js"
+    "prettier": "prettier-eslint --write {shared,pages,server}/**/*.js",
+    "rebuild": "./node_modules/.bin/electron-rebuild"
   },
   "repository": {
     "type": "git",
@@ -48,6 +49,8 @@
     "atob": "^2.0.3",
     "babel-register": "^6.24.1",
     "bytebuffer": "^5.0.1",
+    "chai": "^3.5.0",
+    "chromecasts": "^1.9.0",
     "classnames": "^2.2.5",
     "colors": "1.1.2",
     "cors": "^2.8.3",
@@ -58,6 +61,9 @@
     "electron-devtools-installer": "^2.2.0",
     "express": "4.15.2",
     "get-port": "^3.1.0",
+    "internal-ip": "^1.2.0",
+    "is-electron-renderer": "^2.0.1",
+    "just-is-empty": "^1.0.1",
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
     "lint-staged": "^3.4.0",
@@ -67,6 +73,7 @@
     "parse-torrent": "^5.8.3",
     "pretty-bytes": "^4.0.2",
     "prop-types": "^15.5.8",
+    "protobufjs": "^6.7.3",
     "pump": "^1.0.2",
     "query-string": "^4.3.4",
     "range-parser": "^1.2.0",
@@ -83,12 +90,14 @@
     "redux-observable": "^0.14.1",
     "rimraf": "^2.5.4",
     "rxjs": "^5.3.0",
+    "sinon": "^2.1.0",
     "spectre.css": "^0.2.13",
     "styled-components": "^1.4.5",
     "tempy": "^0.1.0",
     "thepiratebay": "^1.4.0",
     "url-loader": "^0.5.8",
-    "webtorrent": "^0.98.18"
+    "webtorrent": "^0.98.18",
+    "window-or-global": "^1.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -104,6 +113,7 @@
     "css-loader": "^0.28.0",
     "cz-conventional-changelog": "^2.0.0",
     "devtron": "^1.4.0",
+    "electron-rebuild": "^1.5.7",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "14.1.0",
     "eslint-plugin-flowtype": "^2.32.1",

@@ -16,6 +16,18 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
+const Close = styled.button`
+  margin-top: 12px !important;
+  margin-right: 10px !important;
+  cursor: pointer;
+  color: #fff !important;
+  opacity: 1 !important;
+`;
+
+const CloseButton = ({ closeToast }) => (
+  <Close className="btn btn-clear float-right" onClick={closeToast} />
+);
+
 export default function Layout({ children, loading, cast }) {
   return (
     <Container>
@@ -33,7 +45,7 @@ export default function Layout({ children, loading, cast }) {
       {children}
       {cast.streamingMedia && <Controls />}
 
-      <ToastContainer autoClose={3000} position="bottom-center" />
+      <ToastContainer autoClose={3000} position="bottom-center" closeButton={<CloseButton />} />
     </Container>
   );
 }

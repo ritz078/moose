@@ -80,7 +80,6 @@ export default class Cast extends PureComponent {
       'mdi-cast': !cast.selectedPlayer,
       'mdi-cast-connected primary': cast.selectedPlayer
     });
-
     const { players } = cast;
 
     return (

@@ -28,18 +28,6 @@ Toast.defaultProps = {
   type: 'default'
 };
 
-const Close = styled.button`
-  margin-top: 12px !important;
-  margin-right: 10px !important;
-  cursor: pointer;
-  color: #fff !important;
-  opacity: 1 !important;
-`;
-
 export function showToast(text, type) {
-  toast(<Toast text={text} type={type} />, {
-    closeButton: ({ closeToast }) => (
-      <Close className="btn btn-clear float-right" onClick={closeToast} />
-    )
-  });
+  toast(<Toast text={text} type={type} />);
 }

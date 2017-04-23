@@ -11,6 +11,10 @@ export function getPlayer() {
 }
 
 export default {
+  get casts() {
+    return root.casts;
+  },
+
   connect(player, cb) {
     root.selectedPlayer = player;
     root.selectedPlayer.play(

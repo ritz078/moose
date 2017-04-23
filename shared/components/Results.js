@@ -29,7 +29,6 @@ const Td = styled.div`
 `;
 
 const Tr = styled.div`
-  cursor: pointer;
   display: flex;
   flex-direction: ${props => props.direction || 'column'};
   &:nth-of-type(2n){
@@ -85,7 +84,7 @@ export default class Results extends PureComponent {
     return (
       <Tr key={result.id} data-id={result.id} style={style}>
         <div
-          style={{ display: 'flex', flexDirection: 'row' }}
+          style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer' }}
           onClick={() => {
             this.setState(
               {
@@ -180,7 +179,7 @@ export default class Results extends PureComponent {
             loadMoreRows={this.loadMoreRows}
             rowCount={rowCount}
             minimumBatchSize={1}
-            threshold={1}
+            threshold={5}
           >
             {({ onRowsRendered, registerChild }) => (
               <AutoSizer>

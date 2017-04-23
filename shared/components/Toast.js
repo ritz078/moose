@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import cn from 'classnames';
 import { toast } from 'react-toastify';
 
@@ -13,7 +14,6 @@ export default function Toast(props) {
 
   return (
     <div className={mainClass}>
-      <button className="btn btn-clear float-right" />
       {props.text}
     </div>
   );

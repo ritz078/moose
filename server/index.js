@@ -15,7 +15,7 @@ function startServer() {
   app.get('/api/delete/:torrentId', deleteTorr);
   app.get('/api/search/:searchTerm', searchTorrent);
 
-  app.listen(7500, '127.0.0.1');
+  app.listen(7500, '0.0.0.0');
 }
 
 module.exports = startServer;

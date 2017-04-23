@@ -9,6 +9,7 @@ import initStore from '../../store';
 import MediaModal from './MediaModal';
 import getFileType from '../utils/logic/fileType';
 import colors from '../constants/colors';
+import castUtil from '../utils/cast';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -47,9 +48,10 @@ const Info = styled.div`
   flex: 0.4;
 `;
 
-@withRedux(initStore, ({ details, loading }) => ({
+@withRedux(initStore, ({ details, loading, cast }) => ({
   details,
-  loading
+  loading,
+  cast
 }))
 export default class Description extends PureComponent {
   static propTypes = {
@@ -62,7 +64,11 @@ export default class Description extends PureComponent {
         type: PropTypes.string,
         size: PropTypes.string
       })
-    })
+    }),
+    loading: PropTypes.bool.isRequired,
+    cast: PropTypes.shape({
+      selectedPlayer: PropTypes.any
+    }).isRequired
   };
 
   static defaultProps = {
@@ -81,22 +87,44 @@ export default class Description extends PureComponent {
   }
 
   startStream = (e) => {
+    const selectedIndex = e.target.dataset.id;
+
+    // if a cast player is selected then stream on the chromecast
+    if (this.props.cast.selectedPlayer) {
+      const file = this.props.details.files[selectedIndex];
+
+      const fileDetails = {
+        name: file.name,
+        index: e.target.dataset.id,
+        infoHash: this.props.details.torrentId,
+        type: file.type
+      };
+
+      castUtil.play(fileDetails, (err) => {
+        if (!err) {
+          this.props.dispatch({
+            type: 'SET_STREAMING_FILE',
+            payload: fileDetails
+          });
+        } else {
+          this.props.dispatch({
+            type: 'REMOVE_STREAMING_FILE'
+          });
+        }
+      });
+      return;
+    }
+
+    // if no cast is connected stream in the app
     this.setState({
       streaming: true,
-      selectedIndex: e.target.dataset.id
+      selectedIndex
     });
   };
 
   closeModal = () => {
     this.setState({ streaming: false });
     ajax.getJSON(`/api/delete/${this.props.details.torrentId}`);
-  };
-
-  listTorrent = ({ torrentId }) => {
-    this.props.dispatch({
-      type: 'FETCH_DETAILS',
-      payload: torrentId
-    });
   };
 
   getFileIcon = (mime) => {
@@ -144,7 +172,7 @@ export default class Description extends PureComponent {
         return (
           <tr>
             <td>{this.getFileIcon(file.type)}</td>
-            <td style={{ maxWidth: '275px' }} className="text-ellipsis">{file.name}</td>
+            <td style={{ maxWidth: '270px' }} className="text-ellipsis">{file.name}</td>
             <td>{file.size}</td>
             <td>
               {Description.isSupported(file.type) &&
@@ -160,7 +188,13 @@ export default class Description extends PureComponent {
         );
       });
 
-    return <Files><Table><tbody>{x}</tbody></Table></Files>;
+    return (
+      <Files>
+        <Table>
+          <tbody>{x}</tbody>
+        </Table>
+      </Files>
+    );
   }
 
   static isSupported(mime) {
@@ -174,9 +208,13 @@ export default class Description extends PureComponent {
   render() {
     const { details, loading } = this.props;
 
-    if (!details.name) return <div />;
-
-    if (loading) return <Wrapper><div className="loading" /></Wrapper>;
+    if (loading || !details.name) {
+      return (
+        <Wrapper>
+          <div className="loading" />
+        </Wrapper>
+      );
+    }
 
     return (
       <Wrapper>

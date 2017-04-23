@@ -30,10 +30,7 @@ class Video extends PureComponent {
 }
 
 Video.propTypes = {
-  src: PropTypes.string.isRequired,
-  onInit: PropTypes.func,
-  // eslint-disable-next-line react/forbid-prop-types
-  options: PropTypes.object
+  src: PropTypes.string.isRequired
 };
 
 Video.defaultProps = {

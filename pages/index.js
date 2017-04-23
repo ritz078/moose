@@ -15,11 +15,12 @@ const Content = styled.div`
   padding-top: 20px;
 `;
 
-@withRedux(initStore, ({ results, loading, details, params }) => ({
+@withRedux(initStore, ({ results, loading, details, params, cast }) => ({
   results,
   loading,
   details,
-  params
+  params,
+  cast
 }))
 export default class Home extends PureComponent {
   static propTypes = {
@@ -71,6 +72,6 @@ export default class Home extends PureComponent {
     this.props.params.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null;
 
   render() {
-    return <Layout loading={this.props.loading}>{this.getContent()}</Layout>;
+    return <Layout loading={this.props.loading} cast={this.props.cast}>{this.getContent()}</Layout>;
   }
 }

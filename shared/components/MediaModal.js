@@ -12,13 +12,13 @@ const ModalControl = styled.div`
   font-size: 20px;
 `;
 
-const ImageLightbox = styled.img`
+const ImageLightbox = styled.div`
   display: flex;
   background-size:contain;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: ${props => `url${props.src}`};
-  height: auto;
+  background-image: ${props => `url('${props.source}')`};
+  height: 100vh;
   width: 100%;
   align-self: center;
 `;
@@ -52,7 +52,7 @@ export default function MediaModal(props) {
         <CloseIcon onClick={onCloseClick} className="mdi mdi-close close-modal" />
       </ModalControl>
       {file.type.indexOf('video') >= 0 && <Video src={src} />}
-      {file.type.indexOf('image') >= 0 && <ImageLightbox src={src} />}
+      {file.type.indexOf('image') >= 0 && <ImageLightbox source={src} />}
     </Modal>
   );
 }

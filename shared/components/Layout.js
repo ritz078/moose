@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import stylesheet from '../../styles/index.less';
 import Header from './Header';
 import MenuBar from './MenuBar';
+import Controls from './Controls';
 
 const Container = styled.div`
   display: flex;
@@ -15,7 +16,19 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-export default function Layout({ children, loading }) {
+const Close = styled.button`
+  margin-top: 12px !important;
+  margin-right: 10px !important;
+  cursor: pointer;
+  color: #fff !important;
+  opacity: 1 !important;
+`;
+
+const CloseButton = ({ closeToast }) => (
+  <Close className="btn btn-clear float-right" onClick={closeToast} />
+);
+
+export default function Layout({ children, loading, cast }) {
   return (
     <Container>
       <Head>
@@ -30,15 +43,19 @@ export default function Layout({ children, loading }) {
       <Header />
 
       {children}
+      {cast.streamingMedia && <Controls />}
 
-      <ToastContainer autoClose={3000} position="bottom-center" />
+      <ToastContainer autoClose={3000} position="bottom-center" closeButton={<CloseButton />} />
     </Container>
   );
 }
 
 Layout.propTypes = {
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  cast: PropTypes.shape({
+    streamingMedia: PropTypes.any
+  }).isRequired
 };
 
 Layout.defaultProps = {

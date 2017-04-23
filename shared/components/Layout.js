@@ -40,7 +40,10 @@ export default function Layout({ children, loading, cast }) {
 
 Layout.propTypes = {
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  cast: PropTypes.shape({
+    streamingMedia: PropTypes.any
+  }).isRequired
 };
 
 Layout.defaultProps = {

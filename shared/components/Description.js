@@ -9,7 +9,7 @@ import initStore from '../../store';
 import MediaModal from './MediaModal';
 import getFileType from '../utils/logic/fileType';
 import colors from '../constants/colors';
-import castUtil from '../utils/store/cast';
+import castUtil from '../utils/cast';
 
 const Wrapper = styled.div`
   width: 100%;

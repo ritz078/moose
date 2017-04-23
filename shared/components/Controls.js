@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import cn from 'classnames';
-import { getPlayer } from '../utils/store/cast';
+import { getPlayer } from '../utils/cast';
 import { showToast } from './Toast';
 
 const Wrapper = styled.div`
@@ -28,7 +28,8 @@ const Icon = styled.i`
 const Title = styled.h6`
   font-size: 14px;
   margin: 12px 10px 3px;
-  color: #4c4c4c;
+  color: #5764c6;
+  font-weight: 500;
 `;
 
 const Control = styled.div`
@@ -62,23 +63,26 @@ export default class Controls extends PureComponent {
 
       if (player) {
         player.status((err, status) => {
-          this.setState({
-            sliderValue: status.currentTime,
-            sliderMax: status.media.duration,
-            title: status.media.metadata.title
-          });
+          if (status.playerState === 'PLAYING') {
+            this.setState({
+              sliderValue: status.currentTime,
+              sliderMax: status.media.duration,
+              title: status.media.metadata.title
+            });
+          }
         });
       }
     }, 1000);
   }
 
+  stopPolling = () => {
+    clearInterval(this.interval);
+  };
+
   componentDidMount() {
-    this.interval = this.startPolling();
-    getPlayer().on('status', ({ currentTime }) => {
-      this.setState({
-        sliderValue: currentTime
-      });
-    });
+    setTimeout(() => {
+      this.interval = this.startPolling();
+    }, 1000);
   }
 
   pause = () => {
@@ -113,7 +117,7 @@ export default class Controls extends PureComponent {
         showToast(err.message, 'err');
         return;
       }
-      clearInterval(this.interval);
+      this.stopPolling();
       this.setState({
         isPaused: true
       });
@@ -132,6 +136,10 @@ export default class Controls extends PureComponent {
       });
     });
   };
+
+  componentWillUnmount() {
+    this.stopPolling();
+  }
 
   render() {
     const { isPaused, sliderMax, sliderValue, title } = this.state;

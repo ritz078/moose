@@ -3,7 +3,7 @@ import cn from 'classnames';
 import styled from 'styled-components';
 import isEmpty from 'just-is-empty';
 import withRedux from 'next-redux-wrapper';
-import castUtil, { getPlayer } from '../utils/store/cast';
+import castUtil, { getPlayer } from '../utils/cast';
 import initStore from '../../store';
 
 const Icon = styled.i`
@@ -36,6 +36,7 @@ export default class Cast extends PureComponent {
 
   componentDidMount() {
     const { casts } = castUtil;
+
     if (casts) {
       this.props.dispatch({
         type: 'SET_PLAYERS',
@@ -89,10 +90,10 @@ export default class Cast extends PureComponent {
         <Icon className={iconClass} />
         <div className="popover-container">
           <ul className="menu">
-            {players.map((player, i) => (
+            {players.map(player => (
               <Li
                 className="menu-item"
-                key={i}
+                key={player.name}
                 onClick={() => (getPlayer() ? this.disconnect() : this.selectPlayer(player))}
               >
                 {player.name}

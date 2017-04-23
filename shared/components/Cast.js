@@ -3,7 +3,7 @@ import cn from 'classnames';
 import styled from 'styled-components';
 import isEmpty from 'just-is-empty';
 import withRedux from 'next-redux-wrapper';
-import castUtil from '../utils/store/cast';
+import castUtil, { getPlayer } from '../utils/store/cast';
 import initStore from '../../store';
 
 const Icon = styled.i`
@@ -35,15 +35,15 @@ export default class Cast extends PureComponent {
   };
 
   componentDidMount() {
-    console.log(castUtil);
-    if (castUtil.casts) {
+    const { casts } = castUtil;
+    if (casts) {
       this.props.dispatch({
         type: 'SET_PLAYERS',
-        payload: castUtil.casts.players
+        payload: casts.players
       });
 
-      castUtil.casts.on('update', (player) => {
-        castUtil.casts.players.push(player);
+      casts.on('update', (player) => {
+        casts.players.push(player);
         this.props.dispatch({
           type: 'ADD_PLAYER',
           payload: player
@@ -59,6 +59,17 @@ export default class Cast extends PureComponent {
         payload: player
       })
     );
+  };
+
+  disconnect = () => {
+    castUtil.destroy(() => {
+      this.props.dispatch({
+        type: 'REMOVE_SELECTED_PLAYER'
+      });
+      this.props.dispatch({
+        type: 'REMOVE_STREAMING_FILE'
+      });
+    });
   };
 
   render() {
@@ -79,7 +90,11 @@ export default class Cast extends PureComponent {
         <div className="popover-container">
           <ul className="menu">
             {players.map((player, i) => (
-              <Li className="menu-item" key={i} onClick={() => this.selectPlayer(player)}>
+              <Li
+                className="menu-item"
+                key={i}
+                onClick={() => (getPlayer() ? this.disconnect() : this.selectPlayer(player))}
+              >
                 {player.name}
               </Li>
             ))}

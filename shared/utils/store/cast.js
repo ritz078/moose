@@ -6,26 +6,22 @@ import { showToast } from '../../components/Toast';
 
 root.casts = isRenderer ? remote.require('chromecasts')() : require('chromecasts')();
 
+export function getPlayer() {
+  return root.selectedPlayer;
+}
+
 export default {
   get casts() {
     return root.casts;
-  },
-
-  set selectedPlayer(x) {
-    root.selectedPlayer = x;
   },
 
   get players() {
     return root.casts.players;
   },
 
-  get selectedPlayer() {
-    return root.selectedPlayer;
-  },
-
   connect(player, cb) {
-    this.selectedPlayer = player;
-    this.selectedPlayer.play(
+    root.selectedPlayer = player;
+    root.selectedPlayer.play(
       `http://${ip.v4()}:${window.location.port}/static/images/cover.jpg`,
       {
         type: 'image/jpeg'
@@ -34,6 +30,7 @@ export default {
         if (err) {
           showToast(err.message, 'error');
         }
+        showToast(`Successfully connected to ${player.name}`, 'success');
         if (cb) cb();
       }
     );
@@ -62,7 +59,14 @@ export default {
     }
   },
 
-  set addPlayer(player) {
-    window.casts.players.push(player);
+  destroy(cb) {
+    const player = getPlayer();
+    if (player) {
+      player.stop(() => {
+        showToast(`${player.name} has been disconnected.`, 'success');
+        root.selectedPlayer = null;
+        if (cb) cb();
+      });
+    }
   }
 };

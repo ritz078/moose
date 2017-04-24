@@ -3,6 +3,7 @@
 @import url(//cdn.materialdesignicons.com/1.8.36/css/materialdesignicons.min.css);
 @import (less) '~react-loading-bar/dist/index.css';
 @import (less) '~react-toastify/dist/ReactToastify.min.css';
+@import "~plyr/src/less/plyr.less";
 
 html {
   box-sizing: border-box;
@@ -110,12 +111,12 @@ html {
   border-color: #ff4d48;
 }
 
-.ReactVirtualized__Grid__innerScrollContainer{
+.ReactVirtualized__Grid__innerScrollContainer {
   display: table;
   width: 100% !important;
 }
 
-.results-list{
+.results-list {
   padding: 0 20px;
   height: 43px;
 }
@@ -129,11 +130,11 @@ html {
   }
 }
 
-.popover.popover-bottom:hover .popover-container{
+.popover.popover-bottom:hover .popover-container {
   transform: translate(-90%, 0) scale(1) !important;
 }
 
-.primary{
+.primary {
   color: blue;
 }
 
@@ -141,4 +142,19 @@ html {
   -webkit-appearance: none;
   -moz-appearance: none;
   cursor: pointer;
+}
+
+.plyr {
+  width: 100%;
+}
+
+.ReactModalPortal > div {
+  opacity: 0;
+}
+
+.ReactModalPortal .ReactModal__Overlay {
+  transition: opacity .1s ease-in;
+  &--after-open{
+    opacity: 1;
+  }
 }

@@ -4,12 +4,19 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import classNames from 'classnames';
+import isRenderer from 'is-electron-renderer';
+import { remote } from 'electron';
 import withRedux from 'next-redux-wrapper';
 import initStore from '../../store';
 import MediaModal from './MediaModal';
 import getFileType from '../utils/logic/fileType';
 import colors from '../constants/colors';
 import castUtil from '../utils/cast';
+
+let vlc;
+if (isRenderer) {
+  vlc = remote.require('./server/utils/vlc');
+}
 
 const Wrapper = styled.div`
   width: 100%;
@@ -46,6 +53,15 @@ const Files = styled.div`
 
 const Info = styled.div`
   flex: 0.4;
+`;
+
+const VlcIcon = styled.i`
+  color: #FF6000;
+  cursor: pointer;
+  opacity: 0.8;
+  &:hover{
+    opacity: 1;
+  }
 `;
 
 @withRedux(initStore, ({ details, loading, cast }) => ({
@@ -156,7 +172,19 @@ export default class Description extends PureComponent {
     );
   };
 
-  getFiles() {
+  streamOnVlc = (e) => {
+    const selectedIndex = e.target.dataset.id;
+    const infoHash = this.props.details.torrentId;
+    const file = this.props.details.files[selectedIndex];
+    vlc.kill();
+    vlc.playOnVlc(
+      `http://${window.location.hostname}:7500/api/download/${infoHash}/${+selectedIndex}/${file.name}`,
+      file.name
+    );
+  };
+
+  // TODO: show vlc icon only if vlc is installed.
+  getFiles = () => {
     const { details } = this.props;
 
     const x =
@@ -174,6 +202,15 @@ export default class Description extends PureComponent {
             <td>{this.getFileIcon(file.type)}</td>
             <td style={{ maxWidth: '270px' }} className="text-ellipsis">{file.name}</td>
             <td>{file.size}</td>
+            <td>
+              {getFileType(file.type) === 'video' &&
+                <VlcIcon
+                  data-id={i}
+                  data-tooltip="Play on VLC"
+                  onClick={this.streamOnVlc}
+                  className="mdi mdi-vlc fs-18 tooltip tooltip-left"
+                />}
+            </td>
             <td>
               {Description.isSupported(file.type) &&
                 <button className="btn btn-link" onClick={this.startStream}>
@@ -195,7 +232,7 @@ export default class Description extends PureComponent {
         </Table>
       </Files>
     );
-  }
+  };
 
   static isSupported(mime) {
     return (

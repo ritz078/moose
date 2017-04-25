@@ -98,8 +98,13 @@ export default class Description extends PureComponent {
 
     this.state = {
       streaming: false,
-      selectedIndex: null
+      selectedIndex: null,
+      isVlcPresent: false
     };
+  }
+
+  componentDidMount() {
+    this.isVlcPresent();
   }
 
   startStream = (e) => {
@@ -172,6 +177,14 @@ export default class Description extends PureComponent {
     );
   };
 
+  isVlcPresent = () => {
+    vlc.isVlcPresent(isVlcPresent =>
+      this.setState({
+        isVlcPresent
+      })
+    );
+  };
+
   streamOnVlc = (e) => {
     const selectedIndex = e.target.dataset.id;
     const infoHash = this.props.details.torrentId;
@@ -202,15 +215,16 @@ export default class Description extends PureComponent {
             <td>{this.getFileIcon(file.type)}</td>
             <td style={{ maxWidth: '270px' }} className="text-ellipsis">{file.name}</td>
             <td>{file.size}</td>
-            <td>
-              {getFileType(file.type) === 'video' &&
-                <VlcIcon
-                  data-id={i}
-                  data-tooltip="Play on VLC"
-                  onClick={this.streamOnVlc}
-                  className="mdi mdi-vlc fs-18 tooltip tooltip-left"
-                />}
-            </td>
+            {this.state.isVlcPresent &&
+              <td>
+                {getFileType(file.type) === 'video' &&
+                  <VlcIcon
+                    data-id={i}
+                    data-tooltip="Play on VLC"
+                    onClick={this.streamOnVlc}
+                    className="mdi mdi-vlc fs-18 tooltip tooltip-left"
+                  />}
+              </td>}
             <td>
               {Description.isSupported(file.type) &&
                 <button className="btn btn-link" onClick={this.startStream}>

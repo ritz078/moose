@@ -17,6 +17,12 @@ function playOnVlc(url, fileName) {
   });
 }
 
+function isVlcPresent(cb) {
+  vlc((err, path) => {
+    cb(!err && path);
+  });
+}
+
 // end the vlc process
 function kill() {
   if (!proc) return;
@@ -26,5 +32,6 @@ function kill() {
 
 module.exports = {
   playOnVlc,
-  kill
+  kill,
+  isVlcPresent
 };

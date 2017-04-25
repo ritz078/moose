@@ -7680,6 +7680,13 @@ videostream@^2.3.0:
     pump "^1.0.1"
     range-slice-stream "^1.2.0"
 
+vlc-command@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/vlc-command/-/vlc-command-1.1.1.tgz#349b85def831f980cd6eec560b1990fd989eaf92"
+  dependencies:
+    run-parallel "^1.1.6"
+    winreg "^1.2.1"
+
 vm-browserify@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-0.0.4.tgz#5d7ea45bbef9e4a6ff65f95438e0a87c357d5a73"
@@ -7864,6 +7871,10 @@ window-size@0.1.0:
 window-size@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.4.tgz#f8e1aa1ee5a53ec5bf151ffa09742a6ad7697876"
+
+winreg@^1.2.1:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/winreg/-/winreg-1.2.3.tgz#93ad116b2696da87d58f7265a8fcea5254a965d5"
 
 word-wrap@^1.0.3:
   version "1.2.1"

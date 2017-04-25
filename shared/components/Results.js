@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import styled from 'styled-components';
 import withRedux from 'next-redux-wrapper';
 import { InfiniteLoader, List, AutoSizer } from 'react-virtualized';
@@ -31,7 +32,7 @@ const Td = styled.div`
 const Tr = styled.div`
   display: flex;
   flex-direction: ${props => props.direction || 'column'};
-  &:nth-of-type(2n){
+  &.row-even{
     background-color: #f8f8f8
   }
 `;
@@ -81,8 +82,12 @@ export default class Results extends PureComponent {
 
     const result = results.data[index];
 
+    const mainClass = cn({
+      'row-even': index % 2 === 0
+    });
+
     return (
-      <Tr key={result.id} data-id={result.id} style={style}>
+      <Tr key={result.id} data-id={result.id} style={style} className={mainClass}>
         <div
           style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer' }}
           onClick={() => {
@@ -170,8 +175,8 @@ export default class Results extends PureComponent {
           <Td flex={10}>Name</Td>
           <Td flex={2}>Uploaded</Td>
           <Td flex={2}>File Size</Td>
-          <Td flex={1} className="mdi mdi-arrow-down-bold" />
-          <Td flex={1} className="mdi mdi-arrow-up-bold" />
+          <Td flex={1}>Seeds</Td>
+          <Td flex={1}>Leech</Td>
         </Tr>
         <div style={{ flex: 1 }}>
           <InfiniteLoader

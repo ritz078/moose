@@ -41,6 +41,11 @@ const ResultTitle = styled.div`
   max-width: 500px;
 `;
 
+const SortIcon = styled.i`
+  font-size: 16px;
+  color: #aaa;
+`;
+
 @withRedux(initStore, ({ results, params, loading, details }) => ({
   results,
   params,
@@ -63,7 +68,9 @@ export default class Results extends PureComponent {
     dispatch: PropTypes.isRequired,
     params: PropTypes.shape({
       page: PropTypes.number,
-      searchTerm: PropTypes.string
+      searchTerm: PropTypes.string,
+      sortBy: PropTypes.string,
+      orderBy: PropTypes.string
     }).isRequired,
     loading: PropTypes.bool.isRequired,
     details: PropTypes.shape({
@@ -143,9 +150,19 @@ export default class Results extends PureComponent {
   };
 
   setSortOrder = (e: MouseEvent | KeyboardEvent) => {
+    const { orderBy, sortBy } = this.props.params;
+
+    const ob = e.target.dataset.sortType;
+    const sb = orderBy !== ob ? 'desc' : sortBy === 'desc' ? 'asc' : 'desc';
+
+    const x = {
+      sortBy: sb,
+      orderBy: ob
+    };
+
     this.props.dispatch({
       type: 'SET_SORT_ORDER',
-      payload: sortOrder[e.target.value]
+      payload: x
     });
 
     this.fetchResults();
@@ -176,14 +193,31 @@ export default class Results extends PureComponent {
 
   render() {
     const rowCount = this.props.results.data.length + 1;
+
+    const { orderBy, sortBy } = this.props.params;
+
+    function getClass(order) {
+      return cn('mdi', {
+        'mdi-unfold-more': orderBy !== order,
+        'mdi-chevron-double-down black': orderBy === order && sortBy === 'desc',
+        'mdi-chevron-double-up black': orderBy === order && sortBy === 'asc'
+      });
+    }
+
     return (
       <Table>
         <Tr direction="row" style={{ padding: '0 20px' }} className="text-bold">
           <Td flex={0.5}>#</Td>
           <Td flex={10}>Name</Td>
-          <Td flex={2}>Uploaded</Td>
-          <Td flex={2}>File Size</Td>
-          <Td flex={1}>Seeds</Td>
+          <Td data-sort-type="date" onClick={this.setSortOrder} className="pointer" flex={2}>
+            Uploaded <SortIcon className={getClass('date')} />
+          </Td>
+          <Td data-sort-type="size" onClick={this.setSortOrder} className="pointer" flex={2}>
+            File Size <SortIcon className={getClass('size')} />
+          </Td>
+          <Td data-sort-type="seeds" onClick={this.setSortOrder} className="pointer" flex={1}>
+            Seeds<SortIcon className={getClass('seeds')} />
+          </Td>
           <Td flex={1}>Leech</Td>
         </Tr>
         <div style={{ flex: 1 }}>

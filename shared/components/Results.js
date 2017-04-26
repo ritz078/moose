@@ -44,6 +44,9 @@ const ResultTitle = styled.div`
 const SortIcon = styled.i`
   font-size: 16px;
   color: #aaa;
+  &:hover {
+    color: #555;
+  }
 `;
 
 @withRedux(initStore, ({ results, params, loading, details }) => ({

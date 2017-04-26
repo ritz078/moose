@@ -86,6 +86,13 @@ export default class Header extends PureComponent {
       });
     } else {
       this.props.dispatch({
+        type: 'SET_SORT_ORDER',
+        payload: {
+          sortBy: 'desc',
+          orderBy: 'seeds'
+        }
+      });
+      this.props.dispatch({
         type: 'FETCH_RESULTS',
         payload: input
       });

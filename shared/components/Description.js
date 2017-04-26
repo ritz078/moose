@@ -99,7 +99,7 @@ export default class Description extends PureComponent {
     this.state = {
       streaming: false,
       selectedIndex: null,
-      isVlcPresent: false
+      isVlcPresent: true
     };
   }
 

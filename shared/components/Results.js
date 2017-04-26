@@ -65,7 +65,14 @@ export default class Results extends PureComponent {
       page: PropTypes.number,
       searchTerm: PropTypes.string
     }).isRequired,
-    loading: PropTypes.bool.isRequired
+    loading: PropTypes.bool.isRequired,
+    details: PropTypes.shape({
+      name: PropTypes.string
+    })
+  };
+
+  static defaultProps = {
+    details: {}
   };
 
   constructor(props) {
@@ -77,7 +84,7 @@ export default class Results extends PureComponent {
   }
 
   getResult = (index, style) => {
-    const { results, dispatch } = this.props;
+    const { results, dispatch, details, loading } = this.props;
     const { selectedIndex } = this.state;
 
     const result = results.data[index];
@@ -91,6 +98,7 @@ export default class Results extends PureComponent {
         <div
           style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer' }}
           onClick={() => {
+            if (selectedIndex === index && (details.name === result.name || loading)) return;
             this.setState(
               {
                 selectedIndex: index

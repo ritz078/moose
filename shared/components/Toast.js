@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import cn from 'classnames';
 import { toast } from 'react-toastify';
 
@@ -7,12 +9,11 @@ export default function Toast(props) {
     'toast-primary': props.type === 'default',
     'toast-success': props.type === 'success',
     'toast-danger': props.type === 'warning',
-    'toast-error': props.type === 'error',
+    'toast-error': props.type === 'error'
   });
 
   return (
     <div className={mainClass}>
-      <button className="btn btn-clear float-right" />
       {props.text}
     </div>
   );
@@ -20,11 +21,11 @@ export default function Toast(props) {
 
 Toast.propTypes = {
   text: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['default', 'success', 'warning', 'error']),
+  type: PropTypes.oneOf(['default', 'success', 'warning', 'error'])
 };
 
 Toast.defaultProps = {
-  type: 'default',
+  type: 'default'
 };
 
 export function showToast(text, type) {

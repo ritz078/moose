@@ -1,45 +1,97 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import classNames from 'classnames';
+import isRenderer from 'is-electron-renderer';
+import { remote } from 'electron';
+import withRedux from 'next-redux-wrapper';
+import initStore from '../../store';
 import MediaModal from './MediaModal';
 import getFileType from '../utils/logic/fileType';
 import colors from '../constants/colors';
+import castUtil from '../utils/cast';
 
+let vlc;
+if (isRenderer) {
+  vlc = remote.require('./server/utils/vlc');
+}
+
+const Wrapper = styled.div`
+  width: 100%;
+  background-color: white;
+  bottom: 0;
+  flex:1;
+  border-bottom: 1px solid #eee;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+`;
 
 const TileWrapper = styled.div`
-  background-color: ${props => props.color};
-  border-radius: .2rem;
-  color: #fff;
-  height: 4rem;
+  color: ${props => props.color};
+  height: 3rem;
   width: 4rem;
   display: flex;
   align-items: center;
   align-content: space-around;
+  font-size: 13px;
 `;
 
+const Table = styled.table`
+  overflow: scroll;
+  flex: 1;
+  width: 100%;
+`;
+
+const Files = styled.div`
+  flex: 0.6;
+  padding-top: 10px;
+  overflow: scroll;
+`;
+
+const Info = styled.div`
+  flex: 0.4;
+`;
+
+const VlcIcon = styled.i`
+  color: #FF6000;
+  cursor: pointer;
+  opacity: 0.8;
+  &:hover{
+    opacity: 1;
+  }
+`;
+
+@withRedux(initStore, ({ details, loading, cast }) => ({
+  details,
+  loading,
+  cast
+}))
 export default class Description extends PureComponent {
   static propTypes = {
     dispatch: PropTypes.func,
-    fixed: PropTypes.bool,
     details: PropTypes.shape({
       name: PropTypes.string,
       torrentId: PropTypes.string,
       files: PropTypes.shape({
         name: PropTypes.string,
         type: PropTypes.string,
-        size: PropTypes.string,
-      }),
+        size: PropTypes.string
+      })
     }),
-  }
+    loading: PropTypes.bool.isRequired,
+    cast: PropTypes.shape({
+      selectedPlayer: PropTypes.any
+    }).isRequired
+  };
 
   static defaultProps = {
-    dispatch() {
-    },
+    dispatch() {},
     details: {},
-    fixed: false,
-  }
+    fixed: false
+  };
 
   constructor(props) {
     super(props);
@@ -47,27 +99,54 @@ export default class Description extends PureComponent {
     this.state = {
       streaming: false,
       selectedIndex: null,
+      isVlcPresent: true
     };
   }
 
+  componentDidMount() {
+    this.isVlcPresent();
+  }
+
   startStream = (e) => {
+    const selectedIndex = e.target.dataset.id;
+
+    // if a cast player is selected then stream on the chromecast
+    if (this.props.cast.selectedPlayer) {
+      const file = this.props.details.files[selectedIndex];
+
+      const fileDetails = {
+        name: file.name,
+        index: e.target.dataset.id,
+        infoHash: this.props.details.torrentId,
+        type: file.type
+      };
+
+      castUtil.play(fileDetails, (err) => {
+        if (!err) {
+          this.props.dispatch({
+            type: 'SET_STREAMING_FILE',
+            payload: fileDetails
+          });
+        } else {
+          this.props.dispatch({
+            type: 'REMOVE_STREAMING_FILE'
+          });
+        }
+      });
+      return;
+    }
+
+    // if no cast is connected stream in the app
     this.setState({
       streaming: true,
-      selectedIndex: e.target.dataset.id,
+      selectedIndex
     });
-  }
+  };
 
   closeModal = () => {
     this.setState({ streaming: false });
     ajax.getJSON(`/api/delete/${this.props.details.torrentId}`);
-  }
-
-  listTorrent = ({ torrentId }) => {
-    this.props.dispatch({
-      type: 'FETCH_DETAILS',
-      payload: torrentId,
-    });
-  }
+  };
 
   getFileIcon = (mime) => {
     let icon;
@@ -93,70 +172,105 @@ export default class Description extends PureComponent {
     }
     return (
       <TileWrapper color={colors.primary}>
-        <i className={`mdi ${icon} centered fs-22`} />
+        <i style={{ fontSize: '18px' }} className={`mdi ${icon} centered`} />
       </TileWrapper>
+    );
+  };
+
+  isVlcPresent = () => {
+    vlc.isVlcPresent(isVlcPresent =>
+      this.setState({
+        isVlcPresent
+      })
+    );
+  };
+
+  streamOnVlc = (e) => {
+    const selectedIndex = e.target.dataset.id;
+    const infoHash = this.props.details.torrentId;
+    const file = this.props.details.files[selectedIndex];
+    vlc.kill();
+    vlc.playOnVlc(
+      `http://${window.location.hostname}:7500/api/download/${infoHash}/${+selectedIndex}/${file.name}`,
+      file.name
+    );
+  };
+
+  // TODO: show vlc icon only if vlc is installed.
+  getFiles = () => {
+    const { details } = this.props;
+
+    const x =
+      details &&
+      details.files &&
+      details.files.map((file, i) => {
+        const fileType = getFileType(file.type);
+        const streamIcon = classNames('mdi tooltip tooltip-left fs-18', {
+          'mdi-play-circle-outline': fileType === 'video',
+          'mdi-eye': fileType === 'image'
+        });
+
+        return (
+          <tr>
+            <td>{this.getFileIcon(file.type)}</td>
+            <td style={{ maxWidth: '270px' }} className="text-ellipsis">{file.name}</td>
+            <td>{file.size}</td>
+            {this.state.isVlcPresent &&
+              <td>
+                {getFileType(file.type) === 'video' &&
+                  <VlcIcon
+                    data-id={i}
+                    data-tooltip="Play on VLC"
+                    onClick={this.streamOnVlc}
+                    className="mdi mdi-vlc fs-18 tooltip tooltip-left"
+                  />}
+              </td>}
+            <td>
+              {Description.isSupported(file.type) &&
+                <button className="btn btn-link" onClick={this.startStream}>
+                  <i
+                    className={streamIcon}
+                    data-tooltip={fileType === 'video' ? 'Play Video' : 'View Image'}
+                    data-id={i}
+                  />
+                </button>}
+            </td>
+          </tr>
+        );
+      });
+
+    return (
+      <Files>
+        <Table>
+          <tbody>{x}</tbody>
+        </Table>
+      </Files>
+    );
+  };
+
+  static isSupported(mime) {
+    return (
+      document.createElement('video').canPlayType(mime) ||
+      mime === 'video/x-matroska' ||
+      getFileType(mime) === 'image'
     );
   }
 
-  getFiles() {
-    const { details } = this.props;
-
-    return details && details.files && details.files.map((file, i) => {
-      const fileType = getFileType(file.type);
-      const streamIcon = classNames('mdi tooltip tooltip-left fs-22', {
-        'mdi-play-circle-outline': fileType === 'video',
-        'mdi-eye': fileType === 'image',
-      });
-
-      return (
-        <div className="tile tile-centered">
-          <div className="tile-icon">
-            {this.getFileIcon(file.type)}
-          </div>
-          <div className="tile-content">
-            <div className="tile-title">{file.name}</div>
-            <div className="tile-meta">{file.size} · {file.type}</div>
-          </div>
-          <div className="tile-action">
-            {Description.isSupported(file.type) &&
-              <button
-                className="btn btn-link"
-                onClick={this.startStream}
-              >
-                <i
-                  className={streamIcon}
-                  data-tooltip={fileType === 'video' ? 'Play Video' : 'View Image'}
-                  data-id={i}
-                />
-              </button>
-              }
-          </div>
-        </div>
-      );
-    });
-  }
-
-  static isSupported(mime) {
-    return document.createElement('video').canPlayType(mime) || (mime === 'video/x-matroska') || (getFileType(mime) === 'image');
-  }
-
   render() {
-    const { details, fixed } = this.props;
+    const { details, loading } = this.props;
 
-    if (!details.name) return <div />;
-
-    const mainClass = fixed ? 'panel fixed' : 'panel';
+    if (loading || !details.name) {
+      return (
+        <Wrapper>
+          <div className="loading" />
+        </Wrapper>
+      );
+    }
 
     return (
-      <div className={mainClass}>
-        <div className="panel-header">
-          <div className="panel-title text-ellipsis">{details && details.name}</div>
-        </div>
-        <div className="panel-nav" />
-        <div className="panel-body">
-          {this.getFiles()}
-        </div>
-        <div className="panel-footer" />
+      <Wrapper>
+        <Info />
+        {this.getFiles()}
         <MediaModal
           infoHash={details.torrentId}
           fileIndex={this.state.selectedIndex}
@@ -164,7 +278,7 @@ export default class Description extends PureComponent {
           file={details.files[this.state.selectedIndex]}
           onCloseClick={this.closeModal}
         />
-      </div>
+      </Wrapper>
     );
   }
 }

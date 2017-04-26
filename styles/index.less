@@ -1,12 +1,12 @@
 @import "~spectre.css/spectre.less";
-@import url("https://cdnjs.cloudflare.com/ajax/libs/video.js/5.19.1/alt/video-js-cdn.min.css");
+@import "~spectre.css/spectre-exp.less";
 @import url(//cdn.materialdesignicons.com/1.8.36/css/materialdesignicons.min.css);
 @import (less) '~react-loading-bar/dist/index.css';
 @import (less) '~react-toastify/dist/ReactToastify.min.css';
+@import "~plyr/src/less/plyr.less";
 
 html {
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
@@ -31,7 +31,9 @@ html {
   color: #f95f4d;
 }
 
-.mdi.md-light { color: rgba(255, 255, 255, 1); }
+.mdi.md-light {
+  color: rgba(255, 255, 255, 1);
+}
 
 .start-stream {
   cursor: pointer;
@@ -60,7 +62,7 @@ html {
   color: #ffffff;
 }
 
-.mdi.mdi-eye{
+.mdi.mdi-eye {
   cursor: pointer;
 }
 
@@ -68,45 +70,29 @@ html {
   overflow: hidden;
 }
 
-.fs-22 {
-  font-size: 22px;
+.fs-18 {
+  font-size: 18px;
 }
 
 :focus {
-  box-shadow: none;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
-.m-0{
+.m-0 {
   margin: 0;
-}
-
-.show-sm-inline {
-  display: none;
-}
-
-.hide-sm-inline {
-  display: inline;
-}
-@media screen and (max-width: 600px) {
-  .show-sm-inline {
-    display: inline !important;
-  }
-
-  .hide-sm-inline {
-    display: none !important;
-  }
 }
 
 .ReactModal__Content--after-open {
   display: flex;
 }
 
-.ReactModal__Content--after-open{
-  @media screen and (max-width: 1220px) {
-    margin-left: -40px;
-    margin-right: -40px;
-    padding: 0 !important;
-  }
+.ReactModal__Content--after-open {
+  margin-left: -40px;
+  margin-right: -40px;
+  padding: 0 !important;
+  margin-top: -40px !important;
+  margin-bottom: -40px !important;
 }
 
 .toastify-content {
@@ -116,11 +102,67 @@ html {
   min-height: inherit;
 }
 
-.toastify__close{
+.toastify__close {
   display: none;
 }
 
 .toast-error {
   background-color: #ff4d48;
   border-color: #ff4d48;
+}
+
+.ReactVirtualized__Grid__innerScrollContainer {
+  display: table;
+  width: 100% !important;
+}
+
+.results-list {
+  padding: 0 20px;
+  height: 43px;
+}
+
+.popover-container {
+  top: 80% !important;
+  width: 18rem !important;
+  transform: translate(-50%, -50%) scale(0);
+  &:hover {
+    transform: translate(-90%, 0) scale(1) !important;
+  }
+}
+
+.popover.popover-bottom:hover .popover-container {
+  transform: translate(-90%, 0) scale(1) !important;
+}
+
+.primary {
+  color: #0085ff;
+}
+
+.slider {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+.plyr {
+  width: 100%;
+}
+
+.ReactModalPortal > div {
+  opacity: 0;
+}
+
+.ReactModalPortal .ReactModal__Overlay {
+  transition: opacity .1s ease-in;
+  &--after-open {
+    opacity: 1;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.black{
+  color: #000;
 }

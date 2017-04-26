@@ -1,23 +1,21 @@
 /* eslint-disable no-console,dot-notation */
 
-import express from 'express';
-import * as http from 'http';
-import cors from 'cors';
-import { download, list, deleteTorr, searchTorrent } from './middleware/torrent';
-import config from '../env-config';
+const express = require('express');
+const cors = require('cors');
+const { download, list, deleteTorr, searchTorrent } = require('./middleware/torrent');
 
-// Create our express based server.
-const app = express();
+function startServer() {
+  // Create our express based server.
+  const app = express();
 
-app.use(cors());
+  app.use(cors());
 
-app.get('/api/list', list);
-app.get('/api/download/:torrentId/:fileId/:fileName', download);
-app.get('/api/delete/:torrentId', deleteTorr);
-app.get('/api/search/:searchTerm', searchTorrent);
+  app.get('/api/list', list);
+  app.get('/api/download/:torrentId/:fileId/:fileName', download);
+  app.get('/api/delete/:torrentId', deleteTorr);
+  app.get('/api/search/:searchTerm', searchTorrent);
 
-const server = http.createServer(app);
+  app.listen(7500, '0.0.0.0');
+}
 
-server.listen(config['SERVER_PORT'], '127.0.0.1', () =>
-  console.log(`Server listening on port ${config['SERVER_PORT']}`),
-);
+module.exports = startServer;

@@ -13,7 +13,6 @@
       }
     ],
     "transform-class-properties",
-    "transform-decorators-legacy",
-    ["transform-define", "./env-config.js"]
+    "transform-decorators-legacy"
   ]
 }

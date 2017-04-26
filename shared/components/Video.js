@@ -1,64 +1,51 @@
-import React, { PropTypes, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import videojs from 'video.js';
+import isRenderer from 'is-electron-renderer';
 
+let plyr;
+if (isRenderer) {
+  plyr = require('plyr');
+}
 const VideoWrapper = styled.div`
-  max-width: 95%;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   flex: 1;
   align-items: center;
   justify-content: center;
-  @media screen and (max-width: 1220px) {
-    max-width: 100%;
+  & > video {
+    width: 100%;
   }
 `;
 
 class Video extends PureComponent {
   componentDidMount() {
-    this.init();
+    this.player = plyr.setup(this.videoRef);
+    this.player[0].play(); // since autoPlay in video tag is buggy in this browser.
   }
 
-  componentWillReceiveProps() {
-    this.init();
-  }
-
-  init = () => {
-    videojs(this.videoRef, this.props.options, () => {
-      this.props.onInit();
-    });
+  componentWillUnmount() {
+    this.player[0].destroy();
   }
 
   render() {
     return (
       <VideoWrapper>
-        <video
-          className="video-js vjs-default-skin"
-          controls
-          preload="auto"
-          src={this.props.src}
-          ref={x => (this.videoRef = x)}
-          autoPlay
-        />
+        <video controls preload="auto" src={this.props.src} ref={x => (this.videoRef = x)} />
       </VideoWrapper>
     );
   }
 }
 
 Video.propTypes = {
-  src: PropTypes.string.isRequired,
-  onInit: PropTypes.func,
-// eslint-disable-next-line react/forbid-prop-types
-  options: PropTypes.object,
+  src: PropTypes.string.isRequired
 };
 
 Video.defaultProps = {
-  onInit() {
-  },
+  onInit() {},
   options: {
-    fluid: true,
-  },
+    fluid: true
+  }
 };
 
 export default Video;

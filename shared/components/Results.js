@@ -174,7 +174,7 @@ export default class Results extends PureComponent {
   loadMoreRows = () => {
     if (this.props.loading) return;
     this.props.dispatch({ type: 'SET_PAGE', payload: this.props.params.page + 1 });
-    if (this.props.params.page > 1) this.fetchResults();
+    this.fetchResults();
   };
 
   rowRenderer = ({ index, style }) => {

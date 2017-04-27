@@ -8,7 +8,7 @@ const initialState = {
 
 const resultsReducer = createReducer(initialState, {
   SET_RESULTS: (state, action) => {
-    if (action.payload.page > 1) {
+    if (action.payload.page) {
       const newState = deepCopy(state);
       newState.data = newState.data.concat(action.payload.data);
       newState.searchTerm = action.payload.searchTerm;

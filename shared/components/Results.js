@@ -155,7 +155,7 @@ export default class Results extends PureComponent {
   setSortOrder = (e: MouseEvent | KeyboardEvent) => {
     const { orderBy, sortBy } = this.props.params;
 
-    const ob = e.target.dataset.sortType;
+    const ob = e.currentTarget.dataset.sortType;
     const sb = orderBy !== ob ? 'desc' : sortBy === 'desc' ? 'asc' : 'desc';
 
     const x = {

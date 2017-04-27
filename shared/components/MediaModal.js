@@ -59,7 +59,7 @@ export default function MediaModal(props) {
 
 MediaModal.propTypes = {
   infoHash: PropTypes.string.isRequired,
-  fileIndex: PropTypes.number.isRequired,
+  fileIndex: PropTypes.string.isRequired,
   showModal: PropTypes.bool.isRequired,
   file: PropTypes.shape({
     name: PropTypes.string,

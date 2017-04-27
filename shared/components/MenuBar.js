@@ -40,14 +40,8 @@ export default class MenuBar extends PureComponent {
           <div className="popover-container">
             <ul className="menu">
               <Li className="menu-item">
-                <Link href="#">
+                <Link href="/">
                   <div><i className="mdi mdi-home fs-18" /> Home</div>
-                </Link>
-              </Li>
-              <Li className="divider" />
-              <Li className="menu-item">
-                <Link href="#">
-                  <div><i className="mdi mdi-download fs-18" /> Downloads</div>
                 </Link>
               </Li>
             </ul>

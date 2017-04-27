@@ -10,7 +10,8 @@
           "css$",
           "scss$"
         ]
-      }
+      },
+      "styled-components"
     ],
     "transform-class-properties",
     "transform-decorators-legacy"

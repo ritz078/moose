@@ -6930,9 +6930,9 @@ spdx-license-ids@^1.0.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-1.2.2.tgz#c9df7a3424594ade6bd11900d596696dc06bac57"
 
-spectre.css@^0.2.13:
-  version "0.2.13"
-  resolved "https://registry.yarnpkg.com/spectre.css/-/spectre.css-0.2.13.tgz#facee4e14f353ef7cd0ada36c8d191940e70970d"
+spectre.css@^0.2.14:
+  version "0.2.14"
+  resolved "https://registry.yarnpkg.com/spectre.css/-/spectre.css-0.2.14.tgz#4a3f9afd289e8bafcd3e96b13999e08d9e2ebffd"
 
 speedometer@^1.0.0:
   version "1.0.0"

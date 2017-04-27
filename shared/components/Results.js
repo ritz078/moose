@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import withRedux from 'next-redux-wrapper';
 import { InfiniteLoader, List, AutoSizer } from 'react-virtualized';
 import initStore from '../../store';
-import sortOrder from '../constants/sortOrder';
 import Description from './Description';
 
 const Verified = styled.i`
@@ -181,7 +180,7 @@ export default class Results extends PureComponent {
     if (this.props.results.data[index]) {
       return this.getResult(index, style);
     }
-    return <div style={style} className="loading" />;
+    return <div key="loading" style={style} className="loading" />;
   };
 
   isRowLoaded = ({ index }) => {

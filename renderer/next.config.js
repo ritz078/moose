@@ -3,7 +3,7 @@
 module.exports = {
   distDir: 'dist/client',
   webpack: (config) => {
-    config.target = 'electron-renderer'
+    config.target = 'electron-renderer';
 
     config.module.rules.push(
       {
@@ -21,17 +21,17 @@ module.exports = {
         test: /\.(css)$/,
         use: ['babel-loader', 'raw-loader', 'css-loader', 'postcss-loader']
       }
-    )
+    );
 
     config.resolve.alias = {
       Long: 'long',
       ByteBuffer: 'bytebuffer'
-    }
+    };
 
     config.stats = {
       errorDetails: true
-    }
+    };
 
-    return config
+    return config;
   }
-}
+};

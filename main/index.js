@@ -5,7 +5,7 @@ const cors = require('cors');
 const { download, list, deleteTorr, searchTorrent } = require('./middleware/torrent');
 
 function startServer() {
-  // Create our express based server.
+  // Create our express based main.
   const app = express();
 
   app.use(cors());

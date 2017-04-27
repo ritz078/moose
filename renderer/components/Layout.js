@@ -5,7 +5,7 @@ import Loading from 'react-loading-bar';
 import { ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
 
-import stylesheet from '../../styles/index.less';
+import stylesheet from '../styles/index.less';
 import Header from './Header';
 import MenuBar from './MenuBar';
 import Controls from './Controls';

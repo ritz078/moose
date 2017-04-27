@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 import styled from 'styled-components';
 import initStore from '../store';
-import Results from '../shared/components/Results';
-import Layout from '../shared/components/Layout';
-import Description from '../shared/components/Description';
+import Results from '../components/Results';
+import Layout from '../components/Layout';
+import Description from '../components/Description';
 
 const Content = styled.div`
   display: flex;
@@ -41,7 +41,8 @@ export default class Home extends PureComponent {
     dispatch: PropTypes.func,
     params: PropTypes.shape({
       searchTerm: PropTypes.string
-    }).isRequired
+    }).isRequired,
+    cast: PropTypes.array
   };
 
   static defaultProps = {

@@ -2,6 +2,4 @@
 
 import ifElse from './ifElse';
 
-export {
-  ifElse,
-};
+export { ifElse };

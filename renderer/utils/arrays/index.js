@@ -2,6 +2,4 @@
 
 import removeNil from './removeNil';
 
-export {
-  removeNil,
-};
+export { removeNil };

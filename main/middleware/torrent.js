@@ -95,7 +95,7 @@ function download(req, res) {
 
 function deleteTorr(req, res) {
   torrentStore.removeTorrents();
-  res.status(200).end('Torrent file deleted'); // for saving space on server.
+  res.status(200).end('Torrent file deleted'); // for saving space on main.
 }
 
 function searchTorrent(req, res) {

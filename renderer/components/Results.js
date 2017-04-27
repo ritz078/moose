@@ -4,7 +4,7 @@ import cn from 'classnames';
 import styled from 'styled-components';
 import withRedux from 'next-redux-wrapper';
 import { InfiniteLoader, List, AutoSizer } from 'react-virtualized';
-import initStore from '../../store';
+import initStore from '../store';
 import Description from './Description';
 
 const Verified = styled.i`

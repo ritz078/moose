@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import isEmpty from 'just-is-empty';
 import withRedux from 'next-redux-wrapper';
 import castUtil, { getPlayer } from '../utils/cast';
-import initStore from '../../store';
+import initStore from '../store';
 
 const Icon = styled.i`
   font-size: 20px;

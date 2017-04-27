@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import isRenderer from 'is-electron-renderer';
 import { remote } from 'electron';
 import withRedux from 'next-redux-wrapper';
-import initStore from '../../store';
+import initStore from '../store';
 import MediaModal from './MediaModal';
 import getFileType from '../utils/logic/fileType';
 import colors from '../constants/colors';
@@ -15,7 +15,7 @@ import castUtil from '../utils/cast';
 
 let vlc;
 if (isRenderer) {
-  vlc = remote.require('./server/utils/vlc');
+  vlc = remote.require('./main/utils/vlc');
 }
 
 const Wrapper = styled.div`

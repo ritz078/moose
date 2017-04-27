@@ -39,8 +39,11 @@ module.exports = {
     const infoHash = parseTorrent(torrentId).infoHash;
     this.removeTorrents(infoHash);
 
-    return client.get(torrentId) || client.add(torrentId, {
-      path: `${BASE_PATH}`,
-    });
-  },
+    return (
+      client.get(torrentId) ||
+      client.add(torrentId, {
+        path: `${BASE_PATH}`
+      })
+    );
+  }
 };

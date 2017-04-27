@@ -9,7 +9,9 @@ function filterWithRulesLoop(rules, obj, basePropPath = '') {
       acc[key] = filterWithRulesLoop(rules[key], obj[key], propPath); // eslint-disable-line no-param-reassign,max-len
     } else if (rules[key]) {
       if (typeof obj[key] === 'undefined') {
-        throw new Error(`Filter set an "allow" on path "${propPath}", however, this path was not found on the source object.`);
+        throw new Error(
+          `Filter set an "allow" on path "${propPath}", however, this path was not found on the source object.`
+        );
       }
       acc[key] = obj[key]; // eslint-disable-line no-param-reassign
     }

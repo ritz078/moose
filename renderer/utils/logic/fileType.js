@@ -8,7 +8,7 @@ export default function (mime: string) {
     return 'text';
   } else if (mime.indexOf('zip') >= 0) {
     return 'zip';
-  } else if ((mime.indexOf('x-msdownload') >= 0) || (mime.indexOf('x-apple-diskimage') >= 0)) {
+  } else if (mime.indexOf('x-msdownload') >= 0 || mime.indexOf('x-apple-diskimage') >= 0) {
     return 'application';
   } else if (mime.indexOf('image') >= 0) {
     return 'image';

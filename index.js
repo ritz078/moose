@@ -7,18 +7,31 @@ const {
 const express = require('express')
 const next = require('next')
 const getPort = require('get-port')
+const fixPath = require('fix-path')
+const isDev = require('electron-is-dev')
+const {resolve} = require('app-root-path')
 
 // adds debug features like hotkeys for triggering dev tools and reload
 require('electron-debug')()
 
-const backendServer = require('./server')
+const backendServer = require('./main')
 
 const dev = process.env.NODE_ENV !== 'production'
 
-const nextApp = next({dev})
+const dir = resolve('./renderer')
+
+const nextApp = next({dev, dir})
 const handler = nextApp.getRequestHandler()
 
 let win
+
+app.setName('Snape')
+
+// Makes sure where inheriting the correct path
+// Within the bundled app, the path would otherwise be different
+fixPath()
+
+const windowURL = (page = '') => `${isDev ? 'http://127.0.0.1:7000' : 'next://app'}/${page}`
 
 function createWindow () {
   nextApp.prepare().then(() => {
@@ -30,7 +43,7 @@ function createWindow () {
       const x = server.listen(port, (error) => {
         if (error) throw error
 
-        // after the server starts create the electron browser window
+        // after the main starts create the electron browser window
         // start building the next.js app
         win = new BrowserWindow({
           height: 800,
@@ -47,11 +60,11 @@ function createWindow () {
           win.webContents.openDevTools()
         }
 
-        // open our server URL
-        win.loadURL(`http://127.0.0.1:${port}`)
+        // open our main URL
+        win.loadURL(windowURL())
 
         win.on('close', () => {
-          // when the windows is closed clear the `win` variable and close the server
+          // when the windows is closed clear the `win` variable and close the main
           win = null
           x.close()
         })

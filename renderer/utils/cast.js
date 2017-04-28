@@ -17,6 +17,7 @@ export default {
 
   connect(player, cb) {
     root.selectedPlayer = player;
+    console.log(`http://${ip.v4()}:${window.location.port}/static/images/cover.jpg`);
     root.selectedPlayer.play(
       `http://${ip.v4()}:${window.location.port}/static/images/cover.jpg`,
       {

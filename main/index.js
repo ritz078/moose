@@ -46,7 +46,7 @@ async function createWindow() {
 
   server(port, () => {
     // open our main URL
-    win.loadURL(`http://127.0.0.1:${port}`);
+    win.loadURL(`http://0.0.0.0:${port}`);
 
     win.on('close', () => {
       // when the windows is closed clear the `win` variable and close the main

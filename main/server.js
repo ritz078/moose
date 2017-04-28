@@ -25,7 +25,7 @@ async function startServer(port, cb) {
   server.get('/', (req, res) => nextApp.render(req, res, '/', req.query));
   server.get('*', (req, res) => nextHandler(req, res));
 
-  const x = server.listen(port, '127.0.0.1', () => {
+  const x = server.listen(port, '0.0.0.0', () => {
     // Make sure to stop the server when the app closes
     // Otherwise it keeps running on its own
     app.on('before-quit', () => x.close());

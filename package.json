@@ -5,6 +5,7 @@
   "engines": {
     "node": ">=6"
   },
+  "main": "main/index.js",
   "author": "Ritesh Kumar",
   "scripts": {
     "dev": "electron main",
@@ -142,14 +143,16 @@
     "win": {
       "target": [
         "squirrel"
-      ]
+      ],
+      "icon": "renderer/static/images/snape.ico"
     },
     "squirrelWindows": {},
     "mac": {
       "category": "public.app-category.developer-tools",
       "extendInfo": {
         "LSUIElement": 1
-      }
+      },
+      "icon": "renderer/static/images/snape.icns"
     },
     "files": [
       "main",

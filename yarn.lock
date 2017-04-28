@@ -2768,13 +2768,6 @@ electron-rebuild@^1.5.7:
     spawn-rx "^2.0.7"
     yargs "^3.31.0"
 
-electron-routes@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/electron-routes/-/electron-routes-1.0.0.tgz#7384619bdc772d3884fdd9363d721b026abbed33"
-  dependencies:
-    path-to-regexp "^1.6.0"
-    stream-buffers "^3.0.1"
-
 electron-to-chromium@^1.2.7:
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.2.8.tgz#22c2e6200d350da27d6050db7e3f6f85d18cf4ed"
@@ -5660,7 +5653,7 @@ path-to-regexp@0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
 
-path-to-regexp@^1.0.0, path-to-regexp@^1.6.0, path-to-regexp@^1.7.0:
+path-to-regexp@^1.0.0, path-to-regexp@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.7.0.tgz#59fde0f435badacba103a84e9d3bc64e96b9937d"
   dependencies:
@@ -7129,10 +7122,6 @@ stream-browserify@^2.0.1:
   dependencies:
     inherits "~2.0.1"
     readable-stream "^2.0.2"
-
-stream-buffers@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/stream-buffers/-/stream-buffers-3.0.1.tgz#68a38c5faadeded79ff79988d368e3fb1325ef06"
 
 stream-combiner@~0.0.4:
   version "0.0.4"

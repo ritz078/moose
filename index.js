@@ -22,7 +22,7 @@ app.setName('Snape')
 fixPath()
 
 async function createWindow () {
-  const port = await getPort(7000)
+  const port = await getPort()
   // after the main starts create the electron browser window
   // start building the next.js app
   win = new BrowserWindow({

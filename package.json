@@ -7,8 +7,8 @@
   },
   "author": "Ritesh Kumar",
   "scripts": {
-    "dev": "electron .",
-    "start": "NODE_ENV=production npm run build && electron .",
+    "dev": "electron main",
+    "start": "NODE_ENV=production npm run build && electron main",
     "build": "next build renderer",
     "pack": "npm run build && build --dir",
     "precommit": "lint-staged",
@@ -41,7 +41,7 @@
     "chromecasts": "^1.9.0",
     "classnames": "^2.2.5",
     "cors": "^2.8.3",
-    "debug": "^2.6.4",
+    "debug": "^2.6.6",
     "deep-copy": "^1.2.0",
     "electron-config": "^0.2.1",
     "electron-debug": "^1.1.0",
@@ -117,7 +117,7 @@
     "husky": "^0.13.3",
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
-    "lint-staged": "^3.4.0",
+    "lint-staged": "^3.4.1",
     "nodemon": "^1.11.0",
     "postcss-loader": "^1.3.3",
     "prettier-eslint-cli": "^3.4.2",
@@ -152,7 +152,6 @@
       }
     },
     "files": [
-      "index.js",
       "main",
       "node_modules"
     ],

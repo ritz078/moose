@@ -1,36 +1,80 @@
-/* eslint-disable no-console,dot-notation */
-
-const { app } = require('electron');
-const express = require('express');
-const next = require('next');
+const { app, BrowserWindow } = require('electron');
+const {
+  default: installExtension,
+  REACT_DEVELOPER_TOOLS,
+  REDUX_DEVTOOLS
+} = require('electron-devtools-installer');
+const getPort = require('get-port');
+const fixPath = require('fix-path');
 const dev = require('electron-is-dev');
-const { resolve } = require('app-root-path');
-const { download, list, deleteTorr, searchTorrent } = require('./middleware/torrent');
+const { moveToApplications } = require('electron-lets-move');
+const Config = require('electron-config');
 
-async function startServer(port, cb) {
-  const dir = resolve('./renderer');
-  const nextApp = next({ dev, dir });
-  const nextHandler = nextApp.getRequestHandler();
-  // Create our express based main.
+const config = new Config();
 
-  await nextApp.prepare();
+// adds debug features like hotkeys for triggering dev tools and reload
+require('electron-debug')();
 
-  const server = express();
+const server = require('./server');
 
-  server.get('/api/list', list);
-  server.get('/api/download/:torrentId/:fileId/:fileName', download);
-  server.get('/api/delete/:torrentId', deleteTorr);
-  server.get('/api/search/:searchTerm', searchTorrent);
+let win;
 
-  server.get('/', (req, res) => nextApp.render(req, res, '/', req.query));
-  server.get('*', (req, res) => nextHandler(req, res));
+app.setName('Snape');
 
-  const x = server.listen(port, '127.0.0.1', () => {
-    // Make sure to stop the server when the app closes
-    // Otherwise it keeps running on its own
-    app.on('before-quit', () => x.close());
-    cb();
+// Makes sure where inheriting the correct path
+// Within the bundled app, the path would otherwise be different
+fixPath();
+
+async function createWindow() {
+  const port = await getPort();
+  // after the main starts create the electron browser window
+  // start building the next.js app
+  win = new BrowserWindow({
+    height: 800,
+    width: 1000,
+    minWidth: 900,
+    vibrancy: 'light',
+    titleBarStyle: 'hidden-inset'
   });
+
+  if (dev) {
+    installExtension(REACT_DEVELOPER_TOOLS);
+    installExtension(REDUX_DEVTOOLS);
+
+    win.webContents.openDevTools();
+  }
+
+  server(port, () => {
+    // open our main URL
+    win.loadURL(`http://127.0.0.1:${port}`);
+
+    win.on('close', () => {
+      // when the windows is closed clear the `win` variable and close the main
+      win = null;
+    });
+  });
+
+  return win;
 }
 
-module.exports = startServer;
+app.on('ready', async () => {
+  if (config.get('moveToApplicationsFolder') !== 'never') {
+    try {
+      const moved = await moveToApplications();
+      if (!moved) {
+        // the user asked not to move the app, it's up to the parent application
+        // to store this information and not hassle them again.
+        config.set('moveToApplicationsFolder', 'never');
+      }
+    } catch (err) {
+      // log error, something went wrong whilst moving the app.
+    }
+  }
+  await createWindow();
+});
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});

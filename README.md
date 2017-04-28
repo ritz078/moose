@@ -17,18 +17,9 @@
 - [x] Chromecast support
 - [ ] View files like pdf, text etc.
 
-### Usage
-
-```
-snape serve
-```
-
-and the server starts on `localhost:3000`
-
 ### Development
 
-To start the development server run `npm run start:dev`
-This will start the client server (next.js) and the API server in parallel.
+To start the development server run `yarn dev`
 
 ### Credits
 

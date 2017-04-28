@@ -15,7 +15,7 @@ import castUtil from '../utils/cast';
 
 let vlc;
 if (isRenderer) {
-  vlc = remote.require('./main/utils/vlc');
+  vlc = remote.require('./utils/vlc');
 }
 
 const Wrapper = styled.div`

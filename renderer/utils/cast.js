@@ -36,7 +36,7 @@ export default {
     const { selectedPlayer } = root;
 
     if (selectedPlayer) {
-      const src = `http://${ip.v4()}:7500/api/download/${infoHash}/${+index}/${name}`;
+      const src = `http://${ip.v4()}:${window.location.port}/api/download/${infoHash}/${+index}/${name}`;
 
       selectedPlayer.play(
         src,

@@ -3,10 +3,15 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 import styled from 'styled-components';
+import { rendererPreload } from 'electron-routes';
 import initStore from '../store';
 import Results from '../components/Results';
 import Layout from '../components/Layout';
 import Description from '../components/Description';
+
+if (process.type === 'renderer') {
+  rendererPreload();
+}
 
 const Content = styled.div`
   display: flex;

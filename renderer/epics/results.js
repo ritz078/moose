@@ -16,9 +16,7 @@ export default function (action$, { dispatch, getState }) {
     }
 
     return ajax
-      .getJSON(
-        `http://${window.location.hostname}:7500/api/search/${searchTerm}?${stringifiedParams}`
-      )
+      .getJSON(`/api/search/${searchTerm}?${stringifiedParams}`)
       .retry(3)
       .switchMap(data => [
         {

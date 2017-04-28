@@ -4,24 +4,14 @@ const {
   REACT_DEVELOPER_TOOLS,
   REDUX_DEVTOOLS
 } = require('electron-devtools-installer')
-const express = require('express')
-const next = require('next')
 const getPort = require('get-port')
 const fixPath = require('fix-path')
-const isDev = require('electron-is-dev')
-const {resolve} = require('app-root-path')
+const dev = require('electron-is-dev')
 
 // adds debug features like hotkeys for triggering dev tools and reload
 require('electron-debug')()
 
-const backendServer = require('./main')
-
-const dev = process.env.NODE_ENV !== 'production'
-
-const dir = resolve('./renderer')
-
-const nextApp = next({dev, dir})
-const handler = nextApp.getRequestHandler()
+const server = require('./main')
 
 let win
 
@@ -31,47 +21,33 @@ app.setName('Snape')
 // Within the bundled app, the path would otherwise be different
 fixPath()
 
-const windowURL = (page = '') => `${isDev ? 'http://127.0.0.1:7000' : 'next://app'}/${page}`
+async function createWindow () {
+  const port = await getPort(7000)
+  // after the main starts create the electron browser window
+  // start building the next.js app
+  win = new BrowserWindow({
+    height: 800,
+    width: 1000,
+    minWidth: 900,
+    vibrancy: 'light',
+    titleBarStyle: 'hidden-inset'
+  })
 
-function createWindow () {
-  nextApp.prepare().then(() => {
-    getPort(7000).then((port) => {
-      const server = express()
+  if (dev) {
+    installExtension(REACT_DEVELOPER_TOOLS)
+    installExtension(REDUX_DEVTOOLS)
 
-      server.get('*', (req, res) => handler(req, res))
+    win.webContents.openDevTools()
+  }
 
-      const x = server.listen(port, (error) => {
-        if (error) throw error
+  server(port)
 
-        // after the main starts create the electron browser window
-        // start building the next.js app
-        win = new BrowserWindow({
-          height: 800,
-          width: 1000,
-          minWidth: 900,
-          vibrancy: 'light',
-          titleBarStyle: 'hidden-inset'
-        })
+  // open our main URL
+  win.loadURL(`http://127.0.0.1:${port}`)
 
-        if (dev) {
-          installExtension(REACT_DEVELOPER_TOOLS)
-          installExtension(REDUX_DEVTOOLS)
-
-          win.webContents.openDevTools()
-        }
-
-        // open our main URL
-        win.loadURL(windowURL())
-
-        win.on('close', () => {
-          // when the windows is closed clear the `win` variable and close the main
-          win = null
-          x.close()
-        })
-      })
-
-      backendServer()
-    })
+  win.on('close', () => {
+    // when the windows is closed clear the `win` variable and close the main
+    win = null
   })
 }
 

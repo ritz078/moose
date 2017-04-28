@@ -9,7 +9,7 @@ export default function fetchDetails(action$, { dispatch }) {
     dispatch({ type: 'RESET_DETAILS' });
     return ajax
       .getJSON(
-        `http://${window.location.hostname}:7500/api/list?torrentId=${window.btoa(action.payload)}&timestamp=${new Date().getTime()}`,
+        `/api/list?torrentId=${window.btoa(action.payload)}&timestamp=${new Date().getTime()}`,
       {
         withCredentials: true
       }

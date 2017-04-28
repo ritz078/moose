@@ -190,10 +190,7 @@ export default class Description extends PureComponent {
     const infoHash = this.props.details.torrentId;
     const file = this.props.details.files[selectedIndex];
     vlc.kill();
-    vlc.playOnVlc(
-      `http://${window.location.hostname}:7500/api/download/${infoHash}/${+selectedIndex}/${file.name}`,
-      file.name
-    );
+    vlc.playOnVlc(`/api/download/${infoHash}/${+selectedIndex}/${file.name}`, file.name);
   };
 
   // TODO: show vlc icon only if vlc is installed.

@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
+const BabiliPlugin = require('babili-webpack-plugin');
 
 module.exports = {
-  distDir: 'dist/client',
-  webpack: (config) => {
+  webpack: (config, { dev }) => {
     config.target = 'electron-renderer';
 
     config.module.rules.push(
@@ -23,14 +23,16 @@ module.exports = {
       }
     );
 
+    config.plugins = config.plugins.filter(plugin => plugin.constructor.name !== 'UglifyJsPlugin');
+
     config.resolve.alias = {
       Long: 'long',
       ByteBuffer: 'bytebuffer'
     };
 
-    config.stats = {
-      errorDetails: true
-    };
+    if (!dev) {
+      config.plugins.push(new BabiliPlugin());
+    }
 
     return config;
   }

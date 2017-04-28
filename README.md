@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./snape.png" align="center" alt="" width="300"/>
+  <img src="./snape.png" align="center" alt="" width="200"/>
 </p>
 
 > A torrent client for web with search and stream functionality.

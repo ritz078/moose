@@ -7,7 +7,7 @@ const dev = require('electron-is-dev');
 const { resolve } = require('app-root-path');
 const { download, list, deleteTorr, searchTorrent } = require('./middleware/torrent');
 
-async function startServer(port) {
+async function startServer(port, cb) {
   const dir = resolve('./renderer');
   const nextApp = next({ dev, dir });
   const nextHandler = nextApp.getRequestHandler();
@@ -29,6 +29,7 @@ async function startServer(port) {
     // Make sure to stop the server when the app closes
     // Otherwise it keeps running on its own
     app.on('before-quit', () => x.close());
+    cb();
   });
 }
 

@@ -47,3 +47,5 @@ yarn-error.log
 .next
 dist
 package
+
+.vscode

@@ -14,15 +14,8 @@
 - [x] Filter Torrents
 - [x] get files by magnet link
 - [ ] Download files 
-- [ ] Chromecast support
+- [x] Chromecast support
 - [ ] View files like pdf, text etc.
-- [ ] CLI support
-
-### Installation 
-
-```
-npm install -g snape
-```
 
 ### Usage
 

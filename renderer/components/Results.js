@@ -107,7 +107,19 @@ export default class Results extends PureComponent {
         <div
           style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer' }}
           onClick={() => {
-            if (selectedIndex === index && (details.name === result.name || loading)) return;
+            if (selectedIndex === index) {
+              this.setState(
+                {
+                  selectedIndex: null
+                },
+                () => {
+                  const i = Math.min(index, selectedIndex);
+                  return this.listRef.recomputeRowHeights(i);
+                }
+              );
+              return;
+            }
+
             this.setState(
               {
                 selectedIndex: index

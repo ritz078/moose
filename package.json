@@ -8,14 +8,13 @@
   "main": "main/index.js",
   "author": "Ritesh Kumar",
   "scripts": {
-    "dev": "electron main",
-    "start": "NODE_ENV=production npm run build && electron main",
-    "build:client": "next build renderer",
-    "pack": "npm run build:client && build --dir",
+    "start": "electron main",
+    "build": "next build renderer",
     "precommit": "lint-staged",
     "prettier": "prettier-eslint --write {shared,pages,server}/**/*.js",
     "rebuild": "./node_modules/.bin/electron-rebuild",
-    "build": "npm run build:client && build"
+    "pack": "npm run build:client && build --dir",
+    "dist": "npm run build && build"
   },
   "repository": {
     "type": "git",
@@ -138,7 +137,7 @@
     ]
   },
   "build": {
-    "appId": "",
+    "appId": "com.riteshkr.snape",
     "asar": false,
     "win": {
       "target": [

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./logo.png" align="center" alt="" width="150"/>
+  <img src="./logo.png" align="center" alt="" width="250"/>
 </p>
 
 > A torrent client for web with search and stream functionality.

@@ -19,7 +19,7 @@
 
 ### Development
 
-To start the development server run `yarn dev`
+To start the development server run `yarn start`
 
 ### Credits
 

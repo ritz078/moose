@@ -1,9 +1,15 @@
-import { showToast } from '../components/Toast';
+const { dialog } = require('electron');
 
-export function logError(err) {
-  return err && showToast(err.message, 'error');
-}
+exports.error = function (detail, trace, win) {
+  // We need to log the error in order to be able to inspect it
+  if (trace) {
+    console.error(trace);
+  }
 
-export function logWarning(message) {
-  return message && showToast(message, 'warning');
-}
+  dialog.showMessageBox(win || null, {
+    type: 'error',
+    message: 'An Error Occurred',
+    detail,
+    buttons: []
+  });
+};

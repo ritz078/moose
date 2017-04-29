@@ -9,6 +9,7 @@ const fixPath = require('fix-path');
 const dev = require('electron-is-dev');
 const { moveToApplications } = require('electron-lets-move');
 const Config = require('electron-config');
+const { error: showError } = require('../renderer/utils/log');
 
 const config = new Config();
 
@@ -77,4 +78,10 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+});
+
+// Make sure that unhandled errors get handled
+process.on('uncaughtException', (err) => {
+  console.error(err);
+  showError('Unhandled error appeared', err);
 });

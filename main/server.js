@@ -29,8 +29,9 @@ async function startServer(port, cb) {
     // Make sure to stop the server when the app closes
     // Otherwise it keeps running on its own
     app.on('close', x.close);
-    cb();
   });
+
+  return x;
 }
 
 module.exports = startServer;

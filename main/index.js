@@ -38,24 +38,21 @@ async function createWindow() {
     titleBarStyle: 'hidden-inset'
   });
 
+  try {
+    await server(port);
+  } catch (err) {
+    showError('Not able to start server', err);
+    return;
+  }
+
+  win.loadURL(`http://0.0.0.0:${port}`);
+
   if (dev) {
     installExtension(REACT_DEVELOPER_TOOLS);
     installExtension(REDUX_DEVTOOLS);
 
     win.webContents.openDevTools();
   }
-
-  server(port, () => {
-    // open our main URL
-    win.loadURL(`http://0.0.0.0:${port}`);
-
-    win.on('close', () => {
-      // when the windows is closed clear the `win` variable and close the main
-      win = null;
-    });
-  });
-
-  return win;
 }
 
 app.on('ready', async () => {

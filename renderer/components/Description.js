@@ -2,7 +2,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { ajax } from 'rxjs/observable/dom/ajax';
 import classNames from 'classnames';
 import isRenderer from 'is-electron-renderer';
 import { remote } from 'electron';
@@ -64,9 +63,8 @@ const VlcIcon = styled.i`
   }
 `;
 
-@withRedux(initStore, ({ details, loading, cast }) => ({
+@withRedux(initStore, ({ details, cast }) => ({
   details,
-  loading,
   cast
 }))
 export default class Description extends PureComponent {
@@ -81,7 +79,6 @@ export default class Description extends PureComponent {
         size: PropTypes.string
       })
     }),
-    loading: PropTypes.bool.isRequired,
     cast: PropTypes.shape({
       selectedPlayer: PropTypes.any
     }).isRequired,
@@ -147,7 +144,7 @@ export default class Description extends PureComponent {
 
   closeModal = () => {
     this.setState({ streaming: false });
-    ajax.getJSON(`/api/delete/${this.props.details.torrentId}`);
+    fetch(`/api/delete/${this.props.details.torrentId}`);
   };
 
   getFileIcon = (mime) => {

@@ -56,7 +56,10 @@ export default class Home extends PureComponent {
     if (this.isMagnetUrl()) {
       return (
         <Content>
-          <div className="centered"><Description details={details} dispatch={dispatch} /></div>
+          <div className="centered" style={{ width: '90%' }}>
+            <h5>{details.name}</h5>
+            <Description details={details} dispatch={dispatch} showOnlyDetails />
+          </div>
         </Content>
       );
     }

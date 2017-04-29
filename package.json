@@ -10,12 +10,12 @@
   "scripts": {
     "dev": "electron main",
     "start": "NODE_ENV=production npm run build && electron main",
-    "build": "next build renderer",
-    "pack": "npm run build && build --dir",
+    "build:client": "next build renderer",
+    "pack": "npm run build:client && build --dir",
     "precommit": "lint-staged",
     "prettier": "prettier-eslint --write {shared,pages,server}/**/*.js",
     "rebuild": "./node_modules/.bin/electron-rebuild",
-    "dist": "npm run build && build --mac"
+    "build": "npm run build:client && build"
   },
   "repository": {
     "type": "git",

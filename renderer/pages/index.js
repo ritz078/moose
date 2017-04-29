@@ -56,7 +56,10 @@ export default class Home extends PureComponent {
     if (this.isMagnetUrl()) {
       return (
         <Content>
-          <div className="centered"><Description details={details} dispatch={dispatch} /></div>
+          <div className="centered" style={{ width: '90%' }}>
+            <h5>{details.name}</h5>
+            <Description details={details} dispatch={dispatch} showOnlyDetails />
+          </div>
         </Content>
       );
     }
@@ -73,6 +76,11 @@ export default class Home extends PureComponent {
     this.props.params.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null;
 
   render() {
-    return <Layout loading={this.props.loading} cast={this.props.cast}>{this.getContent()}</Layout>;
+    const { loading, details } = this.props;
+    return (
+      <Layout loading={loading || (details && details.loading)} cast={this.props.cast}>
+        {this.getContent()}
+      </Layout>
+    );
   }
 }

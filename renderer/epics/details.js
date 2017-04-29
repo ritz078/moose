@@ -15,7 +15,6 @@ export default function fetchDetails(action$, { dispatch }) {
       }
       )
       .retry(3)
-      .timeout(6000)
       .switchMap(payload => [
         {
           type: 'SET_DETAILS',

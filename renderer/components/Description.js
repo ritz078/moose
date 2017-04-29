@@ -46,7 +46,7 @@ const Table = styled.table`
 `;
 
 const Files = styled.div`
-  flex: 0.6;
+  flex: ${props => (props.showOnlyDetails ? '1' : '0.6')};
   padding-top: 10px;
   overflow: scroll;
 `;
@@ -84,10 +84,12 @@ export default class Description extends PureComponent {
     loading: PropTypes.bool.isRequired,
     cast: PropTypes.shape({
       selectedPlayer: PropTypes.any
-    }).isRequired
+    }).isRequired,
+    showOnlyDetails: PropTypes.bool
   };
 
   static defaultProps = {
+    showOnlyDetails: false,
     dispatch() {},
     details: {},
     fixed: false
@@ -197,7 +199,7 @@ export default class Description extends PureComponent {
   };
 
   getFiles = () => {
-    const { details } = this.props;
+    const { details, showOnlyDetails } = this.props;
 
     const x =
       details &&
@@ -239,7 +241,7 @@ export default class Description extends PureComponent {
       });
 
     return (
-      <Files>
+      <Files showOnlyDetails={showOnlyDetails}>
         <Table>
           <tbody>{x}</tbody>
         </Table>
@@ -256,9 +258,9 @@ export default class Description extends PureComponent {
   }
 
   render() {
-    const { details, loading } = this.props;
+    const { details, showOnlyDetails } = this.props;
 
-    if (loading || !details.name) {
+    if (details.loading || !details.name) {
       return (
         <Wrapper>
           <div className="loading" />
@@ -268,7 +270,7 @@ export default class Description extends PureComponent {
 
     return (
       <Wrapper>
-        <Info />
+        {!showOnlyDetails && <Info />}
         {this.getFiles()}
         <MediaModal
           infoHash={details.torrentId}

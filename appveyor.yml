@@ -12,6 +12,7 @@ install:
   - npm install -g npm@latest
   - set PATH=%APPDATA%\npm;%PATH%
   - yarn
+image: Visual Studio 2015
 matrix:
   fast_finish: true
 build: off

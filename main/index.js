@@ -9,7 +9,7 @@ const fixPath = require('fix-path');
 const dev = require('electron-is-dev');
 const { moveToApplications } = require('electron-lets-move');
 const Config = require('electron-config');
-const { error: showError } = require('../renderer/utils/log');
+const { error: showError } = require('./utils/log');
 
 const config = new Config();
 

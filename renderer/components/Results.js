@@ -175,6 +175,11 @@ export default class Results extends PureComponent {
     };
 
     this.props.dispatch({
+      type: 'SET_PAGE',
+      payload: 1
+    });
+
+    this.props.dispatch({
       type: 'SET_SORT_ORDER',
       payload: x
     });

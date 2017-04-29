@@ -8,7 +8,6 @@ environment:
   CSC_KEY_PASSWORD:
       secure: /4hDi7HJcTpj7vUWlTgsUA==
   matrix:
-    - nodejs_version: 6
     - platform: x64
 install:
   - ps: Install-Product node $env:nodejs_version

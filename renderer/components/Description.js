@@ -258,9 +258,9 @@ export default class Description extends PureComponent {
   }
 
   render() {
-    const { details, loading, showOnlyDetails } = this.props;
+    const { details, showOnlyDetails } = this.props;
 
-    if (loading || !details.name) {
+    if (details.loading || !details.name) {
       return (
         <Wrapper>
           <div className="loading" />

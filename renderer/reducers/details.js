@@ -1,10 +1,17 @@
 import { createReducer } from 'redux-create-reducer';
 
 const resultsReducer = createReducer(
-  {},
   {
-    SET_DETAILS: (state, action) => action.payload,
-    RESET_DETAILS: () => ({})
+    loading: false
+  },
+  {
+    SET_DETAILS: (state, action) =>
+      Object.assign({}, action.payload, {
+        loading: false
+      }),
+    RESET_DETAILS: () => ({
+      loading: true
+    })
   }
 );
 

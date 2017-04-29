@@ -76,8 +76,9 @@ export default class Home extends PureComponent {
     this.props.params.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null;
 
   render() {
+    const { loading, details } = this.props;
     return (
-      <Layout loading={this.props.loading || this.props.details.loading} cast={this.props.cast}>
+      <Layout loading={loading || (details && details.loading)} cast={this.props.cast}>
         {this.getContent()}
       </Layout>
     );

@@ -31,15 +31,17 @@ async function createWindow() {
   // after the main starts create the electron browser window
   // start building the next.js app
   win = new BrowserWindow({
+    backgroundThrottling: false,
     height: 800,
     width: 1000,
     minWidth: 900,
-    vibrancy: 'light',
-    titleBarStyle: 'hidden-inset'
+    titleBarStyle: 'hidden-inset',
+    skipTaskbar: true
   });
 
   try {
     await server(port);
+    app.dock.show();
   } catch (err) {
     showError('Not able to start server', err);
     return;
@@ -72,8 +74,15 @@ app.on('ready', async () => {
 });
 
 app.on('window-all-closed', () => {
+  app.dock.hide();
   if (process.platform !== 'darwin') {
     app.quit();
+  }
+});
+
+app.on('activate', () => {
+  if (!win) {
+    createWindow();
   }
 });
 

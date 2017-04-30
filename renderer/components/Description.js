@@ -63,8 +63,12 @@ const VlcIcon = styled.i`
   }
 `;
 
-@withRedux(initStore, ({ details, cast }) => ({
-  details,
+const ProgressContainer = styled.td`
+  width: 190px;
+  padding: 0 22px 6px 10px;
+`;
+
+@withRedux(initStore, ({ cast }) => ({
   cast
 }))
 export default class Description extends PureComponent {
@@ -73,6 +77,7 @@ export default class Description extends PureComponent {
     details: PropTypes.shape({
       name: PropTypes.string,
       torrentId: PropTypes.string,
+      loading: PropTypes.bool,
       files: PropTypes.shape({
         name: PropTypes.string,
         type: PropTypes.string,
@@ -82,14 +87,16 @@ export default class Description extends PureComponent {
     cast: PropTypes.shape({
       selectedPlayer: PropTypes.any
     }).isRequired,
-    showOnlyDetails: PropTypes.bool
+    showOnlyDetails: PropTypes.bool,
+    showProgress: PropTypes.bool
   };
 
   static defaultProps = {
     showOnlyDetails: false,
     dispatch() {},
     details: {},
-    fixed: false
+    fixed: false,
+    showProgress: false
   };
 
   constructor(props) {
@@ -196,7 +203,7 @@ export default class Description extends PureComponent {
   };
 
   getFiles = () => {
-    const { details, showOnlyDetails } = this.props;
+    const { details, showOnlyDetails, showProgress } = this.props;
 
     const x =
       details &&
@@ -210,8 +217,12 @@ export default class Description extends PureComponent {
 
         return (
           <tr>
-            <td>{this.getFileIcon(file.type)}</td>
+            <td style={{ width: '50px' }}>{this.getFileIcon(file.type)}</td>
             <td style={{ maxWidth: '270px' }} className="text-ellipsis">{file.name}</td>
+            {showProgress &&
+              <ProgressContainer>
+                <progress className="progress" max="100" value={Math.min(file.progress, 100)} />
+              </ProgressContainer>}
             <td>{file.size}</td>
             {this.state.isVlcPresent &&
               <td>

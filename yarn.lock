@@ -201,6 +201,17 @@ app-root-path@^2.0.0, app-root-path@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/app-root-path/-/app-root-path-2.0.1.tgz#cd62dcf8e4fd5a417efc664d2e5b10653c651b46"
 
+application-config-path@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/application-config-path/-/application-config-path-0.1.0.tgz#193c5f0a86541a4c66fba1e2dc38583362ea5e8f"
+
+application-config@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/application-config/-/application-config-1.0.1.tgz#5aa2e2a5ed6abd2e5d1d473d3596f574044fe9e7"
+  dependencies:
+    application-config-path "^0.1.0"
+    mkdirp "^0.5.1"
+
 aproba@^1.0.3:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.1.1.tgz#95d3600f07710aa0e9298c726ad5ecf2eacbabab"
@@ -1968,12 +1979,12 @@ concat-stream@^1.5.2:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
-conf@^0.11.1:
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/conf/-/conf-0.11.2.tgz#879f479267600483e502583462ca4063fc9779b2"
+conf@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/conf/-/conf-1.0.0.tgz#3547170d339bb4d38bf5e0e86c2e5af976b47ffa"
   dependencies:
-    dot-prop "^3.0.0"
-    env-paths "^0.3.0"
+    dot-prop "^4.1.0"
+    env-paths "^1.0.0"
     mkdirp "^0.5.1"
     pkg-up "^1.0.0"
 
@@ -2400,6 +2411,10 @@ decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
 
+deep-compare@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/deep-compare/-/deep-compare-0.0.5.tgz#c38a8f6a834c27dab427dcc496d9d6e1e1b40b67"
+
 deep-copy@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/deep-copy/-/deep-copy-1.2.0.tgz#5fb2a7a95f5455473d7ce39a392f42c3514e11e8"
@@ -2559,17 +2574,15 @@ domutils@1.5.1, domutils@^1.5.1:
     dom-serializer "0"
     domelementtype "1"
 
-dot-prop@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-3.0.0.tgz#1b708af094a49c9a0e7dbcad790aba539dac1177"
-  dependencies:
-    is-obj "^1.0.0"
-
 dot-prop@^4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-4.1.1.tgz#a8493f0b7b5eeec82525b5c7587fa7de7ca859c1"
   dependencies:
     is-obj "^1.0.0"
+
+downloads-folder@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/downloads-folder/-/downloads-folder-1.0.0.tgz#3d31ea730ec4f64b277df2d12ccff76adae75059"
 
 duplexer3@^0.1.4:
   version "0.1.4"
@@ -2697,11 +2710,11 @@ electron-builder@^17.1.1:
     uuid-1345 "^0.99.6"
     yargs "^7.1.0"
 
-electron-config@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/electron-config/-/electron-config-0.2.1.tgz#7e12c26412d06bf3ed3896d0479df162986b95ba"
+electron-config@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/electron-config/-/electron-config-1.0.0.tgz#069d044cc794f04784ae72f12916725d3c8c39af"
   dependencies:
-    conf "^0.11.1"
+    conf "^1.0.0"
 
 electron-debug@^1.1.0:
   version "1.1.0"
@@ -2874,10 +2887,6 @@ enhanced-resolve@^3.0.0:
 entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
-
-env-paths@^0.3.0:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/env-paths/-/env-paths-0.3.1.tgz#c30ccfcbc30c890943dc08a85582517ef00da463"
 
 env-paths@^1.0.0:
   version "1.0.0"
@@ -6441,9 +6450,9 @@ react-toastify@^1.3.0:
     react "^15.3.2"
     react-addons-transition-group "^15.3.2"
 
-react-virtualized@^9.7.3:
-  version "9.7.3"
-  resolved "https://registry.yarnpkg.com/react-virtualized/-/react-virtualized-9.7.3.tgz#5be2bbc0316151ee1c00d133f7a5f9727874f756"
+react-virtualized@^9.7.4:
+  version "9.7.4"
+  resolved "https://registry.yarnpkg.com/react-virtualized/-/react-virtualized-9.7.4.tgz#1b5b25c1397282c6ffc651b416befc69e282df12"
   dependencies:
     babel-runtime "^6.11.6"
     classnames "^2.2.3"

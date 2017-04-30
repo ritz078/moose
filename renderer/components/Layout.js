@@ -6,7 +6,6 @@ import { ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
 
 import stylesheet from '../styles/index.less';
-import Header from './Header';
 import MenuBar from './MenuBar';
 import Controls from './Controls';
 
@@ -40,7 +39,6 @@ export default function Layout({ children, loading, cast }) {
       </Head>
       <Loading show={loading} showSpinner={false} color="#3f51b5" />
       <MenuBar />
-      <Header />
 
       {children}
       {cast.streamingMedia && <Controls />}

@@ -48,6 +48,12 @@ export default class MenuBar extends PureComponent {
           </div>
         </div>
         <Cast />
+        <Link href="/download">
+          <Icon className="mdi mdi-download badge" data-badge="8" />
+        </Link>
+        <Link href="/">
+          <Icon className="mdi mdi-home" />
+        </Link>
       </Wrapper>
     );
   }

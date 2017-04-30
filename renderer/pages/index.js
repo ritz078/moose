@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 import styled from 'styled-components';
+import Header from '../components/Header';
 import initStore from '../store';
 import Results from '../components/Results';
 import Layout from '../components/Layout';
@@ -76,9 +77,10 @@ export default class Home extends PureComponent {
     this.props.params.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null;
 
   render() {
-    const { loading, details } = this.props;
+    const { loading, details, cast } = this.props;
     return (
-      <Layout loading={loading || (details && details.loading)} cast={this.props.cast}>
+      <Layout loading={loading || (details && details.loading)} cast={cast}>
+        <Header />
         {this.getContent()}
       </Layout>
     );

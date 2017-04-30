@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styled from 'styled-components';
 import withRedux from 'next-redux-wrapper';
+import { findIndex } from 'lodash';
+import { ipcRenderer } from 'electron';
 import { InfiniteLoader, List, AutoSizer } from 'react-virtualized';
 import initStore from '../store';
 import Description from './Description';
@@ -48,11 +50,12 @@ const SortIcon = styled.i`
   }
 `;
 
-@withRedux(initStore, ({ results, params, loading, details }) => ({
+@withRedux(initStore, ({ results, params, loading, details, download }) => ({
   results,
   params,
   loading,
-  details
+  details,
+  download
 }))
 export default class Results extends PureComponent {
   static propTypes = {
@@ -93,7 +96,7 @@ export default class Results extends PureComponent {
   }
 
   getResult = (index, style) => {
-    const { results, dispatch } = this.props;
+    const { results, dispatch, details } = this.props;
     const { selectedIndex } = this.state;
 
     const result = results.data[index];
@@ -151,8 +154,25 @@ export default class Results extends PureComponent {
           <Td flex={2}>{result.size}</Td>
           <Td flex={1}>{result.seeders}</Td>
           <Td flex={1}>{result.leechers}</Td>
+          <Td
+            flex={1}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (findIndex(this.props.download, o => o.magnetLink === result.magnetLink) >= 0) {
+                return;
+              }
+              this.addTorrentToDownload(result.magnetLink);
+              return this.props.dispatch({
+                type: 'ADD_TO_DOWNLOAD_LIST',
+                payload: result
+              });
+            }}
+          >
+            <i className="mdi mdi-download fs-18" />
+          </Td>
         </div>
-        {this.state.selectedIndex === index && <Description />}
+        {this.state.selectedIndex === index && <Description details={details} />}
       </Tr>
     );
   };
@@ -210,6 +230,10 @@ export default class Results extends PureComponent {
     return 41;
   };
 
+  addTorrentToDownload = (magnetLink) => {
+    ipcRenderer.send('add_torrent_to_download', magnetLink);
+  };
+
   render() {
     const rowCount = this.props.results.data.length + 1;
 
@@ -238,6 +262,7 @@ export default class Results extends PureComponent {
             Seeds<SortIcon className={getClass('seeds')} />
           </Td>
           <Td flex={1}>Leech</Td>
+          <Td flex={1} />
         </Tr>
         <div style={{ flex: 1 }}>
           <InfiniteLoader

@@ -7,12 +7,9 @@
 <img src="https://travis-ci.org/ritz078/embed.js.svg?branch=master" alt="Build Status" style="max-width:100%;">
 </a>
 <a href="https://ci.appveyor.com/project/ritz078/snape">
-<img src="https://img.shields.io/appveyor/ci/ritz078/snape.svg" alt="Build Status" style="max-width:100%;">
+<img src="https://ci.appveyor.com/api/projects/status/cku637yexhp1bot9/branch/master?svg=true" alt="Build Status" style="max-width:100%;">
 </a>
 <img src="https://img.shields.io/badge/styled_with-prettier-ff69b4.svg" alt="Build Status" style="max-width:100%;">
-<a href="https://github.com/ritz078/snape/issues">
-<img src="https://img.shields.io/github/issues/badges/shields.svg" alt="Build Status" style="max-width:100%;">
-</a>
 </p>
 
 > A torrent client for web with search and stream functionality.

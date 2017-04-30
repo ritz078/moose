@@ -34,7 +34,8 @@ export default class DownloadTile extends Component {
     details: PropTypes.shape({
       name: PropTypes.string
     }),
-    index: PropTypes.number.isRequired
+    index: PropTypes.number.isRequired,
+    onClick: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -48,14 +49,17 @@ export default class DownloadTile extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    return !deepCompare(this.props.downloadData, nextProps.downloadData);
+    return (
+      !deepCompare(this.props.downloadData, nextProps.downloadData) ||
+      this.props.selectedIndex !== nextProps.selectedIndex
+    );
   }
 
   render() {
-    const { details, downloadData, index } = this.props;
+    const { details, downloadData, index, selectedIndex, onClick } = this.props;
 
     return (
-      <div>
+      <div onClick={() => onClick(index)}>
         <ContentTitle index={index}>
           <div style={{ width: '30px' }}>{index + 1}</div>
           <Name>{details.name}</Name>
@@ -66,7 +70,8 @@ export default class DownloadTile extends Component {
             <span>{details.size}</span>
           </Details>
         </ContentTitle>
-        <Description details={downloadData} showOnlyDetails showProgress />
+        {selectedIndex === index &&
+          <Description details={downloadData} showOnlyDetails showProgress />}
       </div>
     );
   }

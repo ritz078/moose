@@ -23,7 +23,8 @@ export default class Download extends PureComponent {
     super(props);
 
     this.state = {
-      downloadData: []
+      downloadData: [],
+      selectedIndex: null
     };
   }
 
@@ -49,6 +50,12 @@ export default class Download extends PureComponent {
     ipcRenderer.removeAllListeners(['download_data']);
   }
 
+  setSelectedIndex = (i) => {
+    this.setState({
+      selectedIndex: this.state.selectedIndex === i ? null : i
+    });
+  };
+
   getDownloads = () => {
     const content = this.props.download.map((d, i) => (
       <DownloadFile
@@ -56,6 +63,8 @@ export default class Download extends PureComponent {
         index={i}
         key={d.magnetLink}
         downloadData={this.state.downloadData[i]}
+        onClick={this.setSelectedIndex}
+        selectedIndex={this.state.selectedIndex}
       />
     ));
 

@@ -95,6 +95,10 @@ export default class Results extends PureComponent {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(this.props.details, nextProps.details);
+  }
+
   getResult = (index, style) => {
     const { results, dispatch, details } = this.props;
     const { selectedIndex } = this.state;
@@ -172,7 +176,7 @@ export default class Results extends PureComponent {
             <i className="mdi mdi-download fs-18" />
           </Td>
         </div>
-        {this.state.selectedIndex === index && <Description details={details} />}
+        {this.state.selectedIndex === index && <Description />}
       </Tr>
     );
   };
@@ -235,6 +239,7 @@ export default class Results extends PureComponent {
   };
 
   render() {
+    console.log('rendered');
     const rowCount = this.props.results.data.length + 1;
 
     const { orderBy, sortBy } = this.props.params;

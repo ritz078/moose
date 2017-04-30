@@ -59,8 +59,8 @@ export default class DownloadTile extends Component {
     const { details, downloadData, index, selectedIndex, onClick } = this.props;
 
     return (
-      <div onClick={() => onClick(index)}>
-        <ContentTitle index={index}>
+      <div>
+        <ContentTitle index={index} onClick={() => onClick(index)}>
           <div style={{ width: '30px' }}>{index + 1}</div>
           <Name>{details.name}</Name>
           <Details>
@@ -71,7 +71,7 @@ export default class DownloadTile extends Component {
           </Details>
         </ContentTitle>
         {selectedIndex === index &&
-          <Description details={downloadData} showOnlyDetails showProgress />}
+          <Description customDetails={downloadData} showOnlyDetails showProgress />}
       </div>
     );
   }

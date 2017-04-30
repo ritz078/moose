@@ -2,6 +2,19 @@
   <img src="./logo.png" align="center" alt="" width="250"/>
 </p>
 
+<p align="center">
+<a href="https://travis-ci.org/ritz078/embed.js">
+<img src="https://travis-ci.org/ritz078/embed.js.svg?branch=master" alt="Build Status" style="max-width:100%;">
+</a>
+<a href="https://ci.appveyor.com/project/ritz078/snape">
+<img src="https://img.shields.io/appveyor/ci/ritz078/snape.svg" alt="Build Status" style="max-width:100%;">
+</a>
+<img src="https://img.shields.io/badge/styled_with-prettier-ff69b4.svg" alt="Build Status" style="max-width:100%;">
+<a href="https://github.com/ritz078/snape/issues">
+<img src="https://img.shields.io/github/issues/badges/shields.svg" alt="Build Status" style="max-width:100%;">
+</a>
+</p>
+
 > A torrent client for web with search and stream functionality.
 
 <p align="center">
@@ -19,7 +32,19 @@
 
 ### Development
 
-To start the development server run `yarn start`
+## Caught a bug?
+
+1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
+2. Install the dependencies: `npm install`
+3. Start the app: `npm start`
+
+To make sure that your code works in the bundled application, you can generate the binaries like this:
+
+```bash
+npm run pack
+```
+
+After that, you'll find them in the `./dist` folder!
 
 ### Credits
 

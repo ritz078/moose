@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { remote, ipcRenderer } from 'electron';
 import styled from 'styled-components';
 import deepCompare from 'deep-compare';
 import prettyBytes from 'pretty-bytes';
 import Description from './Description';
+import { showToast } from './Toast';
 
 export const Details = styled.div`
   display: flex;
@@ -26,18 +28,27 @@ export const Name = styled.div`
   flex: 0.6;
 `;
 
+const RemoveIcon = styled.i`
+  font-weight: bold;
+  transition: all .2s;
+  &:hover{
+    transform: scale(1.4);
+  }
+`;
+
 export default class DownloadTile extends Component {
   static propTypes = {
     downloadData: PropTypes.shape({
       progress: PropTypes.number
     }),
     details: PropTypes.shape({
-      name: PropTypes.string
-    }),
+      name: PropTypes.string,
+      magnetLink: PropTypes.string
+    }).isRequired,
     index: PropTypes.number.isRequired,
     onClick: PropTypes.func.isRequired,
-    selectedIndex: PropTypes.number,
-    dispatch: PropTypes.func
+    selectedIndex: PropTypes.number.isRequired,
+    dispatch: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -57,14 +68,32 @@ export default class DownloadTile extends Component {
     );
   }
 
-  remove = (e: MouseEvent, magnetLink: string) => {
+  remove = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    this.props.dispatch({
-      type: 'REMOVE_FROM_DOWNLOAD_LIST',
-      payload: magnetLink
-    });
+    const { dialog } = remote;
+    const { magnetLink, name } = this.props.details;
+
+    dialog.showMessageBox(
+      {
+        type: 'question',
+        message: `Do you want to delete the torrent for ${name} ?`,
+        buttons: ['OK', 'Cancel']
+      },
+      (response) => {
+        if (response === 0) {
+          ipcRenderer.send('remove_torrent', magnetLink);
+
+          this.props.dispatch({
+            type: 'REMOVE_FROM_DOWNLOAD_LIST',
+            payload: magnetLink
+          });
+
+          showToast(`Sucessfully removed ${name} from download list`, 'success');
+        }
+      }
+    );
   };
 
   render() {
@@ -80,8 +109,8 @@ export default class DownloadTile extends Component {
             <span>{prettyBytes(downloadData.downloadSpeed || 0)}/s</span>
             <span>{prettyBytes(downloadData.uploadSpeed || 0)}/s</span>
             <span>{details.size}</span>
-            <span style={{ textAlign: 'right' }} onClick={e => this.remove(e, details.magnetLink)}>
-              <i className="mdi mdi-close" />
+            <span style={{ textAlign: 'right' }} onClick={this.remove}>
+              <RemoveIcon className="mdi mdi-close" />
             </span>
           </Details>
         </ContentTitle>

@@ -14,8 +14,7 @@ import Controls from './Controls';
 
 NProgress.configure({ showSpinner: false });
 
-Router.onRouteChangeStart = (url) => {
-  console.log(`Loading: ${url}`);
+Router.onRouteChangeStart = () => {
   NProgress.start();
 };
 Router.onRouteChangeComplete = () => NProgress.done();

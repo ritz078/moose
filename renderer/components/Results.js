@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styled from 'styled-components';
 import withRedux from 'next-redux-wrapper';
+import Ink from 'react-ink';
 import { findIndex } from 'lodash';
 import { ipcRenderer } from 'electron';
 import { InfiniteLoader, List, AutoSizer } from 'react-virtualized';
@@ -96,12 +97,8 @@ export default class Results extends PureComponent {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(this.props.details, nextProps.details);
-  }
-
   getResult = (index, style) => {
-    const { results, dispatch, details } = this.props;
+    const { results, dispatch } = this.props;
     const { selectedIndex } = this.state;
 
     const result = results.data[index];
@@ -113,7 +110,7 @@ export default class Results extends PureComponent {
     return (
       <Tr key={result.id} data-id={result.id} style={style} className={mainClass}>
         <div
-          style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer' }}
+          style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', position: 'relative' }}
           onClick={() => {
             if (selectedIndex === index) {
               this.setState(
@@ -143,6 +140,7 @@ export default class Results extends PureComponent {
             });
           }}
         >
+          <Ink />
           <Td flex={0.5}>{index + 1}</Td>
           <Td flex={10}>
             <ResultTitle className="tile-title text-ellipsis">
@@ -160,7 +158,7 @@ export default class Results extends PureComponent {
           <Td flex={1}>{result.seeders}</Td>
           <Td flex={1}>{result.leechers}</Td>
           <Td
-            flex={1}
+            flex={0.5}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -176,7 +174,7 @@ export default class Results extends PureComponent {
               });
             }}
           >
-            <i className="mdi mdi-download fs-18" />
+            <i className="mdi mdi-download fs-18 tooltip tooltip-left" data-tooltip="Download" />
           </Td>
         </div>
         {this.state.selectedIndex === index && <Description />}
@@ -242,7 +240,6 @@ export default class Results extends PureComponent {
   };
 
   render() {
-    console.log('rendered');
     const rowCount = this.props.results.data.length + 1;
 
     const { orderBy, sortBy } = this.props.params;
@@ -270,7 +267,7 @@ export default class Results extends PureComponent {
             Seeds<SortIcon className={getClass('seeds')} />
           </Td>
           <Td flex={1}>Leech</Td>
-          <Td flex={1} />
+          <Td flex={0.5} />
         </Tr>
         <div style={{ flex: 1 }}>
           <InfiniteLoader

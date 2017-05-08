@@ -1,5 +1,5 @@
 import Document, { Head, Main, NextScript } from 'next/document';
-import styleSheet from 'styled-components/lib/models/StyleSheet';
+import { styleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
   static async getInitialProps({ renderPage }) {
@@ -7,7 +7,7 @@ export default class MyDocument extends Document {
     const styles = (
       <style
         dangerouslySetInnerHTML={{
-          __html: styleSheet.rules().map(rule => rule.cssText).join('\n')
+          __html: styleSheet.getCSS()
         }}
       />
     );

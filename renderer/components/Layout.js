@@ -5,9 +5,21 @@ import Loading from 'react-loading-bar';
 import { ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
 
+import NProgress from 'nprogress';
+import Router from 'next/router';
+
 import stylesheet from '../styles/index.less';
 import MenuBar from './MenuBar';
 import Controls from './Controls';
+
+NProgress.configure({ showSpinner: false });
+
+Router.onRouteChangeStart = (url) => {
+  console.log(`Loading: ${url}`);
+  NProgress.start();
+};
+Router.onRouteChangeComplete = () => NProgress.done();
+Router.onRouteChangeError = () => NProgress.done();
 
 const Container = styled.div`
   display: flex;

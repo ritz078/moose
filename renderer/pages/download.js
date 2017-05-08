@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ipcRenderer } from 'electron';
-import styled from 'styled-components';
+import parseTorrent from 'parse-torrent';
 import withRedux from 'next-redux-wrapper';
 import isEmpty from 'just-is-empty';
 import initStore from '../store';
@@ -16,7 +16,8 @@ const config = require('application-config')('Snape');
 }))
 export default class Download extends PureComponent {
   static propTypes = {
-    dispatch: PropTypes.func
+    dispatch: PropTypes.func.isRequired,
+    download: PropTypes.array
   };
 
   constructor(props) {
@@ -62,7 +63,8 @@ export default class Download extends PureComponent {
         details={d}
         index={i}
         key={d.magnetLink}
-        downloadData={this.state.downloadData[i]}
+        dispatch={this.props.dispatch}
+        downloadData={this.state.downloadData[parseTorrent(d.magnetLink).infoHash]}
         onClick={this.setSelectedIndex}
         selectedIndex={this.state.selectedIndex}
       />
@@ -78,6 +80,7 @@ export default class Download extends PureComponent {
             <span><i className="mdi mdi-download" />/s</span>
             <span><i className="mdi mdi-upload" />/s</span>
             <span>Size</span>
+            <span />
           </Details>
         </ContentTitle>
         {content}

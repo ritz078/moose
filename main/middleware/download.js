@@ -21,9 +21,9 @@ let interval;
 
 ipcMain.on('init_download_polling', (event) => {
   interval = setInterval(() => {
-    const data = [];
+    const data = {};
     client.torrents.forEach((torrent) => {
-      data.push({
+      data[torrent.infoHash] = {
         name: torrent.name,
         downloadSpeed: torrent.downloadSpeed,
         progress: torrent.progress * 100,
@@ -36,7 +36,7 @@ ipcMain.on('init_download_polling', (event) => {
           progress: Math.round(file.downloaded / file.length * 100),
           size: prettyBytes(file.length)
         }))
-      });
+      };
     });
 
     event.sender.send('download_data', data);
@@ -52,6 +52,8 @@ ipcMain.on('end_download_polling', () => {
 });
 
 ipcMain.on('add_torrent_to_download', (event, magnetLink) => client.add(magnetLink));
+
+ipcMain.on('remove_torrent', (event, magnetLink) => client.remove(magnetLink));
 
 module.exports = {
   init,

@@ -8,6 +8,7 @@ import { ipcRenderer } from 'electron';
 import { InfiniteLoader, List, AutoSizer } from 'react-virtualized';
 import initStore from '../store';
 import Description from './Description';
+import { showToast } from './Toast';
 
 const Verified = styled.i`
   font-size: 14px;
@@ -164,9 +165,11 @@ export default class Results extends PureComponent {
               e.preventDefault();
               e.stopPropagation();
               if (findIndex(this.props.download, o => o.magnetLink === result.magnetLink) >= 0) {
+                showToast('Already present in the download list', 'warning');
                 return;
               }
               this.addTorrentToDownload(result.magnetLink);
+              showToast('Successfully added to the download list.', 'success');
               return this.props.dispatch({
                 type: 'ADD_TO_DOWNLOAD_LIST',
                 payload: result

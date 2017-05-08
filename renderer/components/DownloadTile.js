@@ -35,7 +35,9 @@ export default class DownloadTile extends Component {
       name: PropTypes.string
     }),
     index: PropTypes.number.isRequired,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired,
+    selectedIndex: PropTypes.number,
+    dispatch: PropTypes.func
   };
 
   constructor(props) {
@@ -55,6 +57,16 @@ export default class DownloadTile extends Component {
     );
   }
 
+  remove = (e: MouseEvent, magnetLink: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.props.dispatch({
+      type: 'REMOVE_FROM_DOWNLOAD_LIST',
+      payload: magnetLink
+    });
+  };
+
   render() {
     const { details, downloadData, index, selectedIndex, onClick } = this.props;
 
@@ -64,10 +76,13 @@ export default class DownloadTile extends Component {
           <div style={{ width: '30px' }}>{index + 1}</div>
           <Name>{details.name}</Name>
           <Details>
-            <span>{downloadData.progress} %</span>
+            <span>{Math.round(downloadData.progress || 0)} %</span>
             <span>{prettyBytes(downloadData.downloadSpeed || 0)}/s</span>
             <span>{prettyBytes(downloadData.uploadSpeed || 0)}/s</span>
             <span>{details.size}</span>
+            <span style={{ textAlign: 'right' }} onClick={e => this.remove(e, details.magnetLink)}>
+              <i className="mdi mdi-close" />
+            </span>
           </Details>
         </ContentTitle>
         {selectedIndex === index &&

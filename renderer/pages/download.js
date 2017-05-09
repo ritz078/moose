@@ -71,7 +71,7 @@ export default class Download extends PureComponent {
     ));
 
     return (
-      <div>
+      <div style={{ height: 'calc(100vh - 116px)' }}>
         <ContentTitle className="text-bold">
           <div style={{ width: '30px' }} />
           <Name>Name</Name>

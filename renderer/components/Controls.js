@@ -156,7 +156,7 @@ export default class Controls extends PureComponent {
           <Icon className="mdi mdi-stop" onClick={this.stop} />
 
           <SliderWrapper>
-            <Slider min={0} max={sliderMax} value={sliderValue} onAfterChange={this.seek} />
+            <Slider min={0} max={sliderMax} value={sliderValue} onChange={this.seek} />
             <SliderMax>{((sliderMax - sliderValue) / 60).toFixed(2)}</SliderMax>
           </SliderWrapper>
 

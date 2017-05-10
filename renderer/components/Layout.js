@@ -5,10 +5,20 @@ import Loading from 'react-loading-bar';
 import { ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
 
+import NProgress from 'nprogress';
+import Router from 'next/router';
+
 import stylesheet from '../styles/index.less';
-import Header from './Header';
 import MenuBar from './MenuBar';
 import Controls from './Controls';
+
+NProgress.configure({ showSpinner: false });
+
+Router.onRouteChangeStart = () => {
+  NProgress.start();
+};
+Router.onRouteChangeComplete = () => NProgress.done();
+Router.onRouteChangeError = () => NProgress.done();
 
 const Container = styled.div`
   display: flex;
@@ -28,7 +38,7 @@ const CloseButton = ({ closeToast }) => (
   <Close className="btn btn-clear float-right" onClick={closeToast} />
 );
 
-export default function Layout({ children, loading, cast }) {
+export default function Layout({ children, loading, cast, download }) {
   return (
     <Container>
       <Head>
@@ -39,8 +49,7 @@ export default function Layout({ children, loading, cast }) {
         <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
       </Head>
       <Loading show={loading} showSpinner={false} color="#3f51b5" />
-      <MenuBar />
-      <Header />
+      <MenuBar downloads={download} />
 
       {children}
       {cast.streamingMedia && <Controls />}
@@ -55,7 +64,9 @@ Layout.propTypes = {
   loading: PropTypes.bool.isRequired,
   cast: PropTypes.shape({
     streamingMedia: PropTypes.any
-  }).isRequired
+  }).isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  download: PropTypes.array.isRequired
 };
 
 Layout.defaultProps = {

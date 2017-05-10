@@ -4,6 +4,8 @@
 @import (less) '~react-loading-bar/dist/index.css';
 @import (less) '~react-toastify/dist/ReactToastify.min.css';
 @import "~plyr/src/less/plyr.less";
+@import "./nprogress.less";
+@import (less) "~rc-slider/assets/index.css";
 
 html {
   box-sizing: border-box;
@@ -138,22 +140,30 @@ html {
   color: #0085ff;
 }
 
-.slider {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  cursor: pointer;
-}
-
 .plyr {
   width: 100%;
 }
-
-
 
 .pointer {
   cursor: pointer;
 }
 
-.black{
+.black {
   color: #000;
+}
+
+.flex-0-5 {
+  flex: 0.5;
+}
+
+.rc-slider-track {
+  background-color: #5764c6;
+}
+
+.rc-slider-handle {
+  border: 2px solid #5764c6;
+}
+
+.mdi-download.downloading {
+  color: #04a900;
 }

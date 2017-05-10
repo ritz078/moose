@@ -10,6 +10,7 @@ const dev = require('electron-is-dev');
 const { moveToApplications } = require('electron-lets-move');
 const Config = require('electron-config');
 const { error: showError } = require('./utils/log');
+const downloadTorrent = require('./middleware/download');
 
 const config = new Config();
 
@@ -41,6 +42,7 @@ async function createWindow() {
 
   try {
     await server(port);
+    downloadTorrent.init();
     app.dock.show();
   } catch (err) {
     showError('Not able to start server', err);

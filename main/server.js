@@ -5,9 +5,9 @@ const express = require('express');
 const next = require('next');
 const dev = require('electron-is-dev');
 const { resolve } = require('app-root-path');
-const { download, list, deleteTorr, searchTorrent } = require('./middleware/torrent');
+const { downloadTorrent, list, deleteTorr, searchTorrent } = require('./middleware/torrent');
 
-async function startServer(port, cb) {
+async function startServer(port) {
   const dir = resolve('./renderer');
   const nextApp = next({ dev, dir });
   const nextHandler = nextApp.getRequestHandler();
@@ -18,7 +18,7 @@ async function startServer(port, cb) {
   const server = express();
 
   server.get('/api/list', list);
-  server.get('/api/download/:torrentId/:fileId/:fileName', download);
+  server.get('/api/download/:torrentId/:fileId/:fileName', downloadTorrent);
   server.get('/api/delete/:torrentId', deleteTorr);
   server.get('/api/search/:searchTerm', searchTorrent);
 

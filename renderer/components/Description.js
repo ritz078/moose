@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/no-static-element-interactions,no-const-assign */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -46,7 +46,7 @@ const Table = styled.table`
 
 const Files = styled.div`
   flex: ${props => (props.showOnlyDetails ? '1' : '0.6')};
-  padding-top: 10px;
+  padding: 10px;
   overflow: scroll;
 `;
 
@@ -63,9 +63,14 @@ const VlcIcon = styled.i`
   }
 `;
 
-@withRedux(initStore, ({ details, cast }) => ({
-  details,
-  cast
+const ProgressContainer = styled.td`
+  width: 190px;
+  padding: 0 22px 6px 10px;
+`;
+
+@withRedux(initStore, ({ cast, details }) => ({
+  cast,
+  details
 }))
 export default class Description extends PureComponent {
   static propTypes = {
@@ -73,6 +78,17 @@ export default class Description extends PureComponent {
     details: PropTypes.shape({
       name: PropTypes.string,
       torrentId: PropTypes.string,
+      loading: PropTypes.bool,
+      files: PropTypes.shape({
+        name: PropTypes.string,
+        type: PropTypes.string,
+        size: PropTypes.string
+      })
+    }),
+    customDetails: PropTypes.shape({
+      name: PropTypes.string,
+      torrentId: PropTypes.string,
+      loading: PropTypes.bool,
       files: PropTypes.shape({
         name: PropTypes.string,
         type: PropTypes.string,
@@ -82,14 +98,16 @@ export default class Description extends PureComponent {
     cast: PropTypes.shape({
       selectedPlayer: PropTypes.any
     }).isRequired,
-    showOnlyDetails: PropTypes.bool
+    showOnlyDetails: PropTypes.bool,
+    showProgress: PropTypes.bool
   };
 
   static defaultProps = {
     showOnlyDetails: false,
     dispatch() {},
     details: {},
-    fixed: false
+    fixed: false,
+    showProgress: false
   };
 
   constructor(props) {
@@ -108,15 +126,16 @@ export default class Description extends PureComponent {
 
   startStream = (e) => {
     const selectedIndex = e.target.dataset.id;
+    const d = this.props.customDetails || this.props.details;
 
     // if a cast player is selected then stream on the chromecast
     if (this.props.cast.selectedPlayer) {
-      const file = this.props.details.files[selectedIndex];
+      const file = d.files[selectedIndex];
 
       const fileDetails = {
         name: file.name,
         index: e.target.dataset.id,
-        infoHash: this.props.details.torrentId,
+        infoHash: d.torrentId,
         type: file.type
       };
 
@@ -143,8 +162,10 @@ export default class Description extends PureComponent {
   };
 
   closeModal = () => {
+    const d = this.props.customDetails || this.props.details;
+
     this.setState({ streaming: false });
-    fetch(`/api/delete/${this.props.details.torrentId}`);
+    fetch(`/api/delete/${d.torrentId}`);
   };
 
   getFileIcon = (mime) => {
@@ -185,9 +206,10 @@ export default class Description extends PureComponent {
   };
 
   streamOnVlc = (e) => {
+    const d = this.props.customDetails || this.props.details;
     const selectedIndex = e.target.dataset.id;
-    const infoHash = this.props.details.torrentId;
-    const file = this.props.details.files[selectedIndex];
+    const infoHash = d.torrentId;
+    const file = d.files[selectedIndex];
     vlc.kill();
     vlc.playOnVlc(
       `http://127.0.0.1:${window.location.port}/api/download/${infoHash}/${+selectedIndex}/${file.name}`,
@@ -196,12 +218,15 @@ export default class Description extends PureComponent {
   };
 
   getFiles = () => {
-    const { details, showOnlyDetails } = this.props;
+    const { details, showOnlyDetails, showProgress, customDetails } = this.props;
+
+    // eslint-disable-next-line no-const-assign
+    const d = customDetails || details;
 
     const x =
-      details &&
-      details.files &&
-      details.files.map((file, i) => {
+      d &&
+      d.files &&
+      d.files.map((file, i) => {
         const fileType = getFileType(file.type);
         const streamIcon = classNames('mdi tooltip tooltip-left fs-18', {
           'mdi-play-circle-outline': fileType === 'video',
@@ -210,8 +235,12 @@ export default class Description extends PureComponent {
 
         return (
           <tr>
-            <td>{this.getFileIcon(file.type)}</td>
+            <td style={{ width: '50px' }}>{this.getFileIcon(file.type)}</td>
             <td style={{ maxWidth: '270px' }} className="text-ellipsis">{file.name}</td>
+            {showProgress &&
+              <ProgressContainer>
+                <progress className="progress" max="100" value={Math.min(file.progress, 100)} />
+              </ProgressContainer>}
             <td>{file.size}</td>
             {this.state.isVlcPresent &&
               <td>
@@ -255,9 +284,11 @@ export default class Description extends PureComponent {
   }
 
   render() {
-    const { details, showOnlyDetails } = this.props;
+    const { details, showOnlyDetails, customDetails } = this.props;
 
-    if (details.loading || !details.name) {
+    const d = customDetails || details;
+
+    if (d.loading || !d.name) {
       return (
         <Wrapper>
           <div className="loading" />
@@ -270,10 +301,10 @@ export default class Description extends PureComponent {
         {!showOnlyDetails && <Info />}
         {this.getFiles()}
         <MediaModal
-          infoHash={details.torrentId}
+          infoHash={d.torrentId}
           fileIndex={this.state.selectedIndex}
           showModal={this.state.streaming}
-          file={details.files[this.state.selectedIndex]}
+          file={d.files[this.state.selectedIndex]}
           onCloseClick={this.closeModal}
         />
       </Wrapper>

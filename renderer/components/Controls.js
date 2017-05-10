@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import Slider from 'rc-slider';
 import styled from 'styled-components';
 import cn from 'classnames';
 import { getPlayer } from '../utils/cast';
@@ -38,12 +39,12 @@ const Control = styled.div`
 
 const SliderMax = styled.span`
   float: right;
-  margin-top: -6px;
+  margin-top: -4px;
 `;
 
-const Slider = styled.div`
+const SliderWrapper = styled.div`
   flex: 1;
-  margin-top: 12px;
+  margin-top: 17px;
 `;
 
 export default class Controls extends PureComponent {
@@ -124,8 +125,7 @@ export default class Controls extends PureComponent {
     });
   };
 
-  seek = (e) => {
-    const time = +e.target.value;
+  seek = (time) => {
     getPlayer().seek(time, (err) => {
       if (err) {
         showToast(err.message, 'err');
@@ -154,18 +154,12 @@ export default class Controls extends PureComponent {
         <Control>
           <Icon className={playClass} onClick={this.handleToggle} />
           <Icon className="mdi mdi-stop" onClick={this.stop} />
-          <Slider>
-            <input
-              className="slider tooltip tooltip-top"
-              data-tooltip={(sliderValue / 60).toFixed(2)}
-              type="range"
-              min="0"
-              max={sliderMax}
-              value={sliderValue}
-              onChange={this.seek}
-            />
+
+          <SliderWrapper>
+            <Slider min={0} max={sliderMax} value={sliderValue} onChange={this.seek} />
             <SliderMax>{((sliderMax - sliderValue) / 60).toFixed(2)}</SliderMax>
-          </Slider>
+          </SliderWrapper>
+
         </Control>
       </Wrapper>
     );

@@ -26,6 +26,8 @@
     // We use global requires in various places, e.g. code splitting instances.
     "global-require": 0,
     "comma-dangle": 0,
-    "semi": 0
+    "semi": 0,
+    "jsx-a11y/img-has-alt": 0,
+    "import/no-extraneous-dependencies": 0
   }
 }

@@ -90,7 +90,7 @@ export default class Download extends PureComponent {
 
   render() {
     return (
-      <Layout cast={this.props.cast}>
+      <Layout cast={this.props.cast} download={this.props.download}>
         {this.getDownloads()}
       </Layout>
     );

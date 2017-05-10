@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import Ink from 'react-ink';
 import styled from 'styled-components';
 import Link from 'next/link';
@@ -26,21 +27,19 @@ const Icon = styled.i`
   }
 `;
 
-const Li = styled.li`
-  cursor: pointer;
-  position: relative;
-  &:hover {
-    color: purple;
-  }
-`;
-
 export default class MenuBar extends PureComponent {
+  static propTypes = {
+    downloads: PropTypes.array.isRequired
+  };
+
   render() {
     return (
       <Wrapper>
         <Cast />
         <Link href="/download" prefetch>
-          <Icon className="mdi mdi-download"><Ink /></Icon>
+          <Icon className="mdi mdi-download badge" data-badge={this.props.downloads.length}>
+            <Ink />
+          </Icon>
         </Link>
         <Link href="/" prefetch>
           <Icon className="mdi mdi-home"><Ink /></Icon>

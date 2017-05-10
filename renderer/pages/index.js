@@ -16,12 +16,13 @@ const Content = styled.div`
   padding-top: 20px;
 `;
 
-@withRedux(initStore, ({ results, loading, details, params, cast }) => ({
+@withRedux(initStore, ({ results, loading, details, params, cast, download }) => ({
   results,
   loading,
   details,
   params,
-  cast
+  cast,
+  download
 }))
 export default class Home extends PureComponent {
   static propTypes = {
@@ -43,7 +44,8 @@ export default class Home extends PureComponent {
     params: PropTypes.shape({
       searchTerm: PropTypes.string
     }).isRequired,
-    cast: PropTypes.array
+    cast: PropTypes.array,
+    download: PropTypes.download.isRequired
   };
 
   static defaultProps = {
@@ -77,9 +79,9 @@ export default class Home extends PureComponent {
     this.props.params.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null;
 
   render() {
-    const { loading, details, cast } = this.props;
+    const { loading, details, cast, download } = this.props;
     return (
-      <Layout loading={loading || (details && details.loading)} cast={cast}>
+      <Layout loading={loading || (details && details.loading)} cast={cast} download={download}>
         <Header />
         {this.getContent()}
       </Layout>

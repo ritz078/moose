@@ -97,6 +97,9 @@ export default class Results extends PureComponent {
     };
   }
 
+  isBeingDownloaded = magnetLink =>
+    findIndex(this.props.download, o => o.magnetLink === magnetLink) >= 0;
+
   getResult = (index, style) => {
     const { results, dispatch } = this.props;
     const { selectedIndex } = this.state;
@@ -105,6 +108,10 @@ export default class Results extends PureComponent {
 
     const mainClass = cn({
       'row-even': index % 2 === 0
+    });
+
+    const downloadClass = cn('mdi mdi-download fs-18 tooltip tooltip-left', {
+      downloading: this.isBeingDownloaded(result.magnetLink)
     });
 
     return (
@@ -134,7 +141,7 @@ export default class Results extends PureComponent {
                 return this.listRef.recomputeRowHeights(i);
               }
             );
-            return dispatch({
+            dispatch({
               type: 'FETCH_DETAILS',
               payload: result.magnetLink
             });
@@ -162,19 +169,22 @@ export default class Results extends PureComponent {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              if (findIndex(this.props.download, o => o.magnetLink === result.magnetLink) >= 0) {
+              if (this.isBeingDownloaded(result.magnetLink)) {
                 showToast('Already present in the download list', 'warning');
                 return;
               }
               this.addTorrentToDownload(result.magnetLink);
               showToast('Successfully added to the download list.', 'success');
-              return this.props.dispatch({
+              this.props.dispatch({
                 type: 'ADD_TO_DOWNLOAD_LIST',
                 payload: result
               });
             }}
           >
-            <i className="mdi mdi-download fs-18 tooltip tooltip-left" data-tooltip="Download" />
+            <i
+              className={downloadClass}
+              data-tooltip={this.isBeingDownloaded(result.magnetLink) ? 'Downloading' : 'Download'}
+            />
           </Td>
         </div>
         {this.state.selectedIndex === index && <Description />}

@@ -5,6 +5,7 @@ import loading from './loading';
 import params from './params';
 import cast from './cast';
 import download from './download';
+import selectedTorrent from './selectedTorrent';
 
 export default combineReducers({
   results,
@@ -12,5 +13,6 @@ export default combineReducers({
   loading,
   params,
   cast,
-  download
+  download,
+  selectedTorrent
 });

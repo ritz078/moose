@@ -23,7 +23,8 @@
 - [x] Stream videos and view images.
 - [x] Filter Torrents
 - [x] get files by magnet link
-- [ ] Download files 
+- [x] Download files
+- [x] Play music
 - [x] Chromecast support
 - [ ] View files like pdf, text etc.
 

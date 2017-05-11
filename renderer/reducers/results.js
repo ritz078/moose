@@ -1,5 +1,5 @@
 import { createReducer } from 'redux-create-reducer';
-import deepCopy from 'deep-copy';
+import { cloneDeep } from 'lodash';
 
 const initialState = {
   data: [],
@@ -9,7 +9,7 @@ const initialState = {
 const resultsReducer = createReducer(initialState, {
   SET_RESULTS: (state, action) => {
     if (action.payload.page) {
-      const newState = deepCopy(state);
+      const newState = cloneDeep(state);
       newState.data = newState.data.concat(action.payload.data);
       newState.searchTerm = action.payload.searchTerm;
       newState.page = action.payload.page;

@@ -11,6 +11,7 @@ import Router from 'next/router';
 import stylesheet from '../styles/index.less';
 import MenuBar from './MenuBar';
 import Controls from './Controls';
+import AudioPlayer from './AudioPlayer';
 
 NProgress.configure({ showSpinner: false });
 
@@ -38,6 +39,10 @@ const CloseButton = ({ closeToast }) => (
   <Close className="btn btn-clear float-right" onClick={closeToast} />
 );
 
+CloseButton.propTypes = {
+  closeToast: PropTypes.func.isRequired
+};
+
 export default function Layout({ children, loading, cast, download }) {
   return (
     <Container>
@@ -52,7 +57,7 @@ export default function Layout({ children, loading, cast, download }) {
       <MenuBar downloads={download} />
 
       {children}
-      {cast.streamingMedia && <Controls />}
+      {cast.streamingMedia ? <Controls /> : <AudioPlayer />}
 
       <ToastContainer autoClose={3000} position="bottom-center" closeButton={<CloseButton />} />
     </Container>

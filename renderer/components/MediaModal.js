@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import Video from './Video';
+import Video from './Media';
+import { isVideo, isImage } from '../utils/logic/isPlayable';
 
 const ModalControl = styled.div`
   color: #9c9c9c;
@@ -29,7 +30,7 @@ const CloseIcon = styled.i`
 `;
 
 export default function MediaModal(props) {
-  const { infoHash, fileIndex, file, showModal, onCloseClick } = props;
+  const { fileIndex, file, showModal, onCloseClick } = props;
 
   if (!fileIndex || !file) return null;
 
@@ -44,21 +45,20 @@ export default function MediaModal(props) {
     }
   };
 
-  const src = `/api/download/${infoHash}/${+fileIndex}/${file.name}`;
+  const src = `/api/download/${file.slug}`;
 
   return (
     <Modal style={style} isOpen={showModal} contentLabel={'Modal'}>
       <ModalControl>
         <CloseIcon onClick={onCloseClick} className="mdi mdi-close close-modal" />
       </ModalControl>
-      {file.type.indexOf('video') >= 0 && <Video src={src} />}
-      {file.type.indexOf('image') >= 0 && <ImageLightbox source={src} />}
+      {isVideo(file.name) && <Video src={src} />}
+      {isImage(file.name) && <ImageLightbox source={src} />}
     </Modal>
   );
 }
 
 MediaModal.propTypes = {
-  infoHash: PropTypes.string.isRequired,
   fileIndex: PropTypes.string.isRequired,
   showModal: PropTypes.bool.isRequired,
   file: PropTypes.shape({

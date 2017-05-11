@@ -2,9 +2,11 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import isRenderer from 'is-electron-renderer';
+import { isAudio, isVideo } from '../utils/logic/isPlayable';
 
 let plyr;
 if (isRenderer) {
+  // only require plyr on the client side as it takes window as an argument
   plyr = require('plyr');
 }
 const VideoWrapper = styled.div`
@@ -18,9 +20,13 @@ const VideoWrapper = styled.div`
   }
 `;
 
-class Video extends PureComponent {
+class Media extends PureComponent {
   componentDidMount() {
     this.player = plyr.setup(this.videoRef);
+    this.player[0].play(); // since autoPlay in video tag is buggy in this browser.
+  }
+
+  componentDidUpdate() {
     this.player[0].play(); // since autoPlay in video tag is buggy in this browser.
   }
 
@@ -31,21 +37,24 @@ class Video extends PureComponent {
   render() {
     return (
       <VideoWrapper>
-        <video controls preload="auto" src={this.props.src} ref={x => (this.videoRef = x)} />
+        {isVideo(this.props.src) &&
+          <video controls preload="auto" src={this.props.src} ref={x => (this.videoRef = x)} />}
+        {isAudio(this.props.src) &&
+          <audio controls preload="auto" src={this.props.src} ref={x => (this.videoRef = x)} />}
       </VideoWrapper>
     );
   }
 }
 
-Video.propTypes = {
+Media.propTypes = {
   src: PropTypes.string.isRequired
 };
 
-Video.defaultProps = {
+Media.defaultProps = {
   onInit() {},
   options: {
     fluid: true
   }
 };
 
-export default Video;
+export default Media;

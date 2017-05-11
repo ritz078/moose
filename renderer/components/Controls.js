@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { getPlayer } from '../utils/cast';
 import { showToast } from './Toast';
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   height: 90px;
   background-color: white;
   border-top: 1px solid #eee;
@@ -26,11 +26,12 @@ const Icon = styled.i`
   }
 `;
 
-const Title = styled.h6`
+export const Title = styled.h6`
   font-size: 14px;
   margin: 12px 10px 3px;
   color: #5764c6;
   font-weight: 500;
+  text-align: center;
 `;
 
 const Control = styled.div`
@@ -83,7 +84,7 @@ export default class Controls extends PureComponent {
   componentDidMount() {
     setTimeout(() => {
       this.interval = this.startPolling();
-    }, 1000);
+    }, 500);
   }
 
   pause = () => {
@@ -159,7 +160,6 @@ export default class Controls extends PureComponent {
             <Slider min={0} max={sliderMax} value={sliderValue} onChange={this.seek} />
             <SliderMax>{((sliderMax - sliderValue) / 60).toFixed(2)}</SliderMax>
           </SliderWrapper>
-
         </Control>
       </Wrapper>
     );

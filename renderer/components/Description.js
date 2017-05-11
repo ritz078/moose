@@ -11,6 +11,7 @@ import MediaModal from './MediaModal';
 import getFileType from '../utils/logic/fileType';
 import colors from '../constants/colors';
 import castUtil from '../utils/cast';
+import isPlayable, { isVideo, isImage, isAudio } from '../utils/logic/isPlayable';
 
 let vlc;
 if (isRenderer) {
@@ -125,13 +126,16 @@ export default class Description extends PureComponent {
   }
 
   startStream = (e) => {
+    const { customDetails, details, cast, dispatch } = this.props;
+
     const selectedIndex = e.target.dataset.id;
-    const d = this.props.customDetails || this.props.details;
+
+    const d = customDetails || details;
+
+    const file = d.files[selectedIndex];
 
     // if a cast player is selected then stream on the chromecast
-    if (this.props.cast.selectedPlayer) {
-      const file = d.files[selectedIndex];
-
+    if (cast.selectedPlayer) {
       const fileDetails = {
         name: file.name,
         index: e.target.dataset.id,
@@ -141,12 +145,12 @@ export default class Description extends PureComponent {
 
       castUtil.play(fileDetails, (err) => {
         if (!err) {
-          this.props.dispatch({
+          dispatch({
             type: 'SET_STREAMING_FILE',
             payload: fileDetails
           });
         } else {
-          this.props.dispatch({
+          dispatch({
             type: 'REMOVE_STREAMING_FILE'
           });
         }
@@ -155,10 +159,17 @@ export default class Description extends PureComponent {
     }
 
     // if no cast is connected stream in the app
-    this.setState({
-      streaming: true,
-      selectedIndex
-    });
+    this.setState(
+      {
+        streaming: true,
+        selectedIndex
+      },
+      () =>
+        dispatch({
+          type: 'SET_SELECTED_TORRENT',
+          payload: file
+        })
+    );
   };
 
   closeModal = () => {
@@ -208,13 +219,9 @@ export default class Description extends PureComponent {
   streamOnVlc = (e) => {
     const d = this.props.customDetails || this.props.details;
     const selectedIndex = e.target.dataset.id;
-    const infoHash = d.torrentId;
     const file = d.files[selectedIndex];
     vlc.kill();
-    vlc.playOnVlc(
-      `http://127.0.0.1:${window.location.port}/api/download/${infoHash}/${+selectedIndex}/${file.name}`,
-      file.name
-    );
+    vlc.playOnVlc(`http://127.0.0.1:${window.location.port}/api/download/${file.slug}`, file.name);
   };
 
   getFiles = () => {
@@ -227,24 +234,25 @@ export default class Description extends PureComponent {
       d &&
       d.files &&
       d.files.map((file, i) => {
-        const fileType = getFileType(file.type);
         const streamIcon = classNames('mdi tooltip tooltip-left fs-18', {
-          'mdi-play-circle-outline': fileType === 'video',
-          'mdi-eye': fileType === 'image'
+          'mdi-play-circle-outline': isPlayable(file.name),
+          'mdi-eye': isImage(file.name)
         });
 
         return (
           <tr>
             <td style={{ width: '50px' }}>{this.getFileIcon(file.type)}</td>
             <td style={{ maxWidth: '270px' }} className="text-ellipsis">{file.name}</td>
+
             {showProgress &&
               <ProgressContainer>
                 <progress className="progress" max="100" value={Math.min(file.progress, 100)} />
               </ProgressContainer>}
+
             <td>{file.size}</td>
             {this.state.isVlcPresent &&
               <td>
-                {getFileType(file.type) === 'video' &&
+                {isVideo(file.name) &&
                   <VlcIcon
                     data-id={i}
                     data-tooltip="Play on VLC"
@@ -253,11 +261,11 @@ export default class Description extends PureComponent {
                   />}
               </td>}
             <td>
-              {Description.isSupported(file.type) &&
+              {isPlayable(file.name) &&
                 <button className="btn btn-link" onClick={this.startStream}>
                   <i
                     className={streamIcon}
-                    data-tooltip={fileType === 'video' ? 'Play Video' : 'View Image'}
+                    data-tooltip={isVideo(file.name) ? 'Play Video' : 'View Image'}
                     data-id={i}
                   />
                 </button>}
@@ -275,16 +283,9 @@ export default class Description extends PureComponent {
     );
   };
 
-  static isSupported(mime) {
-    return (
-      document.createElement('video').canPlayType(mime) ||
-      mime === 'video/x-matroska' ||
-      getFileType(mime) === 'image'
-    );
-  }
-
   render() {
     const { details, showOnlyDetails, customDetails } = this.props;
+    const { selectedIndex, streaming } = this.state;
 
     const d = customDetails || details;
 
@@ -296,15 +297,17 @@ export default class Description extends PureComponent {
       );
     }
 
+    const file = d.files[selectedIndex];
+
     return (
       <Wrapper>
         {!showOnlyDetails && <Info />}
         {this.getFiles()}
         <MediaModal
           infoHash={d.torrentId}
-          fileIndex={this.state.selectedIndex}
-          showModal={this.state.streaming}
-          file={d.files[this.state.selectedIndex]}
+          fileIndex={selectedIndex}
+          showModal={streaming && !isAudio(file.name)}
+          file={file}
           onCloseClick={this.closeModal}
         />
       </Wrapper>

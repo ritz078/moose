@@ -22,7 +22,7 @@ const VideoWrapper = styled.div`
 
 class Media extends PureComponent {
   componentDidMount() {
-    this.player = plyr.setup(this.videoRef);
+    this.player = plyr.setup(this.mediaRef);
     this.player[0].play(); // since autoPlay in video tag is buggy in this browser.
   }
 
@@ -38,9 +38,9 @@ class Media extends PureComponent {
     return (
       <VideoWrapper>
         {isVideo(this.props.src) &&
-          <video controls preload="auto" src={this.props.src} ref={x => (this.videoRef = x)} />}
+          <video controls preload="auto" src={this.props.src} ref={x => (this.mediaRef = x)} />}
         {isAudio(this.props.src) &&
-          <audio controls preload="auto" src={this.props.src} ref={x => (this.videoRef = x)} />}
+          <audio controls preload="auto" src={this.props.src} ref={x => (this.mediaRef = x)} />}
       </VideoWrapper>
     );
   }

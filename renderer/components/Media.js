@@ -22,11 +22,15 @@ const VideoWrapper = styled.div`
 
 class Media extends PureComponent {
   componentDidMount() {
-    this.player = plyr.setup(this.mediaRef);
-    this.player[0].play(); // since autoPlay in video tag is buggy in this browser.
+    this.createPlayer();
   }
 
   componentDidUpdate() {
+    this.createPlayer();
+  }
+
+  createPlayer() {
+    if (!this.player) this.player = plyr.setup(this.mediaRef);
     this.player[0].play(); // since autoPlay in video tag is buggy in this browser.
   }
 

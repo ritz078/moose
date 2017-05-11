@@ -30,11 +30,12 @@ ipcMain.on('init_download_polling', (event) => {
         uploadSpeed: torrent.uploadSpeed,
         peers: torrent.numPeers,
         torrentId: torrent.infoHash,
-        files: torrent.files.map(file => ({
+        files: torrent.files.map((file, i) => ({
           name: file.name,
           type: mime.lookup(file.name),
           progress: Math.round(file.downloaded / file.length * 100),
-          size: prettyBytes(file.length)
+          size: prettyBytes(file.length),
+          slug: `${torrent.infoHash}/${i}/${file.name}`
         }))
       };
     });

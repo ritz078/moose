@@ -158,18 +158,16 @@ export default class Description extends PureComponent {
       return;
     }
 
+    dispatch({
+      type: 'SET_SELECTED_TORRENT',
+      payload: file
+    });
+
     // if no cast is connected stream in the app
-    this.setState(
-      {
-        streaming: true,
-        selectedIndex
-      },
-      () =>
-        dispatch({
-          type: 'SET_SELECTED_TORRENT',
-          payload: file
-        })
-    );
+    this.setState({
+      streaming: true,
+      selectedIndex
+    });
   };
 
   closeModal = () => {

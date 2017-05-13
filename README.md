@@ -6,8 +6,8 @@
 <a href="https://travis-ci.org/ritz078/embed.js">
 <img src="https://travis-ci.org/ritz078/embed.js.svg?branch=master" alt="Build Status" style="max-width:100%;">
 </a>
-<a href="https://ci.appveyor.com/project/ritz078/snape">
-<img src="https://ci.appveyor.com/api/projects/status/cku637yexhp1bot9/branch/master?svg=true" alt="Build Status" style="max-width:100%;">
+<a href="https://ci.appveyor.com/project/ritz078/snape-w59ql">
+<img src="https://ci.appveyor.com/api/projects/status/ug8htkw6156wgvq9/branch/master?svg=true" alt="Build Status" style="max-width:100%;">
 </a>
 <img src="https://img.shields.io/badge/styled_with-prettier-ff69b4.svg" alt="Build Status" style="max-width:100%;">
 </p>

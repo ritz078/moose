@@ -1,6 +1,6 @@
 {
   "name": "snape",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A web application to search and stream torrents.",
   "engines": {
     "node": ">=6"

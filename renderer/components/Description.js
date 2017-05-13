@@ -108,8 +108,7 @@ export default class Description extends PureComponent {
     dispatch() {},
     details: {},
     fixed: false,
-    showProgress: false,
-    customDetails: {}
+    showProgress: false
   };
 
   constructor(props) {

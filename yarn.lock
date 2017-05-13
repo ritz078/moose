@@ -2621,9 +2621,9 @@ electron-builder-http@17.4.0, electron-builder-http@~17.4.0:
     debug "2.6.6"
     fs-extra-p "^4.3.0"
 
-electron-builder-squirrel-windows@^17.4.0:
-  version "17.4.0"
-  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-17.4.0.tgz#c64499271dd3d2af7ff6ff0e35baaa4d2cefe325"
+electron-builder-squirrel-windows@^17.6.0:
+  version "17.6.0"
+  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-17.6.0.tgz#92b4ee28a69e5a7c10e32b75bf2226472709e73c"
   dependencies:
     archiver "^1.3.0"
     bluebird-lst "^1.0.2"
@@ -2772,9 +2772,9 @@ electron-publish@17.4.0:
     fs-extra-p "^4.3.0"
     mime "^1.3.4"
 
-electron-rebuild@^1.5.10:
-  version "1.5.10"
-  resolved "https://registry.yarnpkg.com/electron-rebuild/-/electron-rebuild-1.5.10.tgz#786f97c1362b1559e1b15fd41fa350fbbc058502"
+electron-rebuild@^1.5.11:
+  version "1.5.11"
+  resolved "https://registry.yarnpkg.com/electron-rebuild/-/electron-rebuild-1.5.11.tgz#6ea660deb546a516e7efaa81cd5985d5664f245c"
   dependencies:
     colors "^1.1.2"
     debug "^2.6.3"

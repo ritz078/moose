@@ -8,11 +8,9 @@ const getPort = require('get-port');
 const fixPath = require('fix-path');
 const dev = require('electron-is-dev');
 const { moveToApplications } = require('electron-lets-move');
-const Config = require('electron-config');
+const config = require('application-config')('Snape');
 const { error: showError } = require('./utils/log');
 const downloadTorrent = require('./middleware/download');
-
-const config = new Config();
 
 // adds debug features like hotkeys for triggering dev tools and reload
 require('electron-debug')();
@@ -60,18 +58,20 @@ async function createWindow() {
 }
 
 app.on('ready', async () => {
-  if (config.get('moveToApplicationsFolder') !== 'never') {
-    try {
-      const moved = await moveToApplications();
-      if (!moved) {
-        // the user asked not to move the app, it's up to the parent application
-        // to store this information and not hassle them again.
-        config.set('moveToApplicationsFolder', 'never');
+  config.read(async (err, { moveToApplicationsFolder }) => {
+    if (moveToApplicationsFolder !== 'never') {
+      try {
+        const moved = await moveToApplications();
+        if (!moved) {
+          // the user asked not to move the app, it's up to the parent application
+          // to store this information and not hassle them again.
+          config.write({ moveToApplicationsFolder: 'never' });
+        }
+      } catch (error) {
+        // log error, something went wrong whilst moving the app.
       }
-    } catch (err) {
-      // log error, something went wrong whilst moving the app.
     }
-  }
+  });
   await createWindow();
 });
 

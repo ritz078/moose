@@ -11,10 +11,7 @@
           "scss$"
         ]
       },
-      ["styled-components", {
-        "ssr": true,
-        "preprocess": true
-      }]
+      ["styled-components", { "ssr": true, "displayName": true, "preprocess": false } ]
     ],
     "transform-class-properties",
     "transform-decorators-legacy"

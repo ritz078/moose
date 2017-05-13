@@ -9,11 +9,13 @@ const client = new WebTorrent();
 
 function init() {
   config.read((err, { download }) => {
-    download.forEach(d =>
-      client.add(d.magnetLink, {
-        path: downloadsFolder()
-      })
-    );
+    if (download) {
+      download.forEach(d =>
+        client.add(d.magnetLink, {
+          path: downloadsFolder()
+        })
+      );
+    }
   });
 }
 

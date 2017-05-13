@@ -52,11 +52,10 @@ const SortIcon = styled.i`
   }
 `;
 
-@withRedux(initStore, ({ results, params, loading, details, download }) => ({
+@withRedux(initStore, ({ results, params, loading, download }) => ({
   results,
   params,
   loading,
-  details,
   download
 }))
 export default class Results extends PureComponent {
@@ -80,13 +79,9 @@ export default class Results extends PureComponent {
       orderBy: PropTypes.string
     }).isRequired,
     loading: PropTypes.bool.isRequired,
-    details: PropTypes.shape({
-      name: PropTypes.string
-    })
-  };
-
-  static defaultProps = {
-    details: {}
+    download: PropTypes.shape({
+      magnetLink: PropTypes.string
+    }).isRequired
   };
 
   constructor(props) {

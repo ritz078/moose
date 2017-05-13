@@ -1,4 +1,4 @@
-/* eslint-disable no-param-reassign */
+/* eslint-disable no-param-reassign,no-mixed-operators */
 const mime = require('mime');
 const rangeParser = require('range-parser');
 const prettyBytes = require('pretty-bytes');

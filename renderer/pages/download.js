@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ipcRenderer } from 'electron';
@@ -17,7 +18,8 @@ const config = require('application-config')('Snape');
 export default class Download extends PureComponent {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    download: PropTypes.array
+    download: PropTypes.array.isRequired,
+    cast: PropTypes.array.isRequired
   };
 
   constructor(props) {

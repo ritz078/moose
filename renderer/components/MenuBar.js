@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Ink from 'react-ink';
@@ -29,6 +30,7 @@ const Icon = styled.i`
 
 export default class MenuBar extends PureComponent {
   static propTypes = {
+    // eslint-disable-next-line react/forbid-prop-types
     downloads: PropTypes.array.isRequired
   };
 

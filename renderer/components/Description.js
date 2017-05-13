@@ -238,7 +238,7 @@ export default class Description extends PureComponent {
         });
 
         return (
-          <tr>
+          <tr key={file.name}>
             <td style={{ width: '50px' }}>{this.getFileIcon(file.type)}</td>
             <td style={{ maxWidth: '270px' }} className="text-ellipsis">{file.name}</td>
 

@@ -52,7 +52,11 @@ ipcMain.on('end_download_polling', () => {
   clearInterval(interval);
 });
 
-ipcMain.on('add_torrent_to_download', (event, magnetLink) => client.add(magnetLink));
+ipcMain.on('add_torrent_to_download', (event, magnetLink) =>
+  client.add(magnetLink, {
+    path: downloadsFolder()
+  })
+);
 
 ipcMain.on('remove_torrent', (event, magnetLink) => client.remove(magnetLink));
 

@@ -27,6 +27,7 @@ const Wrapper = styled.div`
   overflow: hidden;
   display: flex;
   justify-content: center;
+  min-height: 200px;
 `;
 
 const TileWrapper = styled.div`

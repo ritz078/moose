@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 const {
   default: installExtension,
   REACT_DEVELOPER_TOOLS,
@@ -11,6 +11,7 @@ const { moveToApplications } = require('electron-lets-move');
 const config = require('application-config')('Snape');
 const { error: showError } = require('./utils/log');
 const downloadTorrent = require('./middleware/download');
+const template = require('./template');
 
 // adds debug features like hotkeys for triggering dev tools and reload
 require('electron-debug')();
@@ -48,6 +49,8 @@ async function createWindow() {
   }
 
   win.loadURL(`http://0.0.0.0:${port}`);
+
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
   if (dev) {
     installExtension(REACT_DEVELOPER_TOOLS);
@@ -90,6 +93,5 @@ app.on('activate', () => {
 
 // Make sure that unhandled errors get handled
 process.on('uncaughtException', (err) => {
-  console.error(err);
   showError('Unhandled error appeared', err);
 });

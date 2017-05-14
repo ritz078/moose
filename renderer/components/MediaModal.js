@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import Video from './Media';
+import Media from './Media';
 import { isVideo, isImage } from '../utils/logic/isPlayable';
 
 const ModalControl = styled.div`
@@ -52,7 +52,7 @@ export default function MediaModal(props) {
       <ModalControl>
         <CloseIcon onClick={onCloseClick} className="mdi mdi-close close-modal" />
       </ModalControl>
-      {isVideo(file.name) && <Video src={src} />}
+      {isVideo(file.name) && <Media src={src} fileName={file.name} />}
       {isImage(file.name) && <ImageLightbox source={src} />}
     </Modal>
   );

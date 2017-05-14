@@ -19,6 +19,10 @@ const SearchInput = styled.input`
   font-family: inherit;
   background-color: #f7f7f7 !important;
   border: 1px solid #f3f3f3 !important;
+  color: #aaa;
+  &:focus{
+    color: #444;
+  }
 `;
 
 const SearchButton = styled.button`

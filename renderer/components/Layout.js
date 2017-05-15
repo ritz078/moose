@@ -59,7 +59,12 @@ export default function Layout({ children, loading, cast, download }) {
       {children}
       {cast.streamingMedia ? <Controls /> : <AudioPlayer />}
 
-      <ToastContainer autoClose={3000} position="bottom-center" closeButton={<CloseButton />} />
+      <ToastContainer
+        autoClose={3000}
+        position="bottom-center"
+        closeButton={<CloseButton />}
+        hideProgressBar
+      />
     </Container>
   );
 }

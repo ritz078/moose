@@ -8,13 +8,15 @@ const getPort = require('get-port');
 const fixPath = require('fix-path');
 const dev = require('electron-is-dev');
 const { moveToApplications } = require('electron-lets-move');
+const unhandled = require('electron-unhandled');
 const config = require('application-config')('Snape');
-const { error: showError } = require('./utils/log');
 const downloadTorrent = require('./middleware/download');
 const template = require('./template');
 
 // adds debug features like hotkeys for triggering dev tools and reload
 require('electron-debug')();
+
+unhandled();
 
 const server = require('./server');
 
@@ -89,9 +91,4 @@ app.on('activate', () => {
   if (!win) {
     createWindow();
   }
-});
-
-// Make sure that unhandled errors get handled
-process.on('uncaughtException', (err) => {
-  showError('Unhandled error appeared', err);
 });

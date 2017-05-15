@@ -45,8 +45,9 @@ const ResultTitle = styled.div`
 `;
 
 const SortIcon = styled.i`
-  font-size: 16px;
+  font-size: 12px;
   color: #aaa;
+  font-weight: bold;
   &:hover {
     color: #555;
   }

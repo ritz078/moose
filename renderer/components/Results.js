@@ -53,6 +53,14 @@ const SortIcon = styled.i`
   }
 `;
 
+const DefaultRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 41px;
+  cursor: pointer;
+  position: relative;
+`;
+
 @withRedux(initStore, ({ results, params, loading, download }) => ({
   results,
   params,
@@ -96,9 +104,58 @@ export default class Results extends PureComponent {
   isBeingDownloaded = magnetLink =>
     findIndex(this.props.download, o => o.magnetLink === magnetLink) >= 0;
 
-  getResult = (index, style) => {
-    const { results, dispatch } = this.props;
+  getDetails = (index) => {
+    const { dispatch, results } = this.props;
     const { selectedIndex } = this.state;
+
+    const result = results.data[index];
+
+    if (selectedIndex === index) {
+      this.setState(
+        {
+          selectedIndex: null
+        },
+        () => {
+          const i = Math.min(index, selectedIndex);
+          return this.listRef.recomputeRowHeights(i);
+        }
+      );
+      return;
+    }
+
+    this.setState(
+      {
+        selectedIndex: index
+      },
+      () => {
+        const i = Math.min(index, selectedIndex);
+        return this.listRef.recomputeRowHeights(i);
+      }
+    );
+
+    dispatch({
+      type: 'FETCH_DETAILS',
+      payload: result.magnetLink
+    });
+  };
+
+  addToDownload = (e, result) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (this.isBeingDownloaded(result.magnetLink)) {
+      showToast('Already present in the download list', 'warning');
+      return;
+    }
+    this.addTorrentToDownload(result.magnetLink);
+    showToast('Successfully added to the download list.', 'success');
+    this.props.dispatch({
+      type: 'ADD_TO_DOWNLOAD_LIST',
+      payload: result
+    });
+  };
+
+  getResult = (index, style) => {
+    const { results } = this.props;
 
     const result = results.data[index];
 
@@ -112,37 +169,7 @@ export default class Results extends PureComponent {
 
     return (
       <Tr key={result.id} data-id={result.id} style={style} className={mainClass}>
-        <div
-          style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', position: 'relative' }}
-          onClick={() => {
-            if (selectedIndex === index) {
-              this.setState(
-                {
-                  selectedIndex: null
-                },
-                () => {
-                  const i = Math.min(index, selectedIndex);
-                  return this.listRef.recomputeRowHeights(i);
-                }
-              );
-              return;
-            }
-
-            this.setState(
-              {
-                selectedIndex: index
-              },
-              () => {
-                const i = Math.min(index, selectedIndex);
-                return this.listRef.recomputeRowHeights(i);
-              }
-            );
-            dispatch({
-              type: 'FETCH_DETAILS',
-              payload: result.magnetLink
-            });
-          }}
-        >
+        <DefaultRow onClick={() => this.getDetails(index)}>
           <Ink />
           <Td flex={0.5}>{index + 1}</Td>
           <Td flex={10}>
@@ -160,29 +187,13 @@ export default class Results extends PureComponent {
           <Td flex={2}>{result.size}</Td>
           <Td flex={1}>{result.seeders}</Td>
           <Td flex={1}>{result.leechers}</Td>
-          <Td
-            flex={0.5}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              if (this.isBeingDownloaded(result.magnetLink)) {
-                showToast('Already present in the download list', 'warning');
-                return;
-              }
-              this.addTorrentToDownload(result.magnetLink);
-              showToast('Successfully added to the download list.', 'success');
-              this.props.dispatch({
-                type: 'ADD_TO_DOWNLOAD_LIST',
-                payload: result
-              });
-            }}
-          >
+          <Td flex={0.5} onClick={e => this.addToDownload(e, result)}>
             <i
               className={downloadClass}
               data-tooltip={this.isBeingDownloaded(result.magnetLink) ? 'Downloading' : 'Download'}
             />
           </Td>
-        </div>
+        </DefaultRow>
         {this.state.selectedIndex === index && <Description />}
       </Tr>
     );
@@ -198,7 +209,12 @@ export default class Results extends PureComponent {
     const { orderBy, sortBy } = this.props.params;
 
     const ob = e.currentTarget.dataset.sortType;
-    const sb = orderBy !== ob ? 'desc' : sortBy === 'desc' ? 'asc' : 'desc';
+    let sb;
+    if (orderBy !== ob) {
+      sb = 'desc';
+    } else {
+      sb = sortBy === 'desc' ? 'asc' : 'desc';
+    }
 
     const x = {
       sortBy: sb,
@@ -245,9 +261,7 @@ export default class Results extends PureComponent {
     ipcRenderer.send('add_torrent_to_download', magnetLink);
   };
 
-  render() {
-    const rowCount = this.props.results.data.length + 1;
-
+  getTableHeader = () => {
     const { orderBy, sortBy } = this.props.params;
 
     function getClass(order) {
@@ -259,22 +273,30 @@ export default class Results extends PureComponent {
     }
 
     return (
+      <Tr direction="row" style={{ padding: '0 20px' }} className="text-bold">
+        <Td flex={0.5}>#</Td>
+        <Td flex={10}>Name</Td>
+        <Td data-sort-type="date" onClick={this.setSortOrder} className="pointer" flex={2}>
+          Uploaded <SortIcon className={getClass('date')} />
+        </Td>
+        <Td data-sort-type="size" onClick={this.setSortOrder} className="pointer" flex={2}>
+          File Size <SortIcon className={getClass('size')} />
+        </Td>
+        <Td data-sort-type="seeds" onClick={this.setSortOrder} className="pointer" flex={1}>
+          Seeds<SortIcon className={getClass('seeds')} />
+        </Td>
+        <Td flex={1}>Leech</Td>
+        <Td flex={0.5} />
+      </Tr>
+    );
+  };
+
+  render() {
+    const rowCount = this.props.results.data.length + 1;
+
+    return (
       <Table>
-        <Tr direction="row" style={{ padding: '0 20px' }} className="text-bold">
-          <Td flex={0.5}>#</Td>
-          <Td flex={10}>Name</Td>
-          <Td data-sort-type="date" onClick={this.setSortOrder} className="pointer" flex={2}>
-            Uploaded <SortIcon className={getClass('date')} />
-          </Td>
-          <Td data-sort-type="size" onClick={this.setSortOrder} className="pointer" flex={2}>
-            File Size <SortIcon className={getClass('size')} />
-          </Td>
-          <Td data-sort-type="seeds" onClick={this.setSortOrder} className="pointer" flex={1}>
-            Seeds<SortIcon className={getClass('seeds')} />
-          </Td>
-          <Td flex={1}>Leech</Td>
-          <Td flex={0.5} />
-        </Tr>
+        {this.getTableHeader()}
         <div style={{ flex: 1 }}>
           <InfiniteLoader
             isRowLoaded={this.isRowLoaded}

@@ -18,6 +18,10 @@
   <img src="./demo.png" align="center"/>
 </p>
 
+<p align="center">
+  <img src="./demo2.png" align="center"/>
+</p>
+
 ### Features
 - [x] Search a torrent. 
 - [x] Stream videos and view images.

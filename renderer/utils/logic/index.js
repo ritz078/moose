@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import ifElse from './ifElse';
+import isMagnet from './isMagnet';
+import isPlayable from './isPlayable';
 
-export { ifElse };
+export { isMagnet, isPlayable };

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import withRedux from 'next-redux-wrapper';
 import initStore from '../store';
+import { isMagnet } from '../utils/logic';
 
 const HeaderWrapper = styled.header`
   width: 100%;
@@ -64,10 +65,10 @@ export default class Header extends PureComponent {
     };
   }
 
-  handleSearch = (e: KeyboardEvent | MouseEvent) => {
+  handleSearch = (e) => {
     if (e.type === 'keypress' && e.which !== 13) return;
 
-    const input: string = this.inputRef.value;
+    const input = this.inputRef.value;
 
     this.setState({
       searchTerm: input
@@ -83,7 +84,7 @@ export default class Header extends PureComponent {
       payload: input
     });
 
-    if (input.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null) {
+    if (isMagnet(input)) {
       this.props.dispatch({
         type: 'FETCH_DETAILS',
         payload: input

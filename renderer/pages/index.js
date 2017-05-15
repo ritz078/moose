@@ -8,6 +8,7 @@ import initStore from '../store';
 import Results from '../components/Results';
 import Layout from '../components/Layout';
 import Description from '../components/Description';
+import isMagnet from '../utils/logic/isMagnet';
 
 const Content = styled.div`
   display: flex;
@@ -78,9 +79,10 @@ export default class Home extends PureComponent {
     );
   }
 
-  isMagnetUrl = () =>
-    this.props.params.searchTerm &&
-    this.props.params.searchTerm.match(/magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i) != null;
+  isMagnetUrl = () => {
+    const { params } = this.props;
+    return params.searchTerm && isMagnet(params.searchTerm);
+  };
 
   render() {
     const { loading, details, cast, download, selectedTorrent } = this.props;

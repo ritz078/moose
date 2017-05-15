@@ -13,7 +13,7 @@
     "precommit": "lint-staged",
     "prettier": "prettier-eslint --write main/**/*.js renderer/**/*.js",
     "rebuild": "./node_modules/.bin/electron-rebuild",
-    "pack": "npm run build:client && build --dir",
+    "pack": "npm run build && build --dir",
     "dist": "npm run build && build",
     "lint": "eslint main/**/*.js renderer/**/*.js"
   },
@@ -37,7 +37,6 @@
     "app-root-path": "^2.0.1",
     "application-config": "^1.0.1",
     "atob": "^2.0.3",
-    "babel-register": "^6.24.1",
     "bytebuffer": "^5.0.1",
     "chai": "^3.5.0",
     "chromecasts": "^1.9.0",

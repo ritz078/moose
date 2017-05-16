@@ -172,10 +172,7 @@ export default class Description extends PureComponent {
   };
 
   closeModal = () => {
-    const d = this.props.customDetails || this.props.details;
-
     this.setState({ streaming: false });
-    fetch(`/api/delete/${d.torrentId}`);
   };
 
   getFileIcon = (mime) => {

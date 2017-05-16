@@ -41,7 +41,7 @@ const Tr = styled.div`
 `;
 
 const ResultTitle = styled.div`
-  max-width: 500px;
+  max-width: 475px;
 `;
 
 const SortIcon = styled.i`

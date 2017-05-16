@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import isRenderer from 'is-electron-renderer';
 import { isAudio, isVideo } from '../utils/logic/isPlayable';
 
-let plyr,
-  vlc;
+let plyr;
+let vlc;
 if (isRenderer) {
   // only require plyr on the client side as it takes window as an argument
   plyr = require('plyr');

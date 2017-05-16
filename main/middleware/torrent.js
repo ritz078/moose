@@ -56,8 +56,6 @@ function stream(req, res, torrent) {
       return res.end();
     }
 
-    res.on('close', res.end);
-
     return pump(file.createReadStream(range), res);
   }
 

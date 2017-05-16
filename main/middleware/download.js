@@ -2,16 +2,17 @@ const WebTorrent = require('webtorrent');
 const { ipcMain } = require('electron');
 const mime = require('mime');
 const prettyBytes = require('pretty-bytes');
-const config = require('application-config')('Snape');
 const downloadsFolder = require('downloads-folder');
+const decorateTorrentInfo = require('../utils/decorateTorrentInfo');
+const { readConfig } = require('../../renderer/utils/config');
 
 const client = new WebTorrent();
 
 function init() {
-  config.read((err, { download }) => {
+  readConfig((err, { download }) => {
     if (download) {
       download.forEach(d =>
-        client.add(d.magnetLink, {
+        client.add(d.infoHash, {
           path: downloadsFolder()
         })
       );
@@ -31,7 +32,7 @@ ipcMain.on('init_download_polling', (event) => {
         progress: torrent.progress * 100,
         uploadSpeed: torrent.uploadSpeed,
         peers: torrent.numPeers,
-        torrentId: torrent.infoHash,
+        infoHash: torrent.infoHash,
         files: torrent.files.map((file, i) => ({
           name: file.name,
           type: mime.lookup(file.name),
@@ -46,21 +47,33 @@ ipcMain.on('init_download_polling', (event) => {
   }, 1000);
 });
 
-function getTorrent(torrentId) {
-  return client.get(torrentId);
+function getTorrent(infoHash) {
+  return client.get(infoHash);
+}
+
+function addTorrent(infoHash) {
+  client.add(infoHash, {
+    path: downloadsFolder()
+  });
 }
 
 ipcMain.on('end_download_polling', () => {
   clearInterval(interval);
 });
 
-ipcMain.on('add_torrent_to_download', (event, magnetLink) =>
-  client.add(magnetLink, {
-    path: downloadsFolder()
-  })
-);
+ipcMain.on('add_torrent_to_download', (event, infoHash) => addTorrent(infoHash));
 
-ipcMain.on('remove_torrent', (event, magnetLink) => client.remove(magnetLink));
+ipcMain.on('remove_torrent', (event, infoHash) => client.remove(infoHash));
+
+ipcMain.on('decode_infohash_and_add_to_download', (event, infoHash) => {
+  addTorrent(infoHash);
+
+  const torrent = client.get(infoHash);
+  torrent.on('metadata', () => {
+    const metadata = decorateTorrentInfo(torrent);
+    event.sender.send('decoded_infoHash', metadata);
+  });
+});
 
 module.exports = {
   init,

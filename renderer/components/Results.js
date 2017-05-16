@@ -101,8 +101,7 @@ export default class Results extends PureComponent {
     };
   }
 
-  isBeingDownloaded = magnetLink =>
-    findIndex(this.props.download, o => o.magnetLink === magnetLink) >= 0;
+  isBeingDownloaded = infoHash => findIndex(this.props.download, o => o.infoHash === infoHash) >= 0;
 
   getDetails = (index) => {
     const { dispatch, results } = this.props;
@@ -142,11 +141,11 @@ export default class Results extends PureComponent {
   addToDownload = (e, result) => {
     e.preventDefault();
     e.stopPropagation();
-    if (this.isBeingDownloaded(result.magnetLink)) {
+    if (this.isBeingDownloaded(result.infoHash)) {
       showToast('Already present in the download list', 'warning');
       return;
     }
-    this.addTorrentToDownload(result.magnetLink);
+    this.addTorrentToDownload(result.infoHash);
     showToast('Successfully added to the download list.', 'success');
     this.props.dispatch({
       type: 'ADD_TO_DOWNLOAD_LIST',
@@ -257,8 +256,8 @@ export default class Results extends PureComponent {
     return 41;
   };
 
-  addTorrentToDownload = (magnetLink) => {
-    ipcRenderer.send('add_torrent_to_download', magnetLink);
+  addTorrentToDownload = (infoHash) => {
+    ipcRenderer.send('add_torrent_to_download', infoHash);
   };
 
   getTableHeader = () => {

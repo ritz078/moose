@@ -36,7 +36,6 @@
   "dependencies": {
     "app-root-path": "^2.0.1",
     "application-config": "^1.0.1",
-    "atob": "^2.0.3",
     "bytebuffer": "^5.0.1",
     "chai": "^3.5.0",
     "chromecasts": "^1.9.0",

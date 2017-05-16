@@ -9,7 +9,6 @@ const fixPath = require('fix-path');
 const dev = require('electron-is-dev');
 const { moveToApplications } = require('electron-lets-move');
 const unhandled = require('electron-unhandled');
-const config = require('application-config')('Snape');
 const downloadTorrent = require('./middleware/download');
 const template = require('./template');
 
@@ -19,6 +18,7 @@ require('electron-debug')();
 unhandled();
 
 const server = require('./server');
+const { addToConfig, readConfig } = require('../renderer/utils/config');
 
 let win;
 
@@ -46,7 +46,6 @@ async function createWindow() {
     downloadTorrent.init();
     app.dock.show();
   } catch (err) {
-    showError('Not able to start server', err);
     return;
   }
 
@@ -63,14 +62,14 @@ async function createWindow() {
 }
 
 app.on('ready', async () => {
-  config.read(async (err, { moveToApplicationsFolder }) => {
+  readConfig(async (err, { moveToApplicationsFolder }) => {
     if (moveToApplicationsFolder !== 'never') {
       try {
         const moved = await moveToApplications();
         if (!moved) {
           // the user asked not to move the app, it's up to the parent application
           // to store this information and not hassle them again.
-          config.write({ moveToApplicationsFolder: 'never' });
+          addToConfig({ moveToApplicationsFolder: 'never' });
         }
       } catch (error) {
         // log error, something went wrong whilst moving the app.

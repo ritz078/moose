@@ -43,7 +43,7 @@ export default class DownloadTile extends Component {
     }),
     details: PropTypes.shape({
       name: PropTypes.string,
-      magnetLink: PropTypes.string
+      infoHash: PropTypes.string
     }).isRequired,
     index: PropTypes.number.isRequired,
     onClick: PropTypes.func.isRequired,
@@ -73,7 +73,7 @@ export default class DownloadTile extends Component {
     e.stopPropagation();
 
     const { dialog } = remote;
-    const { magnetLink, name } = this.props.details;
+    const { infoHash, name } = this.props.details;
 
     dialog.showMessageBox(
       {
@@ -83,11 +83,11 @@ export default class DownloadTile extends Component {
       },
       (response) => {
         if (response === 0) {
-          ipcRenderer.send('remove_torrent', magnetLink);
+          ipcRenderer.send('remove_torrent', infoHash);
 
           this.props.dispatch({
             type: 'REMOVE_FROM_DOWNLOAD_LIST',
-            payload: magnetLink
+            payload: infoHash
           });
 
           showToast(`Sucessfully removed ${name} from download list`, 'success');

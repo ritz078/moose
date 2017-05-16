@@ -79,7 +79,7 @@ export default class Description extends PureComponent {
     dispatch: PropTypes.func,
     details: PropTypes.shape({
       name: PropTypes.string,
-      torrentId: PropTypes.string,
+      infoHash: PropTypes.string,
       loading: PropTypes.bool,
       files: PropTypes.shape({
         name: PropTypes.string,
@@ -89,7 +89,7 @@ export default class Description extends PureComponent {
     }),
     customDetails: PropTypes.shape({
       name: PropTypes.string,
-      torrentId: PropTypes.string,
+      infoHash: PropTypes.string,
       loading: PropTypes.bool,
       files: PropTypes.shape({
         name: PropTypes.string,
@@ -140,7 +140,7 @@ export default class Description extends PureComponent {
       const fileDetails = {
         name: file.name,
         index: e.target.dataset.id,
-        infoHash: d.torrentId,
+        infoHash: d.infoHash,
         type: file.type
       };
 
@@ -231,7 +231,7 @@ export default class Description extends PureComponent {
       d.files &&
       d.files.map((file, i) => {
         const streamIcon = classNames('mdi tooltip tooltip-left fs-18', {
-          'mdi-play-circle-outline': isPlayable(file.name),
+          'mdi-play-circle-outline': isVideo(file.name),
           'mdi-eye': isImage(file.name)
         });
 
@@ -300,7 +300,7 @@ export default class Description extends PureComponent {
         {!showOnlyDetails && <Info />}
         {this.getFiles()}
         <MediaModal
-          infoHash={d.torrentId}
+          infoHash={d.infoHash}
           fileIndex={selectedIndex}
           showModal={streaming && !isAudio(file.name)}
           file={file}

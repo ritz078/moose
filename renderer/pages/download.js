@@ -7,10 +7,9 @@ import withRedux from 'next-redux-wrapper';
 import isEmpty from 'just-is-empty';
 import initStore from '../store';
 import Layout from '../components/Layout';
-import DownloadFile, { ContentTitle, Details, Name } from '../components/DownloadTile';
+import DownloadTile, { ContentTitle, Details, Name } from '../components/DownloadTile';
 import DownloadMenu from '../components/DownloadMenu';
-
-const config = require('application-config')('Snape');
+import { readConfig } from '../utils/config';
 
 @withRedux(initStore, ({ download, cast }) => ({
   download,
@@ -39,7 +38,7 @@ export default class Download extends PureComponent {
       this.setState({ downloadData });
     });
 
-    config.read((err, { download }) => {
+    readConfig((err, { download }) => {
       if (!err && !isEmpty(download)) {
         this.props.dispatch({
           type: 'SET_DOWNLOADS',
@@ -62,12 +61,12 @@ export default class Download extends PureComponent {
 
   getDownloads = () => {
     const content = this.props.download.map((d, i) => (
-      <DownloadFile
+      <DownloadTile
         details={d}
         index={i}
-        key={d.magnetLink}
+        key={d.infoHash}
         dispatch={this.props.dispatch}
-        downloadData={this.state.downloadData[parseTorrent(d.magnetLink).infoHash]}
+        downloadData={this.state.downloadData[d.infoHash]}
         onClick={this.setSelectedIndex}
         selectedIndex={this.state.selectedIndex}
       />
@@ -75,7 +74,7 @@ export default class Download extends PureComponent {
 
     return (
       <div>
-        <DownloadMenu />
+        <DownloadMenu dispatch={this.props.dispatch} />
         {content.length > 0 &&
           <div style={{ height: 'calc(100vh - 116px)', overflow: 'scroll' }}>
             <ContentTitle className="text-bold">

@@ -1,14 +1,13 @@
 import { createReducer } from 'redux-create-reducer';
 import { findIndex, clone } from 'lodash';
-
-const config = require('application-config')('Snape');
+import { addToConfig } from '../utils/config';
 
 const downloadReducer = createReducer([], {
   ADD_TO_DOWNLOAD_LIST: (state, { payload }) => {
     const cloned = clone(state);
     cloned.push(payload);
 
-    config.write({ download: cloned });
+    addToConfig({ download: cloned });
 
     return cloned;
   },
@@ -16,10 +15,10 @@ const downloadReducer = createReducer([], {
   REMOVE_FROM_DOWNLOAD_LIST: (state, { payload }) => {
     const cloned = clone(state);
 
-    const index = findIndex(cloned, o => o.magnetLink === payload);
+    const index = findIndex(cloned, o => o.infoHash === payload);
     cloned.splice(index, 1);
 
-    config.write({ download: cloned });
+    addToConfig({ download: cloned });
 
     return cloned;
   },

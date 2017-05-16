@@ -4,7 +4,7 @@ import withRedux from 'next-redux-wrapper';
 import initStore from '../store';
 import Media from './Media';
 import { Wrapper, Title } from './Controls';
-import { isAudio } from '../utils/logic/isPlayable';
+import { isAudio } from '../utils/isPlayable';
 
 @withRedux(initStore, ({ selectedTorrent }) => ({ selectedTorrent }))
 export default class AudioPlayer extends PureComponent {

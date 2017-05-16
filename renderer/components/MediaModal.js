@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import Media from './Media';
-import { isVideo, isImage } from '../utils/logic/isPlayable';
+import { isVideo, isImage } from '../utils/isPlayable';
 
 const ModalControl = styled.div`
   color: #9c9c9c;

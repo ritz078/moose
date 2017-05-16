@@ -4,12 +4,12 @@ const rangeParser = require('range-parser');
 const prettyBytes = require('pretty-bytes');
 const atob = require('atob');
 const pump = require('pump');
+const parseTorrent = require('parse-torrent');
+const { findIndex } = require('lodash');
 const config = require('application-config')('Snape');
 const torrentStore = require('./helpers/torrentStore');
 const search = require('./helpers/search');
-const { findIndex } = require('lodash');
 const { getTorrent } = require('./download');
-const parseTorrent = require('parse-torrent');
 
 function deselectAllFiles(torrent) {
   torrent.files.forEach(file => file.deselect());

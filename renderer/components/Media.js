@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { remote } from 'electron';
 import styled from 'styled-components';
 import isRenderer from 'is-electron-renderer';
-import { isAudio, isVideo } from '../utils/logic/isPlayable';
+import { isAudio, isVideo } from '../utils/isPlayable';
 
 let plyr;
 let vlc;

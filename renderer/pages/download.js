@@ -8,6 +8,7 @@ import isEmpty from 'just-is-empty';
 import initStore from '../store';
 import Layout from '../components/Layout';
 import DownloadFile, { ContentTitle, Details, Name } from '../components/DownloadTile';
+import DownloadMenu from '../components/DownloadMenu';
 
 const config = require('application-config')('Snape');
 
@@ -73,20 +74,23 @@ export default class Download extends PureComponent {
     ));
 
     return (
-      content.length > 0 &&
-      <div style={{ height: 'calc(100vh - 116px)', overflow: 'scroll' }}>
-        <ContentTitle className="text-bold">
-          <div style={{ width: '30px' }} />
-          <Name>Name</Name>
-          <Details>
-            <span>Progress</span>
-            <span><i className="mdi mdi-download" />/s</span>
-            <span><i className="mdi mdi-upload" />/s</span>
-            <span>Size</span>
-            <span />
-          </Details>
-        </ContentTitle>
-        {content}
+      <div>
+        <DownloadMenu />
+        {content.length > 0 &&
+          <div style={{ height: 'calc(100vh - 116px)', overflow: 'scroll' }}>
+            <ContentTitle className="text-bold">
+              <div style={{ width: '30px' }} />
+              <Name>Name</Name>
+              <Details>
+                <span>Progress</span>
+                <span><i className="mdi mdi-download" />/s</span>
+                <span><i className="mdi mdi-upload" />/s</span>
+                <span>Size</span>
+                <span />
+              </Details>
+            </ContentTitle>
+            {content}
+          </div>}
       </div>
     );
   };

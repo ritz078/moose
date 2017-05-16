@@ -8,10 +8,10 @@ import { remote } from 'electron';
 import withRedux from 'next-redux-wrapper';
 import initStore from '../store';
 import MediaModal from './MediaModal';
-import getFileType from '../utils/logic/fileType';
+import getFileType from '../utils/fileType';
 import colors from '../constants/colors';
 import castUtil from '../utils/cast';
-import isPlayable, { isVideo, isImage, isAudio } from '../utils/logic/isPlayable';
+import isPlayable, { isVideo, isImage, isAudio } from '../utils/isPlayable';
 
 let vlc;
 if (isRenderer) {
@@ -258,7 +258,7 @@ export default class Description extends PureComponent {
               </td>}
             <td>
               {isPlayable(file.name) &&
-                <button className="btn btn-link" onClick={this.startStream}>
+                <button className="btn btn-link" onClick={this.startStream} data-id={i}>
                   <i
                     className={streamIcon}
                     data-tooltip={isVideo(file.name) ? 'Play Video' : 'View Image'}

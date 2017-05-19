@@ -4,6 +4,10 @@ import { addToConfig } from '../utils/config';
 
 const downloadReducer = createReducer([], {
   ADD_TO_DOWNLOAD_LIST: (state, { payload }) => {
+    const index = findIndex(state, o => o.infoHash === payload.infoHash);
+
+    if (index >= 0) return state;
+
     const cloned = clone(state);
     cloned.push(payload);
 

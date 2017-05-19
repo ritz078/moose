@@ -50,7 +50,8 @@ export default class DownloadMenu extends PureComponent {
     super(props);
 
     this.state = {
-      showMagnetModal: false
+      showMagnetModal: false,
+      loadingMagnetInfo: false
     };
   }
 
@@ -111,9 +112,11 @@ export default class DownloadMenu extends PureComponent {
           <h6>Enter the magnet URL</h6>
           <CloseIcon className="mdi mdi-close abs" onClick={this.closeMagnetUrlModal} />
           <input className="form-input" type="text" ref={x => (this.magnetInputRef = x)} />
-          <button className="btn btn-primary mt-10 float-right" onClick={this.addMagnetUrl}>
-            Fetch Magnet
-          </button>
+          {this.state.loadingMagnetInfo
+            ? <button className="btn loading btn-primary mt-10 float-right">button</button>
+            : <button className="btn btn-primary mt-10 float-right" onClick={this.addMagnetUrl}>
+                Fetch Magnet
+              </button>}
         </ModalWrapper>
       </Modal>
     );
@@ -127,7 +130,8 @@ export default class DownloadMenu extends PureComponent {
 
   closeMagnetUrlModal = () => {
     this.setState({
-      showMagnetModal: false
+      showMagnetModal: false,
+      loadingMagnetInfo: false
     });
   };
 
@@ -140,10 +144,12 @@ export default class DownloadMenu extends PureComponent {
 
     const { infoHash } = parseTorrent(value);
 
+    this.setState({
+      loadingMagnetInfo: true
+    });
+
     ipcRenderer.on('decoded_infoHash', (event, torrent) => {
       this.closeMagnetUrlModal();
-
-      console.log(torrent);
 
       this.props.dispatch({
         type: 'ADD_TO_DOWNLOAD_LIST',

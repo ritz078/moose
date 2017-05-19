@@ -18,7 +18,7 @@ async function startServer(port) {
   const server = express();
 
   server.get('/api/list', list);
-  server.get('/api/download/:torrentId/:fileId/:fileName', downloadTorrent);
+  server.get('/api/download/:infoHash/:fileId/:fileName', downloadTorrent);
   server.get('/api/delete/:torrentId', deleteTorr);
   server.get('/api/search/:searchTerm', searchTorrent);
 

@@ -8,10 +8,10 @@ import { remote } from 'electron';
 import withRedux from 'next-redux-wrapper';
 import initStore from '../store';
 import MediaModal from './MediaModal';
-import getFileType from '../utils/logic/fileType';
+import getFileType from '../utils/fileType';
 import colors from '../constants/colors';
 import castUtil from '../utils/cast';
-import isPlayable, { isVideo, isImage, isAudio } from '../utils/logic/isPlayable';
+import isPlayable, { isVideo, isImage, isAudio } from '../utils/isPlayable';
 
 let vlc;
 if (isRenderer) {
@@ -79,7 +79,7 @@ export default class Description extends PureComponent {
     dispatch: PropTypes.func,
     details: PropTypes.shape({
       name: PropTypes.string,
-      torrentId: PropTypes.string,
+      infoHash: PropTypes.string,
       loading: PropTypes.bool,
       files: PropTypes.shape({
         name: PropTypes.string,
@@ -89,7 +89,7 @@ export default class Description extends PureComponent {
     }),
     customDetails: PropTypes.shape({
       name: PropTypes.string,
-      torrentId: PropTypes.string,
+      infoHash: PropTypes.string,
       loading: PropTypes.bool,
       files: PropTypes.shape({
         name: PropTypes.string,
@@ -140,7 +140,7 @@ export default class Description extends PureComponent {
       const fileDetails = {
         name: file.name,
         index: e.target.dataset.id,
-        infoHash: d.torrentId,
+        infoHash: d.infoHash,
         type: file.type
       };
 
@@ -172,10 +172,7 @@ export default class Description extends PureComponent {
   };
 
   closeModal = () => {
-    const d = this.props.customDetails || this.props.details;
-
     this.setState({ streaming: false });
-    fetch(`/api/delete/${d.torrentId}`);
   };
 
   getFileIcon = (mime) => {
@@ -234,7 +231,7 @@ export default class Description extends PureComponent {
       d.files &&
       d.files.map((file, i) => {
         const streamIcon = classNames('mdi tooltip tooltip-left fs-18', {
-          'mdi-play-circle-outline': isPlayable(file.name),
+          'mdi-play-circle-outline': isVideo(file.name),
           'mdi-eye': isImage(file.name)
         });
 
@@ -261,7 +258,7 @@ export default class Description extends PureComponent {
               </td>}
             <td>
               {isPlayable(file.name) &&
-                <button className="btn btn-link" onClick={this.startStream}>
+                <button className="btn btn-link" onClick={this.startStream} data-id={i}>
                   <i
                     className={streamIcon}
                     data-tooltip={isVideo(file.name) ? 'Play Video' : 'View Image'}
@@ -303,7 +300,7 @@ export default class Description extends PureComponent {
         {!showOnlyDetails && <Info />}
         {this.getFiles()}
         <MediaModal
-          infoHash={d.torrentId}
+          infoHash={d.infoHash}
           fileIndex={selectedIndex}
           showModal={streaming && !isAudio(file.name)}
           file={file}

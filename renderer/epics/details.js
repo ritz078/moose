@@ -8,12 +8,9 @@ export default function fetchDetails(action$, { dispatch }) {
     dispatch({ type: 'START_LOADING' });
     dispatch({ type: 'RESET_DETAILS' });
     return ajax
-      .getJSON(
-        `/api/list?torrentId=${window.btoa(action.payload)}&timestamp=${new Date().getTime()}`,
-      {
+      .getJSON(`/api/list?infoHash=${action.payload}&timestamp=${new Date().getTime()}`, {
         withCredentials: true
-      }
-      )
+      })
       .retry(3)
       .switchMap(payload => [
         {

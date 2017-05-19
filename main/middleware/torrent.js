@@ -1,15 +1,13 @@
 /* eslint-disable no-param-reassign,no-mixed-operators */
 const mime = require('mime');
 const rangeParser = require('range-parser');
-const prettyBytes = require('pretty-bytes');
-const atob = require('atob');
 const pump = require('pump');
-const config = require('application-config')('Snape');
+const { findIndex } = require('lodash');
 const torrentStore = require('./helpers/torrentStore');
 const search = require('./helpers/search');
-const { findIndex } = require('lodash');
+const decorateTorrentInfo = require('../utils/decorateTorrentInfo');
+const { readConfig } = require('../../renderer/utils/config');
 const { getTorrent } = require('./download');
-const parseTorrent = require('parse-torrent');
 
 function deselectAllFiles(torrent) {
   torrent.files.forEach(file => file.deselect());
@@ -56,8 +54,6 @@ function stream(req, res, torrent) {
       return res.end();
     }
 
-    res.on('close', res.end);
-
     return pump(file.createReadStream(range), res);
   }
 
@@ -68,8 +64,8 @@ function stream(req, res, torrent) {
 }
 
 function downloadTorrent(req, res) {
-  config.read((err, { download }) => {
-    const torrentId = req.params.torrentId;
+  readConfig((err, { download }) => {
+    const _infoHash = req.params.infoHash;
     let torrent;
 
     // in case the torrent is in the download list then fetch it
@@ -78,18 +74,18 @@ function downloadTorrent(req, res) {
       findIndex(download, (d) => {
         let infoHash;
         try {
-          infoHash = parseTorrent(d.magnetLink).infoHash;
+          infoHash = d.infoHash;
         } catch (e) {
           infoHash = null;
         }
 
-        return infoHash === torrentId;
+        return infoHash === _infoHash;
       }) >= 0;
 
     if (err || !isPresentInDownloads) {
-      torrent = torrentStore.getTorrent(torrentId);
+      torrent = torrentStore.getTorrent(_infoHash);
     } else {
-      torrent = getTorrent(torrentId);
+      torrent = getTorrent(_infoHash);
     }
 
     stream(req, res, torrent);
@@ -97,23 +93,13 @@ function downloadTorrent(req, res) {
 }
 
 function list(req, res) {
-  const torrentId = atob(req.query.torrentId);
+  const torrentId = req.query.infoHash;
 
   const torrent = torrentStore.getTorrent(torrentId);
 
   function onReady() {
     deselectAllFiles(torrent);
-    res.json({
-      torrentId: torrent.infoHash,
-      magnetURI: torrent.magnetURI,
-      files: torrent.files.map((file, i) => ({
-        name: file.name,
-        size: prettyBytes(file.length),
-        type: mime.lookup(file.name),
-        slug: `${torrent.infoHash}/${i}/${file.name}`
-      })),
-      name: torrent.name
-    });
+    res.json(decorateTorrentInfo(torrent));
   }
 
   if (torrent.files && torrent.files.length) {

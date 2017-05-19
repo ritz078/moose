@@ -376,10 +376,6 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
-atob@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/atob/-/atob-2.0.3.tgz#19c7a760473774468f20b2d2d03372ad7d4cbf5d"
-
 autoprefixer@^6.3.1:
   version "6.7.7"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-6.7.7.tgz#1dbd1c835658e35ce3f9984099db00585c782014"
@@ -4888,6 +4884,10 @@ math-expression-evaluator@^1.2.14:
 md5-file@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/md5-file/-/md5-file-3.1.1.tgz#db3c92c09bbda5c2de883fa5490dd711fddbbab9"
+
+mdi@^1.9.33:
+  version "1.9.33"
+  resolved "https://registry.yarnpkg.com/mdi/-/mdi-1.9.33.tgz#3caf6d95fc6b800633630bd62ba0cf1fbde6b2e2"
 
 media-typer@0.3.0:
   version "0.3.0"

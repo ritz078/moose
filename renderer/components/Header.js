@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import withRedux from 'next-redux-wrapper';
 import initStore from '../store';
-import { isMagnet } from '../utils/logic';
+import { isMagnet } from '../utils';
 
 const HeaderWrapper = styled.header`
   width: 100%;

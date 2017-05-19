@@ -8,7 +8,7 @@ import initStore from '../store';
 import Results from '../components/Results';
 import Layout from '../components/Layout';
 import Description from '../components/Description';
-import isMagnet from '../utils/logic/isMagnet';
+import isMagnet from '../utils/isMagnet';
 
 const Content = styled.div`
   display: flex;

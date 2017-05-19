@@ -10,7 +10,7 @@ export function isAudio(file) {
 }
 
 export function isImage(file) {
-  return ['jpg', 'jpeg', 'png', 'gif'].includes(getFileExtension(file));
+  return ['.jpg', '.jpeg', '.png', '.gif'].includes(getFileExtension(file));
 }
 
 // Checks whether a fileSummary or file path is playable video

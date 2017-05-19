@@ -1,5 +1,5 @@
 const WebTorrent = require('webtorrent');
-const { ipcMain } = require('electron');
+const { ipcMain, app } = require('electron');
 const mime = require('mime');
 const prettyBytes = require('pretty-bytes');
 const downloadsFolder = require('downloads-folder');
@@ -69,6 +69,10 @@ ipcMain.on('decode_infohash_and_add_to_download', (event, infoHash) => {
     const metadata = decorateTorrentInfo(torrent);
     event.sender.send('decoded_infoHash', metadata);
   });
+});
+
+app.on('close', () => {
+  clearInterval(interval);
 });
 
 module.exports = {

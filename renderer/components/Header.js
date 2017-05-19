@@ -23,6 +23,8 @@ const SearchInput = styled.input`
   color: #aaa;
   &:focus{
     color: #444;
+    border: 1px solid #bbc3ff !important;
+    border-right: 0 !important;
   }
 `;
 

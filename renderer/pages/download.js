@@ -2,7 +2,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ipcRenderer } from 'electron';
-import parseTorrent from 'parse-torrent';
 import withRedux from 'next-redux-wrapper';
 import isEmpty from 'just-is-empty';
 import initStore from '../store';
@@ -95,8 +94,9 @@ export default class Download extends PureComponent {
   };
 
   render() {
+    const { cast, download } = this.props;
     return (
-      <Layout cast={this.props.cast} download={this.props.download}>
+      <Layout cast={cast} download={download}>
         {this.getDownloads()}
       </Layout>
     );

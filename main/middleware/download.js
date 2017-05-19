@@ -8,14 +8,16 @@ const { readConfig } = require('../../renderer/utils/config');
 
 const client = new WebTorrent();
 
+function addTorrent(infoHash) {
+  client.add(infoHash, {
+    path: downloadsFolder()
+  });
+}
+
 function init() {
   readConfig((err, { download }) => {
     if (download) {
-      download.forEach(d =>
-        client.add(d.infoHash, {
-          path: downloadsFolder()
-        })
-      );
+      download.forEach(d => addTorrent(d.infoHash));
     }
   });
 }
@@ -49,12 +51,6 @@ ipcMain.on('init_download_polling', (event) => {
 
 function getTorrent(infoHash) {
   return client.get(infoHash);
-}
-
-function addTorrent(infoHash) {
-  client.add(infoHash, {
-    path: downloadsFolder()
-  });
 }
 
 ipcMain.on('end_download_polling', () => {

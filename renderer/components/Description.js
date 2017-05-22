@@ -230,7 +230,7 @@ export default class Description extends PureComponent {
       d.files &&
       d.files.map((file, i) => {
         const streamIcon = classNames('mdi tooltip tooltip-left fs-18', {
-          'mdi-play-circle-outline': isVideo(file.name),
+          'mdi-play-circle-outline': isVideo(file.name) || isAudio(file.name),
           'mdi-eye': isImage(file.name)
         });
 

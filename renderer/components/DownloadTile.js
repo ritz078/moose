@@ -8,9 +8,11 @@ import Description from './Description';
 import { showToast } from './Toast';
 
 export const Details = styled.div`
+  align-items: center;
   display: flex;
-  flex: 0.4;
-  & > span {
+  flex: 0.5;
+  & > div {
+    diaplay: inline-block;
     flex: 1;
   }
 `;
@@ -20,19 +22,31 @@ export const ContentTitle = styled.div`
   padding: 10px 20px;
   border-bottom: 0.1rem solid rgb(241, 241, 241);
   font-size: 13px;
+  align-items: center;
   background-color: ${props => (props.index + 1) % 2 === 0 && 'rgb(248, 248, 248)'};
   cursor: pointer;
 `;
 
 export const Name = styled.div`
-  flex: 0.6;
+  flex: 0.5;
 `;
 
 const RemoveIcon = styled.i`
   font-weight: bold;
   transition: all .2s;
+  font-size: 18px;
   &:hover{
     transform: scale(1.4);
+  }
+`;
+
+export const IconWrapper = styled.div`
+  display: inline-block;
+  width: 35px;
+  text-align: center;
+  color: #aaa;
+  &:hover {
+    color: #000;
   }
 `;
 
@@ -68,7 +82,37 @@ export default class DownloadTile extends Component {
     );
   }
 
-  remove = (e: MouseEvent) => {
+  removeFiles = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const { dialog } = remote;
+    const { infoHash, name } = this.props.details;
+
+    dialog.showMessageBox(
+      {
+        type: 'question',
+        message: `Do you want to permanently delete the files for ${name} from the disk?`,
+        buttons: ['OK', 'Cancel']
+      },
+      (response) => {
+        if (response === 0) {
+          ipcRenderer.send('remove_torrent_files', infoHash);
+
+          this.props.dispatch({
+            type: 'REMOVE_FROM_DOWNLOAD_LIST',
+            payload: infoHash
+          });
+
+          ipcRenderer.once('removed_torrent_files', () => {
+            showToast(`Sucessfully removed ${name} from the disk.`, 'success');
+          });
+        }
+      }
+    );
+  };
+
+  removeTorrent = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -105,13 +149,16 @@ export default class DownloadTile extends Component {
           <div style={{ width: '30px' }}>{index + 1}</div>
           <Name>{details.name}</Name>
           <Details>
-            <span>{Math.round(downloadData.progress || 0)} %</span>
-            <span>{prettyBytes(downloadData.downloadSpeed || 0)}/s</span>
-            <span>{prettyBytes(downloadData.uploadSpeed || 0)}/s</span>
-            <span>{details.size}</span>
-            <span style={{ textAlign: 'right' }} onClick={this.remove}>
+            <div>{Math.round(downloadData.progress || 0)} %</div>
+            <div>{prettyBytes(downloadData.downloadSpeed || 0)}/s</div>
+            <div>{prettyBytes(downloadData.uploadSpeed || 0)}/s</div>
+            <div>{details.size}</div>
+            <IconWrapper onClick={this.removeFiles}>
+              <RemoveIcon className="mdi mdi-delete-forever" />
+            </IconWrapper>
+            <IconWrapper onClick={this.removeTorrent}>
               <RemoveIcon className="mdi mdi-close" />
-            </span>
+            </IconWrapper>
           </Details>
         </ContentTitle>
         {selectedIndex === index &&

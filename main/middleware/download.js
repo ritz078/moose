@@ -2,6 +2,7 @@ const WebTorrent = require('webtorrent');
 const { ipcMain, app } = require('electron');
 const mime = require('mime');
 const prettyBytes = require('pretty-bytes');
+const rimraf = require('rimraf');
 const downloadsFolder = require('downloads-folder');
 const decorateTorrentInfo = require('../utils/decorateTorrentInfo');
 const { readConfig } = require('../../renderer/utils/config');
@@ -69,6 +70,16 @@ ipcMain.on('decode_infohash_and_add_to_download', (event, infoHash) => {
     const metadata = decorateTorrentInfo(torrent);
     event.sender.send('decoded_infoHash', metadata);
   });
+});
+
+ipcMain.on('remove_torrent_files', (event, infoHash) => {
+  const torrent = client.get(infoHash);
+  client.remove(infoHash);
+  if (torrent) {
+    rimraf(`${torrent.path}/${torrent.name}`, () => {
+      event.sender.send('removed_torrent_files');
+    });
+  }
 });
 
 app.on('close', () => {

@@ -47,7 +47,6 @@ export default function Layout({ children, loading, cast, download }) {
   return (
     <Container>
       <Head>
-        <title>Snape : A web application to search and stream torrents.</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link rel="shortcut icon" type="image/png" href="./static/images/favicon.png" />

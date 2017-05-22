@@ -9,7 +9,6 @@ import Cast from './Cast';
 const Wrapper = styled.div`
   height: 40px;
   border-bottom: 1px solid #f5f5f5;
-  -webkit-app-region: drag;
   display: flex;
   flex-direction: row-reverse;
   padding:0 10px;

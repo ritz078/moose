@@ -37,7 +37,6 @@ async function createWindow() {
     height: 800,
     width: 1000,
     minWidth: 900,
-    titleBarStyle: 'hidden-inset',
     skipTaskbar: true
   });
 

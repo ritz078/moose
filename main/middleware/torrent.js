@@ -3,10 +3,10 @@ const mime = require('mime');
 const rangeParser = require('range-parser');
 const pump = require('pump');
 const { findIndex } = require('lodash');
+const { readConfig } = require('snape-config');
 const torrentStore = require('./helpers/torrentStore');
 const search = require('./helpers/search');
 const decorateTorrentInfo = require('../utils/decorateTorrentInfo');
-const { readConfig } = require('../../renderer/utils/config');
 const { getTorrent } = require('./download');
 
 function deselectAllFiles(torrent) {

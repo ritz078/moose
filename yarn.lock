@@ -4421,10 +4421,6 @@ junk@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/junk/-/junk-1.0.3.tgz#87be63488649cbdca6f53ab39bec9ccd2347f592"
 
-just-is-empty@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/just-is-empty/-/just-is-empty-1.0.1.tgz#338619f60c28b45a72b94a9339617345c03c43d3"
-
 k-bucket@^3.0.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/k-bucket/-/k-bucket-3.2.1.tgz#200d07f02013436ed67265950ec98f62bb292f62"
@@ -7180,6 +7176,12 @@ slice-ansi@0.0.4:
 slide@^1.1.5:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/slide/-/slide-1.1.6.tgz#56eb027d65b4d2dce6cb2e2d32c4d4afc9e1d707"
+
+snape-config@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/snape-config/-/snape-config-0.0.1.tgz#86183f19900537cd1f72a9c5885e648627d033cd"
+  dependencies:
+    application-config "^1.0.1"
 
 sntp@1.x.x:
   version "1.0.9"

@@ -1,6 +1,6 @@
 import { createReducer } from 'redux-create-reducer';
 import { findIndex, clone } from 'lodash';
-import { addToConfig } from '../utils/config';
+import { addToConfig } from 'snape-config';
 
 const downloadReducer = createReducer([], {
   ADD_TO_DOWNLOAD_LIST: (state, { payload }) => {

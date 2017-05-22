@@ -64,9 +64,8 @@ class Media extends PureComponent {
 
   createPlayer() {
     if (!this.player) {
-      this.player = plyr.setup(this.mediaRef, {
-        autoplay: true
-      });
+      this.player = plyr.setup(this.mediaRef);
+      setTimeout(this.player[0].play, 500);
     }
   }
 

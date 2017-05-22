@@ -18,7 +18,7 @@ require('electron-debug')();
 unhandled();
 
 const server = require('./server');
-const { addToConfig, readConfig } = require('../renderer/utils/config');
+const { addToConfig, readConfig } = require('snape-config');
 
 let win;
 

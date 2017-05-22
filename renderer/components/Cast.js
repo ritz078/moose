@@ -1,7 +1,7 @@
 import React, { PureComponent, PropTypes } from 'react';
 import cn from 'classnames';
 import styled from 'styled-components';
-import isEmpty from 'just-is-empty';
+import { isEmpty } from 'lodash';
 import withRedux from 'next-redux-wrapper';
 import castUtil, { getPlayer } from '../utils/cast';
 import initStore from '../store';

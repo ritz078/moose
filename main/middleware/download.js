@@ -4,8 +4,8 @@ const mime = require('mime');
 const prettyBytes = require('pretty-bytes');
 const rimraf = require('rimraf');
 const downloadsFolder = require('downloads-folder');
+const { readConfig } = require('snape-config');
 const decorateTorrentInfo = require('../utils/decorateTorrentInfo');
-const { readConfig } = require('../../renderer/utils/config');
 
 const client = new WebTorrent();
 

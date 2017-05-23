@@ -4,7 +4,9 @@ import isRenderer from 'is-electron-renderer';
 import ip from 'internal-ip';
 import { showToast } from '../components/Toast';
 
-root.casts = isRenderer ? remote.require('chromecasts')() : require('chromecasts')();
+root.casts = isRenderer
+  ? remote.require('chromecasts')()
+  : require('chromecasts')();
 
 export function getPlayer() {
   return root.selectedPlayer;
@@ -17,9 +19,8 @@ export default {
 
   connect(player, cb) {
     root.selectedPlayer = player;
-    console.log(`http://${ip.v4()}:${window.location.port}/static/images/cover.jpg`);
     root.selectedPlayer.play(
-      `http://${ip.v4()}:${window.location.port}/static/images/cover.jpg`,
+      `http://${ip.v4()}:${window.location.port}/static/images/cover.png`,
       {
         type: 'image/jpeg'
       },

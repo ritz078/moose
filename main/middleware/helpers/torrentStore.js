@@ -1,7 +1,6 @@
 const WebTorrent = require('webtorrent');
 const tempy = require('tempy');
 
-const debug = require('debug')('torrentStore');
 const rimraf = require('rimraf');
 const parseTorrent = require('parse-torrent');
 
@@ -23,7 +22,6 @@ module.exports = {
     client.torrents.forEach((torrent) => {
       if (torrent.infoHash !== infoHash) {
         rimraf(`${BASE_PATH}/${torrent.name}`, () => {
-          debug(`removed all torrents except ${infoHash}`);
           if (cb) {
             cb();
           }

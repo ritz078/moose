@@ -3,8 +3,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ipcRenderer } from 'electron';
 import withRedux from 'next-redux-wrapper';
-import { isEmpty } from 'lodash';
-import { readConfig } from 'snape-config';
 import initStore from '../store';
 import Layout from '../components/Layout';
 import DownloadTile, {

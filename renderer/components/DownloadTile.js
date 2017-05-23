@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { remote, ipcRenderer } from 'electron';
 import styled from 'styled-components';
-import deepCompare from 'deep-compare';
 import prettyBytes from 'pretty-bytes';
+import { isEqual } from 'lodash';
 import Description from './Description';
 import { showToast } from './Toast';
 
@@ -77,7 +77,7 @@ export default class DownloadTile extends Component {
 
   shouldComponentUpdate(nextProps) {
     return (
-      !deepCompare(this.props.downloadData, nextProps.downloadData) ||
+      !isEqual(this.props.downloadData, nextProps.downloadData) ||
       this.props.selectedIndex !== nextProps.selectedIndex
     );
   }

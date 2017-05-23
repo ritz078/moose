@@ -101,7 +101,8 @@ export default class Results extends PureComponent {
     };
   }
 
-  isBeingDownloaded = infoHash => findIndex(this.props.download, o => o.infoHash === infoHash) >= 0;
+  isBeingDownloaded = infoHash =>
+    findIndex(this.props.download, o => o.infoHash === infoHash) >= 0;
 
   getDetails = (index) => {
     const { dispatch, results } = this.props;
@@ -167,7 +168,12 @@ export default class Results extends PureComponent {
     });
 
     return (
-      <Tr key={result.id} data-id={result.id} style={style} className={mainClass}>
+      <Tr
+        key={result.id}
+        data-id={result.id}
+        style={style}
+        className={mainClass}
+      >
         <DefaultRow onClick={() => this.getDetails(index)}>
           <Ink />
           <Td flex={0.5}>{index + 1}</Td>
@@ -189,7 +195,11 @@ export default class Results extends PureComponent {
           <Td flex={0.5} onClick={e => this.addToDownload(e, result)}>
             <i
               className={downloadClass}
-              data-tooltip={this.isBeingDownloaded(result.magnetLink) ? 'Downloading' : 'Download'}
+              data-tooltip={
+                this.isBeingDownloaded(result.magnetLink)
+                  ? 'Downloading'
+                  : 'Download'
+              }
             />
           </Td>
         </DefaultRow>
@@ -235,7 +245,10 @@ export default class Results extends PureComponent {
 
   loadMoreRows = () => {
     if (this.props.loading) return;
-    this.props.dispatch({ type: 'SET_PAGE', payload: this.props.params.page + 1 });
+    this.props.dispatch({
+      type: 'SET_PAGE',
+      payload: this.props.params.page + 1
+    });
     this.fetchResults();
   };
 
@@ -265,7 +278,7 @@ export default class Results extends PureComponent {
 
     function getClass(order) {
       return cn('mdi', {
-        'mdi-unfold-more': orderBy !== order,
+        'mdi-unfold-more-horizontal': orderBy !== order,
         'mdi-chevron-double-down black': orderBy === order && sortBy === 'desc',
         'mdi-chevron-double-up black': orderBy === order && sortBy === 'asc'
       });
@@ -275,13 +288,28 @@ export default class Results extends PureComponent {
       <Tr direction="row" style={{ padding: '0 20px' }} className="text-bold">
         <Td flex={0.5}>#</Td>
         <Td flex={10}>Name</Td>
-        <Td data-sort-type="date" onClick={this.setSortOrder} className="pointer" flex={2}>
+        <Td
+          data-sort-type="date"
+          onClick={this.setSortOrder}
+          className="pointer"
+          flex={2}
+        >
           Uploaded <SortIcon className={getClass('date')} />
         </Td>
-        <Td data-sort-type="size" onClick={this.setSortOrder} className="pointer" flex={2}>
+        <Td
+          data-sort-type="size"
+          onClick={this.setSortOrder}
+          className="pointer"
+          flex={2}
+        >
           File Size <SortIcon className={getClass('size')} />
         </Td>
-        <Td data-sort-type="seeds" onClick={this.setSortOrder} className="pointer" flex={1}>
+        <Td
+          data-sort-type="seeds"
+          onClick={this.setSortOrder}
+          className="pointer"
+          flex={1}
+        >
           Seeds<SortIcon className={getClass('seeds')} />
         </Td>
         <Td flex={1}>Leech</Td>

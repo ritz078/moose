@@ -42,7 +42,7 @@ const RemoveIcon = styled.i`
 
 export const IconWrapper = styled.div`
   display: inline-block;
-  width: 35px;
+  flex: 0.4 !important;
   text-align: center;
   color: #aaa;
   &:hover {
@@ -134,7 +134,10 @@ export default class DownloadTile extends Component {
             payload: infoHash
           });
 
-          showToast(`Sucessfully removed ${name} from download list`, 'success');
+          showToast(
+            `Sucessfully removed ${name} from download list`,
+            'success'
+          );
         }
       }
     );
@@ -153,16 +156,28 @@ export default class DownloadTile extends Component {
             <div>{prettyBytes(downloadData.downloadSpeed || 0)}/s</div>
             <div>{prettyBytes(downloadData.uploadSpeed || 0)}/s</div>
             <div>{details.size}</div>
-            <IconWrapper onClick={this.removeFiles}>
+            <IconWrapper
+              onClick={this.removeFiles}
+              className="tooltip tooltip-bottom"
+              data-tooltip="Delete torrent and files"
+            >
               <RemoveIcon className="mdi mdi-delete-forever" />
             </IconWrapper>
-            <IconWrapper onClick={this.removeTorrent}>
+            <IconWrapper
+              onClick={this.removeTorrent}
+              className="tooltip tooltip-left"
+              data-tooltip="Delete torrent"
+            >
               <RemoveIcon className="mdi mdi-close" />
             </IconWrapper>
           </Details>
         </ContentTitle>
         {selectedIndex === index &&
-          <Description customDetails={downloadData} showOnlyDetails showProgress />}
+          <Description
+            customDetails={downloadData}
+            showOnlyDetails
+            showProgress
+          />}
       </div>
     );
   }

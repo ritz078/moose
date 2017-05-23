@@ -7,7 +7,12 @@ import { isEmpty } from 'lodash';
 import { readConfig } from 'snape-config';
 import initStore from '../store';
 import Layout from '../components/Layout';
-import DownloadTile, { ContentTitle, Details, Name, IconWrapper } from '../components/DownloadTile';
+import DownloadTile, {
+  ContentTitle,
+  Details,
+  Name,
+  IconWrapper
+} from '../components/DownloadTile';
 import DownloadMenu from '../components/DownloadMenu';
 
 @withRedux(initStore, ({ download, cast }) => ({
@@ -35,15 +40,6 @@ export default class Download extends PureComponent {
 
     ipcRenderer.on('download_data', (event, downloadData) => {
       this.setState({ downloadData });
-    });
-
-    readConfig((err, { download }) => {
-      if (!err && !isEmpty(download)) {
-        this.props.dispatch({
-          type: 'SET_DOWNLOADS',
-          payload: download
-        });
-      }
     });
   }
 
@@ -95,9 +91,9 @@ export default class Download extends PureComponent {
   };
 
   render() {
-    const { cast, download } = this.props;
+    const { cast, download, dispatch } = this.props;
     return (
-      <Layout cast={cast} download={download}>
+      <Layout cast={cast} download={download} dispatch={dispatch}>
         {this.getDownloads()}
       </Layout>
     );

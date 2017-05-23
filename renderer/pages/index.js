@@ -17,15 +17,18 @@ const Content = styled.div`
   padding-top: 20px;
 `;
 
-@withRedux(initStore, ({ results, loading, details, params, cast, download, selectedTorrent }) => ({
-  results,
-  loading,
-  details,
-  params,
-  cast,
-  download,
-  selectedTorrent
-}))
+@withRedux(
+  initStore,
+  ({ results, loading, details, params, cast, download, selectedTorrent }) => ({
+    results,
+    loading,
+    details,
+    params,
+    cast,
+    download,
+    selectedTorrent
+  })
+)
 export default class Home extends PureComponent {
   static propTypes = {
     results: PropTypes.shape({
@@ -66,7 +69,11 @@ export default class Home extends PureComponent {
         <Content>
           <div className="centered" style={{ width: '90%' }}>
             <h5>{details.name}</h5>
-            <Description details={details} dispatch={dispatch} showOnlyDetails />
+            <Description
+              details={details}
+              dispatch={dispatch}
+              showOnlyDetails
+            />
           </div>
         </Content>
       );
@@ -85,13 +92,21 @@ export default class Home extends PureComponent {
   };
 
   render() {
-    const { loading, details, cast, download, selectedTorrent } = this.props;
+    const {
+      loading,
+      details,
+      cast,
+      download,
+      selectedTorrent,
+      dispatch
+    } = this.props;
     return (
       <Layout
         loading={loading || (details && details.loading)}
         cast={cast}
         download={download}
         selectedTorrent={selectedTorrent}
+        dispatch={dispatch}
       >
         <Header />
         {this.getContent()}

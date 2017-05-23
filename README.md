@@ -46,11 +46,9 @@ To make sure that your code works in the bundled application, you can generate t
 yarn pack
 ```
 
-After that, you'll find them in the `./dist` folder!
-
 ### Credits
 
-The logo has been designed by [Jacqueline Fernandes](https://thenounproject.com/jacquelinefernandes/)
+The logo has been designed by [Julia Stoffer](https://thenounproject.com/julia.stoffer/)
 
 ### License 
 MIT

@@ -58,7 +58,9 @@ ipcMain.on('end_download_polling', () => {
   clearInterval(interval);
 });
 
-ipcMain.on('add_torrent_to_download', (event, infoHash) => addTorrent(infoHash));
+ipcMain.on('add_torrent_to_download', (event, infoHash) =>
+  addTorrent(infoHash)
+);
 
 ipcMain.on('remove_torrent', (event, infoHash) => client.remove(infoHash));
 
@@ -82,7 +84,7 @@ ipcMain.on('remove_torrent_files', (event, infoHash) => {
   }
 });
 
-app.on('close', () => {
+app.on('before-quit', () => {
   clearInterval(interval);
 });
 

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Ink from 'react-ink';
 import styled from 'styled-components';
 import Link from 'next/link';
+import { isEmpty } from 'lodash';
+import { readConfig } from 'snape-config';
 import Cast from './Cast';
 
 const Wrapper = styled.div`
@@ -30,15 +32,30 @@ const Icon = styled.i`
 export default class MenuBar extends PureComponent {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
-    downloads: PropTypes.array.isRequired
+    downloads: PropTypes.array.isRequired,
+    dispatch: PropTypes.func.isRequired
   };
+
+  componentDidMount() {
+    readConfig((err, { download }) => {
+      if (!err && !isEmpty(download)) {
+        this.props.dispatch({
+          type: 'SET_DOWNLOADS',
+          payload: download
+        });
+      }
+    });
+  }
 
   render() {
     return (
       <Wrapper>
         <Cast />
         <Link href="/download" prefetch>
-          <Icon className="mdi mdi-download badge" data-badge={this.props.downloads.length}>
+          <Icon
+            className="mdi mdi-download badge"
+            data-badge={this.props.downloads.length}
+          >
             <Ink />
           </Icon>
         </Link>

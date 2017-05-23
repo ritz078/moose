@@ -43,17 +43,27 @@ CloseButton.propTypes = {
   closeToast: PropTypes.func.isRequired
 };
 
-export default function Layout({ children, loading, cast, download }) {
+export default function Layout({
+  children,
+  loading,
+  cast,
+  download,
+  dispatch
+}) {
   return (
     <Container>
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="shortcut icon" type="image/png" href="./static/images/favicon.png" />
+        <link
+          rel="shortcut icon"
+          type="image/png"
+          href="./static/images/favicon.png"
+        />
         <style dangerouslySetInnerHTML={{ __html: stylesheet }} />
       </Head>
       <Loading show={loading} showSpinner={false} color="#3f51b5" />
-      <MenuBar downloads={download} />
+      <MenuBar downloads={download} dispatch={dispatch} />
 
       {children}
       {cast.streamingMedia ? <Controls /> : <AudioPlayer />}
@@ -75,7 +85,8 @@ Layout.propTypes = {
     streamingMedia: PropTypes.any
   }).isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  download: PropTypes.array.isRequired
+  download: PropTypes.array.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 Layout.defaultProps = {

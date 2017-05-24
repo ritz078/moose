@@ -1,9 +1,4 @@
 const { app, BrowserWindow, Menu } = require('electron');
-const {
-  default: installExtension,
-  REACT_DEVELOPER_TOOLS,
-  REDUX_DEVTOOLS
-} = require('electron-devtools-installer');
 const getPort = require('get-port');
 const fixPath = require('fix-path');
 const dev = require('electron-is-dev');
@@ -43,7 +38,9 @@ async function createWindow() {
   try {
     await server(port);
     downloadTorrent.init();
-    app.dock.show();
+    if (process.platform === 'darwin') {
+      app.dock.show();
+    }
   } catch (err) {
     return;
   }
@@ -53,6 +50,12 @@ async function createWindow() {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
   if (dev) {
+    const {
+      default: installExtension,
+      REACT_DEVELOPER_TOOLS,
+      REDUX_DEVTOOLS
+    } = require('electron-devtools-installer');
+
     installExtension(REACT_DEVELOPER_TOOLS);
     installExtension(REDUX_DEVTOOLS);
 
@@ -79,7 +82,9 @@ app.on('ready', async () => {
 });
 
 app.on('window-all-closed', () => {
-  app.dock.hide();
+  if (process.platform === 'darwin') {
+    app.dock.hide();
+  }
   if (process.platform !== 'darwin') {
     app.quit();
   }

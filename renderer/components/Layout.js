@@ -9,7 +9,7 @@ import NProgress from 'nprogress';
 import Router from 'next/router';
 
 import stylesheet from '../styles/index.less';
-import MenuBar from './MenuBar';
+import MenuBar from './NavBar';
 import Controls from './Controls';
 import AudioPlayer from './AudioPlayer';
 

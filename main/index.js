@@ -38,7 +38,9 @@ async function createWindow() {
   try {
     await server(port);
     downloadTorrent.init();
-    app.dock.show();
+    if (process.platform === 'darwin') {
+      app.dock.show();
+    }
   } catch (err) {
     return;
   }
@@ -80,7 +82,9 @@ app.on('ready', async () => {
 });
 
 app.on('window-all-closed', () => {
-  app.dock.hide();
+  if (process.platform === 'darwin') {
+    app.dock.hide();
+  }
   if (process.platform !== 'darwin') {
     app.quit();
   }

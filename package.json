@@ -35,6 +35,7 @@
   "homepage": "https://github.com/ritz078/snape#readme",
   "dependencies": {
     "app-root-path": "^2.0.1",
+    "chai": "^3.5.0",
     "chromecasts": "^1.9.0",
     "classnames": "^2.2.5",
     "downloads-folder": "^1.0.0",
@@ -74,6 +75,7 @@
     "redux-observable": "^0.14.1",
     "rimraf": "^2.6.1",
     "rxjs": "^5.4.0",
+    "sinon": "^2.3.1",
     "snape-config": "^0.0.1",
     "spectre.css": "^0.2.14",
     "styled-components": "v2.0.0-17",

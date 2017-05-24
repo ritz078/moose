@@ -58,6 +58,7 @@
     "postcss-easy-import": "^2.0.0",
     "pretty-bytes": "^4.0.2",
     "prop-types": "^15.5.10",
+    "protobufjs": "^6.7.3",
     "pump": "^1.0.2",
     "query-string": "^4.3.4",
     "range-parser": "^1.2.0",

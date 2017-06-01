@@ -23,8 +23,22 @@ app.setName('Snape');
 // Within the bundled app, the path would otherwise be different
 fixPath();
 
+const isAlreadyRunning = app.makeSingleInstance(() => {
+  if (win) {
+    if (win.isMinimized()) {
+      win.restore();
+    }
+
+    win.show();
+  }
+});
+
+if (isAlreadyRunning) {
+  app.exit();
+}
+
 async function createWindow() {
-  const port = await getPort();
+  const port = await getPort(3002);
   // after the main starts create the electron browser window
   // start building the next.js app
   win = new BrowserWindow({
@@ -45,7 +59,7 @@ async function createWindow() {
     return;
   }
 
-  win.loadURL(`http://0.0.0.0:${port}`);
+  win.loadURL(`http://localhost:${port}`);
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
@@ -59,7 +73,7 @@ async function createWindow() {
     installExtension(REACT_DEVELOPER_TOOLS);
     installExtension(REDUX_DEVTOOLS);
 
-    win.webContents.openDevTools();
+    // win.webContents.openDevTools(); // crashing the app
   }
 }
 
@@ -78,15 +92,14 @@ app.on('ready', async () => {
       }
     }
   });
-  await createWindow();
+  createWindow();
 });
 
 app.on('window-all-closed', () => {
   if (process.platform === 'darwin') {
     app.dock.hide();
-  }
-  if (process.platform !== 'darwin') {
-    app.quit();
+  } else {
+    app.exit();
   }
 });
 

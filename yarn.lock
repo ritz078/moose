@@ -134,9 +134,9 @@ ajv-keywords@^1.0.0, ajv-keywords@^1.1.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-1.5.1.tgz#314dd0a4b3368fad3dfcdc54ede6171b886daf3c"
 
-ajv-keywords@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-2.0.0.tgz#a37d02f845b6f52569804164270b24cb6c6cee61"
+ajv-keywords@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-2.1.0.tgz#a296e17f7bfae7c1ce4f7e0de53d29cb32162df0"
 
 ajv@^4.7.0, ajv@^4.9.1:
   version "4.11.5"
@@ -145,16 +145,9 @@ ajv@^4.7.0, ajv@^4.9.1:
     co "^4.6.0"
     json-stable-stringify "^1.0.1"
 
-ajv@^5.0.0:
-  version "5.1.3"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.1.3.tgz#423d1c302c61e617081b30ca05f595ec51408e33"
-  dependencies:
-    co "^4.6.0"
-    json-stable-stringify "^1.0.1"
-
-ajv@^5.1.4:
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.1.4.tgz#56f4ab21d42c2ae59e07de655dca6f8f3549809b"
+ajv@^5.0.0, ajv@^5.1.5:
+  version "5.1.5"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.1.5.tgz#8734931b601f00d4feef7c65738d77d1b65d1f68"
   dependencies:
     co "^4.6.0"
     json-stable-stringify "^1.0.1"
@@ -1646,9 +1639,9 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
-chai@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/chai/-/chai-4.0.0.tgz#f6c989e45a5707d40c54d97ddd7ca89b30a6a06a"
+chai@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/chai/-/chai-4.0.1.tgz#9e41e808e17a7f10807721e2ac5a589d5bb09082"
   dependencies:
     assertion-error "^1.0.1"
     check-error "^1.0.1"
@@ -2193,13 +2186,14 @@ css-color-names@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
 
-css-loader@^0.28.3:
-  version "0.28.3"
-  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.28.3.tgz#9fd5e0b8c405b6df927ba1103887015d360640ce"
+css-loader@^0.28.4:
+  version "0.28.4"
+  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.28.4.tgz#6cf3579192ce355e8b38d5f42dd7a1f2ec898d0f"
   dependencies:
     babel-code-frame "^6.11.0"
     css-selector-tokenizer "^0.7.0"
     cssnano ">=2.6.1 <4"
+    icss-utils "^2.1.0"
     loader-utils "^1.0.2"
     lodash.camelcase "^4.3.0"
     object-assign "^4.0.1"
@@ -2560,32 +2554,32 @@ electron-builder-core@17.2.0, electron-builder-core@~17.2.0:
   version "17.2.0"
   resolved "https://registry.yarnpkg.com/electron-builder-core/-/electron-builder-core-17.2.0.tgz#e235d11aae64bffbad36b601ac58173f9377f619"
 
-electron-builder-http@18.0.1, electron-builder-http@~18.0.1:
-  version "18.0.1"
-  resolved "https://registry.yarnpkg.com/electron-builder-http/-/electron-builder-http-18.0.1.tgz#9d10ead501656087222b4de28b2b90df9f978313"
+electron-builder-http@18.3.0, electron-builder-http@~18.3.0:
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/electron-builder-http/-/electron-builder-http-18.3.0.tgz#01cf7445996b09475515b55006b6b80d75a0360e"
   dependencies:
     debug "2.6.8"
     fs-extra-p "^4.3.0"
 
-electron-builder-squirrel-windows@^18.0.0:
-  version "18.0.0"
-  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-18.0.0.tgz#37f9201e55e138b92f9c16e82d365c4fdbc2f3fd"
+electron-builder-squirrel-windows@^18.3.0:
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-18.3.0.tgz#3bf920cbd318c47535b5815bcdc8e911ff024f70"
   dependencies:
     archiver "^1.3.0"
     bluebird-lst "^1.0.2"
     electron-builder-core "~17.2.0"
-    electron-builder-util "~18.0.0"
+    electron-builder-util "~18.3.0"
     fs-extra-p "^4.3.0"
 
-electron-builder-util@18.0.1, electron-builder-util@~18.0.0, electron-builder-util@~18.0.1:
-  version "18.0.1"
-  resolved "https://registry.yarnpkg.com/electron-builder-util/-/electron-builder-util-18.0.1.tgz#891ddd09ae0fcb7bf9f4abde6e3fa7045fbdb231"
+electron-builder-util@18.3.0, electron-builder-util@~18.3.0:
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/electron-builder-util/-/electron-builder-util-18.3.0.tgz#7a13cb550f05675898c55d987dbb12fed4e8a2bf"
   dependencies:
     "7zip-bin" "^2.0.4"
     bluebird-lst "^1.0.2"
     chalk "^1.1.3"
     debug "2.6.8"
-    electron-builder-http "~18.0.1"
+    electron-builder-http "~18.3.0"
     fs-extra-p "^4.3.0"
     ini "^1.3.4"
     is-ci "^1.0.10"
@@ -2594,24 +2588,24 @@ electron-builder-util@18.0.1, electron-builder-util@~18.0.0, electron-builder-ut
     stat-mode "^0.2.2"
     tunnel-agent "^0.6.0"
 
-electron-builder@^18.1.0:
-  version "18.1.0"
-  resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-18.1.0.tgz#b990493db17a7404ff1a3d22246032e7ab5569dc"
+electron-builder@^18.3.0:
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-18.3.0.tgz#08d3669039313e63162188fb99dfb2efc7ebe1b4"
   dependencies:
     "7zip-bin" "^2.0.4"
-    ajv "^5.1.4"
-    ajv-keywords "^2.0.0"
+    ajv "^5.1.5"
+    ajv-keywords "^2.1.0"
     bluebird-lst "^1.0.2"
     chalk "^1.1.3"
     chromium-pickle-js "^0.2.0"
     cuint "^0.2.2"
     debug "2.6.8"
     electron-builder-core "17.2.0"
-    electron-builder-http "18.0.1"
-    electron-builder-util "18.0.1"
+    electron-builder-http "18.3.0"
+    electron-builder-util "18.3.0"
     electron-download-tf "4.3.1"
     electron-osx-sign "0.4.5"
-    electron-publish "18.0.1"
+    electron-publish "18.3.0"
     fs-extra-p "^4.3.0"
     hosted-git-info "^2.4.2"
     is-ci "^1.0.10"
@@ -2699,14 +2693,14 @@ electron-osx-sign@0.4.5:
     plist "^2.0.1"
     tempfile "^1.1.1"
 
-electron-publish@18.0.1:
-  version "18.0.1"
-  resolved "https://registry.yarnpkg.com/electron-publish/-/electron-publish-18.0.1.tgz#04e8bd1db2c431f9de47c277c845234e3d7e0df8"
+electron-publish@18.3.0:
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/electron-publish/-/electron-publish-18.3.0.tgz#403b4d6f00360c0057b3a05c45b44b21bfaccdc8"
   dependencies:
     bluebird-lst "^1.0.2"
     chalk "^1.1.3"
-    electron-builder-http "~18.0.1"
-    electron-builder-util "~18.0.1"
+    electron-builder-http "~18.3.0"
+    electron-builder-util "~18.3.0"
     fs-extra-p "^4.3.0"
     mime "^1.3.6"
 
@@ -2735,9 +2729,9 @@ electron-unhandled@^0.2.0:
     clean-stack "^1.3.0"
     ensure-error "^0.1.0"
 
-electron@^1.6.10:
-  version "1.6.10"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-1.6.10.tgz#4f0b9cd596e35700b57128f988cc1d2ce67e5671"
+electron@1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-1.7.2.tgz#8115e6ae86128a8cd99360d3793d3618ca2c7619"
   dependencies:
     "@types/node" "^7.0.18"
     electron-download "^3.0.1"
@@ -2947,9 +2941,9 @@ eslint-module-utils@^2.0.0:
     debug "2.2.0"
     pkg-dir "^1.0.0"
 
-eslint-plugin-flowtype@^2.33.0:
-  version "2.33.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.33.0.tgz#b2783814ed2ddcf729953b8f65ff73c90cabee4b"
+eslint-plugin-flowtype@^2.34.0:
+  version "2.34.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.34.0.tgz#b9875f314652e5081623c9d2b18a346bbb759c09"
   dependencies:
     lodash "^4.15.0"
 
@@ -3362,7 +3356,7 @@ forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
 
-form-data@~2.1.1:
+form-data@^2.1.4, form-data@~2.1.1:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.1.4.tgz#33c183acf193276ecaa98143a69e94bfee1750d1"
   dependencies:
@@ -3789,9 +3783,9 @@ humanize-plus@^1.8.1:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/humanize-plus/-/humanize-plus-1.8.2.tgz#a65b34459ad6367adbb3707a82a3c9f916167030"
 
-husky@^0.13.3:
-  version "0.13.3"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-0.13.3.tgz#bc2066080badc8b8fe3516e881f5bc68a57052ff"
+husky@^0.13.4:
+  version "0.13.4"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-0.13.4.tgz#48785c5028de3452a51c48c12c4f94b2124a1407"
   dependencies:
     chalk "^1.1.3"
     find-parent-dir "^0.3.0"
@@ -3809,6 +3803,12 @@ iconv-lite@~0.4.13:
 icss-replace-symbols@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/icss-replace-symbols/-/icss-replace-symbols-1.0.2.tgz#cb0b6054eb3af6edc9ab1d62d01933e2d4c8bfa5"
+
+icss-utils@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/icss-utils/-/icss-utils-2.1.0.tgz#83f0a0ec378bf3246178b6c2ad9136f135b1c962"
+  dependencies:
+    postcss "^6.0.1"
 
 ieee754@^1.1.4:
   version "1.1.8"
@@ -4359,9 +4359,9 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
-less-loader@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/less-loader/-/less-loader-4.0.3.tgz#d1e6462ca2f090c11248455e14b8dda4616d0521"
+less-loader@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/less-loader/-/less-loader-4.0.4.tgz#b4a8c43843e65c67d2ea2eb1465b5c4233d5006a"
   dependencies:
     clone "^2.1.1"
     loader-utils "^1.1.0"
@@ -4391,9 +4391,9 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-lint-staged@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-3.5.0.tgz#e8a8900b863e85051a3769e0a11ccb4a7dfa9f83"
+lint-staged@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-3.6.0.tgz#cda8f0bef16e7928cc14b735186ae12cd662599c"
   dependencies:
     app-root-path "^2.0.0"
     cosmiconfig "^1.1.0"
@@ -5884,7 +5884,7 @@ postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0
     source-map "^0.5.6"
     supports-color "^3.2.3"
 
-postcss@^6.x:
+postcss@^6.0.1, postcss@^6.x:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-6.0.1.tgz#000dbd1f8eef217aa368b9a212c5fc40b2a8f3f2"
   dependencies:
@@ -6186,15 +6186,15 @@ rc-animate@2.x:
     css-animation "^1.3.0"
     prop-types "^15.5.6"
 
-rc-slider@^7.0.6:
-  version "7.0.6"
-  resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-7.0.6.tgz#06050ad1b36a32db2fbc4fe8e94efeaba4e23c04"
+rc-slider@^8.0.2:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-8.0.2.tgz#b25108e676111ae2bdb3402b755dd330bce07249"
   dependencies:
     babel-runtime "6.x"
     classnames "^2.2.5"
     prop-types "^15.5.4"
     rc-tooltip "^3.4.2"
-    rc-util "^4.0.0"
+    rc-util "^4.0.4"
     warning "^3.0.0"
 
 rc-tooltip@^3.4.2:
@@ -6215,7 +6215,7 @@ rc-trigger@1.x:
     rc-animate "2.x"
     rc-util "4.x"
 
-rc-util@4.x, rc-util@^4.0.0:
+rc-util@4.x, rc-util@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/rc-util/-/rc-util-4.0.4.tgz#99813dd90aee7e29b64939a70ac176ead3f4ff39"
   dependencies:
@@ -6928,6 +6928,16 @@ snape-config@^0.0.1:
   dependencies:
     application-config "^1.0.1"
 
+snape-thepiratebay@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/snape-thepiratebay/-/snape-thepiratebay-1.4.2.tgz#e5bfe4c8f65170ce0b370fc4bf16258b6415c7ce"
+  dependencies:
+    babel-runtime "^6.23.0"
+    cheerio "^0.22.0"
+    form-data "^2.1.4"
+    isomorphic-fetch "^2.2.1"
+    url-parse "^1.1.9"
+
 sntp@1.x.x:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/sntp/-/sntp-1.0.9.tgz#6541184cc90aeea6c6e7b35e2659082443c66198"
@@ -7334,15 +7344,6 @@ thenify-all@^1.0.0, thenify-all@^1.6.0:
   dependencies:
     any-promise "^1.0.0"
 
-thepiratebay@1.3.5:
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/thepiratebay/-/thepiratebay-1.3.5.tgz#818acb57f178d989c928c2e3498ef7223cad86a3"
-  dependencies:
-    babel-runtime "^6.23.0"
-    cheerio "^0.22.0"
-    isomorphic-fetch "^2.2.1"
-    url-parse "^1.1.8"
-
 thirty-two@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/thirty-two/-/thirty-two-1.0.2.tgz#4ca2fffc02a51290d2744b9e3f557693ca6b627a"
@@ -7581,7 +7582,7 @@ url-parse-lax@^1.0.0:
   dependencies:
     prepend-http "^1.0.1"
 
-url-parse@^1.1.8:
+url-parse@^1.1.9:
   version "1.1.9"
   resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.1.9.tgz#c67f1d775d51f0a18911dd7b3ffad27bb9e5bd19"
   dependencies:

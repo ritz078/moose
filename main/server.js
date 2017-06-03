@@ -5,7 +5,12 @@ const express = require('express');
 const next = require('next');
 const dev = require('electron-is-dev');
 const { resolve } = require('app-root-path');
-const { downloadTorrent, list, deleteTorr, searchTorrent } = require('./middleware/torrent');
+const {
+  downloadTorrent,
+  list,
+  deleteTorr,
+  searchTorrent
+} = require('./middleware/torrent');
 
 async function startServer(port) {
   const dir = resolve('./renderer');
@@ -25,10 +30,12 @@ async function startServer(port) {
   server.get('/', (req, res) => nextApp.render(req, res, '/', req.query));
   server.get('*', (req, res) => nextHandler(req, res));
 
-  const x = server.listen(port, '0.0.0.0', () => {
+  const host = process.platform === 'darwin' ? '0.0.0.0' : '127.0.0.1'; // for chromecast
+
+  const x = server.listen(port, host, () => {
     // Make sure to stop the server when the app closes
     // Otherwise it keeps running on its own
-    app.on('before-quit', x.close);
+    app.on('close', x.close);
   });
 
   return x;

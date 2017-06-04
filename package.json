@@ -151,7 +151,8 @@
       "target": [
         "AppImage",
         "deb"
-      ]
+      ],
+      "icon": "renderer/static/images/snape.png"
     },
     "files": [
       "main",

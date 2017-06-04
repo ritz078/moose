@@ -1,11 +1,15 @@
-{
-  "os": "osx",
-  "language": "node_js",
-  "node_js": "node",
-  "after_script": "travis_wait 30 npm run dist",
-  "cache": {
-    "directories": [
-      "node_modules"
-    ]
-  }
-}
+sudo: required
+dist: trusty
+language: c
+osx_image: xcode8
+matrix:
+  include:
+    - os: osx
+    - os: linux
+      env: CC=clang CXX=clang++ npm_config_clang=1
+      compiler: clang
+script:
+  - npm run dist
+branches:
+  except:
+    - "/^v\\d+\\.\\d+\\.\\d+$/"

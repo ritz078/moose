@@ -140,11 +140,18 @@
     },
     "squirrelWindows": {},
     "mac": {
-      "category": "public.app-category.developer-tools",
+      "category": "public.app-category.utilities",
       "extendInfo": {
         "LSUIElement": 1
       },
       "icon": "renderer/static/images/snape.icns"
+    },
+    "linux": {
+      "category": "Utility",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
     },
     "files": [
       "main",

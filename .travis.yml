@@ -8,6 +8,10 @@ matrix:
     - os: linux
       env: CC=clang CXX=clang++ npm_config_clang=1
       compiler: clang
+install:
+  - nvm install 7
+  - npm install -g yarn
+  - yarn
 script:
   - npm run dist
 branches:

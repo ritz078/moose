@@ -152,7 +152,7 @@
         "AppImage",
         "deb"
       ],
-      "icon": "renderer/static/images/snape.png"
+      "icon": "renderer/static/images/linux"
     },
     "files": [
       "main",

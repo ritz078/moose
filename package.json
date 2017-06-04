@@ -99,7 +99,7 @@
     "cz-conventional-changelog": "^2.0.0",
     "devtron": "^1.4.0",
     "electron": "1.7.2",
-    "electron-builder": "^18.3.0",
+    "electron-builder": "^18.3.5",
     "electron-builder-squirrel-windows": "^18.3.0",
     "electron-devtools-installer": "^2.2.0",
     "electron-rebuild": "^1.5.11",

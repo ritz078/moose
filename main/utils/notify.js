@@ -6,7 +6,6 @@ module.exports = (msg) => {
   notifier.notify({
     title: 'Snape',
     message: msg,
-    icon,
-    sound: true
+    icon
   })
 }

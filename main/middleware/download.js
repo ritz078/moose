@@ -50,7 +50,9 @@ ipcMain.on('init_download_polling', (event) => {
           type: mime.lookup(file.name),
           progress: Math.round(file.downloaded / file.length * 100),
           size: prettyBytes(file.length),
-          slug: `${torrent.infoHash}/${i}/${file.name}`
+          slug: `${torrent.infoHash}/${i}/${file.name}`,
+          done: file.done,
+          path: `${torrent.path}/${file.path}`
         }))
       }
     })

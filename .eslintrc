@@ -28,6 +28,7 @@
     "comma-dangle": 0,
     "semi": 0,
     "jsx-a11y/img-has-alt": 0,
-    "import/no-extraneous-dependencies": 0
+    "import/no-extraneous-dependencies": 0,
+    "jsx-ally/no-static-element-interactions": 0
   }
 }

@@ -5001,9 +5001,9 @@ next-redux-wrapper@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-1.1.2.tgz#689cd60821dec570bfe23b7784afec64f01f2811"
 
-next@^2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/next/-/next-2.4.1.tgz#ab1e62fecd946cce5f41f4adc972478f474f3e5d"
+next@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/next/-/next-2.4.2.tgz#b8dcd577f6dae5d5b0c3c81cf9f6e5ae4bece341"
   dependencies:
     ansi-html "0.0.7"
     babel-core "6.24.0"
@@ -5941,9 +5941,9 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier-eslint-cli@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/prettier-eslint-cli/-/prettier-eslint-cli-4.0.3.tgz#5b9df73365cd1a1d47dabe306ae0dd0066cefe6c"
+prettier-eslint-cli@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/prettier-eslint-cli/-/prettier-eslint-cli-4.0.2.tgz#84520ff9efc80bbae4a7a477ea362e36be836103"
   dependencies:
     arrify "^1.0.1"
     babel-runtime "^6.23.0"
@@ -6302,9 +6302,9 @@ react-redux@^5.0.5:
     loose-envify "^1.1.0"
     prop-types "^15.5.10"
 
-react-toastify@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-1.5.0.tgz#e9857e0b5d640064e5ba6caf7a96bb1578273de7"
+react-toastify@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-1.7.0.tgz#8731c37e5000ddb33eed40fd10951e0451c5f9d0"
   dependencies:
     prop-types "^15.5.8"
     react-transition-group "^1.1.2"

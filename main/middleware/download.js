@@ -8,14 +8,13 @@ const downloadsFolder = require('downloads-folder')
 const { readConfig } = require('snape-config')
 const decorateTorrentInfo = require('../utils/decorateTorrentInfo')
 const { logError, logSuccess } = require('../utils/logEmitter')
-const notifier = require('node-notifier')
+const notify = require('../utils/notify')
 
 const client = new WebTorrent()
 
 function onTorrentDone(name) {
   const msg = `Completed downloading ${name}`
-  const action = root.win.isFocused() ? logSuccess : notifier
-  action(msg)
+  root.win.isFocused() ? logSuccess(msg) : notify(msg)
 }
 
 function addTorrent(infoHash) {

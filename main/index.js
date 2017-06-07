@@ -2,6 +2,7 @@ const { app, BrowserWindow, Menu } = require('electron');
 const getPort = require('get-port');
 const fixPath = require('fix-path');
 const dev = require('electron-is-dev');
+const root = require('window-or-global');
 const { moveToApplications } = require('electron-lets-move');
 const unhandled = require('electron-unhandled');
 const downloadTorrent = require('./middleware/download');
@@ -38,16 +39,24 @@ if (isAlreadyRunning) {
 }
 
 async function createWindow() {
-  const port = await getPort(3002);
+  let port;
+  try {
+    port = await getPort();
+  } catch (e) {
+    console.log(e);
+  }
   // after the main starts create the electron browser window
   // start building the next.js app
   win = new BrowserWindow({
     backgroundThrottling: false,
     height: 800,
+    backgroundColor: '#ffffff',
     width: 1000,
-    minWidth: 900,
+    minWidth: 1000,
     skipTaskbar: true
   });
+
+  root.win = win;
 
   try {
     await server(port);

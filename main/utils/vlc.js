@@ -10,7 +10,7 @@ function playOnVlc(url, fileName) {
       '--video-on-top',
       '--quiet',
       `--meta-title=${JSON.stringify(fileName)}`,
-      url
+      url,
     ];
 
     proc = spawn(path, args);
@@ -33,5 +33,5 @@ function kill() {
 module.exports = {
   playOnVlc,
   kill,
-  isVlcPresent
+  isVlcPresent,
 };

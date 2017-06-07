@@ -1,3 +1,4 @@
+/* eslint-disable react/no-did-mount-set-state,jsx-a11y/media-has-caption */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { remote } from 'electron';
@@ -41,20 +42,20 @@ class Media extends PureComponent {
     super(props);
 
     this.state = {
-      error: false
+      error: false,
     };
   }
 
   componentDidMount() {
     this.createPlayer();
     this.setState({
-      error: false
+      error: false,
     });
 
     this.player[0].on('error', () =>
       this.setState({
-        error: true
-      })
+        error: true,
+      }),
     );
   }
 
@@ -62,15 +63,15 @@ class Media extends PureComponent {
     this.createPlayer();
   }
 
+  componentWillUnmount() {
+    this.player[0].destroy();
+  }
+
   createPlayer() {
     if (!this.player) {
       this.player = plyr.setup(this.mediaRef);
       setTimeout(this.player[0].play, 500);
     }
-  }
-
-  componentWillUnmount() {
-    this.player[0].destroy();
   }
 
   streamOnVlc = () => {
@@ -93,14 +94,14 @@ class Media extends PureComponent {
 
 Media.propTypes = {
   src: PropTypes.string.isRequired,
-  fileName: PropTypes.string.isRequired
+  fileName: PropTypes.string.isRequired,
 };
 
 Media.defaultProps = {
   onInit() {},
   options: {
-    fluid: true
-  }
+    fluid: true,
+  },
 };
 
 export default Media;

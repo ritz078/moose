@@ -6,6 +6,8 @@ import prettyBytes from 'pretty-bytes';
 import { isEqual } from 'lodash';
 import Description from './Description';
 import { showToast } from './Toast';
+import getCategoryIcon from '../utils/getCategoryIcon';
+import { FixedWidthDiv } from '../utils/commonStyles';
 
 export const Details = styled.div`
   align-items: center;
@@ -44,7 +46,7 @@ export const IconWrapper = styled.div`
   display: inline-block;
   flex: 0.4 !important;
   text-align: center;
-  color: #aaa;
+  color: #666;
   &:hover {
     color: #000;
   }
@@ -53,26 +55,20 @@ export const IconWrapper = styled.div`
 export default class DownloadTile extends Component {
   static propTypes = {
     downloadData: PropTypes.shape({
-      progress: PropTypes.number
+      progress: PropTypes.number,
     }),
     details: PropTypes.shape({
       name: PropTypes.string,
-      infoHash: PropTypes.string
+      infoHash: PropTypes.string,
     }).isRequired,
     index: PropTypes.number.isRequired,
     onClick: PropTypes.func.isRequired,
     selectedIndex: PropTypes.number.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
   static defaultProps = {
-    downloadData: {}
+    downloadData: {},
   };
 
   shouldComponentUpdate(nextProps) {
@@ -93,7 +89,7 @@ export default class DownloadTile extends Component {
       {
         type: 'question',
         message: `Do you want to permanently delete the files for ${name} from the disk?`,
-        buttons: ['OK', 'Cancel']
+        buttons: ['OK', 'Cancel'],
       },
       (response) => {
         if (response === 0) {
@@ -101,14 +97,14 @@ export default class DownloadTile extends Component {
 
           this.props.dispatch({
             type: 'REMOVE_FROM_DOWNLOAD_LIST',
-            payload: infoHash
+            payload: infoHash,
           });
 
           ipcRenderer.once('removed_torrent_files', () => {
             showToast(`Sucessfully removed ${name} from the disk.`, 'success');
           });
         }
-      }
+      },
     );
   };
 
@@ -123,7 +119,7 @@ export default class DownloadTile extends Component {
       {
         type: 'question',
         message: `Do you want to delete the torrent for ${name} ?`,
-        buttons: ['OK', 'Cancel']
+        buttons: ['OK', 'Cancel'],
       },
       (response) => {
         if (response === 0) {
@@ -131,15 +127,12 @@ export default class DownloadTile extends Component {
 
           this.props.dispatch({
             type: 'REMOVE_FROM_DOWNLOAD_LIST',
-            payload: infoHash
+            payload: infoHash,
           });
 
-          showToast(
-            `Sucessfully removed ${name} from download list`,
-            'success'
-          );
+          showToast(`Sucessfully removed ${name} from download list`, 'success');
         }
-      }
+      },
     );
   };
 
@@ -149,7 +142,10 @@ export default class DownloadTile extends Component {
     return (
       <div>
         <ContentTitle index={index} onClick={() => onClick(index)}>
-          <div style={{ width: '30px' }}>{index + 1}</div>
+          <FixedWidthDiv width="30px">{index + 1}</FixedWidthDiv>
+          <FixedWidthDiv width="40px">
+            {getCategoryIcon(`${details.category.name} | ${details.subcategory.name}`)}
+          </FixedWidthDiv>
           <Name>{details.name}</Name>
           <Details>
             <div>{Math.round(downloadData.progress || 0)} %</div>
@@ -173,11 +169,7 @@ export default class DownloadTile extends Component {
           </Details>
         </ContentTitle>
         {selectedIndex === index &&
-          <Description
-            customDetails={downloadData}
-            showOnlyDetails
-            showProgress
-          />}
+          <Description customDetails={downloadData} showOnlyDetails showProgress />}
       </div>
     );
   }

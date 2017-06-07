@@ -3,7 +3,9 @@ import { cloneDeep } from 'lodash';
 
 const initialState = {
   data: [],
-  searchTerm: ''
+  searchTerm: '',
+  loading: false,
+  hasNextPage: false,
 };
 
 const resultsReducer = createReducer(initialState, {
@@ -13,16 +15,21 @@ const resultsReducer = createReducer(initialState, {
       newState.data = newState.data.concat(action.payload.data);
       newState.searchTerm = action.payload.searchTerm;
       newState.page = action.payload.page;
+      newState.hasNextPage = action.payload.hasNextPage;
       return newState;
     }
-    return action.payload;
+    return Object.assign({}, state, action.payload);
   },
 
-  RESET_RESULTS: state =>
+  START_RESULTS_LOADING: state =>
     Object.assign({}, state, {
-      data: [],
-      searchTerm: ''
-    })
+      loading: true,
+    }),
+
+  STOP_RESULTS_LOADING: state =>
+    Object.assign({}, state, {
+      loading: false,
+    }),
 });
 
 export default resultsReducer;

@@ -27,7 +27,7 @@ const downloadReducer = createReducer([], {
     return cloned;
   },
 
-  SET_DOWNLOADS: (state, { payload }) => payload
+  SET_DOWNLOADS: (state, { payload }) => payload,
 });
 
 export default downloadReducer;

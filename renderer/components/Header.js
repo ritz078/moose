@@ -52,18 +52,18 @@ const ClearInput = styled.i`
 @withRedux(initStore)
 export default class Header extends PureComponent {
   static propTypes = {
-    dispatch: PropTypes.func
+    dispatch: PropTypes.func,
   };
 
   static defaultProps = {
-    dispatch() {}
+    dispatch() {},
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      searchTerm: ''
+      searchTerm: '',
     };
   }
 
@@ -73,35 +73,35 @@ export default class Header extends PureComponent {
     const input = this.inputRef.value;
 
     this.setState({
-      searchTerm: input
+      searchTerm: input,
     });
 
     this.props.dispatch({
       type: 'SET_PAGE',
-      payload: 1
+      payload: 1,
     });
 
     this.props.dispatch({
       type: 'SET_SEARCHTERM',
-      payload: input
+      payload: input,
     });
 
     if (isMagnet(input)) {
       this.props.dispatch({
         type: 'FETCH_DETAILS',
-        payload: input
+        payload: input,
       });
     } else {
       this.props.dispatch({
         type: 'SET_SORT_ORDER',
         payload: {
           sortBy: 'desc',
-          orderBy: 'seeds'
-        }
+          orderBy: 'seeds',
+        },
       });
       this.props.dispatch({
         type: 'FETCH_RESULTS',
-        payload: input
+        payload: input,
       });
     }
   };
@@ -109,7 +109,7 @@ export default class Header extends PureComponent {
   clearInput = () => {
     this.inputRef.value = '';
     this.setState({
-      searchTerm: ''
+      searchTerm: '',
     });
   };
 

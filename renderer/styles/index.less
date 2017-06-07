@@ -1,9 +1,9 @@
 @import "~spectre.css/spectre.less";
-@import "~spectre.css/spectre-exp.less";
 @import url("//cdn.materialdesignicons.com/1.9.32/css/materialdesignicons.min.css");
 @import (less) '~react-loading-bar/dist/index.css';
 @import (less) '~react-toastify/dist/ReactToastify.min.css';
 @import (less) "~rc-slider/assets/index.css";
+@import (less) "~react-lazy-card/dist/lazyCard.css";
 @import "~plyr/src/less/plyr.less";
 @import "./nprogress.less";
 
@@ -174,4 +174,19 @@ html {
 
 .plyr input[type='range']{
   -webkit-appearance: none;
+}
+
+.loading-results:before{
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 9;
+}
+
+.rs-img {
+  background-size: contain !important;
 }

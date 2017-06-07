@@ -1,18 +1,28 @@
 const WebTorrent = require('webtorrent');
 const { ipcMain, app } = require('electron');
 const mime = require('mime');
+const root = require('window-or-global');
 const prettyBytes = require('pretty-bytes');
 const rimraf = require('rimraf');
 const downloadsFolder = require('downloads-folder');
 const { readConfig } = require('snape-config');
 const decorateTorrentInfo = require('../utils/decorateTorrentInfo');
+const { logError, logSuccess } = require('../utils/logEmitter');
+const notify = require('../utils/notify');
 
 const client = new WebTorrent();
 
+function onTorrentDone(name) {
+  const msg = `Completed downloading ${name}`;
+  // eslint-disable-next-line no-unused-expressions
+  root.win.isFocused() ? logSuccess(msg) : notify(msg);
+}
+
 function addTorrent(infoHash) {
-  client.add(infoHash, {
-    path: downloadsFolder()
+  const torrent = client.add(infoHash, {
+    path: downloadsFolder(),
   });
+  torrent.on('done', () => onTorrentDone(torrent.name));
 }
 
 function init() {
@@ -39,10 +49,13 @@ ipcMain.on('init_download_polling', (event) => {
         files: torrent.files.map((file, i) => ({
           name: file.name,
           type: mime.lookup(file.name),
+          // eslint-disable-next-line no-mixed-operators
           progress: Math.round(file.downloaded / file.length * 100),
           size: prettyBytes(file.length),
-          slug: `${torrent.infoHash}/${i}/${file.name}`
-        }))
+          slug: `${torrent.infoHash}/${i}/${file.name}`,
+          done: file.done,
+          path: `${torrent.path}/${file.path}`,
+        })),
       };
     });
 
@@ -58,9 +71,7 @@ ipcMain.on('end_download_polling', () => {
   clearInterval(interval);
 });
 
-ipcMain.on('add_torrent_to_download', (event, infoHash) =>
-  addTorrent(infoHash)
-);
+ipcMain.on('add_torrent_to_download', (event, infoHash) => addTorrent(infoHash));
 
 ipcMain.on('remove_torrent', (event, infoHash) => client.remove(infoHash));
 
@@ -88,7 +99,13 @@ app.on('before-quit', () => {
   clearInterval(interval);
 });
 
+client.on('error', err => logError(err.message));
+
+client.torrents.forEach((torrent) => {
+  torrent.on('done', () => onTorrentDone(torrent.name));
+});
+
 module.exports = {
   init,
-  getTorrent
+  getTorrent,
 };

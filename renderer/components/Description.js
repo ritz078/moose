@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions,no-const-assign */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import classNames from 'classnames';
 import isRenderer from 'is-electron-renderer';
-import { remote } from 'electron';
+import { remote, shell } from 'electron';
 import withRedux from 'next-redux-wrapper';
 import initStore from '../store';
 import MediaModal from './MediaModal';
@@ -12,6 +12,7 @@ import getFileType from '../utils/fileType';
 import colors from '../constants/colors';
 import castUtil from '../utils/cast';
 import isPlayable, { isVideo, isImage, isAudio } from '../utils/isPlayable';
+import { FixedWidthTd } from '../utils/commonStyles';
 
 let vlc;
 if (isRenderer) {
@@ -69,9 +70,23 @@ const ProgressContainer = styled.td`
   padding: 0 22px 6px 10px;
 `;
 
+const Name = styled.td`
+  max-width: 270px;
+  color: ${props => (props.isDownloaded ? colors.primary : 'black')};
+  
+  ${props =>
+    props.isDownloaded &&
+    css`
+    color: ${colors.primary};
+    &:hover {
+      color: ${colors.darkPrimary}
+    }
+  `}
+`;
+
 @withRedux(initStore, ({ cast, details }) => ({
   cast,
-  details
+  details,
 }))
 export default class Description extends PureComponent {
   static propTypes = {
@@ -83,9 +98,10 @@ export default class Description extends PureComponent {
       files: PropTypes.shape({
         name: PropTypes.string,
         type: PropTypes.string,
-        size: PropTypes.string
-      })
+        size: PropTypes.string,
+      }),
     }),
+    // eslint-disable-next-line react/require-default-props
     customDetails: PropTypes.shape({
       name: PropTypes.string,
       infoHash: PropTypes.string,
@@ -93,14 +109,14 @@ export default class Description extends PureComponent {
       files: PropTypes.shape({
         name: PropTypes.string,
         type: PropTypes.string,
-        size: PropTypes.string
-      })
+        size: PropTypes.string,
+      }),
     }),
     cast: PropTypes.shape({
-      selectedPlayer: PropTypes.any
+      selectedPlayer: PropTypes.any,
     }).isRequired,
     showOnlyDetails: PropTypes.bool,
-    showProgress: PropTypes.bool
+    showProgress: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -108,7 +124,7 @@ export default class Description extends PureComponent {
     dispatch() {},
     details: {},
     fixed: false,
-    showProgress: false
+    showProgress: false,
   };
 
   constructor(props) {
@@ -117,7 +133,7 @@ export default class Description extends PureComponent {
     this.state = {
       streaming: false,
       selectedIndex: null,
-      isVlcPresent: true
+      isVlcPresent: true,
     };
   }
 
@@ -125,53 +141,73 @@ export default class Description extends PureComponent {
     this.isVlcPresent();
   }
 
-  startStream = (e) => {
-    const { customDetails, details, cast, dispatch } = this.props;
+  getFiles = () => {
+    const { details, showOnlyDetails, showProgress, customDetails } = this.props;
 
-    const selectedIndex = e.target.dataset.id;
-
+    // eslint-disable-next-line no-const-assign
     const d = customDetails || details;
 
-    const file = d.files[selectedIndex];
+    const x =
+      d &&
+      d.files &&
+      d.files.map((file, i) => {
+        const streamIcon = classNames('mdi tooltip tooltip-left fs-18', {
+          'mdi-play-circle-outline': isVideo(file.name) || isAudio(file.name),
+          'mdi-eye': isImage(file.name),
+        });
 
-    // if a cast player is selected then stream on the chromecast
-    if (cast.selectedPlayer) {
-      const fileDetails = {
-        name: file.name,
-        index: e.target.dataset.id,
-        infoHash: d.infoHash,
-        type: file.type
-      };
+        const nameClass = classNames('text-ellipsis', {
+          pointer: file.done,
+        });
 
-      castUtil.play(fileDetails, (err) => {
-        if (!err) {
-          dispatch({
-            type: 'SET_STREAMING_FILE',
-            payload: fileDetails
-          });
-        } else {
-          dispatch({
-            type: 'REMOVE_STREAMING_FILE'
-          });
-        }
+        return (
+          <tr key={file.name}>
+            <FixedWidthTd width="40px">{this.getFileIcon(file.type)}</FixedWidthTd>
+            <Name
+              isDownloaded={file.done}
+              className={nameClass}
+              onClick={() => this.openFile(file)}
+            >
+              {file.name}
+            </Name>
+
+            {showProgress &&
+              <ProgressContainer>
+                <progress className="progress" max="100" value={Math.min(file.progress, 100)} />
+              </ProgressContainer>}
+
+            <td>{file.size}</td>
+            {this.state.isVlcPresent &&
+              <FixedWidthTd width="40px">
+                {isVideo(file.name) &&
+                  <VlcIcon
+                    data-id={i}
+                    data-tooltip="Play on VLC"
+                    onClick={this.streamOnVlc}
+                    className="mdi mdi-vlc fs-18 tooltip tooltip-left"
+                  />}
+              </FixedWidthTd>}
+            <FixedWidthTd width="40px">
+              {isPlayable(file.name) &&
+                <button className="btn btn-link" onClick={this.startStream} data-id={i}>
+                  <i
+                    className={streamIcon}
+                    data-tooltip={isVideo(file.name) ? 'Play Video' : 'View Image'}
+                    data-id={i}
+                  />
+                </button>}
+            </FixedWidthTd>
+          </tr>
+        );
       });
-      return;
-    }
 
-    dispatch({
-      type: 'SET_SELECTED_TORRENT',
-      payload: file
-    });
-
-    // if no cast is connected stream in the app
-    this.setState({
-      streaming: true,
-      selectedIndex
-    });
-  };
-
-  closeModal = () => {
-    this.setState({ streaming: false });
+    return (
+      <Files showOnlyDetails={showOnlyDetails}>
+        <Table>
+          <tbody>{x}</tbody>
+        </Table>
+      </Files>
+    );
   };
 
   getFileIcon = (mime) => {
@@ -203,11 +239,15 @@ export default class Description extends PureComponent {
     );
   };
 
+  closeModal = () => {
+    this.setState({ streaming: false });
+  };
+
   isVlcPresent = () => {
     vlc.isVlcPresent(isVlcPresent =>
       this.setState({
-        isVlcPresent
-      })
+        isVlcPresent,
+      }),
     );
   };
 
@@ -219,63 +259,54 @@ export default class Description extends PureComponent {
     vlc.playOnVlc(`http://127.0.0.1:${window.location.port}/api/download/${file.slug}`, file.name);
   };
 
-  getFiles = () => {
-    const { details, showOnlyDetails, showProgress, customDetails } = this.props;
+  openFile = (file) => {
+    if (!file.done) return;
+    shell.openItem(file.path);
+  };
 
-    // eslint-disable-next-line no-const-assign
+  startStream = (e) => {
+    const { customDetails, details, cast, dispatch } = this.props;
+
+    const selectedIndex = e.target.dataset.id;
+
     const d = customDetails || details;
 
-    const x =
-      d &&
-      d.files &&
-      d.files.map((file, i) => {
-        const streamIcon = classNames('mdi tooltip tooltip-left fs-18', {
-          'mdi-play-circle-outline': isVideo(file.name) || isAudio(file.name),
-          'mdi-eye': isImage(file.name)
-        });
+    const file = d.files[selectedIndex];
 
-        return (
-          <tr key={file.name}>
-            <td style={{ width: '50px' }}>{this.getFileIcon(file.type)}</td>
-            <td style={{ maxWidth: '270px' }} className="text-ellipsis">{file.name}</td>
+    // if a cast player is selected then stream on the chromecast
+    if (cast.selectedPlayer) {
+      const fileDetails = {
+        name: file.name,
+        index: e.target.dataset.id,
+        infoHash: d.infoHash,
+        type: file.type,
+      };
 
-            {showProgress &&
-              <ProgressContainer>
-                <progress className="progress" max="100" value={Math.min(file.progress, 100)} />
-              </ProgressContainer>}
-
-            <td>{file.size}</td>
-            {this.state.isVlcPresent &&
-              <td>
-                {isVideo(file.name) &&
-                  <VlcIcon
-                    data-id={i}
-                    data-tooltip="Play on VLC"
-                    onClick={this.streamOnVlc}
-                    className="mdi mdi-vlc fs-18 tooltip tooltip-left"
-                  />}
-              </td>}
-            <td>
-              {isPlayable(file.name) &&
-                <button className="btn btn-link" onClick={this.startStream} data-id={i}>
-                  <i
-                    className={streamIcon}
-                    data-tooltip={isVideo(file.name) ? 'Play Video' : 'View Image'}
-                    data-id={i}
-                  />
-                </button>}
-            </td>
-          </tr>
-        );
+      castUtil.play(fileDetails, (err) => {
+        if (!err) {
+          dispatch({
+            type: 'SET_STREAMING_FILE',
+            payload: fileDetails,
+          });
+        } else {
+          dispatch({
+            type: 'REMOVE_STREAMING_FILE',
+          });
+        }
       });
+      return;
+    }
 
-    return (
-      <Files showOnlyDetails={showOnlyDetails}>
-        <Table>
-          <tbody>{x}</tbody>
-        </Table>
-      </Files>
-    );
+    dispatch({
+      type: 'SET_SELECTED_TORRENT',
+      payload: file,
+    });
+
+    // if no cast is connected stream in the app
+    this.setState({
+      streaming: true,
+      selectedIndex,
+    });
   };
 
   render() {

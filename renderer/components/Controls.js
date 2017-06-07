@@ -55,8 +55,18 @@ export default class Controls extends PureComponent {
       sliderValue: 0,
       sliderMax: 0,
       title: 'Playing',
-      isPaused: false
+      isPaused: false,
     };
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.interval = this.startPolling();
+    }, 500);
+  }
+
+  componentWillUnmount() {
+    this.stopPolling();
   }
 
   startPolling() {
@@ -69,22 +79,12 @@ export default class Controls extends PureComponent {
             this.setState({
               sliderValue: status.currentTime,
               sliderMax: status.media.duration,
-              title: status.media.metadata.title
+              title: status.media.metadata.title,
             });
           }
         });
       }
     }, 1000);
-  }
-
-  stopPolling = () => {
-    clearInterval(this.interval);
-  };
-
-  componentDidMount() {
-    setTimeout(() => {
-      this.interval = this.startPolling();
-    }, 500);
   }
 
   pause = () => {
@@ -95,7 +95,7 @@ export default class Controls extends PureComponent {
       }
       clearInterval(this.interval);
       this.setState({
-        isPaused: true
+        isPaused: true,
       });
     });
   };
@@ -109,7 +109,7 @@ export default class Controls extends PureComponent {
       }
     });
     this.setState({
-      isPaused: false
+      isPaused: false,
     });
   };
 
@@ -121,7 +121,7 @@ export default class Controls extends PureComponent {
       }
       this.stopPolling();
       this.setState({
-        isPaused: true
+        isPaused: true,
       });
     });
   };
@@ -133,21 +133,21 @@ export default class Controls extends PureComponent {
         return;
       }
       this.setState({
-        sliderValue: time
+        sliderValue: time,
       });
     });
   };
 
-  componentWillUnmount() {
-    this.stopPolling();
-  }
+  stopPolling = () => {
+    clearInterval(this.interval);
+  };
 
   render() {
     const { isPaused, sliderMax, sliderValue, title } = this.state;
 
     const playClass = cn('mdi', {
       'mdi-play': isPaused,
-      'mdi-pause': !isPaused
+      'mdi-pause': !isPaused,
     });
     return (
       <Wrapper>

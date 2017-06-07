@@ -12,8 +12,8 @@ module.exports = function (torrent) {
       name: file.name,
       size: prettyBytes(file.length),
       type: mime.lookup(file.name),
-      slug: `${torrent.infoHash}/${i}/${file.name}`
+      slug: `${torrent.infoHash}/${i}/${file.name}`,
     })),
-    name: torrent.name
+    name: torrent.name,
   };
 };

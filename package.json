@@ -1,7 +1,7 @@
 {
   "name": "snape",
-  "version": "0.1.6",
-  "description": "A web application to search and stream torrents.",
+  "version": "0.1.7",
+  "description": "A torrent client to search, stream and download torrents. Play music, view images and stream videos.",
   "engines": {
     "node": ">=6"
   },

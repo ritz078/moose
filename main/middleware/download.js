@@ -14,6 +14,7 @@ const client = new WebTorrent();
 
 function onTorrentDone(name) {
   const msg = `Completed downloading ${name}`;
+  // eslint-disable-next-line no-unused-expressions
   root.win.isFocused() ? logSuccess(msg) : notify(msg);
 }
 
@@ -48,6 +49,7 @@ ipcMain.on('init_download_polling', (event) => {
         files: torrent.files.map((file, i) => ({
           name: file.name,
           type: mime.lookup(file.name),
+          // eslint-disable-next-line no-mixed-operators
           progress: Math.round(file.downloaded / file.length * 100),
           size: prettyBytes(file.length),
           slug: `${torrent.infoHash}/${i}/${file.name}`,

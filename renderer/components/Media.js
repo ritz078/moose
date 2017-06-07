@@ -1,3 +1,4 @@
+/* eslint-disable react/no-did-mount-set-state,jsx-a11y/media-has-caption */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { remote } from 'electron';
@@ -62,15 +63,15 @@ class Media extends PureComponent {
     this.createPlayer();
   }
 
+  componentWillUnmount() {
+    this.player[0].destroy();
+  }
+
   createPlayer() {
     if (!this.player) {
       this.player = plyr.setup(this.mediaRef);
       setTimeout(this.player[0].play, 500);
     }
-  }
-
-  componentWillUnmount() {
-    this.player[0].destroy();
   }
 
   streamOnVlc = () => {

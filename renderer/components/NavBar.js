@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Ink from 'react-ink';
 import styled, { css } from 'styled-components';
+import isRenderer from 'is-electron-renderer';
 import Router from 'next/router';
 import NotificationBadge, { Effect } from 'react-notification-badge';
 import Link from 'next/link';
@@ -55,12 +56,12 @@ export default class MenuBar extends PureComponent {
     });
   }
 
-  isCurrentRoute = path => path === Router.pathname;
+  isCurrentRoute = path => isRenderer && path === Router.pathname;
 
   render() {
     const badgeContainerStyle = {
       position: 'absolute',
-      top: 1,
+      top: 3,
       right: 1,
     };
 

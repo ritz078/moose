@@ -12,6 +12,7 @@ import getFileType from '../utils/fileType';
 import colors from '../constants/colors';
 import castUtil from '../utils/cast';
 import isPlayable, { isVideo, isImage, isAudio } from '../utils/isPlayable';
+import { FixedWidthTd } from '../utils/commonStyles';
 
 let vlc;
 if (isRenderer) {
@@ -100,6 +101,7 @@ export default class Description extends PureComponent {
         size: PropTypes.string,
       }),
     }),
+    // eslint-disable-next-line react/require-default-props
     customDetails: PropTypes.shape({
       name: PropTypes.string,
       infoHash: PropTypes.string,
@@ -138,6 +140,129 @@ export default class Description extends PureComponent {
   componentDidMount() {
     this.isVlcPresent();
   }
+
+  getFiles = () => {
+    const { details, showOnlyDetails, showProgress, customDetails } = this.props;
+
+    // eslint-disable-next-line no-const-assign
+    const d = customDetails || details;
+
+    const x =
+      d &&
+      d.files &&
+      d.files.map((file, i) => {
+        const streamIcon = classNames('mdi tooltip tooltip-left fs-18', {
+          'mdi-play-circle-outline': isVideo(file.name) || isAudio(file.name),
+          'mdi-eye': isImage(file.name),
+        });
+
+        const nameClass = classNames('text-ellipsis', {
+          pointer: file.done,
+        });
+
+        return (
+          <tr key={file.name}>
+            <FixedWidthTd width="40px">{this.getFileIcon(file.type)}</FixedWidthTd>
+            <Name
+              isDownloaded={file.done}
+              className={nameClass}
+              onClick={() => this.openFile(file)}
+            >
+              {file.name}
+            </Name>
+
+            {showProgress &&
+              <ProgressContainer>
+                <progress className="progress" max="100" value={Math.min(file.progress, 100)} />
+              </ProgressContainer>}
+
+            <td>{file.size}</td>
+            {this.state.isVlcPresent &&
+              <FixedWidthTd width="40px">
+                {isVideo(file.name) &&
+                  <VlcIcon
+                    data-id={i}
+                    data-tooltip="Play on VLC"
+                    onClick={this.streamOnVlc}
+                    className="mdi mdi-vlc fs-18 tooltip tooltip-left"
+                  />}
+              </FixedWidthTd>}
+            <FixedWidthTd width="40px">
+              {isPlayable(file.name) &&
+                <button className="btn btn-link" onClick={this.startStream} data-id={i}>
+                  <i
+                    className={streamIcon}
+                    data-tooltip={isVideo(file.name) ? 'Play Video' : 'View Image'}
+                    data-id={i}
+                  />
+                </button>}
+            </FixedWidthTd>
+          </tr>
+        );
+      });
+
+    return (
+      <Files showOnlyDetails={showOnlyDetails}>
+        <Table>
+          <tbody>{x}</tbody>
+        </Table>
+      </Files>
+    );
+  };
+
+  getFileIcon = (mime) => {
+    let icon;
+
+    switch (getFileType(mime)) {
+      case 'audio':
+        icon = 'mdi-music-note';
+        break;
+      case 'video':
+        icon = 'mdi-movie';
+        break;
+      case 'application':
+        icon = 'mdi-application';
+        break;
+      case 'zip':
+        icon = 'mdi-zip-box';
+        break;
+      case 'image':
+        icon = 'mdi-file-image';
+        break;
+      default:
+        icon = 'mdi-file-document';
+    }
+    return (
+      <TileWrapper color={colors.primary}>
+        <i style={{ fontSize: '18px' }} className={`mdi ${icon} centered`} />
+      </TileWrapper>
+    );
+  };
+
+  closeModal = () => {
+    this.setState({ streaming: false });
+  };
+
+  isVlcPresent = () => {
+    vlc.isVlcPresent(isVlcPresent =>
+      this.setState({
+        isVlcPresent,
+      }),
+    );
+  };
+
+  streamOnVlc = (e) => {
+    const d = this.props.customDetails || this.props.details;
+    const selectedIndex = e.target.dataset.id;
+    const file = d.files[selectedIndex];
+    vlc.kill();
+    vlc.playOnVlc(`http://127.0.0.1:${window.location.port}/api/download/${file.slug}`, file.name);
+  };
+
+  openFile = (file) => {
+    if (!file.done) return;
+    shell.openItem(file.path);
+  };
 
   startStream = (e) => {
     const { customDetails, details, cast, dispatch } = this.props;
@@ -182,129 +307,6 @@ export default class Description extends PureComponent {
       streaming: true,
       selectedIndex,
     });
-  };
-
-  closeModal = () => {
-    this.setState({ streaming: false });
-  };
-
-  getFileIcon = (mime) => {
-    let icon;
-
-    switch (getFileType(mime)) {
-      case 'audio':
-        icon = 'mdi-music-note';
-        break;
-      case 'video':
-        icon = 'mdi-movie';
-        break;
-      case 'application':
-        icon = 'mdi-application';
-        break;
-      case 'zip':
-        icon = 'mdi-zip-box';
-        break;
-      case 'image':
-        icon = 'mdi-file-image';
-        break;
-      default:
-        icon = 'mdi-file-document';
-    }
-    return (
-      <TileWrapper color={colors.primary}>
-        <i style={{ fontSize: '18px' }} className={`mdi ${icon} centered`} />
-      </TileWrapper>
-    );
-  };
-
-  isVlcPresent = () => {
-    vlc.isVlcPresent(isVlcPresent =>
-      this.setState({
-        isVlcPresent,
-      }),
-    );
-  };
-
-  streamOnVlc = (e) => {
-    const d = this.props.customDetails || this.props.details;
-    const selectedIndex = e.target.dataset.id;
-    const file = d.files[selectedIndex];
-    vlc.kill();
-    vlc.playOnVlc(`http://127.0.0.1:${window.location.port}/api/download/${file.slug}`, file.name);
-  };
-
-  openFile = (file) => {
-    if (!file.done) return;
-    shell.openItem(file.path);
-  };
-
-  getFiles = () => {
-    const { details, showOnlyDetails, showProgress, customDetails } = this.props;
-
-    // eslint-disable-next-line no-const-assign
-    const d = customDetails || details;
-
-    const x =
-      d &&
-      d.files &&
-      d.files.map((file, i) => {
-        const streamIcon = classNames('mdi tooltip tooltip-left fs-18', {
-          'mdi-play-circle-outline': isVideo(file.name) || isAudio(file.name),
-          'mdi-eye': isImage(file.name),
-        });
-
-        const nameClass = classNames('text-ellipsis', {
-          pointer: file.done,
-        });
-
-        return (
-          <tr key={file.name}>
-            <td style={{ width: '50px' }}>{this.getFileIcon(file.type)}</td>
-            <Name
-              isDownloaded={file.done}
-              className={nameClass}
-              onClick={() => this.openFile(file)}
-            >
-              {file.name}
-            </Name>
-
-            {showProgress &&
-              <ProgressContainer>
-                <progress className="progress" max="100" value={Math.min(file.progress, 100)} />
-              </ProgressContainer>}
-
-            <td>{file.size}</td>
-            {this.state.isVlcPresent &&
-              <td>
-                {isVideo(file.name) &&
-                  <VlcIcon
-                    data-id={i}
-                    data-tooltip="Play on VLC"
-                    onClick={this.streamOnVlc}
-                    className="mdi mdi-vlc fs-18 tooltip tooltip-left"
-                  />}
-              </td>}
-            <td>
-              {isPlayable(file.name) &&
-                <button className="btn btn-link" onClick={this.startStream} data-id={i}>
-                  <i
-                    className={streamIcon}
-                    data-tooltip={isVideo(file.name) ? 'Play Video' : 'View Image'}
-                    data-id={i}
-                  />
-                </button>}
-            </td>
-          </tr>
-        );
-      });
-
-    return (
-      <Files showOnlyDetails={showOnlyDetails}>
-        <Table>
-          <tbody>{x}</tbody>
-        </Table>
-      </Files>
-    );
   };
 
   render() {

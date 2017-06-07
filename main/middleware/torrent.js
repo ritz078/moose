@@ -65,6 +65,7 @@ function stream(req, res, torrent) {
 
 function downloadTorrent(req, res) {
   readConfig((err, { download }) => {
+    // eslint-disable-next-line no-underscore-dangle
     const _infoHash = req.params.infoHash;
     let torrent;
 

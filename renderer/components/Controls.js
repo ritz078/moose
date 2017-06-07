@@ -59,6 +59,16 @@ export default class Controls extends PureComponent {
     };
   }
 
+  componentDidMount() {
+    setTimeout(() => {
+      this.interval = this.startPolling();
+    }, 500);
+  }
+
+  componentWillUnmount() {
+    this.stopPolling();
+  }
+
   startPolling() {
     return setInterval(() => {
       const player = getPlayer();
@@ -75,16 +85,6 @@ export default class Controls extends PureComponent {
         });
       }
     }, 1000);
-  }
-
-  stopPolling = () => {
-    clearInterval(this.interval);
-  };
-
-  componentDidMount() {
-    setTimeout(() => {
-      this.interval = this.startPolling();
-    }, 500);
   }
 
   pause = () => {
@@ -138,9 +138,9 @@ export default class Controls extends PureComponent {
     });
   };
 
-  componentWillUnmount() {
-    this.stopPolling();
-  }
+  stopPolling = () => {
+    clearInterval(this.interval);
+  };
 
   render() {
     const { isPaused, sliderMax, sliderValue, title } = this.state;

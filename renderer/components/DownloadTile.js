@@ -67,12 +67,6 @@ export default class DownloadTile extends Component {
     dispatch: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
   static defaultProps = {
     downloadData: {},
   };

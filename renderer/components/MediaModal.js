@@ -16,18 +16,6 @@ const ModalControl = styled.div`
   z-index: 10;
 `;
 
-const ImageLightbox = styled.div`
-  display: flex;
-  background-size:contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-image: ${props => `url('${props.source}')`};
-  height: 100vh;
-  width: 100%;
-  align-self: center;
-  z-index: 9;
-`;
-
 const CloseIcon = styled.i`
   font-size: 40px;
   cursor: pointer;

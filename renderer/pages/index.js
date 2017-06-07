@@ -1,4 +1,4 @@
-/* eslint-disable react/no-did-mount-set-state */
+/* eslint-disable react/no-did-mount-set-state,react/forbid-prop-types */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
@@ -47,7 +47,7 @@ export default class Home extends PureComponent {
     params: PropTypes.shape({
       searchTerm: PropTypes.string,
     }).isRequired,
-    cast: PropTypes.array,
+    cast: PropTypes.array.isRequired,
     download: PropTypes.array.isRequired,
     selectedTorrent: PropTypes.shape({
       name: PropTypes.string,
@@ -57,6 +57,7 @@ export default class Home extends PureComponent {
   static defaultProps = {
     results: {},
     dispatch() {},
+    selectedTorrent: null,
   };
 
   getContent() {
@@ -86,10 +87,10 @@ export default class Home extends PureComponent {
   };
 
   render() {
-    const { loading, details, cast, download, selectedTorrent, dispatch, results } = this.props;
+    const { loading, cast, download, selectedTorrent, dispatch, results } = this.props;
     return (
       <Layout
-        loading={loading || (details && details.loading) || results.loading}
+        loading={loading || results.loading}
         cast={cast}
         download={download}
         selectedTorrent={selectedTorrent}

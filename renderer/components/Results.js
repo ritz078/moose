@@ -29,10 +29,13 @@ const Table = styled.div`
 const Td = styled.div`
   border-bottom: 0.1rem solid #f1f1f1;
   padding: 10px 10px;
-  text-align: left;
   vertical-align: middle;
   flex: ${props => props.flex};
 `;
+
+Td.defaultProps = {
+  flex: 1,
+};
 
 const Tr = styled.div`
   display: flex;
@@ -115,8 +118,6 @@ export default class Results extends PureComponent {
     }
   }
 
-  isBeingDownloaded = infoHash => findIndex(this.props.download, o => o.infoHash === infoHash) >= 0;
-
   getDetails = (index) => {
     const { dispatch, results } = this.props;
     const { selectedIndex } = this.state;
@@ -152,21 +153,6 @@ export default class Results extends PureComponent {
     });
   };
 
-  addToDownload = (e, result) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (this.isBeingDownloaded(result.infoHash)) {
-      showToast('Already present in the download list', 'warning');
-      return;
-    }
-    this.addTorrentToDownload(result.infoHash);
-    showToast('Successfully added to the download list.', 'success');
-    this.props.dispatch({
-      type: 'ADD_TO_DOWNLOAD_LIST',
-      payload: result,
-    });
-  };
-
   getResult = (index, style) => {
     const { results } = this.props;
 
@@ -176,7 +162,7 @@ export default class Results extends PureComponent {
       'row-even': index % 2 === 0,
     });
 
-    const downloadClass = cn('mdi mdi-download fs-18 tooltip tooltip-left', {
+    const downloadClass = cn('mdi mdi-download fs-18', {
       downloading: this.isBeingDownloaded(result.magnetLink),
     });
 
@@ -201,24 +187,15 @@ export default class Results extends PureComponent {
           </Td>
           <Td flex={2}>{result.uploadDate}</Td>
           <Td flex={2}>{result.size}</Td>
-          <Td flex={1}>{result.seeders}</Td>
-          <Td flex={1}>{result.leechers}</Td>
+          <Td>{result.seeders}</Td>
+          <Td>{result.leechers}</Td>
           <Td flex={0.5} onClick={e => this.addToDownload(e, result)}>
-            <i
-              className={downloadClass}
-              data-tooltip={this.isBeingDownloaded(result.magnetLink) ? 'Downloading' : 'Download'}
-            />
+            <i className={downloadClass} />
           </Td>
         </DefaultRow>
         {this.state.selectedIndex === index && <Description />}
       </Tr>
     );
-  };
-
-  fetchResults = () => {
-    this.props.dispatch({
-      type: 'FETCH_RESULTS',
-    });
   };
 
   setSortOrder = (e: MouseEvent | KeyboardEvent) => {
@@ -250,35 +227,9 @@ export default class Results extends PureComponent {
     this.fetchResults();
   };
 
-  loadMoreRows = () => {
-    if (this.props.results.loading) return;
-    this.props.dispatch({
-      type: 'SET_PAGE',
-      payload: this.props.params.page + 1,
-    });
-    this.fetchResults();
-  };
-
-  rowRenderer = ({ index, style }) => {
-    const { results } = this.props;
-    if (results.data[index]) {
-      return this.getResult(index, style);
-    }
-    return <div key="loading" style={style} className="loading" />;
-  };
-
-  isRowLoaded = ({ index }) => {
-    const { results } = this.props;
-    return !!results.data[index];
-  };
-
   getHeight = ({ index }) => {
     if (index === this.state.selectedIndex) return 350;
     return 41;
-  };
-
-  addTorrentToDownload = (infoHash) => {
-    ipcRenderer.send('add_torrent_to_download', infoHash);
   };
 
   getTableHeader = () => {
@@ -303,14 +254,63 @@ export default class Results extends PureComponent {
         <Td data-sort-type="size" onClick={this.setSortOrder} className="pointer" flex={2}>
           File Size <SortIcon className={getClass('size')} />
         </Td>
-        <Td data-sort-type="seeds" onClick={this.setSortOrder} className="pointer" flex={1}>
+        <Td data-sort-type="seeds" onClick={this.setSortOrder} className="pointer">
           Seeds<SortIcon className={getClass('seeds')} />
         </Td>
-        <Td flex={1}>Leech</Td>
+        <Td>Leech</Td>
         <Td flex={0.5} />
       </Tr>
     );
   };
+
+  addTorrentToDownload = (infoHash) => {
+    ipcRenderer.send('add_torrent_to_download', infoHash);
+  };
+
+  isRowLoaded = ({ index }) => {
+    const { results } = this.props;
+    return !!results.data[index];
+  };
+
+  rowRenderer = ({ index, style }) => {
+    const { results } = this.props;
+    if (results.data[index]) {
+      return this.getResult(index, style);
+    }
+    return <div key="loading" style={style} className="loading" />;
+  };
+
+  loadMoreRows = () => {
+    if (this.props.results.loading) return;
+    this.props.dispatch({
+      type: 'SET_PAGE',
+      payload: this.props.params.page + 1,
+    });
+    this.fetchResults();
+  };
+
+  fetchResults = () => {
+    this.props.dispatch({
+      type: 'FETCH_RESULTS',
+    });
+  };
+
+  addToDownload = (e, result) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (this.isBeingDownloaded(result.infoHash)) {
+      showToast('Already present in the download list', 'warning');
+      return;
+    }
+    this.addTorrentToDownload(result.infoHash);
+    showToast('Successfully added to the download list.', 'success');
+    this.props.dispatch({
+      type: 'ADD_TO_DOWNLOAD_LIST',
+      payload: result,
+    });
+  };
+
+  isBeingDownloaded = infoHash => findIndex(this.props.download, o => o.infoHash === infoHash) >= 0;
 
   render() {
     const { results } = this.props;

@@ -1,85 +1,86 @@
-const { app, BrowserWindow, Menu } = require('electron')
-const getPort = require('get-port')
-const fixPath = require('fix-path')
-const dev = require('electron-is-dev')
-const root = require('window-or-global')
-const { moveToApplications } = require('electron-lets-move')
-const unhandled = require('electron-unhandled')
-const downloadTorrent = require('./middleware/download')
-const template = require('./template')
+const { app, BrowserWindow, Menu } = require('electron');
+const getPort = require('get-port');
+const fixPath = require('fix-path');
+const dev = require('electron-is-dev');
+const root = require('window-or-global');
+const { moveToApplications } = require('electron-lets-move');
+const unhandled = require('electron-unhandled');
+const downloadTorrent = require('./middleware/download');
+const template = require('./template');
 
 // adds debug features like hotkeys for triggering dev tools and reload
-require('electron-debug')()
+require('electron-debug')();
 
-unhandled()
+unhandled();
 
-const server = require('./server')
-const { addToConfig, readConfig } = require('snape-config')
+const server = require('./server');
+const { addToConfig, readConfig } = require('snape-config');
 
-let win
+let win;
 
-app.setName('Snape')
+app.setName('Snape');
 
 // Makes sure where inheriting the correct path
 // Within the bundled app, the path would otherwise be different
-fixPath()
+fixPath();
 
 const isAlreadyRunning = app.makeSingleInstance(() => {
   if (win) {
     if (win.isMinimized()) {
-      win.restore()
+      win.restore();
     }
 
-    win.show()
+    win.show();
   }
-})
+});
 
 if (isAlreadyRunning) {
-  app.exit()
+  app.exit();
 }
 
 async function createWindow() {
-  let port
+  let port;
   try {
-    port = await getPort()
+    port = await getPort();
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
   // after the main starts create the electron browser window
   // start building the next.js app
   win = new BrowserWindow({
     backgroundThrottling: false,
     height: 800,
+    backgroundColor: '#ffffff',
     width: 1000,
-    minWidth: 900,
+    minWidth: 1000,
     skipTaskbar: true
-  })
+  });
 
-  root.win = win
+  root.win = win;
 
   try {
-    await server(port)
-    downloadTorrent.init()
+    await server(port);
+    downloadTorrent.init();
     if (process.platform === 'darwin') {
-      app.dock.show()
+      app.dock.show();
     }
   } catch (err) {
-    return
+    return;
   }
 
-  win.loadURL(`http://localhost:${port}`)
+  win.loadURL(`http://localhost:${port}`);
 
-  Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
   if (dev) {
     const {
       default: installExtension,
       REACT_DEVELOPER_TOOLS,
       REDUX_DEVTOOLS
-    } = require('electron-devtools-installer')
+    } = require('electron-devtools-installer');
 
-    installExtension(REACT_DEVELOPER_TOOLS)
-    installExtension(REDUX_DEVTOOLS)
+    installExtension(REACT_DEVELOPER_TOOLS);
+    installExtension(REDUX_DEVTOOLS);
 
     // win.webContents.openDevTools(); // crashing the app
   }
@@ -89,30 +90,30 @@ app.on('ready', async () => {
   readConfig(async (err, { moveToApplicationsFolder }) => {
     if (moveToApplicationsFolder !== 'never') {
       try {
-        const moved = await moveToApplications()
+        const moved = await moveToApplications();
         if (!moved) {
           // the user asked not to move the app, it's up to the parent application
           // to store this information and not hassle them again.
-          addToConfig({ moveToApplicationsFolder: 'never' })
+          addToConfig({ moveToApplicationsFolder: 'never' });
         }
       } catch (error) {
         // log error, something went wrong whilst moving the app.
       }
     }
-  })
-  createWindow()
-})
+  });
+  createWindow();
+});
 
 app.on('window-all-closed', () => {
   if (process.platform === 'darwin') {
-    app.dock.hide()
+    app.dock.hide();
   } else {
-    app.exit()
+    app.exit();
   }
-})
+});
 
 app.on('activate', () => {
   if (!win) {
-    createWindow()
+    createWindow();
   }
-})
+});

@@ -10,6 +10,7 @@ import { InfiniteLoader, List, AutoSizer } from 'react-virtualized';
 import initStore from '../store';
 import Description from './Description';
 import { showToast } from './Toast';
+import getCategoryIcon from '../utils/getCategoryIcon';
 
 const Verified = styled.i`
   font-size: 14px;
@@ -101,8 +102,7 @@ export default class Results extends PureComponent {
     };
   }
 
-  isBeingDownloaded = infoHash =>
-    findIndex(this.props.download, o => o.infoHash === infoHash) >= 0;
+  isBeingDownloaded = infoHash => findIndex(this.props.download, o => o.infoHash === infoHash) >= 0;
 
   getDetails = (index) => {
     const { dispatch, results } = this.props;
@@ -168,15 +168,11 @@ export default class Results extends PureComponent {
     });
 
     return (
-      <Tr
-        key={result.id}
-        data-id={result.id}
-        style={style}
-        className={mainClass}
-      >
+      <Tr key={result.id} data-id={result.id} style={style} className={mainClass}>
         <DefaultRow onClick={() => this.getDetails(index)}>
           <Ink />
           <Td flex={0.5}>{index + 1}</Td>
+          <Td flex={0.5}>{getCategoryIcon(result.category.name, result.subcategory.name)}</Td>
           <Td flex={10}>
             <ResultTitle className="tile-title text-ellipsis">
               <Verified
@@ -195,11 +191,7 @@ export default class Results extends PureComponent {
           <Td flex={0.5} onClick={e => this.addToDownload(e, result)}>
             <i
               className={downloadClass}
-              data-tooltip={
-                this.isBeingDownloaded(result.magnetLink)
-                  ? 'Downloading'
-                  : 'Download'
-              }
+              data-tooltip={this.isBeingDownloaded(result.magnetLink) ? 'Downloading' : 'Download'}
             />
           </Td>
         </DefaultRow>
@@ -287,29 +279,15 @@ export default class Results extends PureComponent {
     return (
       <Tr direction="row" style={{ padding: '0 20px' }} className="text-bold">
         <Td flex={0.5}>#</Td>
+        <Td flex={0.5} />
         <Td flex={10}>Name</Td>
-        <Td
-          data-sort-type="date"
-          onClick={this.setSortOrder}
-          className="pointer"
-          flex={2}
-        >
+        <Td data-sort-type="date" onClick={this.setSortOrder} className="pointer" flex={2}>
           Uploaded <SortIcon className={getClass('date')} />
         </Td>
-        <Td
-          data-sort-type="size"
-          onClick={this.setSortOrder}
-          className="pointer"
-          flex={2}
-        >
+        <Td data-sort-type="size" onClick={this.setSortOrder} className="pointer" flex={2}>
           File Size <SortIcon className={getClass('size')} />
         </Td>
-        <Td
-          data-sort-type="seeds"
-          onClick={this.setSortOrder}
-          className="pointer"
-          flex={1}
-        >
+        <Td data-sort-type="seeds" onClick={this.setSortOrder} className="pointer" flex={1}>
           Seeds<SortIcon className={getClass('seeds')} />
         </Td>
         <Td flex={1}>Leech</Td>
@@ -332,10 +310,10 @@ export default class Results extends PureComponent {
             minimumBatchSize={1}
             threshold={5}
           >
-            {({ onRowsRendered, registerChild }) => (
-              <AutoSizer>
-                {({ width, height }) => (
-                  <List
+            {({ onRowsRendered, registerChild }) =>
+              (<AutoSizer>
+                {({ width, height }) =>
+                  (<List
                     ref={(x) => {
                       this.listRef = x;
                       registerChild(x);
@@ -348,10 +326,8 @@ export default class Results extends PureComponent {
                     rowHeight={this.getHeight}
                     overscanRowCount={5}
                     rowRenderer={this.rowRenderer}
-                  />
-                )}
-              </AutoSizer>
-            )}
+                  />)}
+              </AutoSizer>)}
           </InfiniteLoader>
         </div>
       </Table>

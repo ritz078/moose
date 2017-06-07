@@ -9,7 +9,9 @@ export default function (action$, { dispatch, getState }) {
 
     const searchTerm = action.payload || getState().params.searchTerm;
     const stringifiedParams = qs.stringify(params);
-    dispatch({ type: 'START_RESULTS_LOADING' });
+    if (params.page === 1) {
+      dispatch({ type: 'START_RESULTS_LOADING' });
+    }
 
     return ajax
       .getJSON(`/api/search/${searchTerm}?${stringifiedParams}`)

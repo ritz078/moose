@@ -55,7 +55,7 @@ export default class Controls extends PureComponent {
       sliderValue: 0,
       sliderMax: 0,
       title: 'Playing',
-      isPaused: false
+      isPaused: false,
     };
   }
 
@@ -69,7 +69,7 @@ export default class Controls extends PureComponent {
             this.setState({
               sliderValue: status.currentTime,
               sliderMax: status.media.duration,
-              title: status.media.metadata.title
+              title: status.media.metadata.title,
             });
           }
         });
@@ -95,7 +95,7 @@ export default class Controls extends PureComponent {
       }
       clearInterval(this.interval);
       this.setState({
-        isPaused: true
+        isPaused: true,
       });
     });
   };
@@ -109,7 +109,7 @@ export default class Controls extends PureComponent {
       }
     });
     this.setState({
-      isPaused: false
+      isPaused: false,
     });
   };
 
@@ -121,7 +121,7 @@ export default class Controls extends PureComponent {
       }
       this.stopPolling();
       this.setState({
-        isPaused: true
+        isPaused: true,
       });
     });
   };
@@ -133,7 +133,7 @@ export default class Controls extends PureComponent {
         return;
       }
       this.setState({
-        sliderValue: time
+        sliderValue: time,
       });
     });
   };
@@ -147,7 +147,7 @@ export default class Controls extends PureComponent {
 
     const playClass = cn('mdi', {
       'mdi-play': isPaused,
-      'mdi-pause': !isPaused
+      'mdi-pause': !isPaused,
     });
     return (
       <Wrapper>

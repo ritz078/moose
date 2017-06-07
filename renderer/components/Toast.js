@@ -8,7 +8,7 @@ export default function Toast(props) {
     'toast-primary': props.type === 'default',
     'toast-success': props.type === 'success',
     'toast-danger': props.type === 'warning',
-    'toast-error': props.type === 'error'
+    'toast-error': props.type === 'error',
   });
 
   return (
@@ -20,11 +20,11 @@ export default function Toast(props) {
 
 Toast.propTypes = {
   text: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['default', 'success', 'warning', 'error'])
+  type: PropTypes.oneOf(['default', 'success', 'warning', 'error']),
 };
 
 Toast.defaultProps = {
-  type: 'default'
+  type: 'default',
 };
 
 export function showToast(text, type) {

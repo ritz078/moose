@@ -16,7 +16,7 @@ export function isImage(file) {
 // Checks whether a fileSummary or file path is playable video
 export function isVideo(file) {
   return ['.avi', '.m4v', '.mkv', '.mov', '.mp4', '.mpg', '.ogv', '.webm', '.wmv'].includes(
-    getFileExtension(file)
+    getFileExtension(file),
   );
 }
 

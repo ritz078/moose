@@ -5,23 +5,18 @@ import { ipcRenderer } from 'electron';
 import withRedux from 'next-redux-wrapper';
 import initStore from '../store';
 import Layout from '../components/Layout';
-import DownloadTile, {
-  ContentTitle,
-  Details,
-  Name,
-  IconWrapper
-} from '../components/DownloadTile';
+import DownloadTile, { ContentTitle, Details, Name, IconWrapper } from '../components/DownloadTile';
 import DownloadMenu from '../components/DownloadMenu';
 
 @withRedux(initStore, ({ download, cast }) => ({
   download,
-  cast
+  cast,
 }))
 export default class Download extends PureComponent {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     download: PropTypes.array.isRequired,
-    cast: PropTypes.array.isRequired
+    cast: PropTypes.array.isRequired,
   };
 
   constructor(props) {
@@ -29,7 +24,7 @@ export default class Download extends PureComponent {
 
     this.state = {
       downloadData: [],
-      selectedIndex: null
+      selectedIndex: null,
     };
   }
 
@@ -48,13 +43,13 @@ export default class Download extends PureComponent {
 
   setSelectedIndex = (i) => {
     this.setState({
-      selectedIndex: this.state.selectedIndex === i ? null : i
+      selectedIndex: this.state.selectedIndex === i ? null : i,
     });
   };
 
   getDownloads = () => {
-    const content = this.props.download.map((d, i) => (
-      <DownloadTile
+    const content = this.props.download.map((d, i) =>
+      (<DownloadTile
         details={d}
         index={i}
         key={d.infoHash}
@@ -62,8 +57,8 @@ export default class Download extends PureComponent {
         downloadData={this.state.downloadData[d.infoHash]}
         onClick={this.setSelectedIndex}
         selectedIndex={this.state.selectedIndex}
-      />
-    ));
+      />),
+    );
 
     return (
       <div>

@@ -33,7 +33,7 @@ export default class MenuBar extends PureComponent {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
     downloads: PropTypes.array.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -41,7 +41,7 @@ export default class MenuBar extends PureComponent {
       if (!err && !isEmpty(download)) {
         this.props.dispatch({
           type: 'SET_DOWNLOADS',
-          payload: download
+          payload: download,
         });
       }
     });
@@ -52,10 +52,7 @@ export default class MenuBar extends PureComponent {
       <Wrapper>
         <Cast />
         <Link href="/download" prefetch>
-          <Icon
-            className="mdi mdi-download badge"
-            data-badge={this.props.downloads.length}
-          >
+          <Icon className="mdi mdi-download badge" data-badge={this.props.downloads.length}>
             <Ink />
           </Icon>
         </Link>

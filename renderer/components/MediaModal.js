@@ -37,12 +37,12 @@ export default function MediaModal(props) {
   const style = {
     overlay: {
       backgroundColor: 'rgba(0,0,0,0.95)',
-      zIndex: 99
+      zIndex: 99,
     },
     content: {
       background: 'transparent',
-      border: 'none'
-    }
+      border: 'none',
+    },
   };
 
   const src = `/api/download/${file.slug}`;
@@ -63,7 +63,7 @@ MediaModal.propTypes = {
   showModal: PropTypes.bool.isRequired,
   file: PropTypes.shape({
     name: PropTypes.string,
-    type: PropTypes.string
+    type: PropTypes.string,
   }).isRequired,
-  onCloseClick: PropTypes.func.isRequired
+  onCloseClick: PropTypes.func.isRequired,
 };

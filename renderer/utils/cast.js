@@ -4,9 +4,7 @@ import isRenderer from 'is-electron-renderer';
 import ip from 'internal-ip';
 import { showToast } from '../components/Toast';
 
-root.casts = isRenderer
-  ? remote.require('chromecasts')()
-  : require('chromecasts')();
+root.casts = isRenderer ? remote.require('chromecasts')() : require('chromecasts')();
 
 export function getPlayer() {
   return root.selectedPlayer;
@@ -22,7 +20,7 @@ export default {
     root.selectedPlayer.play(
       `http://${ip.v4()}:${window.location.port}/static/images/cover.png`,
       {
-        type: 'image/jpeg'
+        type: 'image/jpeg',
       },
       (err) => {
         if (err) {
@@ -30,7 +28,7 @@ export default {
         }
         showToast(`Successfully connected to ${player.name}`, 'success');
         if (cb) cb();
-      }
+      },
     );
   },
 
@@ -38,13 +36,14 @@ export default {
     const { selectedPlayer } = root;
 
     if (selectedPlayer) {
-      const src = `http://${ip.v4()}:${window.location.port}/api/download/${infoHash}/${+index}/${name}`;
+      const src = `http://${ip.v4()}:${window.location
+        .port}/api/download/${infoHash}/${+index}/${name}`;
 
       selectedPlayer.play(
         src,
         {
           type,
-          title: name
+          title: name,
         },
         (err) => {
           if (err) {
@@ -52,7 +51,7 @@ export default {
             this.connect(selectedPlayer);
           }
           if (cb) cb(err);
-        }
+        },
       );
     }
   },
@@ -66,5 +65,5 @@ export default {
         if (cb) cb();
       });
     }
-  }
+  },
 };

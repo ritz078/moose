@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { remote, ipcRenderer } from 'electron'
-import styled from 'styled-components'
-import prettyBytes from 'pretty-bytes'
-import { isEqual } from 'lodash'
-import Description from './Description'
-import { showToast } from './Toast'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { remote, ipcRenderer } from 'electron';
+import styled from 'styled-components';
+import prettyBytes from 'pretty-bytes';
+import { isEqual } from 'lodash';
+import Description from './Description';
+import { showToast } from './Toast';
 
 export const Details = styled.div`
   align-items: center;
@@ -15,7 +15,7 @@ export const Details = styled.div`
     diaplay: inline-block;
     flex: 1;
   }
-`
+`;
 
 export const ContentTitle = styled.div`
   display: flex;
@@ -25,11 +25,11 @@ export const ContentTitle = styled.div`
   align-items: center;
   background-color: ${props => (props.index + 1) % 2 === 0 && 'rgb(248, 248, 248)'};
   cursor: pointer;
-`
+`;
 
 export const Name = styled.div`
   flex: 0.5;
-`
+`;
 
 const RemoveIcon = styled.i`
   font-weight: bold;
@@ -38,7 +38,7 @@ const RemoveIcon = styled.i`
   &:hover{
     transform: scale(1.4);
   }
-`
+`;
 
 export const IconWrapper = styled.div`
   display: inline-block;
@@ -48,100 +48,100 @@ export const IconWrapper = styled.div`
   &:hover {
     color: #000;
   }
-`
+`;
 
 export default class DownloadTile extends Component {
   static propTypes = {
     downloadData: PropTypes.shape({
-      progress: PropTypes.number
+      progress: PropTypes.number,
     }),
     details: PropTypes.shape({
       name: PropTypes.string,
-      infoHash: PropTypes.string
+      infoHash: PropTypes.string,
     }).isRequired,
     index: PropTypes.number.isRequired,
     onClick: PropTypes.func.isRequired,
     selectedIndex: PropTypes.number.isRequired,
-    dispatch: PropTypes.func.isRequired
-  }
+    dispatch: PropTypes.func.isRequired,
+  };
 
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.state = {}
+    this.state = {};
   }
 
   static defaultProps = {
-    downloadData: {}
-  }
+    downloadData: {},
+  };
 
   shouldComponentUpdate(nextProps) {
     return (
       !isEqual(this.props.downloadData, nextProps.downloadData) ||
       this.props.selectedIndex !== nextProps.selectedIndex
-    )
+    );
   }
 
   removeFiles = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
+    e.preventDefault();
+    e.stopPropagation();
 
-    const { dialog } = remote
-    const { infoHash, name } = this.props.details
+    const { dialog } = remote;
+    const { infoHash, name } = this.props.details;
 
     dialog.showMessageBox(
       {
         type: 'question',
         message: `Do you want to permanently delete the files for ${name} from the disk?`,
-        buttons: ['OK', 'Cancel']
+        buttons: ['OK', 'Cancel'],
       },
       (response) => {
         if (response === 0) {
-          ipcRenderer.send('remove_torrent_files', infoHash)
+          ipcRenderer.send('remove_torrent_files', infoHash);
 
           this.props.dispatch({
             type: 'REMOVE_FROM_DOWNLOAD_LIST',
-            payload: infoHash
-          })
+            payload: infoHash,
+          });
 
           ipcRenderer.once('removed_torrent_files', () => {
-            showToast(`Sucessfully removed ${name} from the disk.`, 'success')
-          })
+            showToast(`Sucessfully removed ${name} from the disk.`, 'success');
+          });
         }
-      }
-    )
-  }
+      },
+    );
+  };
 
   removeTorrent = (e: MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
+    e.preventDefault();
+    e.stopPropagation();
 
-    const { dialog } = remote
-    const { infoHash, name } = this.props.details
+    const { dialog } = remote;
+    const { infoHash, name } = this.props.details;
 
     dialog.showMessageBox(
       {
         type: 'question',
         message: `Do you want to delete the torrent for ${name} ?`,
-        buttons: ['OK', 'Cancel']
+        buttons: ['OK', 'Cancel'],
       },
       (response) => {
         if (response === 0) {
-          ipcRenderer.send('remove_torrent', infoHash)
+          ipcRenderer.send('remove_torrent', infoHash);
 
           this.props.dispatch({
             type: 'REMOVE_FROM_DOWNLOAD_LIST',
-            payload: infoHash
-          })
+            payload: infoHash,
+          });
 
-          showToast(`Sucessfully removed ${name} from download list`, 'success')
+          showToast(`Sucessfully removed ${name} from download list`, 'success');
         }
-      }
-    )
-  }
+      },
+    );
+  };
 
   render() {
-    const { details, downloadData, index, selectedIndex, onClick } = this.props
+    const { details, downloadData, index, selectedIndex, onClick } = this.props;
 
     return (
       <div>
@@ -172,6 +172,6 @@ export default class DownloadTile extends Component {
         {selectedIndex === index &&
           <Description customDetails={downloadData} showOnlyDetails showProgress />}
       </div>
-    )
+    );
   }
 }

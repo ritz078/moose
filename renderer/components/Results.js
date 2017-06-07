@@ -4,13 +4,14 @@ import cn from 'classnames';
 import styled from 'styled-components';
 import withRedux from 'next-redux-wrapper';
 import Ink from 'react-ink';
-import { findIndex } from 'lodash';
+import { findIndex, isEmpty } from 'lodash';
 import { ipcRenderer } from 'electron';
 import { InfiniteLoader, List, AutoSizer } from 'react-virtualized';
 import initStore from '../store';
 import Description from './Description';
 import { showToast } from './Toast';
 import getCategoryIcon from '../utils/getCategoryIcon';
+import DotLoader from './DotLoader';
 
 const Verified = styled.i`
   font-size: 14px;
@@ -62,11 +63,17 @@ const DefaultRow = styled.div`
   position: relative;
 `;
 
-@withRedux(initStore, ({ results, params, loading, download }) => ({
+const LoaderWrapper = styled.div`
+  position: absolute;
+  align-self: center;
+  margin-top: 30vh;
+  z-index: 10;
+`;
+
+@withRedux(initStore, ({ results, params, download }) => ({
   results,
   params,
-  loading,
-  download
+  download,
 }))
 export default class Results extends PureComponent {
   static propTypes = {
@@ -77,29 +84,35 @@ export default class Results extends PureComponent {
           verified: PropTypes.bool,
           size: PropTypes.string,
           seeders: PropTypes.number,
-          leechers: PropTypes.number
-        })
-      )
+          leechers: PropTypes.number,
+        }),
+      ),
+      loading: PropTypes.bool,
     }).isRequired,
     dispatch: PropTypes.isRequired,
     params: PropTypes.shape({
       page: PropTypes.number,
       searchTerm: PropTypes.string,
       sortBy: PropTypes.string,
-      orderBy: PropTypes.string
+      orderBy: PropTypes.string,
     }).isRequired,
-    loading: PropTypes.bool.isRequired,
     download: PropTypes.shape({
-      magnetLink: PropTypes.string
-    }).isRequired
+      magnetLink: PropTypes.string,
+    }).isRequired,
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      selectedIndex: null
+      selectedIndex: null,
     };
+  }
+
+  componentDidUpdate(oldProps) {
+    if (oldProps.results.data !== this.props.results.data && this.props.params.page === 1) {
+      this.listRef.forceUpdateGrid();
+    }
   }
 
   isBeingDownloaded = infoHash => findIndex(this.props.download, o => o.infoHash === infoHash) >= 0;
@@ -113,29 +126,29 @@ export default class Results extends PureComponent {
     if (selectedIndex === index) {
       this.setState(
         {
-          selectedIndex: null
+          selectedIndex: null,
         },
         () => {
           const i = Math.min(index, selectedIndex);
           return this.listRef.recomputeRowHeights(i);
-        }
+        },
       );
       return;
     }
 
     this.setState(
       {
-        selectedIndex: index
+        selectedIndex: index,
       },
       () => {
         const i = Math.min(index, selectedIndex);
         return this.listRef.recomputeRowHeights(i);
-      }
+      },
     );
 
     dispatch({
       type: 'FETCH_DETAILS',
-      payload: result.magnetLink
+      payload: result.magnetLink,
     });
   };
 
@@ -150,7 +163,7 @@ export default class Results extends PureComponent {
     showToast('Successfully added to the download list.', 'success');
     this.props.dispatch({
       type: 'ADD_TO_DOWNLOAD_LIST',
-      payload: result
+      payload: result,
     });
   };
 
@@ -160,11 +173,11 @@ export default class Results extends PureComponent {
     const result = results.data[index];
 
     const mainClass = cn({
-      'row-even': index % 2 === 0
+      'row-even': index % 2 === 0,
     });
 
     const downloadClass = cn('mdi mdi-download fs-18 tooltip tooltip-left', {
-      downloading: this.isBeingDownloaded(result.magnetLink)
+      downloading: this.isBeingDownloaded(result.magnetLink),
     });
 
     return (
@@ -202,7 +215,7 @@ export default class Results extends PureComponent {
 
   fetchResults = () => {
     this.props.dispatch({
-      type: 'FETCH_RESULTS'
+      type: 'FETCH_RESULTS',
     });
   };
 
@@ -219,27 +232,27 @@ export default class Results extends PureComponent {
 
     const x = {
       sortBy: sb,
-      orderBy: ob
+      orderBy: ob,
     };
 
     this.props.dispatch({
       type: 'SET_PAGE',
-      payload: 1
+      payload: 1,
     });
 
     this.props.dispatch({
       type: 'SET_SORT_ORDER',
-      payload: x
+      payload: x,
     });
 
     this.fetchResults();
   };
 
   loadMoreRows = () => {
-    if (this.props.loading) return;
+    if (this.props.results.loading) return;
     this.props.dispatch({
       type: 'SET_PAGE',
-      payload: this.props.params.page + 1
+      payload: this.props.params.page + 1,
     });
     this.fetchResults();
   };
@@ -272,7 +285,7 @@ export default class Results extends PureComponent {
       return cn('mdi', {
         'mdi-unfold-more-horizontal': orderBy !== order,
         'mdi-chevron-double-down black': orderBy === order && sortBy === 'desc',
-        'mdi-chevron-double-up black': orderBy === order && sortBy === 'asc'
+        'mdi-chevron-double-up black': orderBy === order && sortBy === 'asc',
       });
     }
 
@@ -297,39 +310,47 @@ export default class Results extends PureComponent {
   };
 
   render() {
-    const rowCount = this.props.results.data.length + 1;
+    const { results } = this.props;
+
+    const rowCount = results.data.length + 1;
+
+    const mainClass = cn({
+      'loading-results': results.loading,
+    });
 
     return (
-      <Table>
+      <Table className={mainClass}>
         {this.getTableHeader()}
-        <div style={{ flex: 1 }}>
-          <InfiniteLoader
-            isRowLoaded={this.isRowLoaded}
-            loadMoreRows={this.loadMoreRows}
-            rowCount={rowCount}
-            minimumBatchSize={1}
-            threshold={5}
-          >
-            {({ onRowsRendered, registerChild }) =>
-              (<AutoSizer>
-                {({ width, height }) =>
-                  (<List
-                    ref={(x) => {
-                      this.listRef = x;
-                      registerChild(x);
-                    }}
-                    height={height}
-                    onRowsRendered={onRowsRendered}
-                    className={'results-list'}
-                    rowCount={rowCount}
-                    width={width}
-                    rowHeight={this.getHeight}
-                    overscanRowCount={5}
-                    rowRenderer={this.rowRenderer}
-                  />)}
-              </AutoSizer>)}
-          </InfiniteLoader>
-        </div>
+        {!isEmpty(this.props.results.data) &&
+          <div style={{ flex: 1 }}>
+            <InfiniteLoader
+              isRowLoaded={this.isRowLoaded}
+              loadMoreRows={this.loadMoreRows}
+              rowCount={rowCount}
+              minimumBatchSize={1}
+              threshold={5}
+            >
+              {({ onRowsRendered, registerChild }) =>
+                (<AutoSizer>
+                  {({ width, height }) =>
+                    (<List
+                      ref={(x) => {
+                        this.listRef = x;
+                        registerChild(x);
+                      }}
+                      height={height}
+                      onRowsRendered={onRowsRendered}
+                      className={'results-list'}
+                      rowCount={rowCount}
+                      width={width}
+                      rowHeight={this.getHeight}
+                      overscanRowCount={5}
+                      rowRenderer={this.rowRenderer}
+                    />)}
+                </AutoSizer>)}
+            </InfiniteLoader>
+          </div>}
+        {results.loading && <LoaderWrapper><DotLoader /></LoaderWrapper>}
       </Table>
     );
   }

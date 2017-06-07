@@ -14,5 +14,5 @@ export default combineReducers({
   params,
   cast,
   download,
-  selectedTorrent
+  selectedTorrent,
 });

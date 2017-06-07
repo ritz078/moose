@@ -1,4 +1,4 @@
-const { BrowserWindow } = require('electron')
+const { BrowserWindow } = require('electron');
 
 /**
  * This file contains functions required to communicate with the renderer to show
@@ -7,18 +7,18 @@ const { BrowserWindow } = require('electron')
  */
 
 function getWindow() {
-  return BrowserWindow.getAllWindows()[0]
+  return BrowserWindow.getAllWindows()[0];
 }
 
 const logError = (msg) => {
-  getWindow().webContents.send('error-main', msg)
-}
+  getWindow().webContents.send('error-main', msg);
+};
 
 const logSuccess = (msg) => {
-  getWindow().webContents.send('success-main', msg)
-}
+  getWindow().webContents.send('success-main', msg);
+};
 
 module.exports = {
   logError,
-  logSuccess
-}
+  logSuccess,
+};

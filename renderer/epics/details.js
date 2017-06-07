@@ -9,22 +9,22 @@ export default function fetchDetails(action$, { dispatch }) {
     dispatch({ type: 'RESET_DETAILS' });
     return ajax
       .getJSON(`/api/list?infoHash=${action.payload}&timestamp=${new Date().getTime()}`, {
-        withCredentials: true
+        withCredentials: true,
       })
       .retry(3)
       .switchMap(payload => [
         {
           type: 'SET_DETAILS',
-          payload
+          payload,
         },
         {
-          type: 'STOP_LOADING'
-        }
+          type: 'STOP_LOADING',
+        },
       ])
       .catch((err) => {
         showToast(err.message, 'error');
         return Observable.of({
-          type: 'STOP_LOADING'
+          type: 'STOP_LOADING',
         });
       });
   });

@@ -1,42 +1,42 @@
-const WebTorrent = require('webtorrent')
-const { ipcMain, app } = require('electron')
-const mime = require('mime')
-const root = require('window-or-global')
-const prettyBytes = require('pretty-bytes')
-const rimraf = require('rimraf')
-const downloadsFolder = require('downloads-folder')
-const { readConfig } = require('snape-config')
-const decorateTorrentInfo = require('../utils/decorateTorrentInfo')
-const { logError, logSuccess } = require('../utils/logEmitter')
-const notify = require('../utils/notify')
+const WebTorrent = require('webtorrent');
+const { ipcMain, app } = require('electron');
+const mime = require('mime');
+const root = require('window-or-global');
+const prettyBytes = require('pretty-bytes');
+const rimraf = require('rimraf');
+const downloadsFolder = require('downloads-folder');
+const { readConfig } = require('snape-config');
+const decorateTorrentInfo = require('../utils/decorateTorrentInfo');
+const { logError, logSuccess } = require('../utils/logEmitter');
+const notify = require('../utils/notify');
 
-const client = new WebTorrent()
+const client = new WebTorrent();
 
 function onTorrentDone(name) {
-  const msg = `Completed downloading ${name}`
-  root.win.isFocused() ? logSuccess(msg) : notify(msg)
+  const msg = `Completed downloading ${name}`;
+  root.win.isFocused() ? logSuccess(msg) : notify(msg);
 }
 
 function addTorrent(infoHash) {
   const torrent = client.add(infoHash, {
-    path: downloadsFolder()
-  })
-  torrent.on('done', () => onTorrentDone(torrent.name))
+    path: downloadsFolder(),
+  });
+  torrent.on('done', () => onTorrentDone(torrent.name));
 }
 
 function init() {
   readConfig((err, { download }) => {
     if (download) {
-      download.forEach(d => addTorrent(d.infoHash))
+      download.forEach(d => addTorrent(d.infoHash));
     }
-  })
+  });
 }
 
-let interval
+let interval;
 
 ipcMain.on('init_download_polling', (event) => {
   interval = setInterval(() => {
-    const data = {}
+    const data = {};
     client.torrents.forEach((torrent) => {
       data[torrent.infoHash] = {
         name: torrent.name,
@@ -52,58 +52,58 @@ ipcMain.on('init_download_polling', (event) => {
           size: prettyBytes(file.length),
           slug: `${torrent.infoHash}/${i}/${file.name}`,
           done: file.done,
-          path: `${torrent.path}/${file.path}`
-        }))
-      }
-    })
+          path: `${torrent.path}/${file.path}`,
+        })),
+      };
+    });
 
-    event.sender.send('download_data', data)
-  }, 1000)
-})
+    event.sender.send('download_data', data);
+  }, 1000);
+});
 
 function getTorrent(infoHash) {
-  return client.get(infoHash)
+  return client.get(infoHash);
 }
 
 ipcMain.on('end_download_polling', () => {
-  clearInterval(interval)
-})
+  clearInterval(interval);
+});
 
-ipcMain.on('add_torrent_to_download', (event, infoHash) => addTorrent(infoHash))
+ipcMain.on('add_torrent_to_download', (event, infoHash) => addTorrent(infoHash));
 
-ipcMain.on('remove_torrent', (event, infoHash) => client.remove(infoHash))
+ipcMain.on('remove_torrent', (event, infoHash) => client.remove(infoHash));
 
 ipcMain.on('decode_infohash_and_add_to_download', (event, infoHash) => {
-  addTorrent(infoHash)
+  addTorrent(infoHash);
 
-  const torrent = client.get(infoHash)
+  const torrent = client.get(infoHash);
   torrent.on('metadata', () => {
-    const metadata = decorateTorrentInfo(torrent)
-    event.sender.send('decoded_infoHash', metadata)
-  })
-})
+    const metadata = decorateTorrentInfo(torrent);
+    event.sender.send('decoded_infoHash', metadata);
+  });
+});
 
 ipcMain.on('remove_torrent_files', (event, infoHash) => {
-  const torrent = client.get(infoHash)
-  client.remove(infoHash)
+  const torrent = client.get(infoHash);
+  client.remove(infoHash);
   if (torrent) {
     rimraf(`${torrent.path}/${torrent.name}`, () => {
-      event.sender.send('removed_torrent_files')
-    })
+      event.sender.send('removed_torrent_files');
+    });
   }
-})
+});
 
 app.on('before-quit', () => {
-  clearInterval(interval)
-})
+  clearInterval(interval);
+});
 
-client.on('error', err => logError(err.message))
+client.on('error', err => logError(err.message));
 
 client.torrents.forEach((torrent) => {
-  torrent.on('done', () => onTorrentDone(torrent.name))
-})
+  torrent.on('done', () => onTorrentDone(torrent.name));
+});
 
 module.exports = {
   init,
-  getTorrent
-}
+  getTorrent,
+};

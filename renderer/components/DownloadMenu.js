@@ -43,7 +43,7 @@ const ModalWrapper = styled.div`
 
 export default class DownloadMenu extends PureComponent {
   static propTypes = {
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -51,7 +51,7 @@ export default class DownloadMenu extends PureComponent {
 
     this.state = {
       showMagnetModal: false,
-      loadingMagnetInfo: false
+      loadingMagnetInfo: false,
     };
   }
 
@@ -61,9 +61,9 @@ export default class DownloadMenu extends PureComponent {
         filters: [
           {
             name: 'Torrent',
-            extensions: ['torrent']
-          }
-        ]
+            extensions: ['torrent'],
+          },
+        ],
       },
       (paths) => {
         if (isEmpty(paths)) return;
@@ -77,12 +77,12 @@ export default class DownloadMenu extends PureComponent {
 
           this.props.dispatch({
             type: 'ADD_TO_DOWNLOAD_LIST',
-            payload: torrent
+            payload: torrent,
           });
 
           ipcRenderer.send('add_torrent_to_download', torrent.infoHash);
         });
-      }
+      },
     );
   };
 
@@ -94,7 +94,7 @@ export default class DownloadMenu extends PureComponent {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.75)'
+        backgroundColor: 'rgba(0, 0, 0, 0.75)',
       },
       content: {
         height: 130,
@@ -103,8 +103,8 @@ export default class DownloadMenu extends PureComponent {
         margin: '0 10%',
         left: 0,
         right: 0,
-        border: 0
-      }
+        border: 0,
+      },
     };
     return (
       <Modal isOpen={this.state.showMagnetModal} style={style} contentLabel="Magnet">
@@ -124,14 +124,14 @@ export default class DownloadMenu extends PureComponent {
 
   openMagnetUrlModal = () => {
     this.setState({
-      showMagnetModal: true
+      showMagnetModal: true,
     });
   };
 
   closeMagnetUrlModal = () => {
     this.setState({
       showMagnetModal: false,
-      loadingMagnetInfo: false
+      loadingMagnetInfo: false,
     });
   };
 
@@ -145,7 +145,7 @@ export default class DownloadMenu extends PureComponent {
     const { infoHash } = parseTorrent(value);
 
     this.setState({
-      loadingMagnetInfo: true
+      loadingMagnetInfo: true,
     });
 
     ipcRenderer.on('decoded_infoHash', (event, torrent) => {
@@ -153,7 +153,7 @@ export default class DownloadMenu extends PureComponent {
 
       this.props.dispatch({
         type: 'ADD_TO_DOWNLOAD_LIST',
-        payload: torrent
+        payload: torrent,
       });
     });
 

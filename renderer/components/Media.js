@@ -41,20 +41,20 @@ class Media extends PureComponent {
     super(props);
 
     this.state = {
-      error: false
+      error: false,
     };
   }
 
   componentDidMount() {
     this.createPlayer();
     this.setState({
-      error: false
+      error: false,
     });
 
     this.player[0].on('error', () =>
       this.setState({
-        error: true
-      })
+        error: true,
+      }),
     );
   }
 
@@ -93,14 +93,14 @@ class Media extends PureComponent {
 
 Media.propTypes = {
   src: PropTypes.string.isRequired,
-  fileName: PropTypes.string.isRequired
+  fileName: PropTypes.string.isRequired,
 };
 
 Media.defaultProps = {
   onInit() {},
   options: {
-    fluid: true
-  }
+    fluid: true,
+  },
 };
 
 export default Media;

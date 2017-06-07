@@ -9,11 +9,7 @@ export default function (action$, { dispatch, getState }) {
 
     const searchTerm = action.payload || getState().params.searchTerm;
     const stringifiedParams = qs.stringify(params);
-    dispatch({ type: 'START_LOADING' });
-
-    if (params.page === 1) {
-      dispatch({ type: 'RESET_RESULTS' });
-    }
+    dispatch({ type: 'START_RESULTS_LOADING' });
 
     return ajax
       .getJSON(`/api/search/${searchTerm}?${stringifiedParams}`)
@@ -24,19 +20,19 @@ export default function (action$, { dispatch, getState }) {
           payload: {
             searchTerm,
             data: data.data,
-            page: data.page
-          }
+            page: data.page,
+          },
         },
         {
-          type: 'STOP_LOADING'
-        }
+          type: 'STOP_RESULTS_LOADING',
+        },
       ])
       .catch((err) => {
         showToast(err.message, 'error');
         return [
           {
-            type: 'STOP_LOADING'
-          }
+            type: 'STOP_RESULTS_LOADING',
+          },
         ];
       });
   });

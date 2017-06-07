@@ -29,9 +29,9 @@ const Li = styled.li`
 export default class Cast extends PureComponent {
   static propTypes = {
     cast: PropTypes.shape({
-      players: PropTypes.array
+      players: PropTypes.array,
     }).isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -40,14 +40,14 @@ export default class Cast extends PureComponent {
     if (casts) {
       this.props.dispatch({
         type: 'SET_PLAYERS',
-        payload: casts.players
+        payload: casts.players,
       });
 
       casts.on('update', (player) => {
         casts.players.push(player);
         this.props.dispatch({
           type: 'ADD_PLAYER',
-          payload: player
+          payload: player,
         });
       });
     }
@@ -57,18 +57,18 @@ export default class Cast extends PureComponent {
     castUtil.connect(player, () =>
       this.props.dispatch({
         type: 'SET_SELECTED_PLAYER',
-        payload: player
-      })
+        payload: player,
+      }),
     );
   };
 
   disconnect = () => {
     castUtil.destroy(() => {
       this.props.dispatch({
-        type: 'REMOVE_SELECTED_PLAYER'
+        type: 'REMOVE_SELECTED_PLAYER',
       });
       this.props.dispatch({
-        type: 'REMOVE_STREAMING_FILE'
+        type: 'REMOVE_STREAMING_FILE',
       });
     });
   };
@@ -78,7 +78,7 @@ export default class Cast extends PureComponent {
 
     const iconClass = cn('mdi', {
       'mdi-cast': !cast.selectedPlayer,
-      'mdi-cast-connected primary': cast.selectedPlayer
+      'mdi-cast-connected primary': cast.selectedPlayer,
     });
     const { players } = cast;
 
@@ -89,15 +89,15 @@ export default class Cast extends PureComponent {
         <Icon className={iconClass} />
         <div className="popover-container">
           <ul className="menu">
-            {players.map(player => (
-              <Li
+            {players.map(player =>
+              (<Li
                 className="menu-item"
                 key={player.name}
                 onClick={() => (getPlayer() ? this.disconnect() : this.selectPlayer(player))}
               >
                 {player.name}
-              </Li>
-            ))}
+              </Li>),
+            )}
           </ul>
         </div>
       </div>

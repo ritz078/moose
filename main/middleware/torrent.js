@@ -35,7 +35,7 @@ function stream(req, res, torrent) {
     res.setHeader('transferMode.dlna.org', 'Streaming');
     res.setHeader(
       'contentFeatures.dlna.org',
-      'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000'
+      'DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000',
     );
 
     let range = rangeParser(file.length, req.headers.range || '');
@@ -126,7 +126,7 @@ function searchTorrent(req, res) {
       if (results && !results.length) res.status(500).body({ error: 'Unable to fetch data' });
       return res.json({
         data: results,
-        page: req.query.page
+        page: req.query.page,
       });
     })
     .catch(err => res.json(err));
@@ -136,5 +136,5 @@ module.exports = {
   list,
   deleteTorr,
   downloadTorrent,
-  searchTorrent
+  searchTorrent,
 };

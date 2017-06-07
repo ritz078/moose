@@ -11,12 +11,12 @@ export default class AudioPlayer extends PureComponent {
   static propTypes = {
     selectedTorrent: PropTypes.shape({
       slug: PropTypes.string,
-      name: PropTypes.string
-    })
+      name: PropTypes.string,
+    }),
   };
 
   static defaultProps = {
-    selectedTorrent: {}
+    selectedTorrent: {},
   };
 
   render() {

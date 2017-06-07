@@ -6,6 +6,8 @@ import prettyBytes from 'pretty-bytes';
 import { isEqual } from 'lodash';
 import Description from './Description';
 import { showToast } from './Toast';
+import getCategoryIcon from '../utils/getCategoryIcon';
+import { FixedWidthDiv } from '../utils/commonStyles';
 
 export const Details = styled.div`
   align-items: center;
@@ -146,7 +148,10 @@ export default class DownloadTile extends Component {
     return (
       <div>
         <ContentTitle index={index} onClick={() => onClick(index)}>
-          <div style={{ width: '30px' }}>{index + 1}</div>
+          <FixedWidthDiv width="30px">{index + 1}</FixedWidthDiv>
+          <FixedWidthDiv width="40px">
+            {getCategoryIcon(`${details.category.name} | ${details.subcategory.name}`)}
+          </FixedWidthDiv>
           <Name>{details.name}</Name>
           <Details>
             <div>{Math.round(downloadData.progress || 0)} %</div>

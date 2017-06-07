@@ -1,14 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import colors from '../constants/colors';
 
-export default function () {
+export default function DotLoader({ color }) {
   return (
     <svg
       width="120"
       height="30"
       viewBox="0 0 120 30"
       xmlns="http://www.w3.org/2000/svg"
-      fill={colors.darkPrimary}
+      fill={color}
     >
       <circle cx="15" cy="15" r="15">
         <animate
@@ -79,3 +80,11 @@ export default function () {
     </svg>
   );
 }
+
+DotLoader.propTypes = {
+  color: PropTypes.string,
+};
+
+DotLoader.defaultProps = {
+  color: colors.darkPrimary,
+};

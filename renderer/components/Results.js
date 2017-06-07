@@ -185,7 +185,9 @@ export default class Results extends PureComponent {
         <DefaultRow onClick={() => this.getDetails(index)}>
           <Ink />
           <Td flex={0.5}>{index + 1}</Td>
-          <Td flex={0.5}>{getCategoryIcon(result.category.name, result.subcategory.name)}</Td>
+          <Td flex={0.5}>
+            {getCategoryIcon(`${result.category.name} | ${result.subcategory.name}`)}
+          </Td>
           <Td flex={10}>
             <ResultTitle className="tile-title text-ellipsis">
               <Verified
@@ -258,7 +260,8 @@ export default class Results extends PureComponent {
   };
 
   rowRenderer = ({ index, style }) => {
-    if (this.props.results.data[index]) {
+    const { results } = this.props;
+    if (results.data[index]) {
       return this.getResult(index, style);
     }
     return <div key="loading" style={style} className="loading" />;

@@ -5,6 +5,7 @@ const initialState = {
   data: [],
   searchTerm: '',
   loading: false,
+  hasNextPage: false,
 };
 
 const resultsReducer = createReducer(initialState, {
@@ -14,9 +15,10 @@ const resultsReducer = createReducer(initialState, {
       newState.data = newState.data.concat(action.payload.data);
       newState.searchTerm = action.payload.searchTerm;
       newState.page = action.payload.page;
+      newState.hasNextPage = action.payload.hasNextPage;
       return newState;
     }
-    return action.payload;
+    return Object.assign({}, state, action.payload);
   },
 
   START_RESULTS_LOADING: state =>

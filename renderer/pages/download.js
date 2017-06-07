@@ -7,6 +7,7 @@ import initStore from '../store';
 import Layout from '../components/Layout';
 import DownloadTile, { ContentTitle, Details, Name, IconWrapper } from '../components/DownloadTile';
 import DownloadMenu from '../components/DownloadMenu';
+import { FixedWidthDiv } from '../utils/commonStyles';
 
 @withRedux(initStore, ({ download, cast }) => ({
   download,
@@ -66,7 +67,8 @@ export default class Download extends PureComponent {
         {content.length > 0 &&
           <div style={{ height: 'calc(100vh - 190px)', overflow: 'scroll' }}>
             <ContentTitle className="text-bold">
-              <div style={{ width: '30px' }} />
+              <FixedWidthDiv width="30px" />
+              <FixedWidthDiv width="40px" />
               <Name>Name</Name>
               <Details>
                 <div>Progress</div>

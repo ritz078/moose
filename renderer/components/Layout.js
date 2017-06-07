@@ -4,10 +4,8 @@ import Head from 'next/head';
 import Loading from 'react-loading-bar';
 import { ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
-
 import NProgress from 'nprogress';
 import Router from 'next/router';
-
 import stylesheet from '../styles/index.less';
 import MenuBar from './NavBar';
 import Controls from './Controls';

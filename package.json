@@ -67,6 +67,7 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-ink": "^6.2.0",
+    "react-lazy-card": "^0.1.5",
     "react-loading-bar": "^0.0.4",
     "react-modal": "^1.7.7",
     "react-redux": "^5.0.5",

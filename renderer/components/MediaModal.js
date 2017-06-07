@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import styled from 'styled-components';
+import LazyCard from 'react-lazy-card/dist/LazyCard';
 import Media from './Media';
 import { isVideo, isImage } from '../utils/isPlayable';
+import DotLoader from './DotLoader';
 
 const ModalControl = styled.div`
   color: #9c9c9c;
@@ -11,6 +13,7 @@ const ModalControl = styled.div`
   top: 5px;
   right: 5px;
   font-size: 20px;
+  z-index: 10;
 `;
 
 const ImageLightbox = styled.div`
@@ -22,11 +25,25 @@ const ImageLightbox = styled.div`
   height: 100vh;
   width: 100%;
   align-self: center;
+  z-index: 9;
 `;
 
 const CloseIcon = styled.i`
   font-size: 40px;
   cursor: pointer;
+`;
+
+const LoaderWrapper = styled.div`
+  flex: 1;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  justify-content: center;
+  display: flex;
+  z-index: 0;
 `;
 
 export default function MediaModal(props) {
@@ -49,11 +66,12 @@ export default function MediaModal(props) {
 
   return (
     <Modal style={style} isOpen={showModal} contentLabel={'Modal'}>
+      <LoaderWrapper><DotLoader color={'#fff'} /></LoaderWrapper>
       <ModalControl>
         <CloseIcon onClick={onCloseClick} className="mdi mdi-close close-modal" />
       </ModalControl>
       {isVideo(file.name) && <Media src={src} fileName={file.name} />}
-      {isImage(file.name) && <ImageLightbox source={src} />}
+      {isImage(file.name) && <LazyCard autoLoad image={src} />}
     </Modal>
   );
 }

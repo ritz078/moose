@@ -127,6 +127,7 @@ function searchTorrent(req, res) {
       return res.json({
         data: results,
         page: req.query.page,
+        hasNextPage: results.length === 30,
       });
     })
     .catch(err => res.json(err));

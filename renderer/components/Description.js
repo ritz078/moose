@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions,no-const-assign */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import classNames from 'classnames';
 import isRenderer from 'is-electron-renderer';
 import { remote, shell } from 'electron';
@@ -73,9 +73,14 @@ const Name = styled.td`
   max-width: 270px;
   color: ${props => (props.isDownloaded ? colors.primary : 'black')};
   
-  &:hover {
-    color: ${colors.darkPrimary};
-  }
+  ${props =>
+    props.isDownloaded &&
+    css`
+    color: ${colors.primary};
+    &:hover {
+      color: ${colors.darkPrimary}
+    }
+  `}
 `;
 
 @withRedux(initStore, ({ cast, details }) => ({

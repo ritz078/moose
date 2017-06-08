@@ -112,9 +112,18 @@ export default class Results extends PureComponent {
     };
   }
 
+  componentWillReceiveProps(newProps) {
+    if (this.areResultsDifferent(this.props, newProps)) {
+      this.setState({
+        selectedIndex: null,
+      });
+    }
+  }
+
   componentDidUpdate(oldProps) {
-    if (oldProps.results.data !== this.props.results.data && this.props.params.page === 1) {
+    if (this.areResultsDifferent(oldProps, this.props)) {
       this.listRef.forceUpdateGrid();
+      this.listRef.recomputeRowHeights(0);
     }
   }
 
@@ -262,6 +271,15 @@ export default class Results extends PureComponent {
       </Tr>
     );
   };
+
+  /**
+   * Tells whether the search results are for a different search term.
+   * @param oldProps
+   * @param newProps
+   * @returns {boolean}
+   */
+  areResultsDifferent = (oldProps, newProps) =>
+    oldProps.results.data !== newProps.results.data && newProps.params.page === 1;
 
   addTorrentToDownload = (infoHash) => {
     ipcRenderer.send('add_torrent_to_download', infoHash);

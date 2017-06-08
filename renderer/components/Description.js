@@ -325,6 +325,8 @@ export default class Description extends PureComponent {
 
     const file = d.files[selectedIndex];
 
+    const imageFiles = d.files.filter(f => isImage(f.name));
+
     return (
       <Wrapper>
         {!showOnlyDetails && <Info />}
@@ -334,6 +336,7 @@ export default class Description extends PureComponent {
           fileIndex={selectedIndex}
           showModal={streaming && !isAudio(file.name)}
           file={file}
+          imageFiles={imageFiles}
           onCloseClick={this.closeModal}
         />
       </Wrapper>

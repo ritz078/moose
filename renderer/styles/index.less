@@ -4,6 +4,7 @@
 @import (less) '~react-toastify/dist/ReactToastify.min.css';
 @import (less) "~rc-slider/assets/index.css";
 @import (less) "~react-lazy-card/dist/lazyCard.css";
+@import (less) "~react-photostory/dist/Swipe.css";
 @import "~plyr/src/less/plyr.less";
 @import "./nprogress.less";
 
@@ -85,16 +86,14 @@ html {
   margin: 0;
 }
 
-.ReactModal__Content--after-open {
-  display: flex;
-}
-
-.ReactModal__Content--after-open {
-  margin-left: -40px;
-  margin-right: -40px;
+.ReactModal__Content {
+  flex: 1;
+  left: 0 !important;
+  right: 0 !important;
   padding: 0 !important;
-  margin-top: -40px !important;
-  margin-bottom: -40px !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  display: flex;
 }
 
 .toastify-content {
@@ -189,4 +188,35 @@ html {
 
 .rs-img {
   background-size: contain !important;
+}
+
+.react-swipe {
+  width: 100%;
+}
+
+.rs-swipe-gallery {
+  background-color: transparent;
+  z-index: 999;
+}
+
+.rs-prev, .rs-next {
+  position: absolute;
+  top: 50vh;
+  margin-top: -20px;
+  font-size: 50px;
+  cursor: pointer;
+  color: #f6f6f6;
+  opacity: 0.9;
+}
+
+.rs-prev:hover, .rs-next:hover {
+  opacity: 1;
+}
+
+.rs-prev.disabled, .rs-next.disabled {
+  display: none;
+}
+
+.rs-next {
+  right: 0;
 }

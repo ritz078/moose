@@ -16,6 +16,7 @@
   "rules": {
     "react/jsx-filename-extension": 0,
     "import/no-extraneous-dependencies": 0,
-    "global-require": 0
+    "global-require": 0,
+    "semi": 0
   }
 }

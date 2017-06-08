@@ -14,7 +14,6 @@
       ["styled-components", { "ssr": true, "displayName": true, "preprocess": false } ]
     ],
     "transform-class-properties",
-    "transform-decorators-legacy",
-    "lodash"
+    "transform-decorators-legacy"
   ]
 }

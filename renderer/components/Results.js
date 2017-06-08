@@ -30,12 +30,8 @@ const Td = styled.div`
   border-bottom: 0.1rem solid #f1f1f1;
   padding: 10px 10px;
   vertical-align: middle;
-  flex: ${props => props.flex};
+  flex: ${props => props.flex || 1};
 `;
-
-Td.defaultProps = {
-  flex: 1,
-};
 
 const Tr = styled.div`
   display: flex;
@@ -127,7 +123,7 @@ export default class Results extends PureComponent {
     }
   }
 
-  getDetails = (index) => {
+  getDetails = (e, index) => {
     const { dispatch, results } = this.props;
     const { selectedIndex } = this.state;
 
@@ -177,8 +173,7 @@ export default class Results extends PureComponent {
 
     return (
       <Tr key={result.id} data-id={result.id} style={style} className={mainClass}>
-        <DefaultRow onClick={() => this.getDetails(index)}>
-          <Ink />
+        <DefaultRow onClick={e => this.getDetails(e, index)}>
           <Td flex={0.5}>{index + 1}</Td>
           <Td flex={0.5}>
             {getCategoryIcon(`${result.category.name} | ${result.subcategory.name}`)}
@@ -198,9 +193,10 @@ export default class Results extends PureComponent {
           <Td flex={2}>{result.size}</Td>
           <Td>{result.seeders}</Td>
           <Td>{result.leechers}</Td>
-          <Td flex={0.5} onClick={e => this.addToDownload(e, result)}>
+          <Td flex={0.5} onClick={e => this.addToDownload(e, result)} style={{ zIndex: 99 }}>
             <i className={downloadClass} />
           </Td>
+          <Ink />
         </DefaultRow>
         {this.state.selectedIndex === index && <Description />}
       </Tr>
@@ -316,6 +312,7 @@ export default class Results extends PureComponent {
   addToDownload = (e, result) => {
     e.preventDefault();
     e.stopPropagation();
+    e.cancelBubble = true;
     if (this.isBeingDownloaded(result.infoHash)) {
       showToast('Already present in the download list', 'warning');
       return;

@@ -11,7 +11,6 @@ export default function (action$, { dispatch, getState }) {
     const stringifiedParams = qs.stringify(params);
     if (params.page === 1) {
       dispatch({ type: 'START_RESULTS_LOADING' });
-      dispatch({ type: 'RESET_DETAILS' });
     }
 
     return ajax

@@ -30,7 +30,9 @@ export default class Download extends PureComponent {
   }
 
   componentDidMount() {
-    ipcRenderer.send('init_download_polling');
+    this.interval = setInterval(() => {
+      ipcRenderer.send('get_download_data');
+    }, 1000);
 
     ipcRenderer.on('download_data', (event, downloadData) => {
       this.setState({ downloadData });
@@ -38,8 +40,8 @@ export default class Download extends PureComponent {
   }
 
   componentWillUnmount() {
-    ipcRenderer.send('end_download_polling');
-    ipcRenderer.removeAllListeners(['download_data']);
+    clearInterval(this.interval);
+    ipcRenderer.removeAllListeners(['download_data', 'get_download_data']);
   }
 
   setSelectedIndex = (i) => {

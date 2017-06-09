@@ -35,41 +35,35 @@ function init() {
 
 let interval;
 
-ipcMain.on('init_download_polling', (event) => {
-  interval = setInterval(() => {
-    const data = {};
-    client.torrents.forEach((torrent) => {
-      data[torrent.infoHash] = {
-        name: torrent.name,
-        downloadSpeed: torrent.downloadSpeed,
-        progress: torrent.progress * 100,
-        uploadSpeed: torrent.uploadSpeed,
-        peers: torrent.numPeers,
-        infoHash: torrent.infoHash,
-        files: torrent.files.map((file, i) => ({
-          name: file.name,
-          type: mime.lookup(file.name),
-          // eslint-disable-next-line no-mixed-operators
-          progress: Math.round(file.downloaded / file.length * 100),
-          size: prettyBytes(file.length),
-          slug: `${torrent.infoHash}/${i}/${file.name}`,
-          done: file.done,
-          path: `${torrent.path}/${file.path}`,
-        })),
-      };
-    });
+ipcMain.on('get_download_data', (event) => {
+  const data = {};
+  client.torrents.forEach((torrent) => {
+    data[torrent.infoHash] = {
+      name: torrent.name,
+      downloadSpeed: torrent.downloadSpeed,
+      progress: torrent.progress * 100,
+      uploadSpeed: torrent.uploadSpeed,
+      peers: torrent.numPeers,
+      infoHash: torrent.infoHash,
+      files: torrent.files.map((file, i) => ({
+        name: file.name,
+        type: mime.lookup(file.name),
+        // eslint-disable-next-line no-mixed-operators
+        progress: Math.round(file.downloaded / file.length * 100),
+        size: prettyBytes(file.length),
+        slug: `${torrent.infoHash}/${i}/${file.name}`,
+        done: file.done,
+        path: `${torrent.path}/${file.path}`,
+      })),
+    };
+  });
 
-    event.sender.send('download_data', data);
-  }, 1000);
+  event.sender.send('download_data', data);
 });
 
 function getTorrent(infoHash) {
   return client.get(infoHash);
 }
-
-ipcMain.on('end_download_polling', () => {
-  clearInterval(interval);
-});
 
 ipcMain.on('add_torrent_to_download', (event, infoHash) => addTorrent(infoHash));
 
@@ -93,10 +87,6 @@ ipcMain.on('remove_torrent_files', (event, infoHash) => {
       event.sender.send('removed_torrent_files');
     });
   }
-});
-
-app.on('before-quit', () => {
-  clearInterval(interval);
 });
 
 client.on('error', err => logError(err.message));

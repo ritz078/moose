@@ -30,12 +30,8 @@ const Td = styled.div`
   border-bottom: 0.1rem solid #f1f1f1;
   padding: 10px 10px;
   vertical-align: middle;
-  flex: ${props => props.flex};
+  flex: ${props => props.flex || 1};
 `;
-
-Td.defaultProps = {
-  flex: 1,
-};
 
 const Tr = styled.div`
   display: flex;
@@ -112,13 +108,22 @@ export default class Results extends PureComponent {
     };
   }
 
-  componentDidUpdate(oldProps) {
-    if (oldProps.results.data !== this.props.results.data && this.props.params.page === 1) {
-      this.listRef.forceUpdateGrid();
+  componentWillReceiveProps(newProps) {
+    if (this.areResultsDifferent(this.props, newProps)) {
+      this.setState({
+        selectedIndex: null,
+      });
     }
   }
 
-  getDetails = (index) => {
+  componentDidUpdate(oldProps) {
+    if (this.areResultsDifferent(oldProps, this.props)) {
+      this.listRef.forceUpdateGrid();
+      this.listRef.recomputeRowHeights(0);
+    }
+  }
+
+  getDetails = (e, index) => {
     const { dispatch, results } = this.props;
     const { selectedIndex } = this.state;
 
@@ -168,8 +173,7 @@ export default class Results extends PureComponent {
 
     return (
       <Tr key={result.id} data-id={result.id} style={style} className={mainClass}>
-        <DefaultRow onClick={() => this.getDetails(index)}>
-          <Ink />
+        <DefaultRow onClick={e => this.getDetails(e, index)}>
           <Td flex={0.5}>{index + 1}</Td>
           <Td flex={0.5}>
             {getCategoryIcon(`${result.category.name} | ${result.subcategory.name}`)}
@@ -189,9 +193,10 @@ export default class Results extends PureComponent {
           <Td flex={2}>{result.size}</Td>
           <Td>{result.seeders}</Td>
           <Td>{result.leechers}</Td>
-          <Td flex={0.5} onClick={e => this.addToDownload(e, result)}>
+          <Td flex={0.5} onClick={e => this.addToDownload(e, result)} style={{ zIndex: 99 }}>
             <i className={downloadClass} />
           </Td>
+          <Ink />
         </DefaultRow>
         {this.state.selectedIndex === index && <Description />}
       </Tr>
@@ -263,6 +268,15 @@ export default class Results extends PureComponent {
     );
   };
 
+  /**
+   * Tells whether the search results are for a different search term.
+   * @param oldProps
+   * @param newProps
+   * @returns {boolean}
+   */
+  areResultsDifferent = (oldProps, newProps) =>
+    oldProps.results.data !== newProps.results.data && newProps.params.page === 1;
+
   addTorrentToDownload = (infoHash) => {
     ipcRenderer.send('add_torrent_to_download', infoHash);
   };
@@ -298,6 +312,7 @@ export default class Results extends PureComponent {
   addToDownload = (e, result) => {
     e.preventDefault();
     e.stopPropagation();
+    e.cancelBubble = true;
     if (this.isBeingDownloaded(result.infoHash)) {
       showToast('Already present in the download list', 'warning');
       return;

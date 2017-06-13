@@ -4,14 +4,16 @@ const fixPath = require('fix-path');
 const dev = require('electron-is-dev');
 const root = require('window-or-global');
 const { moveToApplications } = require('electron-lets-move');
-const unhandled = require('electron-unhandled');
 const downloadTorrent = require('./middleware/download');
 const template = require('./template');
+const { logError } = require('./utils/logEmitter');
 
 // adds debug features like hotkeys for triggering dev tools and reload
 require('electron-debug')();
 
-unhandled();
+process.on('unhandledRejection', (error) => {
+  logError(error);
+});
 
 const server = require('./server');
 const { addToConfig, readConfig } = require('snape-config');
@@ -53,7 +55,7 @@ async function createWindow() {
     backgroundColor: '#ffffff',
     width: 1000,
     minWidth: 1000,
-    skipTaskbar: true
+    skipTaskbar: true,
   });
 
   root.win = win;
@@ -76,7 +78,7 @@ async function createWindow() {
     const {
       default: installExtension,
       REACT_DEVELOPER_TOOLS,
-      REDUX_DEVTOOLS
+      REDUX_DEVTOOLS,
     } = require('electron-devtools-installer');
 
     installExtension(REACT_DEVELOPER_TOOLS);

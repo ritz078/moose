@@ -31,6 +31,7 @@ export const ContentTitle = styled.div`
 
 export const Name = styled.div`
   flex: 0.5;
+  padding-right: 20px;
 `;
 
 const RemoveIcon = styled.i`
@@ -144,9 +145,10 @@ export default class DownloadTile extends Component {
         <ContentTitle index={index} onClick={() => onClick(index)}>
           <FixedWidthDiv width="30px">{index + 1}</FixedWidthDiv>
           <FixedWidthDiv width="40px">
-            {getCategoryIcon(`${details.category.name} | ${details.subcategory.name}`)}
+            {(details.category || details.subcategory) &&
+              getCategoryIcon(`${details.category.name} | ${details.subcategory.name}`)}
           </FixedWidthDiv>
-          <Name>{details.name}</Name>
+          <Name className="text-ellipsis">{details.name}</Name>
           <Details>
             <div>{Math.round(downloadData.progress || 0)} %</div>
             <div>{prettyBytes(downloadData.downloadSpeed || 0)}/s</div>

@@ -26,17 +26,17 @@
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/7zip/-/7zip-0.0.6.tgz#9cafb171af82329490353b4816f03347aa150a30"
 
-"@protobufjs/aspromise@^1.1.1":
+"@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@protobufjs/aspromise/-/aspromise-1.1.2.tgz#9b8b0cc663d669a7d8f6f5d0893a14d348f30fbf"
 
-"@protobufjs/base64@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@protobufjs/base64/-/base64-1.1.1.tgz#8f10115d2b1ac2c25f3602e55eba708e56bcd2bb"
+"@protobufjs/base64@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@protobufjs/base64/-/base64-1.1.2.tgz#4c85730e59b9a1f1f349047dbf24296034bb2735"
 
-"@protobufjs/codegen@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@protobufjs/codegen/-/codegen-1.0.8.tgz#d29e3d48a9445d77ccbffa420379b29dc37c6d7d"
+"@protobufjs/codegen@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@protobufjs/codegen/-/codegen-2.0.4.tgz#7ef37f0d010fb028ad1ad59722e506d9262815cb"
 
 "@protobufjs/eventemitter@^1.1.0":
   version "1.1.0"
@@ -73,13 +73,9 @@
   version "3.0.31"
   resolved "https://registry.yarnpkg.com/@types/long/-/long-3.0.31.tgz#08635b0d0d322676940c1a88a7a9cef661c6f34a"
 
-"@types/node@7.0.12":
-  version "7.0.12"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.12.tgz#ae5f67a19c15f752148004db07cbbb372e69efc9"
-
-"@types/node@^7.0.18":
-  version "7.0.22"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.22.tgz#4593f4d828bdd612929478ea40c67b4f403ca255"
+"@types/node@^7.0.18", "@types/node@^7.0.29":
+  version "7.0.31"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.31.tgz#80ea4d175599b2a00149c29a10a4eb2dff592e86"
 
 abbrev@1:
   version "1.1.0"
@@ -1762,10 +1758,6 @@ classnames@^2.2.3, classnames@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
-clean-stack@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/clean-stack/-/clean-stack-1.3.0.tgz#9e821501ae979986c46b1d66d2d432db2fd4ae31"
-
 cli-boxes@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/cli-boxes/-/cli-boxes-1.0.0.tgz#4fa917c3e59c94a004cd61f8ee509da651687143"
@@ -2553,9 +2545,13 @@ ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
 
-electron-builder-core@18.4.0, electron-builder-core@~18.4.0:
+electron-builder-core@18.4.0:
   version "18.4.0"
   resolved "https://registry.yarnpkg.com/electron-builder-core/-/electron-builder-core-18.4.0.tgz#e60129df2e6800cd6829c7e0dd7fa0538d1a197f"
+
+electron-builder-core@~19.2.0:
+  version "19.2.0"
+  resolved "https://registry.yarnpkg.com/electron-builder-core/-/electron-builder-core-19.2.0.tgz#907451fade44050a7b25ce6c42a31e9a043dbffa"
 
 electron-builder-http@18.6.0, electron-builder-http@~18.6.0:
   version "18.6.0"
@@ -2564,14 +2560,21 @@ electron-builder-http@18.6.0, electron-builder-http@~18.6.0:
     debug "2.6.8"
     fs-extra-p "^4.3.0"
 
-electron-builder-squirrel-windows@^18.6.0:
-  version "18.6.0"
-  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-18.6.0.tgz#4745018c9e21e0894ceede2be67724a30d8c86aa"
+electron-builder-http@~19.2.0:
+  version "19.2.0"
+  resolved "https://registry.yarnpkg.com/electron-builder-http/-/electron-builder-http-19.2.0.tgz#60212b189f248fe7d9abc79445215f4fd1dff35f"
+  dependencies:
+    debug "2.6.8"
+    fs-extra-p "^4.3.0"
+
+electron-builder-squirrel-windows@^19.2.0:
+  version "19.2.0"
+  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-19.2.0.tgz#cb9d30fd6f84c6c68b66367d3a5018332b3c7527"
   dependencies:
     archiver "^1.3.0"
     bluebird-lst "^1.0.2"
-    electron-builder-core "~18.4.0"
-    electron-builder-util "~18.6.0"
+    electron-builder-core "~19.2.0"
+    electron-builder-util "~19.2.0"
     fs-extra-p "^4.3.0"
 
 electron-builder-util@18.6.0, electron-builder-util@~18.6.0:
@@ -2583,6 +2586,24 @@ electron-builder-util@18.6.0, electron-builder-util@~18.6.0:
     chalk "^1.1.3"
     debug "2.6.8"
     electron-builder-http "~18.6.0"
+    fs-extra-p "^4.3.0"
+    ini "^1.3.4"
+    is-ci "^1.0.10"
+    node-emoji "^1.5.1"
+    source-map-support "^0.4.15"
+    stat-mode "^0.2.2"
+    tunnel-agent "^0.6.0"
+
+electron-builder-util@~19.2.0:
+  version "19.2.0"
+  resolved "https://registry.yarnpkg.com/electron-builder-util/-/electron-builder-util-19.2.0.tgz#9fc346b24af7fc8a1c1608ddb68886f91e3d8ff6"
+  dependencies:
+    "7zip-bin" "^2.1.0"
+    bluebird-lst "^1.0.2"
+    chalk "^1.1.3"
+    debug "2.6.8"
+    electron-builder-http "~19.2.0"
+    fcopy-pre-bundled "0.2.0"
     fs-extra-p "^4.3.0"
     ini "^1.3.4"
     is-ci "^1.0.10"
@@ -2726,13 +2747,6 @@ electron-to-chromium@^1.2.7:
   version "1.3.11"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.11.tgz#744761df1d67b492b322ce9aa0aba5393260eb61"
 
-electron-unhandled@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/electron-unhandled/-/electron-unhandled-0.2.0.tgz#e66bda5b93c84392a7b7d7b7e267d90c2d0c1ae3"
-  dependencies:
-    clean-stack "^1.3.0"
-    ensure-error "^0.1.0"
-
 electron@1.7.2:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/electron/-/electron-1.7.2.tgz#8115e6ae86128a8cd99360d3793d3618ca2c7619"
@@ -2793,10 +2807,6 @@ enhanced-resolve@^3.0.0:
     memory-fs "^0.4.0"
     object-assign "^4.0.1"
     tapable "^0.2.5"
-
-ensure-error@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/ensure-error/-/ensure-error-0.1.0.tgz#cf3fd3365bf7fd83244731cbd4f30006d99df259"
 
 entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
@@ -3110,9 +3120,9 @@ execa@^0.5.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
-execa@^0.6.0:
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/execa/-/execa-0.6.3.tgz#57b69a594f081759c69e5370f0d17b9cb11658fe"
+execa@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/execa/-/execa-0.7.0.tgz#944becd34cc41ee32a63a9faf27ad5a65fc59777"
   dependencies:
     cross-spawn "^5.0.1"
     get-stream "^3.0.0"
@@ -3221,6 +3231,10 @@ fbjs@^0.8.4, fbjs@^0.8.5, fbjs@^0.8.9:
     promise "^7.1.1"
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.9"
+
+fcopy-pre-bundled@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/fcopy-pre-bundled/-/fcopy-pre-bundled-0.2.0.tgz#846195cb53cf0a987ca9ebee4d70f81277c10f8a"
 
 fd-slicer@~1.0.1:
   version "1.0.1"
@@ -4364,13 +4378,13 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-lint-staged@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-3.6.0.tgz#cda8f0bef16e7928cc14b735186ae12cd662599c"
+lint-staged@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-3.6.1.tgz#24423c8b7bd99d96e15acd1ac8cb392a78e58582"
   dependencies:
     app-root-path "^2.0.0"
     cosmiconfig "^1.1.0"
-    execa "^0.6.0"
+    execa "^0.7.0"
     listr "^0.12.0"
     lodash.chunk "^4.2.0"
     minimatch "^3.0.0"
@@ -5896,9 +5910,9 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier-eslint-cli@^4.0.4:
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/prettier-eslint-cli/-/prettier-eslint-cli-4.0.4.tgz#778ec4ae06c644f1cfac5cd8677fb881338292d6"
+prettier-eslint-cli@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/prettier-eslint-cli/-/prettier-eslint-cli-4.1.0.tgz#506f5fa63d8bffd3eb48b754223d1223f5cde4ab"
   dependencies:
     arrify "^1.0.1"
     babel-runtime "^6.23.0"
@@ -6006,13 +6020,13 @@ protobufjs@^3.2.2:
     ascli "~0.3"
     bytebuffer "~3 >=3.5"
 
-protobufjs@^6.7.3:
-  version "6.7.3"
-  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-6.7.3.tgz#9270aa5d75dfe4d37df1dec87c444a72140d0e1c"
+protobufjs@^6.8.0:
+  version "6.8.0"
+  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-6.8.0.tgz#04e85493c4e1653878ec283f18bc78b1e7c5d5a2"
   dependencies:
-    "@protobufjs/aspromise" "^1.1.1"
-    "@protobufjs/base64" "^1.1.1"
-    "@protobufjs/codegen" "^1.0.8"
+    "@protobufjs/aspromise" "^1.1.2"
+    "@protobufjs/base64" "^1.1.2"
+    "@protobufjs/codegen" "^2.0.4"
     "@protobufjs/eventemitter" "^1.1.0"
     "@protobufjs/fetch" "^1.1.0"
     "@protobufjs/float" "^1.0.2"
@@ -6021,7 +6035,7 @@ protobufjs@^6.7.3:
     "@protobufjs/pool" "^1.1.0"
     "@protobufjs/utf8" "^1.1.0"
     "@types/long" "^3.0.31"
-    "@types/node" "7.0.12"
+    "@types/node" "^7.0.29"
     long "^3.2.0"
 
 proxy-addr@~1.1.4:
@@ -6149,9 +6163,9 @@ rc-animate@2.x:
     css-animation "^1.3.0"
     prop-types "^15.5.6"
 
-rc-slider@^8.0.2:
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-8.0.2.tgz#b25108e676111ae2bdb3402b755dd330bce07249"
+rc-slider@^8.1.2:
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-8.1.2.tgz#68f4abd6d0c9337708db8c984b278fa6c821ef23"
   dependencies:
     babel-runtime "6.x"
     classnames "^2.2.5"
@@ -6249,9 +6263,9 @@ react-loading-bar@^0.0.4:
   dependencies:
     shallowequal "^0.2.2"
 
-react-modal@^1.7.8:
-  version "1.7.8"
-  resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-1.7.8.tgz#952f30cf7d4dd584e96c1c82c144d10e3155c95e"
+react-modal@^1.9.4:
+  version "1.9.4"
+  resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-1.9.4.tgz#f6823c29ca9ecbecd9cc2a9f019e78e4319bafdd"
   dependencies:
     create-react-class "^15.5.2"
     element-class "^0.2.0"
@@ -6309,9 +6323,9 @@ react-transition-group@^1.1.2:
     prop-types "^15.5.6"
     warning "^3.0.0"
 
-react-virtualized@^9.7.6:
-  version "9.7.6"
-  resolved "https://registry.yarnpkg.com/react-virtualized/-/react-virtualized-9.7.6.tgz#6be9e7ae8b214a848116f1ebd48ff1aac26fcc2f"
+react-virtualized@^9.8.0:
+  version "9.8.0"
+  resolved "https://registry.yarnpkg.com/react-virtualized/-/react-virtualized-9.8.0.tgz#7c1fe9b723ce39a1c4916cabe1c4f1bda5dbc04b"
   dependencies:
     babel-runtime "^6.11.6"
     classnames "^2.2.3"
@@ -6901,9 +6915,9 @@ single-line-log@^1.1.2:
   dependencies:
     string-width "^1.0.1"
 
-sinon@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/sinon/-/sinon-2.3.2.tgz#c43a9c570f32baac1159505cfeed19108855df89"
+sinon@^2.3.4:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/sinon/-/sinon-2.3.4.tgz#466ad8d1bae86d6db51aa218b92e997bc3e5db88"
   dependencies:
     diff "^3.1.0"
     formatio "1.2.0"
@@ -7588,9 +7602,9 @@ update-notifier@^2.2.0:
     semver-diff "^2.0.0"
     xdg-basedir "^3.0.0"
 
-url-loader@^0.5.8:
-  version "0.5.8"
-  resolved "https://registry.yarnpkg.com/url-loader/-/url-loader-0.5.8.tgz#b9183b1801e0f847718673673040bc9dc1c715c5"
+url-loader@^0.5.9:
+  version "0.5.9"
+  resolved "https://registry.yarnpkg.com/url-loader/-/url-loader-0.5.9.tgz#cc8fea82c7b906e7777019250869e569e995c295"
   dependencies:
     loader-utils "^1.0.2"
     mime "1.3.x"

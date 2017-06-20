@@ -32,12 +32,12 @@ const isAlreadyRunning = app.makeSingleInstance(() => {
       win.restore();
     }
 
-    win.show();
+    win.focus();
   }
 });
 
 if (isAlreadyRunning) {
-  app.exit();
+  app.quit();
 }
 
 async function createWindow() {
@@ -110,7 +110,7 @@ app.on('window-all-closed', () => {
   if (process.platform === 'darwin') {
     app.dock.hide();
   } else {
-    app.exit();
+    app.quit();
   }
 });
 

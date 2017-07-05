@@ -1,4 +1,4 @@
-/* eslint-disable no-param-reassign,no-mixed-operators */
+/* eslint-disable no-param-reassign,no-mixed-operators,comma-dangle */
 const mime = require('mime');
 const rangeParser = require('range-parser');
 const pump = require('pump');

@@ -4,7 +4,7 @@ import isRenderer from 'is-electron-renderer';
 import ip from 'internal-ip';
 import { showToast } from '../components/Toast';
 
-root.casts = isRenderer ? remote.require('chromecasts')() : require('chromecasts')();
+root.casts = isRenderer ? remote.require('chromecasts')() : {};
 
 export function getPlayer() {
   return root.selectedPlayer;

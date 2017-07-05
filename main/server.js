@@ -2,9 +2,10 @@
 
 const { app } = require('electron');
 const express = require('express');
-const dev = require('electron-is-dev');
 const { resolve } = require('app-root-path');
 const { downloadTorrent, list, deleteTorr, searchTorrent } = require('./middleware/torrent');
+
+const dev = process.env.NODE_ENV !== 'production';
 
 async function startServer(port) {
   const dir = resolve('./renderer');
@@ -13,6 +14,7 @@ async function startServer(port) {
 
   let nextApp;
   let nextHandler;
+
   if (dev) {
     const next = require('next');
     nextApp = next({ dev, dir });

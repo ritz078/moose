@@ -1,4 +1,4 @@
-const PirateBay = require('snape-thepiratebay');
+const PirateBay = require('thepiratebay');
 const parseTorrent = require('parse-torrent');
 
 module.exports = function (searchTerm, options) {

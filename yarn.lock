@@ -2273,7 +2273,7 @@ csso@~2.3.1:
     clap "^1.0.9"
     source-map "^0.5.3"
 
-cuint@^0.2.2:
+cuint@^0.2.2, cuint@latest:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/cuint/-/cuint-0.2.2.tgz#408086d409550c2631155619e9fa7bcadc3b991b"
 
@@ -4697,6 +4697,10 @@ md5-file@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/md5-file/-/md5-file-3.1.1.tgz#db3c92c09bbda5c2de883fa5490dd711fddbbab9"
 
+mdi@^1.9.33:
+  version "1.9.33"
+  resolved "https://registry.yarnpkg.com/mdi/-/mdi-1.9.33.tgz#3caf6d95fc6b800633630bd62ba0cf1fbde6b2e2"
+
 media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
@@ -5818,6 +5822,16 @@ postcss-unique-selectors@^2.0.2:
     alphanum-sort "^1.0.1"
     postcss "^5.0.4"
     uniqs "^2.0.0"
+
+postcss-url@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/postcss-url/-/postcss-url-7.0.0.tgz#11c6a1103e527ae914c3bab48415273d027d9508"
+  dependencies:
+    mime "^1.2.11"
+    minimatch "^3.0.0"
+    mkdirp "^0.5.0"
+    postcss "^6.0.1"
+    xxhashjs "^0.2.1"
 
 postcss-value-parser@^3.0.1, postcss-value-parser@^3.0.2, postcss-value-parser@^3.1.1, postcss-value-parser@^3.1.2, postcss-value-parser@^3.2.3, postcss-value-parser@^3.3.0:
   version "3.3.0"
@@ -7982,6 +7996,12 @@ xtend@~2.1.1:
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-2.1.2.tgz#6efecc2a4dad8e6962c4901b337ce7ba87b5d28b"
   dependencies:
     object-keys "~0.4.0"
+
+xxhashjs@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/xxhashjs/-/xxhashjs-0.2.1.tgz#9bbe9be896142976dfa34c061b2d068c43d30de0"
+  dependencies:
+    cuint latest
 
 y18n@^3.2.1:
   version "3.2.1"

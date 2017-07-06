@@ -81,7 +81,6 @@
     "electron-builder": "^19.7.1",
     "electron-builder-squirrel-windows": "^19.7.2",
     "electron-devtools-installer": "^2.2.0",
-    "electron-rebuild": "^1.5.11",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-flowtype": "^2.34.0",
     "eslint-plugin-import": "^2.6.0",

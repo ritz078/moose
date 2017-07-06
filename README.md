@@ -30,7 +30,7 @@
 - [x] Download files
 - [x] Play music
 - [x] Chromecast support
-- [ ] View files like pdf, text etc.
+- [x] View files like pdf, text in external app.
 
 ### Development
 

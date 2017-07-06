@@ -1,22 +1,15 @@
 const PirateBay = require('thepiratebay');
 const parseTorrent = require('parse-torrent');
 
-module.exports = function (searchTerm, options) {
-  return new Promise((resolve, reject) => {
-    PirateBay.search(searchTerm, options)
-      .then((results) => {
-        results.forEach((r) => {
-          // eslint-disable-next-line no-param-reassign
-          r.infoHash = parseTorrent(r.magnetLink).infoHash;
-        });
-        return resolve(results);
-      })
-      .catch((err) => {
-        if (err.message === 'None of the proxy requests were successful') {
-          reject(err.message);
-        } else {
-          reject();
-        }
-      });
-  });
+module.exports = async (searchTerm, options) => {
+  try {
+    const results = await PirateBay.search(searchTerm, options);
+    return results.map(r =>
+      Object.assign({}, r, {
+        infoHash: parseTorrent(r.magnetLink).infoHash,
+      }),
+    );
+  } catch (err) {
+    return err.message;
+  }
 };

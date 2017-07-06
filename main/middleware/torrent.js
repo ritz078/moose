@@ -119,19 +119,20 @@ function deleteTorr(req, res) {
   res.status(200).end('Torrent file deleted'); // for saving space on main.
 }
 
-function searchTorrent(req, res) {
+async function searchTorrent(req, res) {
   req.query.page = req.query.page - 1 || 0;
 
-  search(req.params.searchTerm, req.query)
-    .then((results) => {
-      if (results && !results.length) res.status(500).body({ error: 'Unable to fetch data' });
-      return res.json({
-        data: results,
-        page: req.query.page,
-        hasNextPage: results.length === 30,
-      });
-    })
-    .catch(err => res.json(err));
+  try {
+    const results = await search(req.params.searchTerm, req.query);
+    if (results && !results.length) res.status(500).body({ error: 'Unable to fetch data' });
+    res.json({
+      data: results,
+      page: req.query.page,
+      hasNextPage: results.length === 30,
+    });
+  } catch (err) {
+    res.json(err);
+  }
 }
 
 module.exports = {

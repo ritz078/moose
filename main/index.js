@@ -12,7 +12,9 @@ const { logError } = require('./utils/logEmitter');
 require('electron-debug')();
 
 process.on('unhandledRejection', (error) => {
-  logError(error);
+  if (!error.includes('Database maintenance')) {
+    logError(error);
+  }
 });
 
 const server = require('./server');

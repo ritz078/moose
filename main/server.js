@@ -3,19 +3,18 @@
 const { app } = require('electron');
 const express = require('express');
 const { resolve } = require('app-root-path');
+const dev = require('electron-is-dev');
 const { downloadTorrent, list, deleteTorr, searchTorrent } = require('./middleware/torrent');
 
-const dev = process.env.NODE_ENV !== 'production';
-
 async function startServer(port) {
-  const dir = resolve('./renderer');
-
   const server = express();
 
   let nextApp;
   let nextHandler;
 
   if (dev) {
+    const dir = resolve('./renderer');
+
     const next = require('next');
     nextApp = next({ dev, dir });
     nextHandler = nextApp.getRequestHandler();

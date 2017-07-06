@@ -150,17 +150,8 @@
     },
     "files": [
       "main",
-      "node_modules"
-    ],
-    "extraResources": [
-      {
-        "from": "renderer",
-        "to": "app/renderer",
-        "filter": [
-          ".next",
-          "static"
-        ]
-      }
+      "node_modules",
+      "build"
     ]
   }
 }

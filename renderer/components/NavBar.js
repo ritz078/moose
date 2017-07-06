@@ -1,7 +1,6 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Ink from 'react-ink';
 import styled, { css } from 'styled-components';
 import isRenderer from 'is-electron-renderer';
 import Router from 'next/router';
@@ -73,18 +72,21 @@ export default class MenuBar extends PureComponent {
       <Wrapper>
         <Cast />
         <Link href="/download" prefetch>
-          <Icon className="mdi mdi-download" active={this.isCurrentRoute('/download')}>
-            <NotificationBadge
-              count={this.props.downloads.length}
-              containerStyle={badgeContainerStyle}
-              style={badgeStyle}
-              effect={Effect.ROTATE_Y}
-            />
-            <Ink />
-          </Icon>
+          <a href="">
+            <Icon className="mdi mdi-download" active={this.isCurrentRoute('/download')}>
+              <NotificationBadge
+                count={this.props.downloads.length}
+                containerStyle={badgeContainerStyle}
+                style={badgeStyle}
+                effect={Effect.ROTATE_Y}
+              />
+            </Icon>
+          </a>
         </Link>
         <Link href="/" prefetch>
-          <Icon className="mdi mdi-home" active={this.isCurrentRoute('/')}><Ink /></Icon>
+          <a href="">
+            <Icon className="mdi mdi-magnify" active={this.isCurrentRoute('/')} />
+          </a>
         </Link>
       </Wrapper>
     );

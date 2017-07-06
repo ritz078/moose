@@ -1,4 +1,5 @@
 {
+  "sudo": true,
   "os": "osx",
   "language": "node_js",
   "node_js": "node",

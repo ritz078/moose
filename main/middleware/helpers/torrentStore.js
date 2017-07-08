@@ -1,6 +1,5 @@
 const WebTorrent = require('webtorrent');
 const tempy = require('tempy');
-
 const rimraf = require('rimraf');
 const parseTorrent = require('parse-torrent');
 
@@ -17,15 +16,11 @@ module.exports = {
     return this.client;
   },
 
-  removeTorrents(infoHash, cb) {
+  removeTorrents(infoHash) {
     const client = this.client;
     client.torrents.forEach((torrent) => {
       if (torrent.infoHash !== infoHash) {
-        rimraf(`${BASE_PATH}/${torrent.name}`, () => {
-          if (cb) {
-            cb();
-          }
-        });
+        rimraf(`${BASE_PATH}/${torrent.name}`);
       }
     });
   },
@@ -34,14 +29,14 @@ module.exports = {
     const client = this.getClient();
 
     // destroy all torrents except infoHash
-    const infoHash = parseTorrent(torrentId).infoHash;
+    const { infoHash } = parseTorrent(torrentId);
     this.removeTorrents(infoHash);
 
     return (
       client.get(torrentId) ||
       client.add(torrentId, {
-        path: `${BASE_PATH}`
+        path: `${BASE_PATH}`,
       })
     );
-  }
+  },
 };

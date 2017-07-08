@@ -9,7 +9,9 @@ const template = require('./template');
 const { logError } = require('./utils/logEmitter');
 
 // adds debug features like hotkeys for triggering dev tools and reload
-require('electron-debug')();
+if (dev) {
+  require('electron-debug')();
+}
 
 process.on('unhandledRejection', (error) => {
   if (!error.includes('Database maintenance')) {

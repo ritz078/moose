@@ -1,5 +1,5 @@
 const WebTorrent = require('webtorrent');
-const { ipcMain, app } = require('electron');
+const { ipcMain } = require('electron');
 const mime = require('mime');
 const root = require('window-or-global');
 const prettyBytes = require('pretty-bytes');
@@ -32,8 +32,6 @@ function init() {
     }
   });
 }
-
-let interval;
 
 ipcMain.on('get_download_data', (event) => {
   const data = {};

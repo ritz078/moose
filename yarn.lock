@@ -243,9 +243,9 @@ archiver-utils@^1.3.0:
     normalize-path "^2.0.0"
     readable-stream "^2.0.0"
 
-archiver@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/archiver/-/archiver-1.3.0.tgz#4f2194d6d8f99df3f531e6881f14f15d55faaf22"
+archiver@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/archiver/-/archiver-2.0.0.tgz#ffb73ecccd8dd65b0019e1180f78092a053d43c4"
   dependencies:
     archiver-utils "^1.3.0"
     async "^2.0.0"
@@ -255,7 +255,7 @@ archiver@^1.3.0:
     readable-stream "^2.0.0"
     tar-stream "^1.5.0"
     walkdir "^0.0.11"
-    zip-stream "^1.1.0"
+    zip-stream "^1.2.0"
 
 are-we-there-yet@~1.1.2:
   version "1.1.4"
@@ -2548,13 +2548,20 @@ electron-builder-http@19.12.0, electron-builder-http@~19.12.0:
     debug "^2.6.8"
     fs-extra-p "^4.3.0"
 
-electron-builder-squirrel-windows@^19.7.2:
-  version "19.12.0"
-  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-19.12.0.tgz#1dacd8075e8cb036345b2c1724f2c02ed8235cf1"
+electron-builder-http@~19.14.0:
+  version "19.14.0"
+  resolved "https://registry.yarnpkg.com/electron-builder-http/-/electron-builder-http-19.14.0.tgz#39cd61c56041c1f3adff93012befe58fb8991937"
   dependencies:
-    archiver "^1.3.0"
+    debug "^2.6.8"
+    fs-extra-p "^4.3.0"
+
+electron-builder-squirrel-windows@^19.14.0:
+  version "19.14.0"
+  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-19.14.0.tgz#c16c4815b1e519236463c5da269657aab35b3314"
+  dependencies:
+    archiver "^2.0.0"
     bluebird-lst "^1.0.2"
-    electron-builder-util "~19.12.0"
+    electron-builder-util "~19.14.0"
     fs-extra-p "^4.3.0"
 
 electron-builder-util@19.12.0, electron-builder-util@~19.12.0:
@@ -2571,6 +2578,24 @@ electron-builder-util@19.12.0, electron-builder-util@~19.12.0:
     ini "^1.3.4"
     is-ci "^1.0.10"
     node-emoji "^1.5.1"
+    source-map-support "^0.4.15"
+    stat-mode "^0.2.2"
+    tunnel-agent "^0.6.0"
+
+electron-builder-util@~19.14.0:
+  version "19.14.0"
+  resolved "https://registry.yarnpkg.com/electron-builder-util/-/electron-builder-util-19.14.0.tgz#81c8eafbf2bbff5fc8623ac4cd36662df2dc873d"
+  dependencies:
+    "7zip-bin" "^2.1.0"
+    bluebird-lst "^1.0.2"
+    chalk "^2.0.1"
+    debug "^2.6.8"
+    electron-builder-http "~19.14.0"
+    fcopy-pre-bundled "0.3.4"
+    fs-extra-p "^4.3.0"
+    ini "^1.3.4"
+    is-ci "^1.0.10"
+    node-emoji "^1.6.1"
     source-map-support "^0.4.15"
     stat-mode "^0.2.2"
     tunnel-agent "^0.6.0"
@@ -2909,7 +2934,7 @@ eslint-import-resolver-node@^0.3.1:
     debug "^2.6.8"
     resolve "^1.2.0"
 
-eslint-module-utils@^2.0.0:
+eslint-module-utils@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/eslint-module-utils/-/eslint-module-utils-2.1.1.tgz#abaec824177613b8a95b299639e1b6facf473449"
   dependencies:
@@ -2922,24 +2947,24 @@ eslint-plugin-flowtype@^2.34.0:
   dependencies:
     lodash "^4.15.0"
 
-eslint-plugin-import@^2.6.0:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.6.1.tgz#f580be62bb809421d46e338372764afcc9f59bf6"
+eslint-plugin-import@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.7.0.tgz#21de33380b9efb55f5ef6d2e210ec0e07e7fa69f"
   dependencies:
     builtin-modules "^1.1.1"
     contains-path "^0.1.0"
     debug "^2.6.8"
     doctrine "1.5.0"
     eslint-import-resolver-node "^0.3.1"
-    eslint-module-utils "^2.0.0"
+    eslint-module-utils "^2.1.1"
     has "^1.0.1"
     lodash.cond "^4.3.0"
     minimatch "^3.0.3"
     read-pkg-up "^2.0.0"
 
-eslint-plugin-jsx-a11y@^5.0.3:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-5.1.1.tgz#5c96bb5186ca14e94db1095ff59b3e2bd94069b1"
+eslint-plugin-jsx-a11y@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-6.0.2.tgz#659277a758b036c305a7e4a13057c301cd3be73f"
   dependencies:
     aria-query "^0.7.0"
     array-includes "^3.0.3"
@@ -4954,9 +4979,9 @@ next-event@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-event/-/next-event-1.0.0.tgz#e7778acde2e55802e0ad1879c39cf6f75eda61d8"
 
-next-redux-wrapper@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-1.1.3.tgz#8813bee469a781636cfcc598afb4e2f4bc50f8de"
+next-redux-wrapper@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-1.2.0.tgz#ae254ee84b77bf8cb2cea2c69ec53bdec1461c38"
 
 next@^3.0.1-beta.8:
   version "3.0.1-beta.8"
@@ -5025,6 +5050,12 @@ node-abi@^2.0.0:
 node-emoji@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/node-emoji/-/node-emoji-1.5.1.tgz#fd918e412769bf8c448051238233840b2aff16a1"
+  dependencies:
+    string.prototype.codepointat "^0.2.0"
+
+node-emoji@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/node-emoji/-/node-emoji-1.6.1.tgz#7d2f0a8fd11237cba0ddcef3bdc015dc50b011f9"
   dependencies:
     string.prototype.codepointat "^0.2.0"
 
@@ -8102,7 +8133,7 @@ zero-fill@^2.2.3:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/zero-fill/-/zero-fill-2.2.3.tgz#a3def06ba5e39ae644850bb4ca2ad4112b4855e9"
 
-zip-stream@^1.1.0:
+zip-stream@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/zip-stream/-/zip-stream-1.2.0.tgz#a8bc45f4c1b49699c6b90198baacaacdbcd4ba04"
   dependencies:

@@ -1,4 +1,5 @@
 const vlc = require('vlc-command');
+const { app } = require('electron');
 const { spawn } = require('child_process');
 
 let proc;
@@ -29,6 +30,8 @@ function kill() {
   proc.kill('SIGKILL');
   proc = null;
 }
+
+app.on('close', kill);
 
 module.exports = {
   playOnVlc,

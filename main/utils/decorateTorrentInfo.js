@@ -2,7 +2,7 @@ const prettyBytes = require('pretty-bytes');
 const mime = require('mime');
 const { sumBy } = require('lodash');
 
-module.exports = function (torrent) {
+module.exports = (torrent) => {
   const totalSize = sumBy(torrent.files, o => o.length);
   return {
     infoHash: torrent.infoHash,

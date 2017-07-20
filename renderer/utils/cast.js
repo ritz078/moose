@@ -15,10 +15,11 @@ export default {
     return root.casts;
   },
 
-  connect(player, cb) {
+  async connect(player, cb) {
     root.selectedPlayer = player;
+    const ipAddr = await ip.v4();
     root.selectedPlayer.play(
-      `http://${ip.v4()}:${window.location.port}/static/images/cover.png`,
+      `http://${ipAddr}:${window.location.port}/static/images/cover.png`,
       {
         type: 'image/jpeg',
       },
@@ -32,11 +33,12 @@ export default {
     );
   },
 
-  play({ name, type, index, infoHash }, cb) {
+  async play({ name, type, index, infoHash }, cb) {
     const { selectedPlayer } = root;
 
+    const ipAddr = await ip.v4();
     if (selectedPlayer) {
-      const src = `http://${ip.v4()}:${window.location
+      const src = `http://${ipAddr}:${window.location
         .port}/api/download/${infoHash}/${+index}/${name}`;
 
       selectedPlayer.play(

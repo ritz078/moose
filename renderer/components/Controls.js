@@ -10,9 +10,9 @@ export const Wrapper = styled.div`
   background-color: white;
   border-top: 1px solid #eee;
   display: flex;
-  padding:0 10px;
+  padding: 0 10px;
   flex-direction: column;
-  box-shadow: 0 0px 5px 0px rgba(0,0,0,0.1);
+  box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.1);
 `;
 
 const Icon = styled.i`
@@ -21,7 +21,7 @@ const Icon = styled.i`
   padding: 5px;
   cursor: pointer;
   color: #676767;
-  &:hover{
+  &:hover {
     color: #000;
   }
 `;
@@ -34,9 +34,7 @@ export const Title = styled.h6`
   text-align: center;
 `;
 
-const Control = styled.div`
-  display: flex;
-`;
+const Control = styled.div`display: flex;`;
 
 const SliderMax = styled.span`
   float: right;
@@ -75,7 +73,7 @@ export default class Controls extends PureComponent {
 
       if (player) {
         player.status((err, status) => {
-          if (status.playerState === 'PLAYING') {
+          if (status && status.playerState === 'PLAYING') {
             this.setState({
               sliderValue: status.currentTime,
               sliderMax: status.media.duration,
@@ -151,14 +149,18 @@ export default class Controls extends PureComponent {
     });
     return (
       <Wrapper>
-        <Title>{title}</Title>
+        <Title>
+          {title}
+        </Title>
         <Control>
           <Icon className={playClass} onClick={this.handleToggle} />
           <Icon className="mdi mdi-stop" onClick={this.stop} />
 
           <SliderWrapper>
             <Slider min={0} max={sliderMax} value={sliderValue} onChange={this.seek} />
-            <SliderMax>{((sliderMax - sliderValue) / 60).toFixed(2)}</SliderMax>
+            <SliderMax>
+              {((sliderMax - sliderValue) / 60).toFixed(2)}
+            </SliderMax>
           </SliderWrapper>
         </Control>
       </Wrapper>

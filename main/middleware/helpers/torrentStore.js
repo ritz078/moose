@@ -20,7 +20,7 @@ module.exports = {
     const client = this.client;
     client.torrents.forEach((torrent) => {
       if (torrent.infoHash !== infoHash) {
-        rimraf(`${BASE_PATH}/${torrent.name}`);
+        rimraf(`${BASE_PATH}/${torrent.name}`, () => {});
       }
     });
   },

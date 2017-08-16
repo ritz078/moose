@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, autoUpdater } = require('electron');
 const getPort = require('get-port');
 const fixPath = require('fix-path');
 const dev = require('electron-is-dev');
@@ -13,8 +13,15 @@ if (dev) {
   require('electron-debug')();
 }
 
+if (!dev) {
+  const updateServer = 'https://hazel-xzdrgzprqt.now.sh';
+  const feed = `${updateServer}/update/${process.platform}/${app.getVersion()}`;
+
+  autoUpdater.setFeedURL(feed);
+}
+
 process.on('unhandledRejection', (error) => {
-  if (!error.includes('Database maintenance')) {
+  if (error && typeof error === 'string' && !error.includes('Database maintenance')) {
     logError(error);
   }
 });

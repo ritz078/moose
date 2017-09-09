@@ -53,3 +53,5 @@ The logo has been designed by [Julia Stoffer](https://thenounproject.com/julia.s
 ### License 
 MIT
 
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/8CBegPnJTnjtddvd2E18Su4F/ritz078/snape'>  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/8CBegPnJTnjtddvd2E18Su4F/ritz078/snape.svg' /></a>
+

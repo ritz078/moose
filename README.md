@@ -50,6 +50,8 @@ yarn pack
 
 The logo has been designed by [Julia Stoffer](https://thenounproject.com/julia.stoffer/)
 
+CSS Framework is [Spectre](https://github.com/picturepan2/spectre) by [@picturepan2](https://github.com/picturepan2)
+
 ### License 
 MIT
 

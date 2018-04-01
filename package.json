@@ -15,7 +15,8 @@
     "rebuild": "./node_modules/.bin/electron-rebuild",
     "pack": "npm run build && electron-builder --dir",
     "dist": "rm -rf dist && npm run build && electron-builder",
-    "lint": "eslint main/**/*.js renderer/**/*.js"
+    "lint": "eslint main/**/*.js renderer/**/*.js",
+    "test": ""
   },
   "repository": {
     "type": "git",

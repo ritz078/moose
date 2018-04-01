@@ -36,8 +36,8 @@ const Td = styled.div`
 const Tr = styled.div`
   display: flex;
   flex-direction: ${props => props.direction || 'column'};
-  &.row-even{
-    background-color: #f8f8f8
+  &.row-even {
+    background-color: #f8f8f8;
   }
 `;
 
@@ -69,44 +69,38 @@ const LoaderWrapper = styled.div`
   z-index: 10;
 `;
 
+type Props = {
+  results: {
+    data: {
+      magnetLink: string,
+      verified: boolean,
+      size: string,
+      seeders: number,
+      leechers: number,
+    }[],
+    loading: boolean,
+  },
+  dispatch: Function,
+  params: {
+    page: number,
+    searchTerm: string,
+    sortBy: string,
+    orderBy: string,
+  },
+  download: {
+    magnetLink: PropTypes.string,
+  },
+};
+
 @withRedux(initStore, ({ results, params, download }) => ({
   results,
   params,
   download,
 }))
-export default class Results extends PureComponent {
-  static propTypes = {
-    results: PropTypes.shape({
-      data: PropTypes.arrayOf(
-        PropTypes.shape({
-          magnetLink: PropTypes.string,
-          verified: PropTypes.bool,
-          size: PropTypes.string,
-          seeders: PropTypes.number,
-          leechers: PropTypes.number,
-        }),
-      ),
-      loading: PropTypes.bool,
-    }).isRequired,
-    dispatch: PropTypes.isRequired,
-    params: PropTypes.shape({
-      page: PropTypes.number,
-      searchTerm: PropTypes.string,
-      sortBy: PropTypes.string,
-      orderBy: PropTypes.string,
-    }).isRequired,
-    download: PropTypes.shape({
-      magnetLink: PropTypes.string,
-    }).isRequired,
+export default class Results extends PureComponent<Props> {
+  state = {
+    selectedIndex: null,
   };
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedIndex: null,
-    };
-  }
 
   componentWillReceiveProps(newProps) {
     if (this.areResultsDifferent(this.props, newProps)) {
@@ -184,8 +178,7 @@ export default class Results extends PureComponent {
                 data-tooltip={result.verified ? 'Verified' : 'Not verified'}
                 className="mdi mdi-verified tooltip tooltip-right"
                 active={result.verified}
-              />
-              {' '}
+              />{' '}
               {result.name}
             </ResultTitle>
           </Td>
@@ -339,7 +332,7 @@ export default class Results extends PureComponent {
     return (
       <Table className={mainClass}>
         {this.getTableHeader()}
-        {!isEmpty(this.props.results.data) &&
+        {!isEmpty(this.props.results.data) && (
           <div style={{ flex: 1 }}>
             <InfiniteLoader
               isRowLoaded={this.isRowLoaded}
@@ -348,27 +341,34 @@ export default class Results extends PureComponent {
               minimumBatchSize={1}
               threshold={5}
             >
-              {({ onRowsRendered, registerChild }) =>
-                (<AutoSizer>
-                  {({ width, height }) =>
-                    (<List
+              {({ onRowsRendered, registerChild }) => (
+                <AutoSizer>
+                  {({ width, height }) => (
+                    <List
                       ref={(x) => {
                         this.listRef = x;
                         registerChild(x);
                       }}
                       height={height}
                       onRowsRendered={onRowsRendered}
-                      className={'results-list'}
+                      className="results-list"
                       rowCount={rowCount}
                       width={width}
                       rowHeight={this.getHeight}
                       overscanRowCount={5}
                       rowRenderer={this.rowRenderer}
-                    />)}
-                </AutoSizer>)}
+                    />
+                  )}
+                </AutoSizer>
+              )}
             </InfiniteLoader>
-          </div>}
-        {results.loading && <LoaderWrapper><DotLoader /></LoaderWrapper>}
+          </div>
+        )}
+        {results.loading && (
+          <LoaderWrapper>
+            <DotLoader />
+          </LoaderWrapper>
+        )}
       </Table>
     );
   }

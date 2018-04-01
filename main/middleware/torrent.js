@@ -27,7 +27,7 @@ function stream(req, res, torrent) {
     }
 
     res.setHeader('Accept-Ranges', 'bytes');
-    res.setHeader('Content-Type', mime.lookup(file.name));
+    res.setHeader('Content-Type', mime.getType(file.name));
 
     res.statusCode = 200;
 

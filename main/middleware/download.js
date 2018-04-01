@@ -45,7 +45,7 @@ ipcMain.on('get_download_data', (event) => {
       infoHash: torrent.infoHash,
       files: torrent.files.map((file, i) => ({
         name: file.name,
-        type: mime.lookup(file.name),
+        type: mime.getType(file.name),
         // eslint-disable-next-line no-mixed-operators
         progress: Math.round(file.downloaded / file.length * 100),
         size: prettyBytes(file.length),

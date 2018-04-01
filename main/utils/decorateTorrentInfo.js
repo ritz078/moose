@@ -11,8 +11,8 @@ module.exports = (torrent) => {
     files: torrent.files.map((file, i) => ({
       name: file.name,
       size: prettyBytes(file.length),
-      type: mime.lookup(file.name),
-      slug: `${torrent.infoHash}/${i}/${file.name}`,
+      type: mime.getType(file.name),
+      slug: `${torrent.infoHash}/${i}/${encodeURI(file.name)}`,
     })),
     name: torrent.name,
   };

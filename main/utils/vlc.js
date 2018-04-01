@@ -6,13 +6,7 @@ let proc;
 
 function playOnVlc(url, fileName) {
   vlc((err, path) => {
-    const args = [
-      '--play-and-exit',
-      '--video-on-top',
-      '--quiet',
-      `--meta-title=${JSON.stringify(fileName)}`,
-      url,
-    ];
+    const args = ['--quiet', `--meta-title=${JSON.stringify(fileName)}`, url];
 
     proc = spawn(path, args);
   });

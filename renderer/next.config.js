@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-const BabiliPlugin = require('babili-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 module.exports = {
   webpack: (config, { dev }) => {
@@ -25,16 +25,15 @@ module.exports = {
 
     config.module.rules.push(...loaders);
 
-    config.plugins = config.plugins.filter(plugin => plugin.constructor.name !== 'UglifyJsPlugin');
-
     config.resolve.alias = {
       Long: 'long',
       ByteBuffer: 'bytebuffer',
     };
 
-    if (!dev) {
-      config.plugins.push(new BabiliPlugin());
-    }
+    config.plugins.push(new LodashModuleReplacementPlugin({
+      collections: true,
+      shorthands: true,
+    }));
 
     return config;
   },

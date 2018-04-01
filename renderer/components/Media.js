@@ -1,16 +1,17 @@
 /* eslint-disable react/no-did-mount-set-state,jsx-a11y/media-has-caption */
 import React, { PureComponent } from 'react';
+import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import { remote } from 'electron';
 import styled from 'styled-components';
 import isRenderer from 'is-electron-renderer';
 import { isAudio, isVideo } from '../utils/isPlayable';
 
-let plyr;
+let Plyr;
 let vlc;
 if (isRenderer) {
   // only require plyr on the client side as it takes window as an argument
-  plyr = require('plyr');
+  Plyr = require('plyr');
   vlc = remote.require('./utils/vlc');
 }
 const VideoWrapper = styled.div`
@@ -52,11 +53,10 @@ class Media extends PureComponent {
       error: false,
     });
 
-    this.player[0].on('error', () =>
+    this.player.on('error', () =>
       this.setState({
         error: true,
-      }),
-    );
+      }));
   }
 
   componentDidUpdate() {
@@ -64,13 +64,18 @@ class Media extends PureComponent {
   }
 
   componentWillUnmount() {
-    this.player[0].destroy();
+    this.destroyInstance();
   }
+
+  destroyInstance = () => {
+    this.player && this.player.destroy();
+  };
 
   createPlayer() {
     if (!this.player) {
-      this.player = plyr.setup(this.mediaRef);
-      setTimeout(this.player[0].play, 500);
+      this.player = new Plyr(findDOMNode(this.mediaRef));
+
+      this.player.play();
     }
   }
 

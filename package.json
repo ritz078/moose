@@ -3,7 +3,7 @@
   "version": "0.2.3",
   "description": "A torrent client to search, stream and download torrents. Play music, view images and stream videos.",
   "engines": {
-    "node": ">=6"
+    "node": ">=9"
   },
   "main": "main/index.js",
   "author": "Ritesh Kumar",
@@ -11,10 +11,10 @@
     "start": "electron --inspect main",
     "build": "next build renderer && next export -o build renderer",
     "precommit": "lint-staged",
-    "prettier": "prettier-eslint --write main/**/*.js renderer/**/*.js",
+    "format": "prettier-eslint --write main/**/*.js renderer/**/*.js",
     "rebuild": "./node_modules/.bin/electron-rebuild",
-    "pack": "npm run build && build --dir",
-    "dist": "rm -rf dist && npm run build && build",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "rm -rf dist && npm run build && electron-builder",
     "lint": "eslint main/**/*.js renderer/**/*.js"
   },
   "repository": {

@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styled from 'styled-components';
 import withRedux from 'next-redux-wrapper';
@@ -88,7 +87,7 @@ type Props = {
     orderBy: string,
   },
   download: {
-    magnetLink: PropTypes.string,
+    magnetLink: string,
   },
 };
 

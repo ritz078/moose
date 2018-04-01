@@ -14,7 +14,7 @@
     "format": "prettier-eslint --write main/**/*.js renderer/**/*.js",
     "rebuild": "./node_modules/.bin/electron-rebuild",
     "pack": "npm run build && electron-builder --dir",
-    "dist": "rm -rf dist && npm run build && electron-builder",
+    "dist": "rm -rf dist && npm run build && electron-builder -p 'onTag'",
     "lint": "eslint main/**/*.js renderer/**/*.js",
     "test": ""
   },

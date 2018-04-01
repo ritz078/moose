@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   width: 100%;
   background-color: white;
   bottom: 0;
-  flex:1;
+  flex: 1;
   border-bottom: 1px solid #eee;
   overflow: hidden;
   display: flex;
@@ -57,10 +57,10 @@ const Info = styled.div`
 `;
 
 const VlcIcon = styled.i`
-  color: #FF6000;
+  color: #ff6000;
   cursor: pointer;
   opacity: 0.8;
-  &:hover{
+  &:hover {
     opacity: 1;
   }
 `;
@@ -73,15 +73,15 @@ const ProgressContainer = styled.td`
 const Name = styled.td`
   max-width: 270px;
   color: ${props => (props.isDownloaded ? colors.primary : 'black')};
-  
+
   ${props =>
     props.isDownloaded &&
     css`
-    color: ${colors.primary};
-    &:hover {
-      color: ${colors.darkPrimary}
-    }
-  `}
+      color: ${colors.primary};
+      &:hover {
+        color: ${colors.darkPrimary};
+      }
+    `};
 `;
 
 @withRedux(initStore, ({ cast, details }) => ({
@@ -142,7 +142,9 @@ export default class Description extends PureComponent {
   }
 
   getFiles = () => {
-    const { details, showOnlyDetails, showProgress, customDetails } = this.props;
+    const {
+      details, showOnlyDetails, showProgress, customDetails,
+    } = this.props;
 
     // eslint-disable-next-line no-const-assign
     const d = customDetails || details;
@@ -171,31 +173,35 @@ export default class Description extends PureComponent {
               {file.name}
             </Name>
 
-            {showProgress &&
+            {showProgress && (
               <ProgressContainer>
                 <progress className="progress" max="100" value={Math.min(file.progress, 100)} />
-              </ProgressContainer>}
+              </ProgressContainer>
+            )}
 
             <td>{file.size}</td>
-            {this.state.isVlcPresent &&
+            {this.state.isVlcPresent && (
               <FixedWidthTd width="40px">
-                {isVideo(file.name) &&
+                {isVideo(file.name) && (
                   <VlcIcon
                     data-id={i}
                     data-tooltip="Play on VLC"
                     onClick={this.streamOnVlc}
                     className="mdi mdi-vlc fs-18 tooltip tooltip-left"
-                  />}
-              </FixedWidthTd>}
+                  />
+                )}
+              </FixedWidthTd>
+            )}
             <FixedWidthTd width="40px">
-              {isPlayable(file.name) &&
+              {isPlayable(file.name) && (
                 <button className="btn btn-link" onClick={this.startStream} data-id={i}>
                   <i
                     className={streamIcon}
                     data-tooltip={isVideo(file.name) ? 'Play Video' : 'View Image'}
                     data-id={i}
                   />
-                </button>}
+                </button>
+              )}
             </FixedWidthTd>
           </tr>
         );
@@ -247,8 +253,7 @@ export default class Description extends PureComponent {
     vlc.isVlcPresent(isVlcPresent =>
       this.setState({
         isVlcPresent,
-      }),
-    );
+      }));
   };
 
   streamOnVlc = (e) => {
@@ -256,7 +261,10 @@ export default class Description extends PureComponent {
     const selectedIndex = e.target.dataset.id;
     const file = d.files[selectedIndex];
     vlc.kill();
-    vlc.playOnVlc(`http://127.0.0.1:${window.location.port}/api/download/${file.slug}`, file.name);
+    vlc.playOnVlc(
+      `http://127.0.0.1:${window.location.port}/api/download/${file.slug.replace(/ /g, '.')}`,
+      file.name,
+    );
   };
 
   openFile = (file) => {
@@ -265,7 +273,9 @@ export default class Description extends PureComponent {
   };
 
   startStream = (e) => {
-    const { customDetails, details, cast, dispatch } = this.props;
+    const {
+      customDetails, details, cast, dispatch,
+    } = this.props;
 
     const selectedIndex = e.target.dataset.id;
 

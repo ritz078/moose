@@ -1,4 +1,5 @@
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
 import styled from 'styled-components';
 import { isEmpty } from 'lodash';
@@ -13,7 +14,7 @@ const Icon = styled.i`
   display: inline-block;
   color: #777;
   cursor: pointer;
-  &:hover{
+  &:hover {
     color: #555;
   }
 `;
@@ -58,8 +59,7 @@ export default class Cast extends PureComponent {
       this.props.dispatch({
         type: 'SET_SELECTED_PLAYER',
         payload: player,
-      }),
-    );
+      }));
   };
 
   disconnect = () => {
@@ -84,23 +84,24 @@ export default class Cast extends PureComponent {
 
     return (
       players &&
-      !isEmpty(players) &&
-      <div className="popover popover-bottom">
-        <Icon className={iconClass} />
-        <div className="popover-container">
-          <ul className="menu">
-            {players.map(player =>
-              (<Li
-                className="menu-item"
-                key={player.name}
-                onClick={() => (getPlayer() ? this.disconnect() : this.selectPlayer(player))}
-              >
-                {player.name}
-              </Li>),
-            )}
-          </ul>
+      !isEmpty(players) && (
+        <div className="popover popover-bottom">
+          <Icon className={iconClass} />
+          <div className="popover-container">
+            <ul className="menu">
+              {players.map(player => (
+                <Li
+                  className="menu-item"
+                  key={player.name}
+                  onClick={() => (getPlayer() ? this.disconnect() : this.selectPlayer(player))}
+                >
+                  {player.name}
+                </Li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
+      )
     );
   }
 }

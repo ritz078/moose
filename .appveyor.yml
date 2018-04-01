@@ -6,7 +6,7 @@ environment:
   matrix:
     - platform: x64
 install:
-  - ps: Install-Product node 6 x64
+  - ps: Install-Product node 9 x64
   - set CI=true
   - npm install -g flow-typed
   - npm install -g npm@latest

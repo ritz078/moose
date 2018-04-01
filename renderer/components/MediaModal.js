@@ -1,8 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import { findIndex } from 'lodash';
 import LazyCard from 'react-lazy-card/dist/LazyCard';
 import Swipe from 'react-photostory/dist/Swipe';
 import Media from './Media';
@@ -43,8 +41,24 @@ const ImageName = styled.span`
   color: #eee;
 `;
 
-export default function MediaModal(props) {
-  const { fileIndex, file, showModal, onCloseClick, imageFiles } = props;
+type Props = {
+  fileIndex: string,
+  imageFiles: {
+    slug: string,
+  }[],
+  showModal: boolean,
+  file: {
+    name: string,
+    type: string,
+    slug: string,
+  },
+  onCloseClick: Function,
+};
+
+export default function MediaModal(props: Props) {
+  const {
+    fileIndex, file, showModal, onCloseClick, imageFiles,
+  } = props;
 
   if (!fileIndex || !file) return null;
 
@@ -59,18 +73,33 @@ export default function MediaModal(props) {
     },
   };
 
-  const initialIndex = findIndex(imageFiles, o => o.slug === file.slug);
+  const initialIndex = imageFiles.findIndex(o => o.slug === file.slug);
 
   const src = `/api/download/${file.slug}`;
+  let mediaCompRef;
+
+  const mediaComponent = isVideo(file.name) && (
+    <Media src={src} ref={x => (mediaCompRef = x)} fileName={file.name} />
+  );
 
   return (
-    <Modal style={style} isOpen={showModal} contentLabel={'Modal'}>
-      <LoaderWrapper><DotLoader color={'#fff'} /></LoaderWrapper>
+    <Modal style={style} isOpen={showModal} contentLabel="Modal" ariaHideApp={false}>
+      <LoaderWrapper>
+        <DotLoader color="#fff" />
+      </LoaderWrapper>
       <ModalControl>
-        <CloseIcon onClick={onCloseClick} className="mdi mdi-close close-modal" />
+        <CloseIcon
+          onClick={() => {
+            if (mediaCompRef) {
+              mediaCompRef.destroyInstance();
+            }
+            onCloseClick();
+          }}
+          className="mdi mdi-close close-modal"
+        />
       </ModalControl>
-      {isVideo(file.name) && <Media src={src} fileName={file.name} />}
-      {isImage(file.name) &&
+      {mediaComponent}
+      {isImage(file.name) && (
         <Swipe
           initialIndex={initialIndex}
           height="100vh"
@@ -78,31 +107,16 @@ export default function MediaModal(props) {
           prev={<i className="mdi mdi-chevron-left" />}
           next={<i className="mdi mdi-chevron-right" />}
         >
-          {imageFiles.map(image =>
-            (<LazyCard image={`/api/download/${image.slug}`} key={image.slug}>
+          {imageFiles.map(image => (
+            <LazyCard image={`/api/download/${image.slug}`} key={image.slug}>
               <ImageName>{image.name}</ImageName>
-            </LazyCard>),
-          )}
-        </Swipe>}
+            </LazyCard>
+          ))}
+        </Swipe>
+      )}
     </Modal>
   );
 }
-
-MediaModal.propTypes = {
-  fileIndex: PropTypes.string.isRequired,
-  imageFiles: PropTypes.arrayOf(
-    PropTypes.shape({
-      slug: PropTypes.string,
-    }),
-  ),
-  showModal: PropTypes.bool.isRequired,
-  file: PropTypes.shape({
-    name: PropTypes.string,
-    type: PropTypes.string,
-    slug: PropTypes.string,
-  }).isRequired,
-  onCloseClick: PropTypes.func.isRequired,
-};
 
 MediaModal.defaultProps = {
   imageFiles: [],

@@ -1,0 +1,8 @@
+.dragAndDrop {
+  display: flex;
+  flex: 1;
+}
+
+.dragAndDrop:focus {
+  outline: none;
+}

@@ -1,0 +1,50 @@
+{
+  "name": "snape",
+  "description": "A torrent client to search, stream and download torrents. Play music, view images and stream videos.",
+  "version": "2.0.0",
+  "author": {
+    "name": "Ritesh Kumar"
+  },
+  "private": true,
+  "scripts": {
+    "build:main": "tsc --project main/tsconfig.json",
+    "build:main:watch": "npm run build:main -- -w",
+    "dev:renderer": "next dev",
+    "dev:main": "electron dist/index.js",
+    "dev:main:watch": "nodemon --watch ./dist --exec 'npm run dev:main'",
+    "dev": "npm run build:main && concurrently \"npm run build:main:watch\" \"npm run dev:main:watch\" \"npm run dev:renderer\"",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.riteshkr.snape",
+    "productName": "Snape",
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    }
+  },
+  "dependencies": {
+    "buffer": "^5.5.0",
+    "next": "9.3.2-canary.6",
+    "parse-torrent": "^7.0.1",
+    "react": "16.13.1",
+    "react-desktop": "^0.3.9",
+    "react-dom": "16.13.1",
+    "react-dropzone": "^10.2.1",
+    "webtorrent": "^0.107.17"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.30",
+    "@types/parse-torrent": "^5.8.3",
+    "@types/react": "^16.9.25",
+    "@types/webtorrent": "^0.107.1",
+    "concurrently": "^5.1.0",
+    "electron": "^8.2.0",
+    "electron-builder": "^22.4.1",
+    "electron-debug": "^3.0.1",
+    "nodemon": "^2.0.2",
+    "prettier": "^2.0.1",
+    "typescript": "3.9.0-dev.20200325",
+    "webpack": "^4.42.0"
+  }
+}

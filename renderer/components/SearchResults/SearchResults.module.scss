@@ -1,0 +1,44 @@
+.results {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.resultsLabel {
+  background-color: #0000003d;
+  padding: 7px 10px;
+  border-bottom: 1px solid #252525;
+}
+
+.resultsTableWrapper {
+  display: flex;
+  flex: 1;
+}
+
+.resultsTable {
+  font-size: 12px;
+  border-spacing: 1px;
+  border-collapse: separate;
+  width: 100%;
+}
+
+.columnheader {
+  text-align: left;
+  font-weight: normal;
+}
+
+.cell {
+  background-color: rgba(25, 25, 25, 0.4);
+  transition: all 200ms;
+  cursor: pointer;
+}
+
+.cell:hover {
+  background-color: rgba(25, 25, 25, 0.7);
+}
+
+.cell td,
+.columnheader {
+  padding: 8px 10px;
+}

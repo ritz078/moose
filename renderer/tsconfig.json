@@ -3,15 +3,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@utils/*": [
-        "utils/*"
-      ],
-      "@components/*": [
-        "components/*"
-      ],
-      "@styles/*": [
-        "styles/*"
-      ]
+      "@utils/*": ["utils/*"],
+      "@components/*": ["components/*"],
+      "@styles/*": ["styles/*"],
+      "@contexts/*": ["contexts/*"],
+      "@enums/*": ["enums/*"]
     }
   }
 }

@@ -1,23 +1,26 @@
 import { BrowserWindow, app } from "electron";
-import serve from "electron-serve"
+import serve from "electron-serve";
 import createWindow from "./helpers/createWindow";
 
-const isProd: boolean = process.env.NODE_ENV === 'production';
+// import modules
+import "./modules/torrents";
+
+const isProd: boolean = process.env.NODE_ENV === "production";
 
 app.name = "Snape";
 
 let win: BrowserWindow;
 
 if (isProd) {
-  serve({ directory: 'app' });
+  serve({ directory: "app" });
 } else {
-  app.setPath('userData', `${app.getPath('userData')} (development)`);
+  app.setPath("userData", `${app.getPath("userData")} (development)`);
 }
 
 async function _createWindow() {
   await app.whenReady();
 
-  win = createWindow('main', {
+  win = createWindow("main", {
     width: 800,
     frame: false,
     titleBarStyle: "hidden",
@@ -25,7 +28,7 @@ async function _createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
-    vibrancy: "ultra-dark"
+    vibrancy: "ultra-dark",
   });
 
   win.setTrafficLightPosition({
@@ -38,7 +41,7 @@ async function _createWindow() {
   // )
 
   if (isProd) {
-    await win.loadURL('app://./home.html');
+    await win.loadURL("app://./home.html");
   } else {
     const port = process.argv[2];
     await win.loadURL(`http://localhost:${port}/home`);
@@ -67,6 +70,6 @@ app.allowRendererProcessReuse = true;
 
 app.on("ready", _createWindow);
 
-app.on('window-all-closed', () => {
+app.on("window-all-closed", () => {
   app.quit();
 });

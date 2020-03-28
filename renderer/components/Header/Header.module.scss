@@ -5,15 +5,19 @@ $focus: #2196f3;
   height: 48px;
   background-color: rgba(0, 0, 0, 0.45);
   -webkit-app-region: drag;
+  -webkit-user-select: none;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
   padding: 0 20px;
+  flex-shrink: 0;
 }
 
 .search {
   display: flex;
   align-items: center;
+  -webkit-app-region: no-drag;
+  position: relative;
 }
 
 .search:focus-within .searchIcon {
@@ -30,6 +34,17 @@ $focus: #2196f3;
   fill: $primary;
 }
 
+.closeIcon {
+  position: absolute;
+  fill: $primary;
+  right: 6px;
+  cursor: pointer;
+}
+
+.closeIcon:hover {
+  fill: white;
+}
+
 .searchInput {
   width: 160px;
   padding: 5px 10px 5px 28px;
@@ -39,4 +54,5 @@ $focus: #2196f3;
   transition: all 200ms;
   outline: none;
   caret-color: white;
+  color: white;
 }

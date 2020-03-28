@@ -8,6 +8,7 @@
   "private": true,
   "main": "app/background.js",
   "scripts": {
+    "format": "pretty-quick",
     "dev": "nextron",
     "build": "nextron build",
     "postinstall": "electron-builder install-app-deps"
@@ -23,20 +24,35 @@
     "@types/node": "^12.12.30",
     "@types/parse-torrent": "^5.8.3",
     "@types/react": "^16.9.25",
+    "@types/react-table": "^7.0.12",
     "@types/webtorrent": "^0.107.1",
+    "babel-loader": "^8.1.0",
     "buffer": "^5.5.0",
+    "classnames": "^2.2.6",
     "electron": "^8.2.0",
     "electron-builder": "^22.4.1",
+    "husky": "^4.2.3",
     "next": "^9.3.2",
     "nextron": "^5.14.5",
     "parse-torrent": "^7.0.1",
     "prettier": "^2.0.1",
+    "pretty-quick": "^2.0.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-dropzone": "^10.2.1",
+    "react-spring": "^8.0.27",
+    "react-table": "^7.0.0",
     "sass": "^1.26.3",
+    "simplebar-react": "^2.1.0",
+    "time-ago": "^0.2.1",
+    "timeago.js": "^4.0.2",
     "typescript": "3.9.0-dev.20200325",
     "webpack": "^4.42.0",
     "webtorrent": "^0.107.17"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }

@@ -1,20 +1,31 @@
-import { TitleBar, Toolbar, SearchField } from "react-desktop/macOs";
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
+import styles from "./Header.module.scss";
+import Icon from "@mdi/react";
+import { mdiMagnify } from "@mdi/js";
 
 export const Header: React.FC<{}> = memo(() => {
-  const [query, setQuery] = React.useState('');
+  const [query, setQuery] = React.useState("");
 
-  console.log(query)
+  useEffect(() => {
+    console.log(query)
+  }, [query]);
 
   return (
-    <TitleBar inset>
-      <Toolbar height={25} horizontalAlignment="right" >
-        <SearchField
+    <div className={styles.header}>
+      <div className={styles.search}>
+        <Icon
+          className={styles.searchIcon}
+          size={0.7}
+          path={mdiMagnify}
+          title="Search"
+        />
+        <input
+          type="text"
+          className={styles.searchInput}
           placeholder="Search"
-          defaultValue=""
           onChange={e => setQuery(e.target.value)}
         />
-      </Toolbar>
-    </TitleBar>
+      </div>
+    </div>
   );
-})
+});

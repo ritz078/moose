@@ -1,0 +1,42 @@
+$primary: #5d5d5d;
+$focus: #2196f3;
+
+.header {
+  height: 48px;
+  background-color: rgba(0, 0, 0, 0.45);
+  -webkit-app-region: drag;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+}
+
+.search:focus-within .searchIcon {
+  fill: $focus;
+}
+
+.search:focus-within .searchInput {
+  border-color: $focus;
+}
+
+.searchIcon {
+  position: absolute;
+  margin-left: 6px;
+  fill: $primary;
+}
+
+.searchInput {
+  width: 160px;
+  padding: 5px 10px 5px 28px;
+  background-color: #191919;
+  border: 1px solid $primary;
+  border-radius: 20px;
+  transition: all 200ms;
+  outline: none;
+  caret-color: white;
+}

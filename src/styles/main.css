@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
 body, html {
   margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+  color: #fff
 }

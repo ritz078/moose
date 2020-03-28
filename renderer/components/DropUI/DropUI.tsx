@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { ViewState } from "@components/enums/ViewState";
+import { ViewState } from "@enums/ViewState";
 import Icon from "@mdi/react";
 import { mdiFileDownload } from "@mdi/js";
 import styles from "./DropUI.module.scss";

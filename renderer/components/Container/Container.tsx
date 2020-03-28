@@ -2,7 +2,7 @@ import { Header, IResults } from "../Header";
 import React, { useCallback, useState } from "react";
 import styles from "./Container.module.css";
 import { SearchResults } from "@components/SearchResults";
-import { ViewState } from "@components/enums/ViewState";
+import { ViewState } from "@enums/ViewState";
 import { DragAndDrop } from "@components/DragAndDrop";
 
 export default function () {

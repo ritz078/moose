@@ -5,7 +5,7 @@ import { Buffer } from "buffer";
 import ParseTorrent from "parse-torrent";
 import electron from "electron";
 import MagnetUri from "magnet-uri";
-import { ViewState } from "@components/enums/ViewState";
+import { ViewState } from "@enums/ViewState";
 import { DropUI } from "@components/DropUI";
 
 interface IProps {

@@ -1,0 +1,11 @@
+appId: com.riteshkr.snape
+productName: Snape
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+publish: null

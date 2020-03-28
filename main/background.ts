@@ -1,15 +1,23 @@
-import Electron from "electron";
-import BrowserWindow = Electron.BrowserWindow;
-import app = Electron.app;
+import { BrowserWindow, app } from "electron";
+import serve from "electron-serve"
+import createWindow from "./helpers/createWindow";
 
-require("electron-debug")();
+const isProd: boolean = process.env.NODE_ENV === 'production';
 
 app.name = "Snape";
 
 let win: BrowserWindow;
 
-function createWindow() {
-  win = new BrowserWindow({
+if (isProd) {
+  serve({ directory: 'app' });
+} else {
+  app.setPath('userData', `${app.getPath('userData')} (development)`);
+}
+
+async function _createWindow() {
+  await app.whenReady();
+
+  win = createWindow('main', {
     width: 800,
     frame: false,
     titleBarStyle: "hidden",
@@ -29,7 +37,13 @@ function createWindow() {
   //   path.join(os.homedir(), '/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.5.0_0')
   // )
 
-  win.loadURL("http://localhost:3000");
+  if (isProd) {
+    await win.loadURL('app://./home.html');
+  } else {
+    const port = process.argv[2];
+    await win.loadURL(`http://localhost:${port}/home`);
+    win.webContents.openDevTools();
+  }
 }
 
 const gotTheLock = app.requestSingleInstanceLock();
@@ -51,4 +65,8 @@ if (!gotTheLock) {
 
 app.allowRendererProcessReuse = true;
 
-app.on("ready", createWindow);
+app.on("ready", _createWindow);
+
+app.on('window-all-closed', () => {
+  app.quit();
+});

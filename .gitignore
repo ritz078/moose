@@ -11,6 +11,7 @@
 # next.js
 /.next/
 /out/
+./renderer/.next
 
 # production
 /build
@@ -25,3 +26,4 @@ yarn-debug.log*
 yarn-error.log*
 dist
 .idea
+app

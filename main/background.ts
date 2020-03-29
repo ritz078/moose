@@ -3,7 +3,10 @@ import serve from "electron-serve";
 import createWindow from "./helpers/createWindow";
 
 // import modules
-import "./modules/torrents";
+import "./modules/results";
+import "./modules/description";
+import { cleanup } from "./modules/details";
+import "./modules/playOnVlc";
 
 const isProd: boolean = process.env.NODE_ENV === "production";
 
@@ -69,6 +72,10 @@ if (!gotTheLock) {
 app.allowRendererProcessReuse = true;
 
 app.on("ready", _createWindow);
+
+app.on("will-quit", () => {
+  cleanup();
+});
 
 app.on("window-all-closed", () => {
   app.quit();

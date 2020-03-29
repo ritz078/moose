@@ -3,9 +3,9 @@ import styles from "./Header.module.scss";
 import Icon from "@mdi/react";
 import { mdiCloseCircle, mdiCog, mdiFolderDownload, mdiMagnify } from "@mdi/js";
 import { ipcRenderer } from "electron";
-import { TorrentResult } from "../../../types/TorrentResult";
 import { ViewState } from "@enums/ViewState";
 import cn from "classnames";
+import { TorrentResult } from "../../../types/TorrentResult";
 
 export interface IResults {
   results: TorrentResult[];
@@ -70,7 +70,8 @@ const Search: React.FC<Omit<IProps, "viewState">> = memo(
       (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && query.length) {
           (async function () {
-            const results = await ipcRenderer.invoke("get-torrents", query);
+            const results = await ipcRenderer.invoke("getTorrents", query);
+            console.log(results);
             setViewState(ViewState.SEARCH);
             onResultsChange({
               results,

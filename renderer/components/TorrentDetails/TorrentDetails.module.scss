@@ -1,0 +1,102 @@
+$buttonColor: rgba(53, 53, 53, 0.91);
+
+.torrentDetails {
+  height: 320px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.55);
+  border-top: 1px solid #000;
+  display: grid;
+  grid-template-columns: 98px 98px repeat(10, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  padding: 15px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.poster {
+  grid-area: 1 / 1 / 5 / 4;
+  height: 100%;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.title {
+  grid-area: 1 / 3 / 2 / 13;
+  padding-left: 15px;
+
+  h4 {
+    margin: 0 0 10px;
+    font-weight: normal;
+    font-size: 18px;
+  }
+
+  span {
+    font-size: 13px;
+    line-height: 20px;
+    opacity: 0.8;
+  }
+}
+.files {
+  grid-area: 2 / 3 / 5 / 13;
+  margin-top: 15px;
+  margin-left: 15px;
+  border-radius: 2px;
+  overflow: auto;
+  display: flex;
+
+  table {
+    font-size: 12px;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  th {
+    text-align: left;
+  }
+
+  td,
+  th {
+    background-color: rgba(255, 255, 255, 0.08);
+    padding: 5px 8px;
+  }
+
+  td[data-id="play"] {
+    text-align: center;
+    padding: 5px 0;
+  }
+
+  tbody tr {
+    cursor: pointer;
+    transition: all 200ms;
+  }
+
+  tbody tr:hover {
+    background-color: rgba(103, 58, 183, 0.33);
+  }
+}
+.download {
+  grid-area: 5/12/5/13;
+
+  button {
+    font: inherit;
+    border: 0;
+    border-radius: 2px;
+    font-size: 12px;
+    padding: 8px 14px;
+    margin-top: 24px;
+    background-color: $buttonColor;
+    color: #fff;
+    cursor: pointer;
+    transition: all 200ms;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+  }
+
+  button:hover {
+    background-color: lighten($buttonColor, 10);
+  }
+}

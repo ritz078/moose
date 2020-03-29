@@ -2,295 +2,265 @@ import React, { memo } from "react";
 import { IResults } from "@components/Header";
 import { useTable } from "react-table";
 import styles from "./SearchResults.module.scss";
-import prettyTime from "time-ago";
 import SimpleBar from "simplebar-react";
+import { makeData } from "@components/SearchResults/makeData";
+import { TorrentResult } from "../../../types/TorrentResult";
 
 interface IProps {
   searchResults: IResults;
+  onTorrentSelect: (torrent: TorrentResult) => void;
 }
 
 const data = [
   {
     provider: "Rarbg",
-    title: "The.Flash.2014.S06E15.720P.WEB.X264-POKE[rartv]",
-    time: "2020-03-17 17:47:10 +0000",
-    seeds: 442,
-    peers: 26,
-    size: "903.5 MiB",
+    title: "Parasite.2019.KOREAN.1080p.BluRay.H264.AAC-VXT",
+    time: "2019-11-29 10:40:31 +0000",
+    seeds: 1962,
+    peers: 225,
+    size: "2.5 GiB",
     magnet:
-      "magnet:?xt=urn:btih:72bda6459e901591a94626e095894b48c329392f&dn=The.Flash.2014.S06E15.720P.WEB.X264-POKE%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "magnet:?xt=urn:btih:66b8ac047bb6c15914038673234313612449f5d6&dn=Parasite.2019.KOREAN.1080p.BluRay.H264.AAC-VXT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_7_6_6_0_5__72bda6459e",
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_5_7_8__66b8ac047b",
   },
   {
     provider: "Rarbg",
-    title: "The.Flash.2014.S06E15.1080P.WEB.X264-POKE[rartv]",
-    time: "2020-03-17 17:45:25 +0000",
-    seeds: 440,
-    peers: 55,
-    size: "2.2 GiB",
+    title: "Parasite.2019.KOREAN.720p.BluRay.H264.AAC-VXT",
+    time: "2019-11-29 09:45:14 +0000",
+    seeds: 1422,
+    peers: 182,
+    size: "1.6 GiB",
     magnet:
-      "magnet:?xt=urn:btih:7c76281981788ca0af8e77a3c14b1bdf56954912&dn=The.Flash.2014.S06E15.1080P.WEB.X264-POKE%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "magnet:?xt=urn:btih:ffd237d041fe2393a698253bee7887f0ad7f8202&dn=Parasite.2019.KOREAN.720p.BluRay.H264.AAC-VXT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_7_6_6_0_3__7c76281981",
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_5_3_6__ffd237d041",
   },
   {
     provider: "Rarbg",
-    title: "The.Flash.2014.S06E14.720p.HDTV.x264-SVA[rartv]",
-    time: "2020-03-11 01:01:09 +0000",
-    seeds: 412,
-    peers: 33,
-    size: "835.1 MiB",
+    title: "Parasite.2019.KOREAN.720p.BluRay.x264.DTS-FGT",
+    time: "2019-11-29 09:34:28 +0000",
+    seeds: 709,
+    peers: 257,
+    size: "6.5 GiB",
     magnet:
-      "magnet:?xt=urn:btih:2c0e394df1a99581a23d177c8f58018ef22fc9aa&dn=The.Flash.2014.S06E14.720p.HDTV.x264-SVA%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "magnet:?xt=urn:btih:4de43f99e02cffcfe90abab3a0f214abab05cd20&dn=Parasite.2019.KOREAN.720p.BluRay.x264.DTS-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_7_0_7_7_5__2c0e394df1",
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_5_2_3__4de43f99e0",
   },
   {
     provider: "Rarbg",
-    title: "The.Flash.2014.S06E14.HDTV.x264-SVA[rartv]",
-    time: "2020-03-11 01:01:07 +0000",
-    seeds: 384,
-    peers: 40,
-    size: "245.5 MiB",
+    title: "Parasite.2019.1080p.BluRay.x264-REGRET",
+    time: "2020-01-05 04:34:27 +0000",
+    seeds: 525,
+    peers: 96,
+    size: "9.9 GiB",
     magnet:
-      "magnet:?xt=urn:btih:1a3602b511b67b1c646d69f477943b2dc3e67b19&dn=The.Flash.2014.S06E14.HDTV.x264-SVA%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "magnet:?xt=urn:btih:264d238e72d938af8cebb74693226507a836e841&dn=Parasite.2019.1080p.BluRay.x264-REGRET&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_7_0_7_7_4__1a3602b511",
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_0_4_1_7_2__264d238e72",
   },
   {
     provider: "Rarbg",
-    title: "The.Flash.2014.S06E13.720p.HDTV.x264-SVA[rartv]",
-    time: "2020-02-26 02:02:25 +0000",
-    seeds: 242,
-    peers: 21,
-    size: "1.1 GiB",
+    title: "Parasite.2019.KOREAN.1080p.BluRay.x264.DTS-FGT",
+    time: "2019-11-29 10:44:59 +0000",
+    seeds: 395,
+    peers: 74,
+    size: "12.0 GiB",
     magnet:
-      "magnet:?xt=urn:btih:646e4f4eba0f712dc77c8e15fc8552a939d79118&dn=The.Flash.2014.S06E13.720p.HDTV.x264-SVA%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "magnet:?xt=urn:btih:6d54f137fcfc3ac204a0dbf2998c4aa9acbe5e80&dn=Parasite.2019.KOREAN.1080p.BluRay.x264.DTS-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_5_7_4_7_2__646e4f4eba",
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_5_8_0__6d54f137fc",
   },
   {
     provider: "Rarbg",
-    title: "The.Flash.2014.S06E12.720p.HDTV.x264-SVA[rartv]",
-    time: "2020-02-19 02:01:13 +0000",
-    seeds: 193,
-    peers: 18,
-    size: "797.0 MiB",
+    title: "Parasite.2019.KOREAN.1080p.WEBRip.x264.AAC2.0-NOGRP",
+    time: "2019-08-11 17:24:48 +0000",
+    seeds: 391,
+    peers: 35,
+    size: "5.0 GiB",
     magnet:
-      "magnet:?xt=urn:btih:f43adba8605c7fb31cd8e0f818428d33b424ff8f&dn=The.Flash.2014.S06E12.720p.HDTV.x264-SVA%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "magnet:?xt=urn:btih:a39e4232842fd09608162521df562b34e61bb22a&dn=Parasite.2019.KOREAN.1080p.WEBRip.x264.AAC2.0-NOGRP&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_5_0_6_2_2__f43adba860",
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=1_9_2_0_0_0_2__a39e423284",
   },
   {
     provider: "Rarbg",
-    title: "The.Flash.2014.S06E10.HDTV.x264-SVA[rartv]",
-    time: "2020-02-05 02:00:53 +0000",
-    seeds: 192,
-    peers: 11,
-    size: "237.4 MiB",
+    title: "Parasite.2019.KOREAN.WEBRip.x264-ION10",
+    time: "2019-08-11 18:23:32 +0000",
+    seeds: 257,
+    peers: 35,
+    size: "1.3 GiB",
     magnet:
-      "magnet:?xt=urn:btih:a114a61f25560470c12cd7f2fbb871a969b01d4b&dn=The.Flash.2014.S06E10.HDTV.x264-SVA%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "magnet:?xt=urn:btih:3c5a6f1fe1ee3504595d688f3708b56b38edf050&dn=Parasite.2019.KOREAN.WEBRip.x264-ION10&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_3_6_3_5_2__a114a61f25",
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=1_9_2_0_0_1_9__3c5a6f1fe1",
   },
   {
     provider: "Rarbg",
-    title: "The.Flash.2014.S06E15.WEB.H264-XLF[rartv]",
-    time: "2020-03-18 05:03:21 +0000",
-    seeds: 191,
-    peers: 12,
-    size: "389.3 MiB",
-    magnet:
-      "magnet:?xt=urn:btih:14102cfbe09d21a5a207d3166560d8144bb947e0&dn=The.Flash.2014.S06E15.WEB.H264-XLF%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_7_6_8_7_1__14102cfbe0",
-  },
-  {
-    provider: "Rarbg",
-    title: "The.Flash.2014.S06E10.720p.HDTV.x264-SVA[rartv]",
-    time: "2020-02-05 02:01:06 +0000",
-    seeds: 182,
-    peers: 20,
-    size: "823.7 MiB",
-    magnet:
-      "magnet:?xt=urn:btih:9be2a068b1d8ff53e7d1f03ecf8ffc4e0869a3d9&dn=The.Flash.2014.S06E10.720p.HDTV.x264-SVA%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_3_6_3_5_3__9be2a068b1",
-  },
-  {
-    provider: "Rarbg",
-    title: "The.Flash.2014.S06E11.720p.HDTV.x264-KILLERS[rartv]",
-    time: "2020-02-12 02:48:50 +0000",
+    title: "Parasite.2019.BDRip.x264-REGRET",
+    time: "2020-01-05 04:23:32 +0000",
     seeds: 172,
-    peers: 10,
-    size: "858.6 MiB",
+    peers: 33,
+    size: "639.4 MiB",
     magnet:
-      "magnet:?xt=urn:btih:0f4bc7a3757167281531bf80d9b675c242be2c01&dn=The.Flash.2014.S06E11.720p.HDTV.x264-KILLERS%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "magnet:?xt=urn:btih:49b0243b3d379c7261b0760d1fb801b16da6cd9e&dn=Parasite.2019.BDRip.x264-REGRET&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_4_3_5_0_8__0f4bc7a375",
-  },
-  {
-    provider: "Rarbg",
-    title: "The.Flash.S06E15.WEBRip.x264-ION10",
-    time: "2020-03-18 15:04:09 +0000",
-    seeds: 164,
-    peers: 18,
-    size: "411.0 MiB",
-    magnet:
-      "magnet:?xt=urn:btih:dcb4ecf507c6ce0e0996dde2c48275934f03db25&dn=The.Flash.S06E15.WEBRip.x264-ION10&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_7_7_2_4_6__dcb4ecf507",
-  },
-  {
-    provider: "Rarbg",
-    title: "The.Flash.2014.S06E14.1080p.WEB.H264-XLF[rartv]",
-    time: "2020-03-11 05:06:39 +0000",
-    seeds: 155,
-    peers: 28,
-    size: "2.4 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:bce754543c97756bdfe7c9558c474c73abccceb7&dn=The.Flash.2014.S06E14.1080p.WEB.H264-XLF%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_7_0_9_2_4__bce754543c",
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_0_4_1_6_4__49b0243b3d",
   },
   {
     provider: "Rarbg",
     title:
-      "The.Flash.2014.S06E15.The.Exorcism.of.Nash.Wells.1080p.AMZN.WEBRip.DDP5.1.x264-NTb[rartv]",
-    time: "2020-03-18 14:53:03 +0000",
-    seeds: 147,
-    peers: 10,
-    size: "2.7 GiB",
+      "Parasite.2019.KOREAN.2160p.UHD.BluRay.X265.10bit.HDR.TrueHD.7.1.Atmos-IAMABLE",
+    time: "2020-02-22 10:48:37 +0000",
+    seeds: 134,
+    peers: 81,
+    size: "35.8 GiB",
     magnet:
-      "magnet:?xt=urn:btih:b833e0b3905339df56c19d0433e2d8aae632fdd2&dn=The.Flash.2014.S06E15.The.Exorcism.of.Nash.Wells.1080p.AMZN.WEBRip.DDP5.1.x264-NTb%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "magnet:?xt=urn:btih:1288fd53174fed47744df5e8ed3209521a27b64a&dn=Parasite.2019.KOREAN.2160p.UHD.BluRay.X265.10bit.HDR.TrueHD.7.1.Atmos-IAMABLE&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_7_7_2_4_4__b833e0b390",
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_5_3_9_6_9__1288fd5317",
   },
   {
     provider: "Rarbg",
-    title: "The.Flash.2014.S06E11.HDTV.x264-KILLERS[rartv]",
-    time: "2020-02-12 02:31:07 +0000",
-    seeds: 143,
-    peers: 6,
-    size: "255.8 MiB",
+    title: "Parasite.2019.KOREAN.1080p.BluRay.x264.TrueHD.7.1.Atmos-FGT",
+    time: "2019-11-29 10:45:14 +0000",
+    seeds: 125,
+    peers: 16,
+    size: "15.0 GiB",
     magnet:
-      "magnet:?xt=urn:btih:194ddb0f04633bd520341efbea2e8b627b69e330&dn=The.Flash.2014.S06E11.HDTV.x264-KILLERS%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "magnet:?xt=urn:btih:2f600fca6c5b15b0ce3b16897f228da50c44e079&dn=Parasite.2019.KOREAN.1080p.BluRay.x264.TrueHD.7.1.Atmos-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_4_3_4_9_5__194ddb0f04",
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_5_8_2__2f600fca6c",
   },
   {
     provider: "Rarbg",
-    title: "The.Flash.2014.S06E12.HDTV.x264-SVA[rartv]",
-    time: "2020-02-19 02:01:05 +0000",
-    seeds: 138,
-    peers: 11,
-    size: "226.5 MiB",
+    title: "Parasite.2019.720p.BluRay.x264-REGRET",
+    time: "2020-01-05 04:26:50 +0000",
+    seeds: 125,
+    peers: 33,
+    size: "6.6 GiB",
     magnet:
-      "magnet:?xt=urn:btih:78dd13316ccea279b2bbb9d514ef5ae29b287739&dn=The.Flash.2014.S06E12.HDTV.x264-SVA%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "magnet:?xt=urn:btih:728910f00922f21d298796d4f02fc357f1fad88e&dn=Parasite.2019.720p.BluRay.x264-REGRET&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_5_0_6_2_1__78dd13316c",
-  },
-  {
-    provider: "Rarbg",
-    title: "The.Flash.2014.S06E13.1080p.WEB.H264-XLF[rartv]",
-    time: "2020-02-26 06:05:21 +0000",
-    seeds: 107,
-    peers: 9,
-    size: "2.4 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:1fc6e389b1d74a515e9fe3b3b8d4796e2dc4d340&dn=The.Flash.2014.S06E13.1080p.WEB.H264-XLF%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_5_7_6_1_9__1fc6e389b1",
-  },
-  {
-    provider: "Rarbg",
-    title: "The.Flash.2014.S06E13.WEB.H264-XLF[rartv]",
-    time: "2020-02-26 06:03:00 +0000",
-    seeds: 99,
-    peers: 7,
-    size: "387.9 MiB",
-    magnet:
-      "magnet:?xt=urn:btih:69b35490964269bcd4bb1dea6a9594280af13b0b&dn=The.Flash.2014.S06E13.WEB.H264-XLF%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_5_7_6_1_7__69b3549096",
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_0_4_1_6_6__728910f009",
   },
   {
     provider: "Rarbg",
     title:
-      "The.Flash.2014.S06E14.Death.of.the.Speed.Force.1080p.AMZN.WEBRip.DDP5.1.x264-NTb[rartv]",
-    time: "2020-03-12 14:54:01 +0000",
-    seeds: 93,
-    peers: 9,
-    size: "2.6 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:866f8fe78cdfbefdf35d4c7e827a5983f10187c1&dn=The.Flash.2014.S06E14.Death.of.the.Speed.Force.1080p.AMZN.WEBRip.DDP5.1.x264-NTb%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_7_2_2_4_7__866f8fe78c",
-  },
-  {
-    provider: "Rarbg",
-    title: "The.Flash.2014.S06E08.720p.HDTV.x264-SVA[rartv]",
-    time: "2019-12-04 02:00:43 +0000",
+      "Parasite.2019.KOREAN.1080p.BluRay.REMUX.AVC.DTS-HD.MA.TrueHD.7.1.Atmos-FGT",
+    time: "2019-11-29 08:40:20 +0000",
     seeds: 90,
-    peers: 11,
-    size: "878.2 MiB",
+    peers: 14,
+    size: "34.8 GiB",
     magnet:
-      "magnet:?xt=urn:btih:c044bca4bb0594ab731ad6219c31dee3a5075974&dn=The.Flash.2014.S06E08.720p.HDTV.x264-SVA%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "magnet:?xt=urn:btih:f5db70043ec66572aeece6b5355166ffff2e62a5&dn=Parasite.2019.KOREAN.1080p.BluRay.REMUX.AVC.DTS-HD.MA.TrueHD.7.1.Atmos-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_0_7_4_8_9_2__c044bca4bb",
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_4_7_5__f5db70043e",
   },
   {
     provider: "Rarbg",
-    title: "The.Flash.S06E14.WEBRip.x264-ION10",
-    time: "2020-03-12 15:07:22 +0000",
-    seeds: 87,
-    peers: 10,
-    size: "411.0 MiB",
+    title: "Parasite.2019.KOREAN.INTERNAL.1080p.BluRay.X264-AMIABLE",
+    time: "2020-02-22 14:47:23 +0000",
+    seeds: 74,
+    peers: 13,
+    size: "19.7 GiB",
     magnet:
-      "magnet:?xt=urn:btih:3da40bf77a9ecbb65cb4985faf886ecc4ddcfcd3&dn=The.Flash.S06E14.WEBRip.x264-ION10&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "magnet:?xt=urn:btih:479783ea40e9e51e558ad332a8c04b66753710fa&dn=Parasite.2019.KOREAN.INTERNAL.1080p.BluRay.X264-AMIABLE&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=uko96bvfqy&p=2_1_7_2_2_5_6__3da40bf77a",
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_5_4_1_2_6__479783ea40",
+  },
+  {
+    provider: "Rarbg",
+    title: "Parasite.2019.KOREAN.BRRip.XviD.MP3-VXT",
+    time: "2019-11-29 08:56:10 +0000",
+    seeds: 63,
+    peers: 11,
+    size: "1.3 GiB",
+    magnet:
+      "magnet:?xt=urn:btih:bdd8195fca3d87e4021bbc670dffeb242b0bd47c&dn=Parasite.2019.KOREAN.BRRip.XviD.MP3-VXT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+    desc:
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_4_8_8__bdd8195fca",
+  },
+  {
+    provider: "Rarbg",
+    title:
+      "Parasite.2019.KOREAN.2160p.BluRay.REMUX.HEVC.DTS-HD.MA.TrueHD.7.1.Atmos-FGT",
+    time: "2020-02-22 18:17:46 +0000",
+    seeds: 32,
+    peers: 30,
+    size: "85.5 GiB",
+    magnet:
+      "magnet:?xt=urn:btih:635100a77687dd3c1a99368c4e7d48a09b3ea518&dn=Parasite.2019.KOREAN.2160p.BluRay.REMUX.HEVC.DTS-HD.MA.TrueHD.7.1.Atmos-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+    desc:
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_5_4_1_9_7__635100a776",
+  },
+  {
+    provider: "Rarbg",
+    title: "Parasite.2019.KOREAN.1080p.BluRay.x264.DTS-HD.MA.7.1-FGT",
+    time: "2019-11-29 10:45:07 +0000",
+    seeds: 31,
+    peers: 2,
+    size: "14.4 GiB",
+    magnet:
+      "magnet:?xt=urn:btih:62fed8ea812eea1612eebd9b7247a605c502d54b&dn=Parasite.2019.KOREAN.1080p.BluRay.x264.DTS-HD.MA.7.1-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+    desc:
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_5_8_1__62fed8ea81",
+  },
+  {
+    provider: "Rarbg",
+    title:
+      "Parasite.2019.KOREAN.2160p.BluRay.x265.10bit.SDR.DTS-HD.MA.TrueHD.7.1.Atmos-SWTYBLZ",
+    time: "2020-02-23 10:42:48 +0000",
+    seeds: 19,
+    peers: 34,
+    size: "78.3 GiB",
+    magnet:
+      "magnet:?xt=urn:btih:9c24524d2f773a61363b79c291c68a4ba179e1d9&dn=Parasite.2019.KOREAN.2160p.BluRay.x265.10bit.SDR.DTS-HD.MA.TrueHD.7.1.Atmos-SWTYBLZ&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+    desc:
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_5_5_0_1_7__9c24524d2f",
+  },
+  {
+    provider: "Rarbg",
+    title: "Parasite.2019.KOREAN.2160p.BluRay.HEVC.TrueHD.7.1.Atmos-MMCLX",
+    time: "2020-02-22 17:37:16 +0000",
+    seeds: 15,
+    peers: 11,
+    size: "89.4 GiB",
+    magnet:
+      "magnet:?xt=urn:btih:a90d4354a1d1b189f178ee6f5428a4d0fab731d2&dn=Parasite.2019.KOREAN.2160p.BluRay.HEVC.TrueHD.7.1.Atmos-MMCLX&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+    desc:
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_5_4_1_7_5__a90d4354a1",
+  },
+  {
+    provider: "Rarbg",
+    title: "Parasites.2016.1080p.WEBRip.x264-RARBG",
+    time: "2020-01-27 08:33:25 +0000",
+    seeds: 9,
+    peers: 1,
+    size: "1.5 GiB",
+    magnet:
+      "magnet:?xt=urn:btih:b33ff9add05a943451c827323c48d93b09430031&dn=Parasites.2016.1080p.WEBRip.x264-RARBG&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+    desc:
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_2_7_3_7_6__b33ff9add0",
+  },
+  {
+    provider: "Rarbg",
+    title: "Parasite.1982.1080p.BluRay.H264.AAC-RARBG",
+    time: "2019-10-27 18:17:31 +0000",
+    seeds: 8,
+    peers: 0,
+    size: "1.6 GiB",
+    magnet:
+      "magnet:?xt=urn:btih:26373b96f121a9f7b17d24168e7f996e3cdd631e&dn=Parasite.1982.1080p.BluRay.H264.AAC-RARBG&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+    desc:
+      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_3_9_2_5_6__26373b96f1",
   },
 ];
 
 export const SearchResults: React.FC<IProps> = memo(
-  ({ searchResults: { query, results } }) => {
-    const _data = data.map((x, i) => ({
-      ...x,
-      index: i + 1,
-      time: `${prettyTime.ago(new Date(x.time).getTime(), true)} ago`,
-    }));
-
-    const columns = React.useMemo(
-      () => [
-        { Header: "#", accessor: "index" },
-        {
-          Header: "Name",
-          accessor: "title",
-        },
-        {
-          Header: "Size",
-          accessor: "size",
-        },
-        {
-          Header: "Seeds",
-          accessor: "seeds",
-        },
-        {
-          Header: "Peers",
-          accessor: "peers",
-        },
-        {
-          Header: "Time",
-          accessor: "time",
-        },
-        {
-          Header: "Download",
-        },
-      ],
-      []
-    );
+  ({ searchResults: { query, results }, onTorrentSelect }) => {
+    const { columns, data: _data } = makeData(data);
 
     const {
       getTableProps,
@@ -306,7 +276,7 @@ export const SearchResults: React.FC<IProps> = memo(
           {results.length} results for <b>{query}</b>
         </div>
 
-        <SimpleBar style={{ maxHeight: "calc(100vh - 80px)" }}>
+        <SimpleBar className={styles.simplebar}>
           <div className={styles.resultsTableWrapper}>
             <table {...getTableProps()} className={styles.resultsTable}>
               <thead>
@@ -327,14 +297,14 @@ export const SearchResults: React.FC<IProps> = memo(
                 {rows.map((row) => {
                   prepareRow(row);
                   return (
-                    <tr className={styles.cell} {...row.getRowProps()}>
-                      {row.cells.map((cell) => {
-                        return (
-                          <td {...cell.getCellProps()}>
-                            {cell.render("Cell")}
-                          </td>
-                        );
-                      })}
+                    <tr
+                      onClick={() => onTorrentSelect(row.original)}
+                      className={styles.cell}
+                      {...row.getRowProps()}
+                    >
+                      {row.cells.map((cell) => (
+                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      ))}
                     </tr>
                   );
                 })}

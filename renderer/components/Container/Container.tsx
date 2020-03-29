@@ -4,6 +4,8 @@ import styles from "./Container.module.css";
 import { SearchResults } from "@components/SearchResults";
 import { ViewState } from "@enums/ViewState";
 import { DragAndDrop } from "@components/DragAndDrop";
+import { TorrentDetails } from "@components/TorrentDetails";
+import { TorrentResult } from "../../../types/TorrentResult";
 
 export default function () {
   const [infoHashes, setInfoHashes] = useState<string[]>([]);
@@ -12,6 +14,7 @@ export default function () {
     results: [],
   });
   const [viewState, setViewState] = useState(ViewState.SEARCH);
+  const [selectedTorrent, setSelectedTorrent] = useState<TorrentResult>(null);
 
   const onFileSelect = useCallback(
     ({ infoHash }) => {
@@ -34,8 +37,13 @@ export default function () {
       />
       <DragAndDrop viewState={viewState} onFileSelect={onFileSelect}>
         {viewState === ViewState.SEARCH && (
-          <SearchResults searchResults={searchResults} />
+          <SearchResults
+            onTorrentSelect={setSelectedTorrent}
+            searchResults={searchResults}
+          />
         )}
+
+        <TorrentDetails torrent={selectedTorrent} />
       </DragAndDrop>
     </div>
   );

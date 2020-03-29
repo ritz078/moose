@@ -3,7 +3,7 @@ import { ipcMain } from "electron";
 
 TorrentSearchApi.enableProvider("RarBg");
 
-ipcMain.handle("get-torrents", async (e, query) => {
+ipcMain.handle("getTorrents", async (e, query) => {
   try {
     const torrents = await TorrentSearchApi.search(query, undefined, 20);
 

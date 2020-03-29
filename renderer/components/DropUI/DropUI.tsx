@@ -16,8 +16,10 @@ export const DropUI: React.FC<IProps> = memo(({ viewState, isDragActive }) => {
     viewState === ViewState.DOWNLOADS || isDragActive,
     null,
     {
+      from: { opacity: 0 },
       enter: { opacity: 1 },
       leave: { opacity: 0, pointerEvents: "none" },
+      initial: null,
     }
   );
 

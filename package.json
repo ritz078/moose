@@ -35,6 +35,7 @@
     "next": "^9.3.2",
     "nextron": "^5.14.5",
     "parse-torrent": "^7.0.1",
+    "parse-torrent-name": "^0.5.4",
     "prettier": "^2.0.1",
     "pretty-quick": "^2.0.1",
     "react": "16.13.1",

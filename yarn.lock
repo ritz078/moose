@@ -6414,6 +6414,11 @@ parse-numeric-range@^0.0.2:
   resolved "https://registry.yarnpkg.com/parse-numeric-range/-/parse-numeric-range-0.0.2.tgz#b4f09d413c7adbcd987f6e9233c7b4b210c938e4"
   integrity sha1-tPCdQTx6282Yf26SM8e0shDJOOQ=
 
+parse-torrent-name@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/parse-torrent-name/-/parse-torrent-name-0.5.4.tgz#c6d88a61263b674ca82e6551c0d30c6a5fb8aac4"
+  integrity sha1-xtiKYSY7Z0yoLmVRwNMMal+4qsQ=
+
 parse-torrent@^7.0.0, parse-torrent@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-7.0.1.tgz#669c51a95363550055c7de0957741d6a05575daf"

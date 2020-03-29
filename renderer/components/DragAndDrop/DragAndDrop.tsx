@@ -61,7 +61,11 @@ export const DragAndDrop: React.FC<IProps> = memo(
     return (
       <div {...getRootProps()} className={styles.dragAndDrop}>
         <input hidden {...getInputProps()} />
-        <DropUI viewState={viewState} isDragActive={isDragActive} />
+        <DropUI
+          key={viewState}
+          viewState={viewState}
+          isDragActive={isDragActive}
+        />
         {children}
       </div>
     );

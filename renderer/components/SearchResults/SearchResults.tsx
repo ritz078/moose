@@ -285,6 +285,9 @@ export const SearchResults: React.FC<IProps> = memo(
           Header: "Time",
           accessor: "time",
         },
+        {
+          Header: "Download",
+        },
       ],
       []
     );

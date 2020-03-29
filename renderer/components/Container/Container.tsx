@@ -11,7 +11,7 @@ export default function () {
     query: "",
     results: [],
   });
-  const [viewState, setViewState] = useState(ViewState.DOWNLOADS);
+  const [viewState, setViewState] = useState(ViewState.SEARCH);
 
   const onFileSelect = useCallback(
     ({ infoHash }) => {
@@ -27,7 +27,11 @@ export default function () {
 
   return (
     <div className={styles.pane}>
-      <Header onResultsChange={setSearchResults} />
+      <Header
+        viewState={viewState}
+        setViewState={setViewState}
+        onResultsChange={setSearchResults}
+      />
       <DragAndDrop viewState={viewState} onFileSelect={onFileSelect}>
         {viewState === ViewState.SEARCH && (
           <SearchResults searchResults={searchResults} />

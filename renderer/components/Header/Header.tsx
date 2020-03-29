@@ -1,9 +1,11 @@
 import React, { memo, useCallback } from "react";
 import styles from "./Header.module.scss";
 import Icon from "@mdi/react";
-import { mdiCloseCircle, mdiMagnify } from "@mdi/js";
+import { mdiCloseCircle, mdiCog, mdiFolderDownload, mdiMagnify } from "@mdi/js";
 import { ipcRenderer } from "electron";
 import { TorrentResult } from "../../../types/TorrentResult";
+import { ViewState } from "@enums/ViewState";
+import cn from "classnames";
 
 export interface IResults {
   results: TorrentResult[];
@@ -12,29 +14,75 @@ export interface IResults {
 
 interface IProps {
   onResultsChange: (results: IResults) => void;
+  setViewState: (viewState: ViewState) => void;
+  viewState: ViewState;
 }
 
-export const Header: React.FC<IProps> = memo(({ onResultsChange }) => {
-  const [query, setQuery] = React.useState("");
+export const Header: React.FC<IProps> = memo(
+  ({ onResultsChange, setViewState, viewState }) => {
+    return (
+      <div className={styles.header}>
+        <div></div>
+        <Navbar viewState={viewState} setViewState={setViewState} />
+        <Search setViewState={setViewState} onResultsChange={onResultsChange} />
+      </div>
+    );
+  }
+);
 
-  const fetchResults = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter" && query.length) {
-        (async function () {
-          const results = await ipcRenderer.invoke("get-torrents", query);
-          console.log(results);
-          onResultsChange({
-            results,
-            query,
-          });
-        })();
-      }
-    },
-    [query]
-  );
+const Navbar: React.FC<Omit<IProps, "onResultsChange">> = memo(
+  ({ setViewState, viewState }) => {
+    return (
+      <div className={styles.navbar}>
+        <button
+          className={
+            viewState === ViewState.SEARCH ? styles.navbarActive : undefined
+          }
+          onClick={() => setViewState(ViewState.SEARCH)}
+        >
+          <Icon path={mdiMagnify} title="Search for Torrents" size={0.72} />
+        </button>
+        <button
+          className={
+            viewState === ViewState.DOWNLOADS ? styles.navbarActive : undefined
+          }
+          onClick={() => setViewState(ViewState.DOWNLOADS)}
+        >
+          <Icon
+            path={mdiFolderDownload}
+            title="Download Torrents"
+            size={0.72}
+          />
+        </button>
+        <button>
+          <Icon path={mdiCog} title="Settings" size={0.72} />
+        </button>
+      </div>
+    );
+  }
+);
 
-  return (
-    <div className={styles.header}>
+const Search: React.FC<Omit<IProps, "viewState">> = memo(
+  ({ onResultsChange, setViewState }) => {
+    const [query, setQuery] = React.useState("");
+
+    const fetchResults = useCallback(
+      (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter" && query.length) {
+          (async function () {
+            const results = await ipcRenderer.invoke("get-torrents", query);
+            setViewState(ViewState.SEARCH);
+            onResultsChange({
+              results,
+              query,
+            });
+          })();
+        }
+      },
+      [query]
+    );
+
+    return (
       <div className={styles.search}>
         <Icon
           className={styles.searchIcon}
@@ -61,6 +109,6 @@ export const Header: React.FC<IProps> = memo(({ onResultsChange }) => {
           />
         )}
       </div>
-    </div>
-  );
-});
+    );
+  }
+);

@@ -1,16 +1,18 @@
 $primary: #5d5d5d;
 $focus: #2196f3;
+$headerBackground: rgba(0, 0, 0, 0.45);
 
 .header {
   height: 48px;
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: $headerBackground;
   -webkit-app-region: drag;
   -webkit-user-select: none;
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   align-items: center;
   padding: 0 20px;
   flex-shrink: 0;
+  justify-content: space-between;
 }
 
 .search {
@@ -55,4 +57,44 @@ $focus: #2196f3;
   outline: none;
   caret-color: white;
   color: white;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  border-radius: 2px;
+
+  & > button {
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 4px 6px;
+    display: flex;
+    cursor: pointer;
+    transition: all 200ms;
+    border: 0;
+    outline: none;
+    border-right: 1px solid $headerBackground;
+    -webkit-app-region: no-drag;
+
+    &:last-of-type {
+      border-right: none;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    &.navbarActive svg {
+      fill: #ffeb3b;
+    }
+  }
+
+  svg {
+    fill: #eeeeee;
+    pointer-events: none;
+    transition: all 200ms;
+  }
+
+  & > div:hover > svg {
+    fill: #ffffff;
+  }
 }

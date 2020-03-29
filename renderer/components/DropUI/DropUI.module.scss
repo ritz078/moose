@@ -1,5 +1,6 @@
 .zeroResultsWrapper {
   display: flex;
+  opacity: 0;
   flex: 1;
   border: 2px dashed #656565;
   margin: 20px;
@@ -20,7 +21,6 @@
 }
 
 .zrwSearch {
-  opacity: 0;
   margin: 0;
   border: none;
   background-color: rgba(0, 0, 0, 0.64);

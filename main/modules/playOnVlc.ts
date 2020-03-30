@@ -5,6 +5,7 @@ import { app } from "electron";
 
 let proc;
 ipcMain.handle("playOnVlc", async (e, url) => {
+  kill();
   vlcCommand(function (err, path) {
     const args = [
       "--quiet",

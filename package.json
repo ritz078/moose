@@ -36,6 +36,7 @@
     "husky": "^4.2.3",
     "next": "^9.3.2",
     "nextron": "^5.14.5",
+    "opensubtitles-api": "^5.1.0",
     "parse-torrent": "^7.0.1",
     "parse-torrent-name": "^0.5.4",
     "prettier": "^2.0.1",

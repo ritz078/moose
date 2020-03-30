@@ -7,6 +7,7 @@ import "./modules/results";
 import "./modules/description";
 import { cleanup } from "./modules/details";
 import "./modules/playOnVlc";
+import "./modules/captions";
 
 const isProd: boolean = process.env.NODE_ENV === "production";
 

@@ -1,13 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TorrentResult } from "../../../types/TorrentResult";
 import styles from "./TorrentDetails.module.scss";
 import { ipcRenderer } from "electron";
-import parseTorrentName from "parse-torrent-name";
-import { useTable } from "react-table";
-import SimpleBar from "simplebar-react";
 import Icon from "@mdi/react";
-import { mdiDownload, mdiVlc } from "@mdi/js";
-import { FileType } from "@enums/FileType";
+import { mdiDownload } from "@mdi/js";
+import { ITorrentDetails } from "../../../types/TorrentDetails";
+import { FilesList } from "@components/FilesList";
 
 interface IProps {
   torrent: TorrentResult;
@@ -39,56 +37,35 @@ const description = {
   genre: "Comedy, Drama, Thriller",
 };
 
-const header = [
-  { Header: "#", accessor: "index" },
-  {
-    Header: "Name",
-    accessor: "name",
-  },
-  {
-    Header: "Size",
-    accessor: "size",
-  },
-  {
-    id: "play",
-    accessor: "type",
-  },
-];
-
 export const TorrentDetails: React.FC<IProps> = ({}) => {
-  const [torrentDetails, setTorrentDetails] = useState(null);
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({
-    columns: header,
-    data: torrentDetails ? torrentDetails.files : [],
-  });
+  const [torrentDetails, setTorrentDetails] = useState<ITorrentDetails>(null);
 
   useEffect(() => {
     setTorrentDetails(null);
+
     (async () => {
-      const details = await ipcRenderer.invoke("getTorrentDetails", torrent);
-      console.log(details);
+      const details: ITorrentDetails = await ipcRenderer.invoke(
+        "getTorrentDetails",
+        torrent
+      );
+
       setTorrentDetails(details);
+
+      const x = await ipcRenderer.invoke("getCaptions", details.infoHash);
+
+      console.log(x);
+      // console.log(details);
     })();
+
     (async () => {
-      // const parsedInfo = parseTorrentName(torrent.title);
-      // console.log(parsedInfo)
-      // const description = await ipcRenderer.invoke("getTorrentDescription", parsedInfo);
-      // console.log(description);
+      return; // TODO
+      const description = await ipcRenderer.invoke(
+        "getTorrentDescription",
+        torrent.title
+      );
+      console.log(description);
     })();
   }, [torrent]);
-
-  const play = useCallback(({ url }) => {
-    (async function () {
-      await ipcRenderer.invoke("playOnVlc", url);
-    })();
-  }, []);
 
   return (
     <div className={styles.torrentDetails}>
@@ -98,58 +75,7 @@ export const TorrentDetails: React.FC<IProps> = ({}) => {
         <span>{description.description}</span>
       </div>
 
-      {torrentDetails && (
-        <SimpleBar className={styles.files}>
-          <table {...getTableProps()}>
-            <thead>
-              {headerGroups.map((headerGroup) => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <th {...column.getHeaderProps()}>
-                      {column.render("Header")}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-              {rows.map((row) => {
-                prepareRow(row);
-                return (
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map((cell) => {
-                      let element = cell.render("Cell");
-                      if (cell.column.id === "play") {
-                        if (cell.value === FileType.VIDEO) {
-                          element = (
-                            <Icon
-                              path={mdiVlc}
-                              color="orange"
-                              size={0.7}
-                              title="Play in VLC"
-                            />
-                          );
-                        } else {
-                          element = null;
-                        }
-                      }
-                      return (
-                        <td
-                          onClick={() => play(cell.row.original)}
-                          data-id={cell.column.id}
-                          {...cell.getCellProps()}
-                        >
-                          {element}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </SimpleBar>
-      )}
+      <FilesList torrentDetails={torrentDetails} />
 
       <div className={styles.download}>
         <button>

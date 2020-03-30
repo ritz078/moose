@@ -2,14 +2,15 @@ import TorrentSearchApi from "torrent-search-api";
 import { ipcMain } from "electron";
 import { TorrentResult } from "../../types/TorrentResult";
 import parseTorrent from "parse-torrent";
-import WebTorrent, { Torrent } from "webtorrent";
+import { Torrent } from "webtorrent";
 import prettyBytes from "pretty-bytes";
 import path from "path";
 import { FileType } from "../enums/FileType";
 import getPort from "get-port";
 import { Server } from "http";
-
-const client = new WebTorrent();
+import { isMovieOrShow } from "../utils/isMovieOrShow";
+import { ITorrentDetails } from "../../types/TorrentDetails";
+import client from "../utils/webtorrent";
 
 function getFileExtension(file) {
   const name = typeof file === "string" ? file : file.name;
@@ -51,15 +52,20 @@ function getFileType(file) {
   return isVideo(file) || isAudio(file) || isImage(file);
 }
 
-function decorateTorrent({ name, files }: Torrent, port: number) {
+function decorateTorrent(
+  { name, files, infoHash }: Torrent,
+  port: number
+): ITorrentDetails {
   return {
     name,
+    infoHash,
     files: files.map((file, i) => ({
       index: i + 1,
       name: file.name,
       size: prettyBytes(file.length),
       type: getFileType(file),
       url: `http://localhost:${port}/${i}/${encodeURI(file.name)}`,
+      isMovieOrShow: isMovieOrShow(file.name),
     })),
   };
 }

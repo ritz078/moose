@@ -7,7 +7,8 @@
       "@components/*": ["components/*"],
       "@styles/*": ["styles/*"],
       "@contexts/*": ["contexts/*"],
-      "@enums/*": ["enums/*"]
+      "@enums/*": ["enums/*"],
+      "@hooks/*": ["hooks/*"]
     }
   }
 }

@@ -1,0 +1,38 @@
+.files {
+  grid-area: 2 / 3 / 5 / 13;
+  margin-top: 15px;
+  margin-left: 15px;
+  border-radius: 2px;
+  overflow: auto;
+  display: flex;
+
+  table {
+    font-size: 12px;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  th {
+    text-align: left;
+  }
+
+  td,
+  th {
+    background-color: rgba(255, 255, 255, 0.08);
+    padding: 5px 8px;
+  }
+
+  td[data-id="play"] {
+    text-align: center;
+    padding: 5px 0;
+  }
+
+  tbody tr {
+    cursor: pointer;
+    transition: all 200ms;
+  }
+
+  tbody tr:hover {
+    background-color: rgba(103, 58, 183, 0.33);
+  }
+}

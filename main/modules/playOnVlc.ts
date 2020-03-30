@@ -4,7 +4,7 @@ import { spawn } from "child_process";
 import { app } from "electron";
 
 let proc;
-ipcMain.handle("playOnVlc", async (e, url) => {
+ipcMain.handle("playOnVlc", async (e, url, caption) => {
   kill();
   vlcCommand(function (err, path) {
     const args = [
@@ -12,6 +12,7 @@ ipcMain.handle("playOnVlc", async (e, url) => {
       `--meta-title=${JSON.stringify(
         url.split("/")[url.split("/").length - 1]
       )}`,
+      ...(caption ? [`--sub-file=${caption}`] : []),
       url,
     ];
 

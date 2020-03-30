@@ -36,3 +36,22 @@
     background-color: rgba(103, 58, 183, 0.33);
   }
 }
+
+.loaderModal {
+  position: absolute;
+  z-index: 9999;
+  padding: 20px;
+  background-color: #232323;
+  border-radius: 4px;
+  left: 50%;
+  margin-left: -90px;
+  top: 100px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  svg {
+    margin: 0 auto 20px;
+  }
+}

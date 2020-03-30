@@ -6,6 +6,7 @@ export interface IFile {
   size: string;
   index: number;
   type: boolean | FileType;
+  isMovieOrShow: boolean;
 }
 
 export interface ITorrentDetails {

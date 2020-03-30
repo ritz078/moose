@@ -50,11 +50,6 @@ export const TorrentDetails: React.FC<IProps> = ({}) => {
       );
 
       setTorrentDetails(details);
-
-      const x = await ipcRenderer.invoke("getCaptions", details.infoHash);
-
-      console.log(x);
-      // console.log(details);
     })();
 
     (async () => {

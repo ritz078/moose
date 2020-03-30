@@ -26,8 +26,8 @@ async function _createWindow() {
 
   win = createWindow("main", {
     width: 800,
-    frame: false,
-    titleBarStyle: "hidden",
+    // frame: false,
+    // titleBarStyle: "hidden",
     minWidth: 500,
     webPreferences: {
       nodeIntegration: true,
@@ -35,10 +35,10 @@ async function _createWindow() {
     vibrancy: "ultra-dark",
   });
 
-  win.setTrafficLightPosition({
-    x: 20,
-    y: 33,
-  });
+  // win.setTrafficLightPosition({
+  //   x: 20,
+  //   y: 33,
+  // });
 
   // BrowserWindow.addDevToolsExtension(
   //   path.join(os.homedir(), '/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.5.0_0')

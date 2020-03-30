@@ -36,7 +36,7 @@ async function fetchSubtitleFromOS(
   return OpenSubtitles.search(options);
 }
 
-ipcMain.handle("getCaptions", async (e, torrentId, fileIndex) => {
+ipcMain.handle("getCaptions", async (e, torrentId, fileIndex, forVLC) => {
   try {
     const torrent = client.get(torrentId);
     if (!torrent) return;
@@ -48,10 +48,14 @@ ipcMain.handle("getCaptions", async (e, torrentId, fileIndex) => {
     const res = await fetchSubtitleFromOS(path, language, fileName);
 
     if (res && res.en && res.en[0] && res.en[0].vtt) {
-      const { data } = await axios.get(res.en[0].vtt, {
-        timeout: 10000,
-      });
-      return tempy.writeSync(data);
+      if (forVLC) {
+        const { data } = await axios.get(res.en[0].vtt, {
+          timeout: 10000,
+        });
+        return tempy.writeSync(data);
+      } else {
+        return res.en[0].vtt;
+      }
     }
 
     return null;

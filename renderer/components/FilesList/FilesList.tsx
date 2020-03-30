@@ -9,6 +9,7 @@ import SimpleBar from "simplebar-react";
 import { ipcRenderer } from "electron";
 import ReactDOM from "react-dom";
 import { useTransition, animated, config } from "react-spring";
+import { Player } from "@components/Player";
 
 const header = [
   { Header: "#", accessor: "index" },
@@ -33,6 +34,11 @@ interface IProps {
 export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
   if (!torrentDetails) return null;
   const [isFetchingCaption, setIsFetchingCaption] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<
+    IFile & {
+      caption: string;
+    }
+  >(null);
 
   const {
     getTableProps,
@@ -45,26 +51,44 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
     data: torrentDetails.files,
   });
 
-  const play = useCallback(({ url, type, isMovieOrShow, index }: IFile) => {
-    if (type !== FileType.VIDEO) return;
-    (async function () {
-      let caption;
-      if (isMovieOrShow) {
-        setIsFetchingCaption(true);
-        caption = await ipcRenderer.invoke(
-          "getCaptions",
-          torrentDetails.infoHash,
-          index - 1
-        );
-        setIsFetchingCaption(false);
-      }
+  async function getCaption(isMovieOrShow, index) {
+    let caption;
+    if (isMovieOrShow) {
+      setIsFetchingCaption(true);
+      caption = await ipcRenderer.invoke(
+        "getCaptions",
+        torrentDetails.infoHash,
+        index - 1
+      );
+      setIsFetchingCaption(false);
+    }
 
-      await ipcRenderer.invoke("playOnVlc", url, caption);
-    })();
-  }, []);
+    return caption;
+  }
 
-  const openFile = (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>) => {
+  const play = useCallback(
+    ({ url, type, isMovieOrShow, index }: IFile) => {
+      if (type !== FileType.VIDEO) return;
+      (async function () {
+        const caption = await getCaption(isMovieOrShow, index);
+
+        await ipcRenderer.invoke("playOnVlc", url, caption, true);
+      })();
+    },
+    [torrentDetails]
+  );
+
+  const openFile = async (
+    e: React.MouseEvent<HTMLTableRowElement, MouseEvent>,
+    file: IFile
+  ) => {
     e.stopPropagation();
+
+    const caption = await getCaption(file.isMovieOrShow, file.index);
+    setSelectedFile({
+      ...file,
+      caption,
+    });
   };
 
   return (
@@ -86,7 +110,10 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} onClick={openFile}>
+                <tr
+                  {...row.getRowProps()}
+                  onClick={(e) => openFile(e, row.original)}
+                >
                   {row.cells.map((cell) => {
                     let vlcElement;
                     if (cell.column.id === "play") {
@@ -127,6 +154,7 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
         </table>
       </SimpleBar>
       <LoaderModal show={isFetchingCaption} />
+      <Player file={selectedFile} />
     </>
   );
 });

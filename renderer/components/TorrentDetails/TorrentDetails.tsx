@@ -20,7 +20,7 @@ const torrent = {
   time: "1 Year+",
   size: "232.92 MB",
   magnet:
-    "magnet:?xt=urn:btih:88d5b3fdb966781762288cd48c72a9a3e6bbb51e&dn=Parasite.2019.KOREAN.1080p.BluRay.x265-VXT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2860&tr=udp%3A%2F%2F9.rarbg.to%3A2900",
+    "magnet:?xt=urn:btih:ce6d2a6bbc439a8f6b94b23ba63b04164400fe3b&dn=Parasite.2019.1080p.BRRip.x264.AAC2.0-MP4&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.ccc.de%3A80",
 };
 
 const description = {

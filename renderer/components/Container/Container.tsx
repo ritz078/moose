@@ -7,6 +7,9 @@ import { DragAndDrop } from "@components/DragAndDrop";
 import { TorrentDetails } from "@components/TorrentDetails";
 import { TorrentResult } from "../../../types/TorrentResult";
 
+// @ts-ignore
+console.log(global.location.search);
+
 export default function () {
   const [infoHashes, setInfoHashes] = useState<string[]>([]);
   const [searchResults, setSearchResults] = useState<IResults>({

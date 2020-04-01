@@ -2,13 +2,13 @@ import Plyr from "plyr";
 import React, { memo, useEffect, useRef, useState } from "react";
 import ReactDom from "react-dom";
 import styles from "./Player.module.scss";
-import { IFile } from "../../../types/TorrentDetails";
+import { IFile, Subtitle } from "../../../types/TorrentDetails";
 import { useTransition, animated } from "react-spring";
-import { Caption } from "@utils/getCaptions";
+import { getStreamingUrl } from "@utils/url";
 
 interface IProps {
   file?: IFile & {
-    captions: Caption[];
+    subtitles: Subtitle[];
   };
   onCloseRequest: () => void;
 }
@@ -30,7 +30,13 @@ export const Player: React.FC<IProps> = memo(({ file, onCloseRequest }) => {
   }, []);
 
   useEffect(() => {
-    const player = new Plyr(playerRef.current);
+    if (!file) return;
+
+    const player = new Plyr(playerRef.current, {
+      captions: {
+        active: true,
+      },
+    });
 
     function closePlayer(e: KeyboardEvent) {
       if (e.key === "Escape") {
@@ -70,18 +76,16 @@ export const Player: React.FC<IProps> = memo(({ file, onCloseRequest }) => {
                 controls
                 playsInline
               >
-                <source src={file?.url} />
-                {file?.captions.map(({ name, url }, key) => {
-                  return (
-                    <track
-                      key={key}
-                      kind="subtitles"
-                      label={name}
-                      src={url}
-                      default={!key}
-                    />
-                  );
-                })}
+                <source src={file ? getStreamingUrl(file) : undefined} />
+                {file?.subtitles?.map(({ lang, vtt }, key) => (
+                  <track
+                    key={key}
+                    kind="subtitles"
+                    label={lang}
+                    src={vtt}
+                    default={!key}
+                  />
+                ))}
               </video>
             </animated.div>
           )

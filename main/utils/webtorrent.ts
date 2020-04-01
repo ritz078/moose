@@ -1,3 +1,5 @@
-import WebTorrent from "webtorrent";
+import WebTorrent, { Instance } from "webtorrent";
 
-export default new WebTorrent();
+const client: Instance = new WebTorrent();
+
+export default client;

@@ -1,6 +1,10 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useTable } from "react-table";
-import { IFile, ITorrentDetails } from "../../../types/TorrentDetails";
+import {
+  IFile,
+  ITorrentDetails,
+  Subtitle,
+} from "../../../types/TorrentDetails";
 import styles from "./FilesList.module.scss";
 import Icon from "@mdi/react";
 import { mdiFan, mdiVlc } from "@mdi/js";
@@ -9,8 +13,8 @@ import { ipcRenderer, shell } from "electron";
 import ReactDOM from "react-dom";
 import { animated, config, useTransition } from "react-spring";
 import { Player } from "@components/Player";
-import { Caption, getCaptions } from "@utils/getCaptions";
 import { FileType } from "@enums/FileType";
+import { getStreamingUrl, getSubtitles } from "@utils/url";
 
 const header = [
   { Header: "#", accessor: "index" },
@@ -37,7 +41,7 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
   const [isFetchingCaption, setIsFetchingCaption] = useState(false);
   const [selectedFile, setSelectedFile] = useState<
     IFile & {
-      captions: Caption[];
+      subtitles: Subtitle[];
     }
   >(null);
 
@@ -49,21 +53,24 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
     prepareRow,
   } = useTable<IFile>({
     columns: header,
-    data: torrentDetails.files,
+    data: torrentDetails.files.map((file) => ({
+      ...file,
+      url: getStreamingUrl(file),
+    })),
   });
 
   const playOnVLC = useCallback(
     (file: IFile) => {
       if (file.type !== FileType.VIDEO) return;
       (async function () {
-        const captions = await getCaptions(
-          file,
-          torrentDetails,
-          setIsFetchingCaption,
-          true
+        setIsFetchingCaption(true);
+        const subtitles = await getSubtitles(file, true);
+        await ipcRenderer.invoke(
+          "playOnVlc",
+          file.url,
+          subtitles?.[0]?.srtPath
         );
-
-        await ipcRenderer.invoke("playOnVlc", file.url, captions[0], true);
+        setIsFetchingCaption(false);
       })();
     },
     [torrentDetails]
@@ -75,15 +82,13 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
         e.stopPropagation();
 
         if (file.type === FileType.VIDEO) {
-          const captions = await getCaptions(
-            file,
-            torrentDetails,
-            setIsFetchingCaption
-          );
+          setIsFetchingCaption(true);
+          const subtitles = await getSubtitles(file);
           setSelectedFile({
             ...file,
-            captions,
+            subtitles,
           });
+          setIsFetchingCaption(false);
         } else {
           await shell.openItem(file.path);
         }

@@ -3,13 +3,13 @@ import serve from "electron-serve";
 import createWindow from "./helpers/createWindow";
 import path from "path";
 import os from "os";
+import getPort from "get-port";
 
 // import modules
-import "./modules/results";
 import "./modules/description";
 import { cleanup } from "./modules/details";
 import "./modules/playOnVlc";
-import "./modules/captions";
+import { createServer, closeServer } from "./server";
 
 const isProd: boolean = process.env.NODE_ENV === "production";
 
@@ -26,6 +26,10 @@ if (isProd) {
 async function _createWindow() {
   await app.whenReady();
 
+  const apiPort = await getPort({
+    port: getPort.makeRange(3000, 3010),
+  });
+
   win = createWindow("main", {
     width: 800,
     minWidth: 500,
@@ -35,20 +39,22 @@ async function _createWindow() {
     vibrancy: "ultra-dark",
   });
 
-  BrowserWindow.addDevToolsExtension(
-    path.join(
-      os.homedir(),
-      "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.5.0_0"
-    )
-  );
+  // BrowserWindow.addDevToolsExtension(
+  //   path.join(
+  //     os.homedir(),
+  //     "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.5.0_0"
+  //   )
+  // );
 
   if (isProd) {
-    await win.loadURL("app://./home.html");
+    await win.loadURL(`app://./home.html`);
   } else {
     const port = process.argv[2];
-    await win.loadURL(`http://localhost:${port}/home`);
+    await win.loadURL(`http://localhost:${port}/home?port=${apiPort}`);
     win.webContents.openDevTools();
   }
+
+  createServer(apiPort);
 }
 
 const gotTheLock = app.requestSingleInstanceLock();
@@ -74,6 +80,7 @@ app.on("ready", _createWindow);
 
 app.on("will-quit", () => {
   cleanup();
+  closeServer();
 });
 
 app.on("window-all-closed", () => {

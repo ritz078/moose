@@ -95,7 +95,7 @@
     "lint-staged": "^7.0.1",
     "lodash-webpack-plugin": "^0.11.4",
     "mdi": "1.9.33",
-    "next": "^5.1.0",
+    "next": "^9.3.2",
     "next-redux-wrapper": "^1.2.0",
     "nprogress": "^0.2.0",
     "plyr": "^3.0.11",

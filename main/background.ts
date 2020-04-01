@@ -1,6 +1,8 @@
 import { BrowserWindow, app } from "electron";
 import serve from "electron-serve";
 import createWindow from "./helpers/createWindow";
+import path from "path";
+import os from "os";
 
 // import modules
 import "./modules/results";
@@ -26,8 +28,6 @@ async function _createWindow() {
 
   win = createWindow("main", {
     width: 800,
-    // frame: false,
-    // titleBarStyle: "hidden",
     minWidth: 500,
     webPreferences: {
       nodeIntegration: true,
@@ -35,14 +35,12 @@ async function _createWindow() {
     vibrancy: "ultra-dark",
   });
 
-  // win.setTrafficLightPosition({
-  //   x: 20,
-  //   y: 33,
-  // });
-
-  // BrowserWindow.addDevToolsExtension(
-  //   path.join(os.homedir(), '/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.5.0_0')
-  // )
+  BrowserWindow.addDevToolsExtension(
+    path.join(
+      os.homedir(),
+      "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.5.0_0"
+    )
+  );
 
   if (isProd) {
     await win.loadURL("app://./home.html");

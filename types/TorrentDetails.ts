@@ -7,6 +7,8 @@ export interface IFile {
   index: number;
   type: boolean | FileType;
   isMovieOrShow: boolean;
+  path: string;
+  srt: string;
 }
 
 export interface ITorrentDetails {

@@ -12,29 +12,27 @@ interface IProps {
 }
 
 const torrent = {
-  provider: "Rarbg",
-  title: "Parasite.2019.KOREAN.1080p.BluRay.H264.AAC-VXT",
-  time: "2019-11-29 10:40:31 +0000",
-  seeds: 1962,
-  peers: 225,
-  size: "2.5 GiB",
+  title: "Tears of Steel[SHORT] 2012 BRRip AC3 XViD-RemixHD",
+  link:
+    "http://itorrents.org/torrent/D05361AD9E0D4BB168B05FFAF9CCE9BA6AC300DB.torrent?title=Tears-of-Steel[SHORT]-2012-BRRip-AC3-XViD-RemixHD",
+  seeds: 36,
+  peers: 63,
+  time: "1 Year+",
+  size: "232.92 MB",
   magnet:
-    "magnet:?xt=urn:btih:66b8ac047bb6c15914038673234313612449f5d6&dn=Parasite.2019.KOREAN.1080p.BluRay.H264.AAC-VXT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-  desc:
-    "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_5_7_8__66b8ac047b",
+    "magnet:?xt=urn:btih:88d5b3fdb966781762288cd48c72a9a3e6bbb51e&dn=Parasite.2019.KOREAN.1080p.BluRay.x265-VXT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2860&tr=udp%3A%2F%2F9.rarbg.to%3A2900",
 };
 
 const description = {
-  title: "Parasite",
-  description:
-    "A poor family, the Kims, con their way into becoming the servants of a rich family, the Parks. But their easy life gets complicated when their deception is threatened with exposure.",
+  title: "Tears of Steel",
+  Year: "2012",
+  rated: "N/A",
+  released: "26 Sep 2012",
+  runtime: "12 min",
+  genre: "Short, Sci-Fi",
+  description: "He just wanted to be awesome in space.",
   poster:
-    "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
-  year: "2019",
-  runtime: "132 min",
-  rated: "R",
-  released: "08 Nov 2019",
-  genre: "Comedy, Drama, Thriller",
+    "https://m.media-amazon.com/images/M/MV5BMTczMzQzNDE5NV5BMl5BanBnXkFtZTcwNzYwMzQ1OA@@._V1_SX300.jpg",
 };
 
 export const TorrentDetails: React.FC<IProps> = ({}) => {
@@ -44,9 +42,11 @@ export const TorrentDetails: React.FC<IProps> = ({}) => {
     setTorrentDetails(null);
 
     (async () => {
+      const magnet =
+        torrent.magnet || (await ipcRenderer.invoke("getMagnetUrl", torrent));
       const details: ITorrentDetails = await ipcRenderer.invoke(
         "getTorrentDetails",
-        torrent
+        { ...torrent, magnet }
       );
 
       setTorrentDetails(details);

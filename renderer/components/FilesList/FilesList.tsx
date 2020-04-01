@@ -2,14 +2,15 @@ import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useTable } from "react-table";
 import { IFile, ITorrentDetails } from "../../../types/TorrentDetails";
 import styles from "./FilesList.module.scss";
-import { FileType } from "@enums/FileType";
 import Icon from "@mdi/react";
 import { mdiFan, mdiVlc } from "@mdi/js";
 import SimpleBar from "simplebar-react";
-import { ipcRenderer } from "electron";
+import { ipcRenderer, shell } from "electron";
 import ReactDOM from "react-dom";
-import { useTransition, animated, config } from "react-spring";
+import { animated, config, useTransition } from "react-spring";
 import { Player } from "@components/Player";
+import { Caption, getCaptions } from "@utils/getCaptions";
+import { FileType } from "@enums/FileType";
 
 const header = [
   { Header: "#", accessor: "index" },
@@ -36,7 +37,7 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
   const [isFetchingCaption, setIsFetchingCaption] = useState(false);
   const [selectedFile, setSelectedFile] = useState<
     IFile & {
-      caption: string;
+      captions: Caption[];
     }
   >(null);
 
@@ -51,45 +52,44 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
     data: torrentDetails.files,
   });
 
-  async function getCaption(isMovieOrShow, index) {
-    let caption;
-    if (isMovieOrShow) {
-      setIsFetchingCaption(true);
-      caption = await ipcRenderer.invoke(
-        "getCaptions",
-        torrentDetails.infoHash,
-        index - 1
-      );
-      setIsFetchingCaption(false);
-    }
-
-    return caption;
-  }
-
-  const play = useCallback(
-    ({ url, type, isMovieOrShow, index }: IFile) => {
-      if (type !== FileType.VIDEO) return;
+  const playOnVLC = useCallback(
+    (file: IFile) => {
+      if (file.type !== FileType.VIDEO) return;
       (async function () {
-        const caption = await getCaption(isMovieOrShow, index);
+        const captions = await getCaptions(
+          file,
+          torrentDetails,
+          setIsFetchingCaption,
+          true
+        );
 
-        await ipcRenderer.invoke("playOnVlc", url, caption, true);
+        await ipcRenderer.invoke("playOnVlc", file.url, captions[0], true);
       })();
     },
     [torrentDetails]
   );
 
-  const openFile = async (
-    e: React.MouseEvent<HTMLTableRowElement, MouseEvent>,
-    file: IFile
-  ) => {
-    e.stopPropagation();
+  const openFile = useCallback(
+    (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, file: IFile) =>
+      (async function () {
+        e.stopPropagation();
 
-    const caption = await getCaption(file.isMovieOrShow, file.index);
-    setSelectedFile({
-      ...file,
-      caption,
-    });
-  };
+        if (file.type === FileType.VIDEO) {
+          const captions = await getCaptions(
+            file,
+            torrentDetails,
+            setIsFetchingCaption
+          );
+          setSelectedFile({
+            ...file,
+            captions,
+          });
+        } else {
+          await shell.openItem(file.path);
+        }
+      })(),
+    [torrentDetails]
+  );
 
   return (
     <>
@@ -136,7 +136,7 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
                           vlcElement
                             ? (e) => {
                                 e.stopPropagation();
-                                play(cell.row.original);
+                                playOnVLC(cell.row.original);
                               }
                             : undefined
                         }
@@ -154,7 +154,10 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
         </table>
       </SimpleBar>
       <LoaderModal show={isFetchingCaption} />
-      <Player file={selectedFile} />
+      <Player
+        onCloseRequest={() => setSelectedFile(null)}
+        file={selectedFile}
+      />
     </>
   );
 });

@@ -4,8 +4,8 @@ import Icon from "@mdi/react";
 import { mdiCloseCircle, mdiCog, mdiFolderDownload, mdiMagnify } from "@mdi/js";
 import { ipcRenderer } from "electron";
 import { ViewState } from "@enums/ViewState";
-import cn from "classnames";
 import { TorrentResult } from "../../../types/TorrentResult";
+import axios from "axios";
 
 export interface IResults {
   results: TorrentResult[];
@@ -70,6 +70,11 @@ const Search: React.FC<Omit<IProps, "viewState">> = memo(
       (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && query.length) {
           (async function () {
+            const { data } = await axios.get(
+              `https://yts.mx/api/v2/list_movies.json?sort=seeds&query_term=${query}`
+            );
+            console.log(data);
+
             const results = await ipcRenderer.invoke("getTorrents", query);
             console.log(results);
             setViewState(ViewState.SEARCH);

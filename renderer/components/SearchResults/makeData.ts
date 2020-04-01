@@ -28,10 +28,13 @@ const columns = [
 export function makeData(results: TorrentResult[]) {
   return {
     columns,
-    data: results.map((datum, i) => ({
-      ...datum,
-      index: i + 1,
-      time: `${timeAgo.ago(new Date(datum.time).getTime(), true)} ago`,
-    })),
+    data: results.map((datum, i) => {
+      const date = new Date(datum.time).getTime();
+      return {
+        ...datum,
+        index: i + 1,
+        time: isNaN(date) ? datum.time : `${timeAgo.ago(date, true)} ago`,
+      };
+    }),
   };
 }

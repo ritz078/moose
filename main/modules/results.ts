@@ -2,13 +2,16 @@ import TorrentSearchApi from "torrent-search-api";
 import { ipcMain } from "electron";
 
 TorrentSearchApi.enableProvider("RarBg");
-
+TorrentSearchApi.enableProvider("ThePirateBay");
 ipcMain.handle("getTorrents", async (e, query) => {
   try {
-    const torrents = await TorrentSearchApi.search(query, undefined, 20);
-
-    return torrents;
+    return TorrentSearchApi.search(query, undefined, 40);
   } catch (e) {
     return e.message;
   }
+});
+
+ipcMain.handle("getMagnetUrl", async (e, torrent) => {
+  console.log(torrent);
+  return TorrentSearchApi.getMagnet(torrent);
 });

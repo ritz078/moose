@@ -13,248 +13,448 @@ interface IProps {
 
 const data = [
   {
-    provider: "Rarbg",
-    title: "Parasite.2019.KOREAN.1080p.BluRay.H264.AAC-VXT",
-    time: "2019-11-29 10:40:31 +0000",
-    seeds: 1962,
-    peers: 225,
-    size: "2.5 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:66b8ac047bb6c15914038673234313612449f5d6&dn=Parasite.2019.KOREAN.1080p.BluRay.H264.AAC-VXT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+    title: "Tears of Steel[1080p H264 Eng Ac3 MultiSub][TNTVillage]",
+    link:
+      "http://itorrents.org/torrent/624F30F5C86B658C997F8FA93FEC94D1D46F5892.torrent?title=Tears-of-Steel[1080p-H264-Eng-Ac3-MultiSub][TNTVillage]",
+    seeds: 316,
+    peers: 71,
+    time: "1 Year+",
+    size: "358.33 MB",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_5_7_8__66b8ac047b",
+      "https://www.limetorrents.info/Tears-of-Steel[1080p-H264-Eng-Ac3-MultiSub][TNTVillage]-torrent-1512039.html",
+    provider: "Limetorrents",
   },
   {
-    provider: "Rarbg",
-    title: "Parasite.2019.KOREAN.720p.BluRay.H264.AAC-VXT",
-    time: "2019-11-29 09:45:14 +0000",
-    seeds: 1422,
-    peers: 182,
-    size: "1.6 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:ffd237d041fe2393a698253bee7887f0ad7f8202&dn=Parasite.2019.KOREAN.720p.BluRay.H264.AAC-VXT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+    title: "Tears of Steel[SHORT] 2012 BRRip AC3 XViD-RemixHD",
+    link:
+      "http://itorrents.org/torrent/D05361AD9E0D4BB168B05FFAF9CCE9BA6AC300DB.torrent?title=Tears-of-Steel[SHORT]-2012-BRRip-AC3-XViD-RemixHD",
+    seeds: 36,
+    peers: 63,
+    time: "1 Year+",
+    size: "232.92 MB",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_5_3_6__ffd237d041",
+      "https://www.limetorrents.info/Tears-of-Steel[SHORT]-2012-BRRip-AC3-XViD-RemixHD-torrent-1518490.html",
+    provider: "Limetorrents",
   },
   {
-    provider: "Rarbg",
-    title: "Parasite.2019.KOREAN.720p.BluRay.x264.DTS-FGT",
-    time: "2019-11-29 09:34:28 +0000",
-    seeds: 709,
-    peers: 257,
-    size: "6.5 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:4de43f99e02cffcfe90abab3a0f214abab05cd20&dn=Parasite.2019.KOREAN.720p.BluRay.x264.DTS-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+    title: "Tears.Of.Steel.2012.iTALiAN.Subbed.BRRiP.XViD.NeWZoNe",
+    link:
+      "http://itorrents.org/torrent/4AE92D79F9A2DF95932604452ABF5F607CD96108.torrent?title=Tears Of Steel 2012 iTALiAN Subbed BRRiP XViD NeWZoNe",
+    seeds: 27,
+    peers: 36,
+    time: "1 Year+",
+    size: "274.14 MB",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_5_2_3__4de43f99e0",
+      "https://www.limetorrents.info/Tears%20Of%20Steel%202012%20iTALiAN%20Subbed%20BRRiP%20XViD%20NeWZoNe-torrent-1525441.html",
+    provider: "Limetorrents",
   },
   {
-    provider: "Rarbg",
-    title: "Parasite.2019.1080p.BluRay.x264-REGRET",
-    time: "2020-01-05 04:34:27 +0000",
-    seeds: 525,
-    peers: 96,
-    size: "9.9 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:264d238e72d938af8cebb74693226507a836e841&dn=Parasite.2019.1080p.BluRay.x264-REGRET&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+    title: "Ð¡Ð»Ñ‘Ð·Ñ‹ ÑÑ‚Ð°Ð»Ð¸ Tears of Steel (2012) 4K DMRip 21..",
+    link:
+      "http://itorrents.org/torrent/6BDE2C83CBF9A2AC7F2083B2445F328CC139B1E7.torrent?title=Ð¡Ð»Ñ‘Ð·Ñ‹-ÑÑ‚Ð°Ð»Ð¸--Tears-of-Steel-(2012)-4K-DMRip-2160p-Ð¾Ñ‚-GORESEWAGE--LM--2xL1",
+    seeds: 4,
+    peers: 98,
+    time: "1 Year+",
+    size: "12.33 GB",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_0_4_1_7_2__264d238e72",
+      "https://www.limetorrents.info/Ð¡Ð»Ñ‘Ð·Ñ‹-ÑÑ‚Ð°Ð»Ð¸--Tears-of-Steel-(2012)-4K-DMRip-2160p-Ð¾Ñ‚-GORESEWAGE--LM--2xL1-torrent-4303444.html",
+    provider: "Limetorrents",
   },
   {
-    provider: "Rarbg",
-    title: "Parasite.2019.KOREAN.1080p.BluRay.x264.DTS-FGT",
-    time: "2019-11-29 10:44:59 +0000",
-    seeds: 395,
-    peers: 74,
-    size: "12.0 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:6d54f137fcfc3ac204a0dbf2998c4aa9acbe5e80&dn=Parasite.2019.KOREAN.1080p.BluRay.x264.DTS-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_5_8_0__6d54f137fc",
-  },
-  {
-    provider: "Rarbg",
-    title: "Parasite.2019.KOREAN.1080p.WEBRip.x264.AAC2.0-NOGRP",
-    time: "2019-08-11 17:24:48 +0000",
-    seeds: 391,
-    peers: 35,
-    size: "5.0 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:a39e4232842fd09608162521df562b34e61bb22a&dn=Parasite.2019.KOREAN.1080p.WEBRip.x264.AAC2.0-NOGRP&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=1_9_2_0_0_0_2__a39e423284",
-  },
-  {
-    provider: "Rarbg",
-    title: "Parasite.2019.KOREAN.WEBRip.x264-ION10",
-    time: "2019-08-11 18:23:32 +0000",
-    seeds: 257,
-    peers: 35,
-    size: "1.3 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:3c5a6f1fe1ee3504595d688f3708b56b38edf050&dn=Parasite.2019.KOREAN.WEBRip.x264-ION10&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=1_9_2_0_0_1_9__3c5a6f1fe1",
-  },
-  {
-    provider: "Rarbg",
-    title: "Parasite.2019.BDRip.x264-REGRET",
-    time: "2020-01-05 04:23:32 +0000",
-    seeds: 172,
-    peers: 33,
-    size: "639.4 MiB",
-    magnet:
-      "magnet:?xt=urn:btih:49b0243b3d379c7261b0760d1fb801b16da6cd9e&dn=Parasite.2019.BDRip.x264-REGRET&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_0_4_1_6_4__49b0243b3d",
-  },
-  {
-    provider: "Rarbg",
-    title:
-      "Parasite.2019.KOREAN.2160p.UHD.BluRay.X265.10bit.HDR.TrueHD.7.1.Atmos-IAMABLE",
-    time: "2020-02-22 10:48:37 +0000",
-    seeds: 134,
-    peers: 81,
-    size: "35.8 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:1288fd53174fed47744df5e8ed3209521a27b64a&dn=Parasite.2019.KOREAN.2160p.UHD.BluRay.X265.10bit.HDR.TrueHD.7.1.Atmos-IAMABLE&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_5_3_9_6_9__1288fd5317",
-  },
-  {
-    provider: "Rarbg",
-    title: "Parasite.2019.KOREAN.1080p.BluRay.x264.TrueHD.7.1.Atmos-FGT",
-    time: "2019-11-29 10:45:14 +0000",
-    seeds: 125,
-    peers: 16,
-    size: "15.0 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:2f600fca6c5b15b0ce3b16897f228da50c44e079&dn=Parasite.2019.KOREAN.1080p.BluRay.x264.TrueHD.7.1.Atmos-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_5_8_2__2f600fca6c",
-  },
-  {
-    provider: "Rarbg",
-    title: "Parasite.2019.720p.BluRay.x264-REGRET",
-    time: "2020-01-05 04:26:50 +0000",
-    seeds: 125,
-    peers: 33,
-    size: "6.6 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:728910f00922f21d298796d4f02fc357f1fad88e&dn=Parasite.2019.720p.BluRay.x264-REGRET&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_0_4_1_6_6__728910f009",
-  },
-  {
-    provider: "Rarbg",
-    title:
-      "Parasite.2019.KOREAN.1080p.BluRay.REMUX.AVC.DTS-HD.MA.TrueHD.7.1.Atmos-FGT",
-    time: "2019-11-29 08:40:20 +0000",
-    seeds: 90,
-    peers: 14,
-    size: "34.8 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:f5db70043ec66572aeece6b5355166ffff2e62a5&dn=Parasite.2019.KOREAN.1080p.BluRay.REMUX.AVC.DTS-HD.MA.TrueHD.7.1.Atmos-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_4_7_5__f5db70043e",
-  },
-  {
-    provider: "Rarbg",
-    title: "Parasite.2019.KOREAN.INTERNAL.1080p.BluRay.X264-AMIABLE",
-    time: "2020-02-22 14:47:23 +0000",
-    seeds: 74,
-    peers: 13,
-    size: "19.7 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:479783ea40e9e51e558ad332a8c04b66753710fa&dn=Parasite.2019.KOREAN.INTERNAL.1080p.BluRay.X264-AMIABLE&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_5_4_1_2_6__479783ea40",
-  },
-  {
-    provider: "Rarbg",
-    title: "Parasite.2019.KOREAN.BRRip.XviD.MP3-VXT",
-    time: "2019-11-29 08:56:10 +0000",
-    seeds: 63,
-    peers: 11,
-    size: "1.3 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:bdd8195fca3d87e4021bbc670dffeb242b0bd47c&dn=Parasite.2019.KOREAN.BRRip.XviD.MP3-VXT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_4_8_8__bdd8195fca",
-  },
-  {
-    provider: "Rarbg",
-    title:
-      "Parasite.2019.KOREAN.2160p.BluRay.REMUX.HEVC.DTS-HD.MA.TrueHD.7.1.Atmos-FGT",
-    time: "2020-02-22 18:17:46 +0000",
-    seeds: 32,
-    peers: 30,
-    size: "85.5 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:635100a77687dd3c1a99368c4e7d48a09b3ea518&dn=Parasite.2019.KOREAN.2160p.BluRay.REMUX.HEVC.DTS-HD.MA.TrueHD.7.1.Atmos-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_5_4_1_9_7__635100a776",
-  },
-  {
-    provider: "Rarbg",
-    title: "Parasite.2019.KOREAN.1080p.BluRay.x264.DTS-HD.MA.7.1-FGT",
-    time: "2019-11-29 10:45:07 +0000",
-    seeds: 31,
-    peers: 2,
-    size: "14.4 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:62fed8ea812eea1612eebd9b7247a605c502d54b&dn=Parasite.2019.KOREAN.1080p.BluRay.x264.DTS-HD.MA.7.1-FGT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_7_0_5_8_1__62fed8ea81",
-  },
-  {
-    provider: "Rarbg",
-    title:
-      "Parasite.2019.KOREAN.2160p.BluRay.x265.10bit.SDR.DTS-HD.MA.TrueHD.7.1.Atmos-SWTYBLZ",
-    time: "2020-02-23 10:42:48 +0000",
-    seeds: 19,
-    peers: 34,
-    size: "78.3 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:9c24524d2f773a61363b79c291c68a4ba179e1d9&dn=Parasite.2019.KOREAN.2160p.BluRay.x265.10bit.SDR.DTS-HD.MA.TrueHD.7.1.Atmos-SWTYBLZ&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_5_5_0_1_7__9c24524d2f",
-  },
-  {
-    provider: "Rarbg",
-    title: "Parasite.2019.KOREAN.2160p.BluRay.HEVC.TrueHD.7.1.Atmos-MMCLX",
-    time: "2020-02-22 17:37:16 +0000",
-    seeds: 15,
-    peers: 11,
-    size: "89.4 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:a90d4354a1d1b189f178ee6f5428a4d0fab731d2&dn=Parasite.2019.KOREAN.2160p.BluRay.HEVC.TrueHD.7.1.Atmos-MMCLX&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
-    desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_5_4_1_7_5__a90d4354a1",
-  },
-  {
-    provider: "Rarbg",
-    title: "Parasites.2016.1080p.WEBRip.x264-RARBG",
-    time: "2020-01-27 08:33:25 +0000",
-    seeds: 9,
+    title: "Tears of Steel(2012) BDRip 480p 50Mb Mkv-movieSEEkz",
+    link:
+      "http://itorrents.org/torrent/9D679DBE483583C44431D35A67D641C606CCA69E.torrent?title=Tears-of-Steel(2012)-BDRip-480p-50Mb-Mkv-movieSEEkz",
+    seeds: 4,
     peers: 1,
-    size: "1.5 GiB",
-    magnet:
-      "magnet:?xt=urn:btih:b33ff9add05a943451c827323c48d93b09430031&dn=Parasites.2016.1080p.WEBRip.x264-RARBG&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+    time: "1 Year+",
+    size: "55.97 MB",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_1_2_7_3_7_6__b33ff9add0",
+      "https://www.limetorrents.info/Tears-of-Steel(2012)-BDRip-480p-50Mb-Mkv-movieSEEkz-torrent-1530230.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel (2012) BRRip(xvid) NL Subs DMT",
+    link:
+      "http://itorrents.org/torrent/D8B0537D46A1D44B4EB027037B09B7491EB11BEB.torrent?title=Tears-of-Steel-(2012)-BRRip(xvid)-NL-Subs-DMT",
+    seeds: 4,
+    peers: 17,
+    time: "1 Year+",
+    size: "317.58 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-(2012)-BRRip(xvid)-NL-Subs-DMT-torrent-1532399.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel (2012) 720pBR2XVID DD 2 0 (nl subs ext)) B-Sam",
+    link:
+      "http://itorrents.org/torrent/5392C5B746EBBEA2CBEF52C284BF3135144D9B6D.torrent?title=Tears-of-Steel-(2012)-720pBR2XVID-DD-2-0-(nl-subs-ext))-B-Sam",
+    seeds: 3,
+    peers: 16,
+    time: "1 Year+",
+    size: "350.46 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-(2012)-720pBR2XVID-DD-2-0-(nl-subs-ext))-B-Sam-torrent-1531155.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel 2012 BRRip AC3 XViD-RemixHD",
+    link:
+      "http://itorrents.org/torrent/7B184AE4DDD2F5D198A5A0058045F97E30BF9F5C.torrent?title=Tears-of-Steel-2012-BRRip-AC3-XViD-RemixHD",
+    seeds: 2,
+    peers: 8,
+    time: "1 Year+",
+    size: "233.06 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-2012-BRRip-AC3-XViD-RemixHD-torrent-1520315.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel 2012 2160p 4K DMRip Eng HDCL mkv",
+    link:
+      "http://itorrents.org/torrent/975B60A7032F7D7C114DC7441B754DEFA4C6D659.torrent?title=Tears-of-Steel-2012-2160p-4K-DMRip-Eng-HDCL-mkv",
+    seeds: 2,
+    peers: 0,
+    time: "1 Year+",
+    size: "11.95 GB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-2012-2160p-4K-DMRip-Eng-HDCL-mkv-torrent-4307068.html",
+    provider: "Limetorrents",
+  },
+  {
+    title:
+      "Tears Of Steel - Full Length Animated Action Movie 2012 - 2013 Full Movie in Eng..",
+    link:
+      "http://itorrents.org/torrent/D0C4C27422527A9F3765C0F6855E9511044765DE.torrent?title=Tears-Of-Steel--Full-Length-Animated-Action-Movie-2012--2013-Full-Movie-in-English-Multi-Subtitle-mp4",
+    seeds: 2,
+    peers: 1,
+    time: "1 Year+",
+    size: "303.67 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-Of-Steel--Full-Length-Animated-Action-Movie-2012--2013-Full-Movie-in-English-Multi-Subtitle-mp4-torrent-2918968.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "tears of steel 1080p webm (movie)",
+    link:
+      "http://itorrents.org/torrent/02767050E0BE2FD4DB9A2AD6C12416AC806ED6ED.torrent?title=tears-of-steel-1080p-webm-(movie)",
+    seeds: 1,
+    peers: 0,
+    time: "1 Year+",
+    size: "544.88 MB",
+    desc:
+      "https://www.limetorrents.info/tears-of-steel-1080p-webm-(movie)-torrent-1449610.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel[SHORT] 2012 BRRip AC3 XViD-RemixHD",
+    link:
+      "http://itorrents.org/torrent/AEBACA998B95CA366B491090FBC8E5670BE86B9F.torrent?title=Tears-of-Steel[SHORT]-2012-BRRip-AC3-XViD-RemixHD",
+    seeds: 1,
+    peers: 4,
+    time: "1 Year+",
+    size: "233.06 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel[SHORT]-2012-BRRip-AC3-XViD-RemixHD-torrent-1518474.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel 2012 Blu-ray 1080p DTS multisub-HighCode",
+    link:
+      "http://itorrents.org/torrent/8DCC14F1947302E111B890A3B47CEF2B507F037C.torrent?title=Tears-of-Steel-2012-Blu-ray-1080p-DTS-multisub-HighCode",
+    seeds: 1,
+    peers: 2,
+    time: "1 Year+",
+    size: "973.72 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-2012-Blu-ray-1080p-DTS-multisub-HighCode-torrent-3781207.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel 2012 2160p DM DD5 1 x264-DON",
+    link:
+      "http://itorrents.org/torrent/A83525878992BC849B538DFB3CE870AB60AF03F0.torrent?title=Tears-of-Steel-2012-2160p-DM-DD5-1-x264-DON",
+    seeds: 1,
+    peers: 5,
+    time: "1 Year+",
+    size: "12.31 GB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-2012-2160p-DM-DD5-1-x264-DON-torrent-3787542.html",
+    provider: "Limetorrents",
   },
   {
     provider: "Rarbg",
-    title: "Parasite.1982.1080p.BluRay.H264.AAC-RARBG",
-    time: "2019-10-27 18:17:31 +0000",
-    seeds: 8,
-    peers: 0,
-    size: "1.6 GiB",
+    title: "Tears of Steel 2012 2160p DM DD5 1 x264-DON",
+    time: "2013-11-30 13:16:22 +0000",
+    seeds: 1,
+    peers: 2,
+    size: "12.3 GiB",
     magnet:
-      "magnet:?xt=urn:btih:26373b96f121a9f7b17d24168e7f996e3cdd631e&dn=Parasite.1982.1080p.BluRay.H264.AAC-RARBG&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
+      "magnet:?xt=urn:btih:a83525878992bc849b538dfb3ce870ab60af03f0&dn=Tears+of+Steel+2012+2160p+DM+DD5+1+x264-DON&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce",
     desc:
-      "https://torrentapi.org/redirect_to_info.php?token=zxqm8od5st&p=2_0_3_9_2_5_6__26373b96f1",
+      "https://torrentapi.org/redirect_to_info.php?token=nuo5kjvcgd&p=5_1_2_7_9_8__a835258789",
+  },
+  {
+    title: "Tears of Steel 2012 2160p 6CH x265 HEVC-PSA",
+    link:
+      "http://itorrents.org/torrent/C53B71A1E1D318F0B5918D6387316B98136ACAF8.torrent?title=Tears-of-Steel-2012-2160p-6CH-x265-HEVC-PSA",
+    seeds: 1,
+    peers: 2,
+    time: "1 Year+",
+    size: "619.67 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-2012-2160p-6CH-x265-HEVC-PSA-torrent-6181309.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel (2012) Sci-Fi BR2DVD DD2.0 NL Subs",
+    link:
+      "http://itorrents.org/torrent/1EF2640A24086AE02E3F5BAB423580E4C1C27DE6.torrent?title=Tears-of-Steel-(2012)-Sci-Fi-BR2DVD-DD2 0-NL-Subs",
+    seeds: 1,
+    peers: 0,
+    time: "1 Year+",
+    size: "685.51 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-(2012)-Sci-Fi-BR2DVD-DD2%200-NL-Subs-torrent-1527449.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel (2012) 720p Sci-Fi AAC 2.0 NL Subs",
+    link:
+      "http://itorrents.org/torrent/DC590C39A206F0AD6CBD9CF11FC8C31F792AA759.torrent?title=Tears-of-Steel-(2012)-720p-Sci-Fi-AAC-2 0-NL-Subs",
+    seeds: 1,
+    peers: 0,
+    time: "1 Year+",
+    size: "364.42 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-(2012)-720p-Sci-Fi-AAC-2%200-NL-Subs-torrent-1527661.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Annadefka - Tears of Steel (2017)",
+    link:
+      "http://itorrents.org/torrent/8F9D998EA12BE639BC030C59139B65DAB9AADDF9.torrent?title=Annadefka--Tears-of-Steel-(2017)",
+    seeds: 1,
+    peers: 1,
+    time: "1 Year+",
+    size: "103.73 MB",
+    desc:
+      "https://www.limetorrents.info/Annadefka--Tears-of-Steel-(2017)-torrent-12024796.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Ð¡Ð»ÐµÐ·Ñ‹ Ð¡Ñ‚Ð°Ð»Ð¸ Tears of Steel (2012) BDRip 1080p",
+    link:
+      "http://itorrents.org/torrent/11B53B855B1487947276FB9C95F43085EA942AB1.torrent?title=Ð¡Ð»ÐµÐ·Ñ‹-Ð¡Ñ‚Ð°Ð»Ð¸--Tears-of-Steel-(2012)-BDRip-1080p",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "617.88 MB",
+    desc:
+      "https://www.limetorrents.info/Ð¡Ð»ÐµÐ·Ñ‹-Ð¡Ñ‚Ð°Ð»Ð¸--Tears-of-Steel-(2012)-BDRip-1080p-torrent-1516625.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel[SHORT] 2012 BRRip AC3 XViD-RemixHD {RGDT}",
+    link:
+      "http://itorrents.org/torrent/93572BE0B4C4077A129554D996474348045FC64A.torrent?title=Tears-of-Steel[SHORT]-2012-BRRip-AC3-XViD-RemixHD- RGDT ",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "214.08 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel[SHORT]-2012-BRRip-AC3-XViD-RemixHD-%20RGDT%20-torrent-3099635.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel 2012 SWESUB AC3 BRRip XviD-Tankafett tv",
+    link:
+      "http://itorrents.org/torrent/3931349F90B28D03995F25941CA61A187541BD85.torrent?title=Tears-of-Steel-2012-SWESUB-AC3-BRRip-XviD-Tankafett-tv",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "428.54 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-2012-SWESUB-AC3-BRRip-XviD-Tankafett-tv-torrent-1588576.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel 2012 PRPOER SWESUB AC3 BRRip XviD-Tankafett tv",
+    link:
+      "http://itorrents.org/torrent/A6E1A5B5CAAD509C1D5F0FB6B0202087E5787547.torrent?title=Tears-of-Steel-2012-PRPOER-SWESUB-AC3-BRRip-XviD-Tankafett-tv",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "428.54 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-2012-PRPOER-SWESUB-AC3-BRRip-XviD-Tankafett-tv-torrent-1589578.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel 2012 HDRip",
+    link:
+      "http://itorrents.org/torrent/B9F0C289E7EE1B8612EA8D68610853A5D1277131.torrent?title=Tears-of-Steel-2012-HDRip",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "255 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-2012-HDRip-torrent-1613994.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel 2012 4K [3840x1714] x264 anoXmous",
+    link:
+      "http://itorrents.org/torrent/1732C76718B1FD038885B64BFE690030D9A904AB.torrent?title=Tears-of-Steel-2012-4K-[3840x1714]-x264-anoXmous",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "4.39 GB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-2012-4K-[3840x1714]-x264-anoXmous-torrent-3257029.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel 2012 2160p DMRip Eng HDCL mp4",
+    link:
+      "http://itorrents.org/torrent/AA59289941FAA6563A7868B1DF06D84924ED8F0B.torrent?title=Tears-of-Steel-2012-2160p-DMRip-Eng-HDCL-mp4",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "368.69 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-2012-2160p-DMRip-Eng-HDCL-mp4-torrent-6384214.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel 2012 2160p DM DD5 1 x264-DON",
+    link:
+      "http://itorrents.org/torrent/A5844EDA9826538C12700C012D1F754731E74D08.torrent?title=Tears-of-Steel-2012-2160p-DM-DD5-1-x264-DON",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "12.31 GB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-2012-2160p-DM-DD5-1-x264-DON-torrent-3793347.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel 2012 (Short-Film) 50MB BDRip 480p ~JMX~ Ganool",
+    link:
+      "http://itorrents.org/torrent/E91242FB72DFFEF303511F4166E716AB61C24930.torrent?title=Tears-of-Steel-2012-(Short-Film)-50MB-BDRip-480p- JMX -Ganool",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "54.03 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-2012-(Short-Film)-50MB-BDRip-480p-%20JMX%20-Ganool-torrent-1521239.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel (2012)(dvd5)(Nl Subs)(BR2DVD) SAM TBS",
+    link:
+      "http://itorrents.org/torrent/9CDF98B58A5B9E13574347249C1C991DB51881D1.torrent?title=Tears-of-Steel-(2012)(dvd5)(Nl-Subs)(BR2DVD)-SAM-TBS",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "685.68 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-(2012)(dvd5)(Nl-Subs)(BR2DVD)-SAM-TBS-torrent-2978213.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel (2012) mp4",
+    link:
+      "http://itorrents.org/torrent/79304FBAD35141CB60E7192F3D80E2954C160507.torrent?title=Tears-of-Steel-(2012)-mp4",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "276.88 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-(2012)-mp4-torrent-8042794.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel (2012) BDRip(WWWWIDE COM) 480p mkv",
+    link:
+      "http://itorrents.org/torrent/A6B08D767E944BB6A86A5531D29616586C19FDC3.torrent?title=Tears-of-Steel-(2012)-BDRip(WWWWIDE-COM)-480p-mkv",
+    seeds: 0,
+    peers: 7,
+    time: "1 Year+",
+    size: "54.11 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-(2012)-BDRip(WWWWIDE-COM)-480p-mkv-torrent-1662901.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel (2012) 720p mkv",
+    link:
+      "http://itorrents.org/torrent/5A3A3D0084D338526714F21867C874BF4E703E52.torrent?title=Tears-of-Steel-(2012)-720p-mkv",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "364.77 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-(2012)-720p-mkv-torrent-1517065.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel (2012) 2160p DMRip x264 AC3 - ABI",
+    link:
+      "http://itorrents.org/torrent/A60A1AA48D7BD892425B2AEE175A949212C39ECC.torrent?title=Tears-of-Steel-(2012)-2160p-DMRip-x264-AC3--ABI",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "1.53 GB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-(2012)-2160p-DMRip-x264-AC3--ABI-torrent-8704084.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel (2012) - HD 720p - mkv",
+    link:
+      "http://itorrents.org/torrent/89BF571C58412E9110A597A404F159993D603FA6.torrent?title=Tears-of-Steel-(2012)--HD-720p--mkv",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "364.8 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-of-Steel-(2012)--HD-720p--mkv-torrent-5776307.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears of Steel",
+    link:
+      "http://itorrents.org/torrent/209C8226B299B308BEAF2B9CD3FB49212DBD13EC.torrent?title=Tears-of-Steel",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "544.95 MB",
+    desc: "https://www.limetorrents.info/Tears-of-Steel-torrent-10644528.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears Of Steel 2012 BRRip 240p All Mobile (T Media)",
+    link:
+      "http://itorrents.org/torrent/093326CC5694505CF8F30206E1C54E1F041D2A9C.torrent?title=Tears-Of-Steel-2012-BRRip-240p-All-Mobile-(T-Media)",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "20.5 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-Of-Steel-2012-BRRip-240p-All-Mobile-(T-Media)-torrent-4340888.html",
+    provider: "Limetorrents",
+  },
+  {
+    title: "Tears Of Steel (2012) 1080p x264 AAC-WiNNy",
+    link:
+      "http://itorrents.org/torrent/79C8E6E28E89514816200AD2CC74BB2F26988E6E.torrent?title=Tears-Of-Steel-(2012)-1080p-x264-AAC-WiNNy",
+    seeds: 0,
+    peers: 0,
+    time: "1 Year+",
+    size: "959.73 MB",
+    desc:
+      "https://www.limetorrents.info/Tears-Of-Steel-(2012)-1080p-x264-AAC-WiNNy-torrent-3790678.html",
+    provider: "Limetorrents",
   },
 ];
 

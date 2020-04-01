@@ -9,8 +9,9 @@ import { FileType } from "../enums/FileType";
 import getPort from "get-port";
 import { Server } from "http";
 import { isMovieOrShow } from "../utils/isMovieOrShow";
-import { ITorrentDetails } from "../../types/TorrentDetails";
+import { IFile, ITorrentDetails } from "../../types/TorrentDetails";
 import client from "../utils/webtorrent";
+import Caption from "caption-core";
 
 function getFileExtension(file) {
   const name = typeof file === "string" ? file : file.name;
@@ -53,21 +54,48 @@ function getFileType(file) {
 }
 
 function decorateTorrent(
-  { name, files, infoHash }: Torrent,
+  { name, files, infoHash, path: torrentPath }: Torrent,
   port: number
 ): ITorrentDetails {
   return {
     name,
     infoHash,
-    files: files.map((file, i) => ({
-      index: i + 1,
-      name: file.name,
-      size: prettyBytes(file.length),
-      type: getFileType(file),
-      url: `http://localhost:${port}/${i}/${encodeURI(file.name)}`,
-      isMovieOrShow: isMovieOrShow(file.name),
-    })),
+    files: files.map((file, i) => {
+      const _isMovieOrShow = isMovieOrShow(file.name);
+      const filePath = `${torrentPath}/${file.path}`;
+      return {
+        index: i + 1,
+        name: file.name,
+        size: prettyBytes(file.length),
+        type: getFileType(file),
+        url: `http://localhost:${port}/${i}/${encodeURI(file.name)}`,
+        isMovieOrShow: _isMovieOrShow,
+        path: filePath,
+        srt: _isMovieOrShow
+          ? path.join(
+              path.dirname(filePath),
+              path.basename(filePath, path.extname(filePath)) + ".srt"
+            )
+          : undefined,
+      };
+    }),
   };
+}
+
+async function downloadCaptions(files: IFile[]) {
+  return new Promise((resolve) => {
+    const ENGLISH = "eng";
+    const LIMIT = 10;
+    Caption.searchByFiles(
+      files
+        .filter((file) => file.isMovieOrShow)
+        .map((file) => ({
+          path: file.path,
+        })),
+      ENGLISH,
+      LIMIT
+    ).on("completed", resolve);
+  });
 }
 
 let server: Server = null;

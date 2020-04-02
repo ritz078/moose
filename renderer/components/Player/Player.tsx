@@ -5,6 +5,7 @@ import styles from "./Player.module.scss";
 import { IFile, Subtitle } from "../../../types/TorrentDetails";
 import { useTransition, animated } from "react-spring";
 import { getStreamingUrl } from "@utils/url";
+import { ipcRenderer } from "electron";
 
 interface IProps {
   file?: IFile & {
@@ -35,8 +36,12 @@ export const Player: React.FC<IProps> = memo(({ file, onCloseRequest }) => {
     const player = new Plyr(playerRef.current, {
       captions: {
         active: true,
+        language: "auto",
+        update: false,
       },
     });
+
+    airPlay();
 
     function closePlayer(e: KeyboardEvent) {
       if (e.key === "Escape") {
@@ -50,6 +55,10 @@ export const Player: React.FC<IProps> = memo(({ file, onCloseRequest }) => {
       document.removeEventListener("keydown", closePlayer);
     };
   }, [file]);
+
+  const airPlay = async () => {
+    ipcRenderer.invoke("airplay", getStreamingUrl(file));
+  };
 
   const transitions = useTransition(!!file, null, {
     from: { opacity: 0 },
@@ -77,12 +86,12 @@ export const Player: React.FC<IProps> = memo(({ file, onCloseRequest }) => {
                 playsInline
               >
                 <source src={file ? getStreamingUrl(file) : undefined} />
-                {file?.subtitles?.map(({ lang, vtt }, key) => (
+                {file?.subtitles?.map(({ lang, vtt, url }, key) => (
                   <track
                     key={key}
                     kind="subtitles"
                     label={lang}
-                    src={vtt}
+                    src={vtt || url}
                     default={!key}
                   />
                 ))}

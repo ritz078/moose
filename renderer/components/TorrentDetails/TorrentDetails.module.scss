@@ -1,12 +1,12 @@
 $buttonColor: rgba(53, 53, 53, 0.91);
 
 .torrentDetails {
-  height: 320px;
+  height: 266px;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.55);
   border-top: 1px solid #000;
   display: grid;
-  grid-template-columns: 98px 98px repeat(10, 1fr);
+  grid-template-columns: 79px 79px repeat(10, 1fr);
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;

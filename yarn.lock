@@ -1119,7 +1119,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/parse-torrent@*", "@types/parse-torrent@^5.8.3":
+"@types/parse-torrent@*":
   version "5.8.3"
   resolved "https://registry.yarnpkg.com/@types/parse-torrent/-/parse-torrent-5.8.3.tgz#ff4e987d09ad27ccc1c8893b3a2c6a31a3bc4042"
   integrity sha512-c0xAjnpov+Xk/2HTtpaBm0tukNIAoZoxrqgTDwSaIu6IVCynY+2YD9zcQNk2P6H4atcXzD78/LI2CQzLlMmAJg==
@@ -6610,7 +6610,7 @@ parse-torrent-title@^1.2.0:
   resolved "https://registry.yarnpkg.com/parse-torrent-title/-/parse-torrent-title-1.2.0.tgz#ec2eb8ad189eaadc5cacd87599cd36829bc451be"
   integrity sha1-7C64rRieqtxcrNh1mc02gpvEUb4=
 
-parse-torrent@^7.0.0, parse-torrent@^7.0.1:
+parse-torrent@^7.0.0:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-7.0.1.tgz#669c51a95363550055c7de0957741d6a05575daf"
   integrity sha512-FdF1kBImRLt+ICV4NTz8L+sI2hFlPXAq1tXuw21gKz8EuThyVUFJ/wPfBEyYQrvnBpmGf7cM/LVSOhMRe8MrKw==
@@ -8405,6 +8405,11 @@ sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
+
+srt-webvtt@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/srt-webvtt/-/srt-webvtt-1.0.1.tgz#0842a9f4ac07679948de47c5d6d7f13151cfba97"
+  integrity sha1-CEKp9KwHZ5lI3kfF1tfxMVHPupc=
 
 sshpk@^1.7.0:
   version "1.16.1"

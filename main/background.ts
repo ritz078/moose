@@ -7,9 +7,9 @@ import getPort from "get-port";
 
 // import modules
 import "./modules/description";
-import { cleanup } from "./modules/details";
 import "./modules/playOnVlc";
 import { createServer, closeServer } from "./server";
+import client from "./utils/webtorrent";
 
 const isProd: boolean = process.env.NODE_ENV === "production";
 
@@ -37,6 +37,8 @@ async function _createWindow() {
       nodeIntegration: true,
     },
     vibrancy: "ultra-dark",
+    frame: false,
+    titleBarStyle: "hiddenInset",
   });
 
   // BrowserWindow.addDevToolsExtension(
@@ -79,8 +81,8 @@ app.allowRendererProcessReuse = true;
 app.on("ready", _createWindow);
 
 app.on("will-quit", () => {
-  cleanup();
   closeServer();
+  client.destroy();
 });
 
 app.on("window-all-closed", () => {

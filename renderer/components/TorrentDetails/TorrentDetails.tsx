@@ -6,12 +6,13 @@ import Icon from "@mdi/react";
 import { mdiDownload } from "@mdi/js";
 import { ITorrentDetails } from "../../../types/TorrentDetails";
 import { FilesList } from "@components/FilesList";
+import { getMagnetUrl, getTorrentDetails } from "@utils/url";
 
 interface IProps {
   torrent: TorrentResult;
 }
 
-const torrent = {
+const _torrent = {
   title: "Tears of Steel[SHORT] 2012 BRRip AC3 XViD-RemixHD",
   link:
     "http://itorrents.org/torrent/D05361AD9E0D4BB168B05FFAF9CCE9BA6AC300DB.torrent?title=Tears-of-Steel[SHORT]-2012-BRRip-AC3-XViD-RemixHD",
@@ -20,7 +21,7 @@ const torrent = {
   time: "1 Year+",
   size: "232.92 MB",
   magnet:
-    "magnet:?xt=urn:btih:ce6d2a6bbc439a8f6b94b23ba63b04164400fe3b&dn=Parasite.2019.1080p.BRRip.x264.AAC2.0-MP4&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.ccc.de%3A80",
+    "magnet:?xt=urn:btih:209c8226b299b308beaf2b9cd3fb49212dbd13ec&dn=Tears+of+Steel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F&xs=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Ftears-of-steel.torrent",
 };
 
 const description = {
@@ -35,20 +36,15 @@ const description = {
     "https://m.media-amazon.com/images/M/MV5BMTczMzQzNDE5NV5BMl5BanBnXkFtZTcwNzYwMzQ1OA@@._V1_SX300.jpg",
 };
 
-export const TorrentDetails: React.FC<IProps> = ({}) => {
+export const TorrentDetails: React.FC<IProps> = ({ torrent = _torrent }) => {
+  if (!torrent) return null;
   const [torrentDetails, setTorrentDetails] = useState<ITorrentDetails>(null);
 
   useEffect(() => {
     setTorrentDetails(null);
 
     (async () => {
-      const magnet =
-        torrent.magnet || (await ipcRenderer.invoke("getMagnetUrl", torrent));
-      const details: ITorrentDetails = await ipcRenderer.invoke(
-        "getTorrentDetails",
-        { ...torrent, magnet }
-      );
-
+      const details: ITorrentDetails = await getTorrentDetails(torrent);
       setTorrentDetails(details);
     })();
 

@@ -15,6 +15,7 @@ export interface ITorrentDetails {
   files: IFile[];
   name: string;
   infoHash: string;
+  size: string;
 }
 
 export interface Subtitle {

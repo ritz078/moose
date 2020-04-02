@@ -1,6 +1,6 @@
 export interface TorrentResult {
   title: string;
-  time: string;
+  time: string | Date;
   magnet?: string;
   seeds: number;
 }

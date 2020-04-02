@@ -64,7 +64,7 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
       if (file.type !== FileType.VIDEO) return;
       (async function () {
         setIsFetchingCaption(true);
-        const subtitles = await getSubtitles(file, true);
+        const subtitles = await getSubtitles(torrentDetails, file, true);
         await ipcRenderer.invoke(
           "playOnVlc",
           file.url,
@@ -83,7 +83,7 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
 
         if (file.type === FileType.VIDEO) {
           setIsFetchingCaption(true);
-          const subtitles = await getSubtitles(file);
+          const subtitles = await getSubtitles(torrentDetails, file);
           setSelectedFile({
             ...file,
             subtitles,

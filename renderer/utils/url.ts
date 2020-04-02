@@ -1,5 +1,7 @@
 import axios from "axios";
-import { IFile, Subtitle } from "../../types/TorrentDetails";
+import { IFile, ITorrentDetails, Subtitle } from "../../types/TorrentDetails";
+import { TorrentResult } from "../../types/TorrentResult";
+import { getSubtitlesFromTorrent } from "@utils/getSubtitlesFromTorrent";
 
 function getApiPort() {
   const { searchParams } = new URL(window.location.href);
@@ -12,6 +14,7 @@ const baseURL = `${window.location.protocol}//${
 
 const instance = axios.create({
   baseURL,
+  timeout: 5000,
 });
 
 export async function getSearchResults(query: string) {
@@ -29,13 +32,31 @@ export function getStreamingUrl({ index, infoHash, name }: IFile) {
 }
 
 export async function getSubtitles(
-  { index, infoHash }: IFile,
+  { files }: ITorrentDetails,
+  { index, infoHash, isMovieOrShow }: IFile,
   download?: boolean
 ): Promise<Subtitle[]> {
+  const subtitles = await getSubtitlesFromTorrent(files);
+
+  if (subtitles) return subtitles;
+
+  if (!isMovieOrShow) return [];
   const { data } = await instance.get(`/subtitles/${infoHash}/${index}`, {
     params: {
       download,
     },
+  });
+  return data;
+}
+
+export async function getMagnetUrl(torrent: TorrentResult) {
+  const { data } = await instance.post(`/magnet`, torrent);
+  return data.magnet;
+}
+
+export async function getTorrentDetails(torrent) {
+  const { data } = await instance.post("/details", torrent, {
+    timeout: 50000,
   });
   return data;
 }

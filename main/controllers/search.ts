@@ -1,8 +1,8 @@
 import TorrentSearchApi from "torrent-search-api";
 import { Request, Response } from "express";
 
-TorrentSearchApi.enableProvider("RarBg");
-TorrentSearchApi.enableProvider("ThePirateBay");
+TorrentSearchApi.enableProvider("Limetorrents");
+// TorrentSearchApi.enableProvider("ThePirateBay");
 
 export async function search(req: Request, res: Response) {
   const { query } = req.query;
@@ -13,4 +13,10 @@ export async function search(req: Request, res: Response) {
   } catch (e) {
     res.status(404);
   }
+}
+
+export async function magnet(req: Request, res: Response) {
+  res.status(200).json({
+    magnet: await TorrentSearchApi.getMagnet(req.body),
+  });
 }

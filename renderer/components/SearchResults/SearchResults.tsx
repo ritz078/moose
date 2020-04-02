@@ -459,8 +459,14 @@ const data = [
 ];
 
 export const SearchResults: React.FC<IProps> = memo(
-  ({ searchResults: { query, results }, onTorrentSelect }) => {
-    const { columns, data: _data } = makeData(data);
+  ({
+    searchResults: { query, results } = {
+      query: "tears of steel",
+      results: data,
+    },
+    onTorrentSelect,
+  }) => {
+    const { columns, data: _data } = makeData(results);
 
     const {
       getTableProps,

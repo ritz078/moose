@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
+
+@import "~simplebar/dist/simplebar.min.css";
+@import "~plyr/dist/plyr.css";
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+.plyr--audio {
+  height: 40px !important;
+  overflow: hidden;
+
+  .plyr__controls {
+    padding: 4px !important;
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border-top: 1px solid #696969;
+  }
+
+  .plyr--full-ui input[type="range"] {
+    background-color: white !important;
+  }
+}

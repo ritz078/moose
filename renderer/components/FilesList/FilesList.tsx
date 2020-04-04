@@ -1,10 +1,13 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useTable } from "react-table";
-import {
-  IFile,
-  ITorrentDetails,
-  Subtitle,
-} from "../../../types/TorrentDetails";
+import { IFile, ITorrentDetails } from "../../../types/TorrentDetails";
 import styles from "./FilesList.module.scss";
 import Icon from "@mdi/react";
 import { mdiFan, mdiVlc } from "@mdi/js";
@@ -13,11 +16,12 @@ import { ipcRenderer, shell } from "electron";
 import ReactDOM from "react-dom";
 import { animated, config, useTransition } from "react-spring";
 import { Player } from "@components/Player";
-import { FileType } from "@enums/FileType";
 import { getStreamingUrl, getSubtitles } from "@utils/url";
+import { MiniPlayer } from "@components/MiniPlayer";
+import { FileType } from "@enums/FileType";
+import { SelectedFileContext } from "@contexts/SelectedFileContext";
 
 const header = [
-  { Header: "#", accessor: "index" },
   {
     Header: "Name",
     accessor: "name",
@@ -29,6 +33,14 @@ const header = [
   {
     id: "play",
     accessor: "type",
+    Cell: ({ cell }) => {
+      if (cell.column.id === "play" && cell.value === FileType.VIDEO) {
+        return (
+          <Icon path={mdiVlc} color="orange" size={0.6} title="Play in VLC" />
+        );
+      }
+      return null;
+    },
   },
 ];
 
@@ -39,19 +51,11 @@ interface IProps {
 export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
   if (!torrentDetails) return null;
   const [isFetchingCaption, setIsFetchingCaption] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<
-    IFile & {
-      subtitles: Subtitle[];
-    }
-  >(null);
+  const { selectedFile, setSelectedFile } = useContext(SelectedFileContext);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable<IFile>({
+  const { getTableProps, getTableBodyProps, rows, prepareRow } = useTable<
+    IFile
+  >({
     columns: header,
     data: torrentDetails.files
       .sort((a, b) => b.type - a.type)
@@ -93,6 +97,8 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
             });
           } catch (e) {}
           setIsFetchingCaption(false);
+        } else if (file.type === FileType.AUDIO) {
+          setSelectedFile(file);
         } else {
           await shell.openItem(file.path);
         }
@@ -104,17 +110,6 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
     <>
       <SimpleBar className={styles.files}>
         <table {...getTableProps()}>
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
           <tbody {...getTableBodyProps()}>
             {rows.map((row) => {
               prepareRow(row);
@@ -123,39 +118,23 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
                   {...row.getRowProps()}
                   onClick={(e) => openFile(e, row.original)}
                 >
-                  {row.cells.map((cell) => {
-                    let vlcElement;
-                    if (cell.column.id === "play") {
-                      if (cell.value === FileType.VIDEO) {
-                        vlcElement = (
-                          <Icon
-                            path={mdiVlc}
-                            color="orange"
-                            size={0.7}
-                            title="Play in VLC"
-                          />
-                        );
-                      } else {
-                        vlcElement = null;
+                  {row.cells.map((cell) => (
+                    <td
+                      onClick={
+                        cell.column.id === "play" &&
+                        cell.value === FileType.VIDEO
+                          ? (e) => {
+                              e.stopPropagation();
+                              playOnVLC(cell.row.original);
+                            }
+                          : undefined
                       }
-                    }
-                    return (
-                      <td
-                        onClick={
-                          vlcElement
-                            ? (e) => {
-                                e.stopPropagation();
-                                playOnVLC(cell.row.original);
-                              }
-                            : undefined
-                        }
-                        data-id={cell.column.id}
-                        {...cell.getCellProps()}
-                      >
-                        {vlcElement ?? cell.render("Cell")}
-                      </td>
-                    );
-                  })}
+                      data-id={cell.column.id}
+                      {...cell.getCellProps()}
+                    >
+                      {cell.render("Cell")}
+                    </td>
+                  ))}
                 </tr>
               );
             })}

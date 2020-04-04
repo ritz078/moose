@@ -14,14 +14,14 @@ app.use(bodyParser.json());
 app.use(cors());
 
 let server: Server;
-export function createServer(port) {
+export function createServer(port, cb) {
   app.get("/stream/:infoHash/:fileIndex/:name", stream);
   app.get("/subtitles/:infoHash/:fileIndex", subtitles);
   app.get("/search", search);
   app.get("/description", description);
   app.post("/magnet", magnet);
   app.post("/details", details);
-  server = app.listen(port);
+  server = app.listen(port, cb);
 }
 
 export function closeServer() {

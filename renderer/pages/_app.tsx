@@ -1,5 +1,5 @@
-import "../styles/main.css"
+import "@styles/main.scss";
 
 export default function ({ Component, props }) {
-	return <Component props={props} />
+  return <Component props={props} />;
 }

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import dynamic from "next/dynamic";
+import { SelectedFileContext } from "@contexts/SelectedFileContext";
 
 const Container =
   BROWSER &&
@@ -8,5 +9,16 @@ const Container =
   });
 
 export default () => {
-  return Container ? <Container /> : <div />;
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  return (
+    <SelectedFileContext.Provider
+      value={{
+        selectedFile,
+        setSelectedFile,
+      }}
+    >
+      {Container ? <Container /> : <div />}
+    </SelectedFileContext.Provider>
+  );
 };

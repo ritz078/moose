@@ -5,11 +5,11 @@ import styles from "./Player.module.scss";
 import { IFile, Subtitle } from "../../../types/TorrentDetails";
 import { useTransition, animated } from "react-spring";
 import { getStreamingUrl } from "@utils/url";
-import { ipcRenderer } from "electron";
+import { FileType } from "@enums/FileType";
 
 interface IProps {
   file?: IFile & {
-    subtitles: Subtitle[];
+    subtitles?: Subtitle[];
   };
   onCloseRequest: () => void;
 }
@@ -54,11 +54,15 @@ export const Player: React.FC<IProps> = memo(({ file, onCloseRequest }) => {
     };
   }, [file]);
 
-  const transitions = useTransition(!!file, null, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-  });
+  const transitions = useTransition(
+    !!file && file.type === FileType.VIDEO,
+    null,
+    {
+      from: { opacity: 0 },
+      enter: { opacity: 1 },
+      leave: { opacity: 0 },
+    }
+  );
 
   return (
     isMounted &&

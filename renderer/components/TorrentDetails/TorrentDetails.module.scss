@@ -1,12 +1,12 @@
-$buttonColor: rgba(53, 53, 53, 0.91);
+$buttonColor: rgba(255, 255, 255, 0.2);
 
 .torrentDetails {
-  height: 266px;
+  height: 220px;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.55);
   border-top: 1px solid #000;
   display: grid;
-  grid-template-columns: 84px 84px repeat(10, 1fr);
+  grid-template-columns: 138px repeat(10, 1fr) 30px;
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
@@ -16,20 +16,20 @@ $buttonColor: rgba(53, 53, 53, 0.91);
 }
 
 .poster {
-  grid-area: 1 / 1 / 6 / 3;
+  grid-area: 1 / 1 / 6 / 2;
   height: 100%;
   border-radius: 2px;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.28);
 }
 .title {
-  grid-area: 1 / 3 / 2 / 13;
+  grid-area: 1 / 2 / 2 / 13;
   padding-left: 15px;
 
   h4 {
     margin: 0 0 10px;
     font-weight: normal;
-    font-size: 18px;
+    font-size: 16px;
   }
 
   span {
@@ -39,7 +39,7 @@ $buttonColor: rgba(53, 53, 53, 0.91);
   }
 }
 .files {
-  grid-area: 2 / 3 / 5 / 13;
+  grid-area: 2 / 2 / 6 / 13;
   margin-top: 15px;
   margin-left: 15px;
   border-radius: 2px;
@@ -56,15 +56,14 @@ $buttonColor: rgba(53, 53, 53, 0.91);
     text-align: left;
   }
 
-  td,
-  th {
+  td {
     background-color: rgba(255, 255, 255, 0.08);
-    padding: 5px 8px;
+    padding: 3px 6px;
   }
 
   td[data-id="play"] {
     text-align: center;
-    padding: 5px 0;
+    padding: 0;
   }
 
   tbody tr {
@@ -76,28 +75,17 @@ $buttonColor: rgba(53, 53, 53, 0.91);
     background-color: rgba(103, 58, 183, 0.33);
   }
 }
+
 .download {
-  grid-area: 5/12/5/13;
+  grid-area: 1/12/2/13;
+  fill: #ffffff;
+  cursor: pointer;
+  transition: all 200ms;
+  padding: 5px;
+  border-radius: 50%;
+}
 
-  button {
-    font: inherit;
-    border: 0;
-    border-radius: 2px;
-    font-size: 12px;
-    padding: 8px 14px;
-    margin-top: 24px;
-    background-color: $buttonColor;
-    color: #fff;
-    cursor: pointer;
-    transition: all 200ms;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    outline: none;
-  }
-
-  button:hover {
-    background-color: lighten($buttonColor, 10);
-  }
+.download:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  fill: lighten(#ffffff, 40);
 }

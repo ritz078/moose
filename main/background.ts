@@ -6,7 +6,6 @@ import os from "os";
 import getPort from "get-port";
 
 // import modules
-import "./modules/description";
 import "./modules/playOnVlc";
 import { createServer, closeServer } from "./server";
 import client from "./utils/webtorrent";
@@ -41,22 +40,15 @@ async function _createWindow() {
     titleBarStyle: "hiddenInset",
   });
 
-  // BrowserWindow.addDevToolsExtension(
-  //   path.join(
-  //     os.homedir(),
-  //     "/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.5.0_0"
-  //   )
-  // );
-
-  if (isProd) {
-    await win.loadURL(`app://./home.html`);
-  } else {
-    const port = process.argv[2];
-    await win.loadURL(`http://localhost:${port}/home?port=${apiPort}`);
-    win.webContents.openDevTools();
-  }
-
-  createServer(apiPort);
+  createServer(apiPort, async () => {
+    if (isProd) {
+      await win.loadURL(`app://./home.html`);
+    } else {
+      const port = process.argv[2];
+      await win.loadURL(`http://localhost:${port}/home?port=${apiPort}`);
+      win.webContents.openDevTools();
+    }
+  });
 }
 
 const gotTheLock = app.requestSingleInstanceLock();

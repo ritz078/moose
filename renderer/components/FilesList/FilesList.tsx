@@ -53,10 +53,12 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
     prepareRow,
   } = useTable<IFile>({
     columns: header,
-    data: torrentDetails.files.map((file) => ({
-      ...file,
-      url: getStreamingUrl(file),
-    })),
+    data: torrentDetails.files
+      .sort((a, b) => b.type - a.type)
+      .map((file) => ({
+        ...file,
+        url: getStreamingUrl(file),
+      })),
   });
 
   const playOnVLC = useCallback(
@@ -83,11 +85,13 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
 
         if (file.type === FileType.VIDEO) {
           setIsFetchingCaption(true);
-          const subtitles = await getSubtitles(torrentDetails, file);
-          setSelectedFile({
-            ...file,
-            subtitles,
-          });
+          try {
+            const subtitles = await getSubtitles(torrentDetails, file);
+            setSelectedFile({
+              ...file,
+              subtitles,
+            });
+          } catch (e) {}
           setIsFetchingCaption(false);
         } else {
           await shell.openItem(file.path);

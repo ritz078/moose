@@ -6,7 +6,7 @@ $buttonColor: rgba(53, 53, 53, 0.91);
   background-color: rgba(0, 0, 0, 0.55);
   border-top: 1px solid #000;
   display: grid;
-  grid-template-columns: 79px 79px repeat(10, 1fr);
+  grid-template-columns: 84px 84px repeat(10, 1fr);
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
@@ -16,10 +16,11 @@ $buttonColor: rgba(53, 53, 53, 0.91);
 }
 
 .poster {
-  grid-area: 1 / 1 / 5 / 4;
+  grid-area: 1 / 1 / 6 / 3;
   height: 100%;
   border-radius: 2px;
   overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.28);
 }
 .title {
   grid-area: 1 / 3 / 2 / 13;

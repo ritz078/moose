@@ -5,7 +5,7 @@ export interface IFile {
   url?: string;
   size: string;
   index: number;
-  type: boolean | FileType;
+  type: FileType;
   isMovieOrShow: boolean;
   path: string;
   infoHash: string;

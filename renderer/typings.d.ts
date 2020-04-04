@@ -9,3 +9,4 @@ declare module "@mdi/react" {
 }
 
 declare const BROWSER: boolean;
+declare const FETCH_SUBTITLES: boolean;

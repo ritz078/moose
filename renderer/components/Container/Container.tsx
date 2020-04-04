@@ -15,7 +15,9 @@ export default function () {
     results: sampleResults,
   });
   const [viewState, setViewState] = useState(ViewState.SEARCH);
-  const [selectedTorrent, setSelectedTorrent] = useState<TorrentResult>(null);
+  const [selectedTorrent, setSelectedTorrent] = useState<TorrentResult>(
+    sampleResults[0]
+  );
 
   const onFileSelect = useCallback(
     ({ infoHash }) => {

@@ -65,5 +65,6 @@ export function stream(
     onReady();
   }
 
-  torrent.on("ready", onReady);
+  torrent.once("ready", onReady);
+  torrent.once("error", () => res.end());
 }

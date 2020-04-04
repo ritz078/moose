@@ -41,8 +41,6 @@ export const Player: React.FC<IProps> = memo(({ file, onCloseRequest }) => {
       },
     });
 
-    airPlay();
-
     function closePlayer(e: KeyboardEvent) {
       if (e.key === "Escape") {
         onCloseRequest();
@@ -55,10 +53,6 @@ export const Player: React.FC<IProps> = memo(({ file, onCloseRequest }) => {
       document.removeEventListener("keydown", closePlayer);
     };
   }, [file]);
-
-  const airPlay = async () => {
-    ipcRenderer.invoke("airplay", getStreamingUrl(file));
-  };
 
   const transitions = useTransition(!!file, null, {
     from: { opacity: 0 },

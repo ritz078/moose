@@ -14,7 +14,7 @@ const baseURL = `${window.location.protocol}//${
 
 const instance = axios.create({
   baseURL,
-  timeout: 5000,
+  timeout: 50000,
 });
 
 export async function getSearchResults(query: string) {
@@ -40,7 +40,7 @@ export async function getSubtitles(
 
   if (subtitles) return subtitles;
 
-  if (!isMovieOrShow) return [];
+  if (!isMovieOrShow || !FETCH_SUBTITLES) return [];
   const { data } = await instance.get(`/subtitles/${infoHash}/${index}`, {
     params: {
       download,
@@ -58,5 +58,15 @@ export async function getTorrentDetails(torrent) {
   const { data } = await instance.post("/details", torrent, {
     timeout: 50000,
   });
+  return data;
+}
+
+export async function getTorrentDescription(torrentName: string) {
+  const { data } = await instance.get("/description", {
+    params: {
+      name: torrentName,
+    },
+  });
+
   return data;
 }

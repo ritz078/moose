@@ -15,9 +15,9 @@ export async function details(req: Request, res: Response) {
         ? req.body
         : req.body.magnet || (await TorrentSearchApi.getMagnet(req.body));
 
-    const torrent: Torrent =
-      client.get(magnet) ||
-      (await new Promise((resolve) => client.add(magnet, resolve)));
+    const torrent: Torrent = client.get(magnet) || client.add(magnet);
+
+    await new Promise((resolve) => torrent.on("metadata", resolve));
 
     // destroy all other torrents.
     client.torrents

@@ -17,9 +17,9 @@ import ReactDOM from "react-dom";
 import { animated, config, useTransition } from "react-spring";
 import { Player } from "@components/Player";
 import { getStreamingUrl, getSubtitles } from "@utils/url";
-import { MiniPlayer } from "@components/MiniPlayer";
-import { FileType } from "@enums/FileType";
 import { SelectedFileContext } from "@contexts/SelectedFileContext";
+import { Modal } from "@components/Modal";
+import { FileType } from "@enums/FileType";
 
 const header = [
   {
@@ -142,10 +142,13 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
         </table>
       </SimpleBar>
       <LoaderModal show={isFetchingCaption} />
-      <Player
+      <Modal
         onCloseRequest={() => setSelectedFile(null)}
-        file={selectedFile}
-      />
+        show={selectedFile && selectedFile.type === FileType.VIDEO}
+        fullScreen
+      >
+        <Player file={selectedFile} />
+      </Modal>
     </>
   );
 });

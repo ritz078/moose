@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { CancelTokenSource } from "axios";
 import { IFile, ITorrentDetails, Subtitle } from "../../types/TorrentDetails";
 import { TorrentResult } from "../../types/TorrentResult";
 import { getSubtitlesFromTorrent } from "@utils/getSubtitlesFromTorrent";
@@ -17,11 +17,19 @@ const instance = axios.create({
   timeout: 50000,
 });
 
+let searchResultsToken: CancelTokenSource;
 export async function getSearchResults(query: string) {
+  if (searchResultsToken) {
+    searchResultsToken.cancel();
+  }
+
+  searchResultsToken = axios.CancelToken.source();
+
   const { data } = await instance.get("/search", {
     params: {
       query,
     },
+    cancelToken: searchResultsToken.token,
   });
 
   return data;
@@ -49,23 +57,31 @@ export async function getSubtitles(
   return data;
 }
 
-export async function getMagnetUrl(torrent: TorrentResult) {
-  const { data } = await instance.post(`/magnet`, torrent);
-  return data.magnet;
-}
-
+let torrentDetailsToken: CancelTokenSource;
 export async function getTorrentDetails(torrent) {
+  if (torrentDetailsToken) {
+    torrentDetailsToken.cancel();
+  }
+
+  torrentDetailsToken = axios.CancelToken.source();
+
   const { data } = await instance.post("/details", torrent, {
     timeout: 50000,
+    cancelToken: torrentDetailsToken.token,
   });
   return data;
 }
 
+let torrentDescriptionToken: CancelTokenSource;
 export async function getTorrentDescription(torrentName: string) {
+  if (torrentDescriptionToken) torrentDescriptionToken.cancel();
+
+  torrentDescriptionToken = axios.CancelToken.source();
   const { data } = await instance.get("/description", {
     params: {
       name: torrentName,
     },
+    cancelToken: torrentDescriptionToken.token,
   });
 
   return data;

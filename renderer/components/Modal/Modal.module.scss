@@ -1,0 +1,15 @@
+.modal {
+  position: absolute;
+  display: flex;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+
+  &.fullScreen {
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+}

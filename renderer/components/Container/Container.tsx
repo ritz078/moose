@@ -18,6 +18,7 @@ export default function () {
   const [selectedTorrent, setSelectedTorrent] = useState<TorrentResult>(
     sampleResults[0]
   );
+  const [isLoadingResults, setIsLoadingResults] = useState(false);
 
   const onFileSelect = useCallback(
     ({ infoHash }) => {
@@ -37,10 +38,12 @@ export default function () {
         viewState={viewState}
         setViewState={setViewState}
         onResultsChange={setSearchResults}
+        onSearchStatusChange={setIsLoadingResults}
       />
       <DragAndDrop viewState={viewState} onFileSelect={onFileSelect}>
         {viewState === ViewState.SEARCH && (
           <SearchResults
+            isLoading={isLoadingResults}
             onTorrentSelect={setSelectedTorrent}
             searchResults={searchResults}
           />

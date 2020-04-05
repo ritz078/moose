@@ -4,6 +4,7 @@
   flex-direction: column;
   font-size: 14px;
   overflow: hidden;
+  position: relative;
 }
 
 .resultsLabel {
@@ -47,4 +48,16 @@
 .simplebar {
   display: flex;
   overflow: auto;
+}
+
+.resultsLoader {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: 0;
 }

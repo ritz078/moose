@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import { ViewState } from "@enums/ViewState";
 import Icon from "@mdi/react";
 import { mdiFileDownload } from "@mdi/js";
 import styles from "./DropUI.module.scss";
@@ -7,21 +6,16 @@ import cn from "classnames";
 import { useTransition, animated } from "react-spring";
 
 interface IProps {
-  viewState: ViewState;
   isDragActive: boolean;
 }
 
-export const DropUI: React.FC<IProps> = memo(({ viewState, isDragActive }) => {
-  const transitions = useTransition(
-    viewState === ViewState.DOWNLOADS || isDragActive,
-    null,
-    {
-      from: { opacity: 0 },
-      enter: { opacity: 1 },
-      leave: { opacity: 0, pointerEvents: "none" },
-      initial: null,
-    }
-  );
+export const DropUI: React.FC<IProps> = memo(({ isDragActive }) => {
+  const transitions = useTransition(isDragActive, null, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0, pointerEvents: "none" },
+    initial: null,
+  });
 
   return (
     <>
@@ -32,7 +26,7 @@ export const DropUI: React.FC<IProps> = memo(({ viewState, isDragActive }) => {
               key={key}
               className={cn(styles.zeroResultsWrapper, {
                 [styles.zrwActive]: isDragActive,
-                [styles.zrwSearch]: viewState === ViewState.SEARCH,
+                [styles.zrwSearch]: true,
               })}
               style={props}
             >

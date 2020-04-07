@@ -30,6 +30,7 @@ module.exports = {
         ...defaultConfig.plugins,
         new webpack.DefinePlugin({
           OMDB_API: `"${config.OMDB_API}"`,
+          TMDB_API: `"${config.TMDB_API}"`,
         }),
       ],
     }),

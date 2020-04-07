@@ -17,24 +17,6 @@ const instance = axios.create({
   timeout: 50000,
 });
 
-let searchResultsToken: CancelTokenSource;
-export async function getSearchResults(query: string) {
-  if (searchResultsToken) {
-    searchResultsToken.cancel();
-  }
-
-  searchResultsToken = axios.CancelToken.source();
-
-  const { data } = await instance.get("/search", {
-    params: {
-      query,
-    },
-    cancelToken: searchResultsToken.token,
-  });
-
-  return data;
-}
-
 export function getStreamingUrl({ index, infoHash, name }: IFile) {
   return `${baseURL}stream/${infoHash}/${index}/${encodeURI(name)}`;
 }

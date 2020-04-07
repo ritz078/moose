@@ -1,6 +1,6 @@
 {
   "name": "snape",
-  "description": "A torrent client to search, stream and download torrents. Play music, view images and stream videos.",
+  "description": "A torrent client to stream and download torrents. Play music, view images and stream videos.",
   "version": "2.0.0",
   "author": {
     "name": "Ritesh Kumar"
@@ -20,8 +20,7 @@
     "electron-store": "^5.1.1",
     "express": "^4.17.1",
     "mime": "^2.4.4",
-    "range-parser": "^1.2.1",
-    "torrent-search-api": "^2.1.1"
+    "range-parser": "^1.2.1"
   },
   "devDependencies": {
     "@mdi/js": "^5.0.45",
@@ -62,6 +61,7 @@
     "srt-webvtt": "^1.0.1",
     "tempy": "^0.5.0",
     "time-ago": "^0.2.1",
+    "tmdb": "^2.5.1",
     "typescript": "3.9.0-dev.20200325",
     "vlc-command": "^1.2.0",
     "webpack": "^4.42.0",

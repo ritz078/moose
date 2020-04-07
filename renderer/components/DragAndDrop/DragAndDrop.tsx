@@ -5,7 +5,6 @@ import { Buffer } from "buffer";
 import ParseTorrent from "parse-torrent";
 import electron from "electron";
 import MagnetUri from "magnet-uri";
-import { ViewState } from "@enums/ViewState";
 import { DropUI } from "@components/DropUI";
 
 interface IProps {
@@ -13,11 +12,10 @@ interface IProps {
     name: string | string[];
     infoHash: string;
   }) => void;
-  viewState: ViewState;
 }
 
 export const DragAndDrop: React.FC<IProps> = memo(
-  ({ children, onFileSelect, viewState }) => {
+  ({ children, onFileSelect }) => {
     useEffect(() => {
       function handlePress(e: KeyboardEvent) {
         if (e.metaKey && e.code === "KeyV") {
@@ -61,11 +59,7 @@ export const DragAndDrop: React.FC<IProps> = memo(
     return (
       <div {...getRootProps()} className={styles.dragAndDrop}>
         <input hidden {...getInputProps()} />
-        <DropUI
-          key={viewState}
-          viewState={viewState}
-          isDragActive={isDragActive}
-        />
+        <DropUI isDragActive={isDragActive} />
         {children}
       </div>
     );

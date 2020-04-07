@@ -35,7 +35,7 @@ async function _createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
-    vibrancy: "ultra-dark",
+    vibrancy: "under-window",
     frame: false,
     titleBarStyle: "hiddenInset",
   });

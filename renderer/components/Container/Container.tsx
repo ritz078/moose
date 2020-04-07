@@ -2,7 +2,6 @@ import { Header, IResults } from "../Header";
 import React, { useCallback, useState } from "react";
 import styles from "./Container.module.css";
 import { SearchResults } from "@components/SearchResults";
-import { ViewState } from "@enums/ViewState";
 import { DragAndDrop } from "@components/DragAndDrop";
 import { TorrentDetails } from "@components/TorrentDetails";
 import { TorrentResult } from "../../../types/TorrentResult";
@@ -14,7 +13,6 @@ export default function () {
     query: "",
     results: sampleResults,
   });
-  const [viewState, setViewState] = useState(ViewState.SEARCH);
   const [selectedTorrent, setSelectedTorrent] = useState<TorrentResult>(
     sampleResults[0]
   );
@@ -35,19 +33,15 @@ export default function () {
   return (
     <div className={styles.pane}>
       <Header
-        viewState={viewState}
-        setViewState={setViewState}
         onResultsChange={setSearchResults}
         onSearchStatusChange={setIsLoadingResults}
       />
-      <DragAndDrop viewState={viewState} onFileSelect={onFileSelect}>
-        {viewState === ViewState.SEARCH && (
-          <SearchResults
-            isLoading={isLoadingResults}
-            onTorrentSelect={setSelectedTorrent}
-            searchResults={searchResults}
-          />
-        )}
+      <DragAndDrop onFileSelect={onFileSelect}>
+        <SearchResults
+          isLoading={isLoadingResults}
+          onTorrentSelect={setSelectedTorrent}
+          searchResults={searchResults}
+        />
 
         <TorrentDetails torrent={selectedTorrent} />
       </DragAndDrop>

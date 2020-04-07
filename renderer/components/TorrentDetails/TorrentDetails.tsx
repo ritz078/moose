@@ -9,6 +9,7 @@ import { getTorrentDescription, getTorrentDetails } from "@utils/url";
 import { ITorrentDescription } from "../../../types/TorrentDescription";
 import { MiniPlayer } from "@components/MiniPlayer";
 import { SelectedFileContext } from "@contexts/SelectedFileContext";
+import { FileType } from "@enums/FileType";
 
 interface IProps {
   torrent: TorrentResult;
@@ -34,13 +35,17 @@ export const TorrentDetails: React.FC<IProps> = ({ torrent }) => {
     })();
   }, [torrent]);
 
+  const isMusic = torrentDetails?.files?.some(
+    (file) => file.type === FileType.AUDIO
+  );
+
   return (
     <>
       <MiniPlayer file={selectedFile} />
       <div className={styles.torrentDetails}>
         <img
           className={styles.poster}
-          src={description?.poster}
+          src={description?.poster || (isMusic && "/music.png")}
           alt={description?.title}
         />
         <div className={styles.title}>

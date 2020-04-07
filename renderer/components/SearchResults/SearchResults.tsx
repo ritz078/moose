@@ -43,10 +43,6 @@ export const SearchResults: React.FC<IProps> = memo(
 
     return (
       <div className={styles.results}>
-        <div className={styles.resultsLabel}>
-          {results.length} results for <b>{query}</b>
-        </div>
-
         <SimpleBar className={styles.simplebar}>
           <div className={styles.resultsTableWrapper}>
             <table {...getTableProps()} className={styles.resultsTable}>

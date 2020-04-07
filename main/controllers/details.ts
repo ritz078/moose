@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import TorrentSearchApi from "torrent-search-api";
 import client from "../utils/webtorrent";
 import { Torrent } from "webtorrent";
 import { ITorrentDetails } from "../../types/TorrentDetails";
@@ -10,10 +9,7 @@ import { FileType } from "../enums/FileType";
 
 export async function details(req: Request, res: Response) {
   try {
-    const magnet =
-      typeof req.body === "string"
-        ? req.body
-        : req.body.magnet || (await TorrentSearchApi.getMagnet(req.body));
+    const magnet = typeof req.body === "string" ? req.body : req.body.magnet;
 
     const torrent: Torrent = client.get(magnet) || client.add(magnet);
 
@@ -57,12 +53,12 @@ function decorateTorrent({
   };
 }
 
-function getFileExtension(file) {
+function getFileExtension(file): FileType {
   const name = typeof file === "string" ? file : file.name;
   return path.extname(name).toLowerCase();
 }
 
-function isAudio(file) {
+function isAudio(file): FileType {
   return (
     [".aac", ".ac3", ".mp3", ".ogg", ".wav", ".flac", ".m4a"].includes(
       getFileExtension(file)
@@ -70,14 +66,14 @@ function isAudio(file) {
   );
 }
 
-function isImage(file) {
+function isImage(file): FileType {
   return (
     [".jpg", ".jpeg", ".png", ".gif"].includes(getFileExtension(file)) &&
     FileType.IMAGE
   );
 }
 
-function isVideo(file) {
+function isVideo(file): FileType {
   return (
     [
       ".avi",

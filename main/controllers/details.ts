@@ -9,16 +9,14 @@ import { FileType } from "../enums/FileType";
 
 export async function details(req: Request, res: Response) {
   try {
-    const magnet = typeof req.body === "string" ? req.body : req.body.magnet;
+    const { infoHash } = req.params;
 
-    const torrent: Torrent = client.get(magnet) || client.add(magnet);
+    const torrent: Torrent | void = client.get(infoHash);
+    if (!torrent) return res.end();
 
-    await new Promise((resolve) => torrent.on("metadata", resolve));
-
-    // destroy all other torrents.
-    client.torrents
-      .filter((_torrent) => _torrent.infoHash !== torrent.infoHash)
-      .forEach((_torrent) => _torrent.destroy());
+    if (!torrent.files?.length) {
+      await new Promise((resolve) => torrent.on("metadata", resolve));
+    }
 
     res.json(decorateTorrent(torrent));
   } catch (e) {
@@ -53,7 +51,7 @@ function decorateTorrent({
   };
 }
 
-function getFileExtension(file): FileType {
+function getFileExtension(file): string {
   const name = typeof file === "string" ? file : file.name;
   return path.extname(name).toLowerCase();
 }

@@ -1,8 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { TorrentResult } from "../../../types/TorrentResult";
 import styles from "./TorrentDetails.module.scss";
-import Icon from "@mdi/react";
-import { mdiDownload } from "@mdi/js";
 import { ITorrentDetails } from "../../../types/TorrentDetails";
 import { FilesList } from "@components/FilesList";
 import { getTorrentDescription, getTorrentDetails } from "@utils/url";
@@ -12,11 +9,12 @@ import { SelectedFileContext } from "@contexts/SelectedFileContext";
 import { FileType } from "@enums/FileType";
 
 interface IProps {
-  torrent: TorrentResult;
+  name: string;
+  infoHash: string;
 }
 
-export const TorrentDetails: React.FC<IProps> = ({ torrent }) => {
-  if (!torrent) return null;
+export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
+  if (!infoHash) return null;
   const [torrentDetails, setTorrentDetails] = useState<ITorrentDetails>(null);
   const [description, setDescription] = useState<ITorrentDescription>(null);
   const { selectedFile, setSelectedFile } = useContext(SelectedFileContext);
@@ -24,16 +22,16 @@ export const TorrentDetails: React.FC<IProps> = ({ torrent }) => {
   useEffect(() => {
     (async () => {
       setTorrentDetails(null);
-      const details: ITorrentDetails = await getTorrentDetails(torrent);
+      const details: ITorrentDetails = await getTorrentDetails(infoHash);
       setTorrentDetails(details);
     })();
 
     (async () => {
       setDescription(null);
-      const description = await getTorrentDescription(torrent.title);
+      const description = await getTorrentDescription(name);
       setDescription(description);
     })();
-  }, [torrent]);
+  }, [infoHash, name]);
 
   const isMusic = torrentDetails?.files?.some(
     (file) => file.type === FileType.AUDIO
@@ -49,20 +47,11 @@ export const TorrentDetails: React.FC<IProps> = ({ torrent }) => {
           alt={description?.title}
         />
         <div className={styles.title}>
-          <h4>{description?.title || torrent.title}</h4>
+          <h4>{description?.title || name}</h4>
           <span>{description?.description}</span>
         </div>
 
         <FilesList torrentDetails={torrentDetails} />
-
-        {torrentDetails && (
-          <Icon
-            title="Download"
-            path={mdiDownload}
-            size={0.8}
-            className={styles.download}
-          />
-        )}
       </div>
     </>
   );

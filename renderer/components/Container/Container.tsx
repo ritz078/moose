@@ -1,49 +1,48 @@
-import { Header, IResults } from "../Header";
+import { Header } from "../Header";
 import React, { useCallback, useState } from "react";
 import styles from "./Container.module.css";
-import { SearchResults } from "@components/SearchResults";
+import { Download, Downloads } from "@components/Downloads";
 import { DragAndDrop } from "@components/DragAndDrop";
 import { TorrentDetails } from "@components/TorrentDetails";
-import { TorrentResult } from "../../../types/TorrentResult";
-import { sampleResults } from "../../../sample/results";
+import store from "@utils/store";
+import { DownloadingTorrent } from "../../../types/DownloadingTorrent";
+import { remote } from "electron";
 
 export default function () {
-  const [infoHashes, setInfoHashes] = useState<string[]>([]);
-  const [searchResults, setSearchResults] = useState<IResults>({
-    query: "",
-    results: sampleResults,
-  });
-  const [selectedTorrent, setSelectedTorrent] = useState<TorrentResult>(
-    sampleResults[0]
+  const [selectedTorrent, setSelectedTorrent] = useState<DownloadingTorrent>(
+    null
   );
   const [isLoadingResults, setIsLoadingResults] = useState(false);
+  const [downloads, setDownloads] = useState<Download[]>(
+    store.get("torrents") as Download[]
+  );
 
   const onFileSelect = useCallback(
-    ({ infoHash }) => {
-      if (infoHashes.includes(infoHash)) {
-        // TODO: Show an error message
+    ({ name, magnet }) => {
+      if (!!downloads.find((d) => d.magnet === magnet)) {
+        remote.dialog.showMessageBoxSync({
+          type: "info",
+          message: "This torrent is already added.",
+        });
         return;
       }
 
-      setInfoHashes([...infoHashes, infoHash]);
+      store.set("torrents", [...downloads, { name, magnet }]);
+      setDownloads([...downloads, { name, magnet }]);
     },
-    [infoHashes]
+    [downloads]
   );
 
   return (
     <div className={styles.pane}>
-      <Header
-        onResultsChange={setSearchResults}
-        onSearchStatusChange={setIsLoadingResults}
-      />
+      <Header onSearchStatusChange={setIsLoadingResults} />
       <DragAndDrop onFileSelect={onFileSelect}>
-        <SearchResults
-          isLoading={isLoadingResults}
-          onTorrentSelect={setSelectedTorrent}
-          searchResults={searchResults}
-        />
+        <Downloads downloads={downloads} onTorrentSelect={setSelectedTorrent} />
 
-        <TorrentDetails torrent={selectedTorrent} />
+        <TorrentDetails
+          infoHash={selectedTorrent?.infoHash}
+          name={selectedTorrent?.name}
+        />
       </DragAndDrop>
     </div>
   );

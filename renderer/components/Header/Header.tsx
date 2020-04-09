@@ -2,34 +2,22 @@ import React, { memo, useCallback } from "react";
 import styles from "./Header.module.scss";
 import Icon from "@mdi/react";
 import { mdiCast, mdiCloseCircle, mdiCog, mdiMagnify } from "@mdi/js";
-import { TorrentResult } from "../../../types/TorrentResult";
 import { Modal } from "@components/Modal";
 import { Preferences } from "@components/Preferences";
 
-export interface IResults {
-  results: TorrentResult[];
-  query: string;
-}
-
 interface IProps {
-  onResultsChange: (results: IResults) => void;
   onSearchStatusChange: (isLoading: boolean) => void;
 }
 
-export const Header: React.FC<IProps> = memo(
-  ({ onResultsChange, onSearchStatusChange }) => {
-    return (
-      <div className={styles.header}>
-        <div></div>
-        <Navbar />
-        <Search
-          onSearchStatusChange={onSearchStatusChange}
-          onResultsChange={onResultsChange}
-        />
-      </div>
-    );
-  }
-);
+export const Header: React.FC<IProps> = memo(({ onSearchStatusChange }) => {
+  return (
+    <div className={styles.header}>
+      <div></div>
+      <Navbar />
+      <Search onSearchStatusChange={onSearchStatusChange} />
+    </div>
+  );
+});
 
 const Navbar: React.FC<Omit<
   Omit<IProps, "onResultsChange">,
@@ -38,10 +26,10 @@ const Navbar: React.FC<Omit<
   return (
     <div className={styles.navbar}>
       <button>
-        <Icon path={mdiCast} title="Settings" size={0.72} />
+        <Icon path={mdiCast} title="Settings" size={0.72} color="#fff" />
       </button>
       <button>
-        <Icon path={mdiCog} title="Settings" size={0.72} />
+        <Icon path={mdiCog} title="Settings" size={0.72} color="#fff" />
       </button>
 
       <Modal show={false} onCloseRequest={console.log}>
@@ -52,7 +40,7 @@ const Navbar: React.FC<Omit<
 });
 
 const Search: React.FC<Omit<IProps, "viewState">> = memo(
-  ({ onResultsChange, onSearchStatusChange }) => {
+  ({ onSearchStatusChange }) => {
     const [query, setQuery] = React.useState("");
 
     const fetchResults = useCallback(

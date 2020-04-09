@@ -1,30 +1,24 @@
-import React, { memo } from "react";
-import { IResults } from "@components/Header";
+import React, { memo, useEffect, useState } from "react";
 import { useTable } from "react-table";
-import styles from "./SearchResults.module.scss";
+import styles from "./Downloads.module.scss";
 import SimpleBar from "simplebar-react";
-import { makeData } from "@components/SearchResults/makeData";
-import { TorrentResult } from "../../../types/TorrentResult";
-import Icon from "@mdi/react";
-import { mdiLoading } from "@mdi/js";
-import { useTransition, animated, config } from "react-spring";
+import { columns } from "./makeData";
+import { ipcRenderer } from "electron";
+import { DownloadingTorrent } from "../../../types/DownloadingTorrent";
 
-interface IProps {
-  searchResults: IResults;
-  onTorrentSelect: (torrent: TorrentResult) => void;
-  isLoading: boolean;
+export interface Download {
+  magnet: string;
+  name: string;
 }
 
-export const SearchResults: React.FC<IProps> = memo(
-  ({
-    searchResults: { query, results } = {
-      query: "",
-      results: [],
-    },
-    onTorrentSelect,
-    isLoading,
-  }) => {
-    const { columns, data: _data } = makeData(results);
+interface IProps {
+  downloads: Download[];
+  onTorrentSelect: (torrent: DownloadingTorrent) => void;
+}
+
+export const Downloads: React.FC<IProps> = memo(
+  ({ onTorrentSelect, downloads }) => {
+    const [data, setData] = useState([]);
 
     const {
       getTableProps,
@@ -32,14 +26,22 @@ export const SearchResults: React.FC<IProps> = memo(
       headerGroups,
       rows,
       prepareRow,
-    } = useTable({ columns, data: _data });
+    } = useTable({ columns, data });
 
-    const transitions = useTransition(isLoading, null, {
-      from: { opacity: 0 },
-      enter: { opacity: 1 },
-      leave: { opacity: 0 },
-      config: config.stiff,
-    });
+    useEffect(() => {
+      (async function () {
+        await ipcRenderer.invoke("addTorrentsToDownload", downloads);
+
+        const intervalId = setInterval(() => {
+          const torrents = ipcRenderer.sendSync("progress");
+          setData(torrents);
+        }, 1000);
+
+        return () => {
+          clearInterval(intervalId);
+        };
+      })();
+    }, [downloads]);
 
     return (
       <div className={styles.results}>
@@ -79,19 +81,6 @@ export const SearchResults: React.FC<IProps> = memo(
             </table>
           </div>
         </SimpleBar>
-
-        {transitions.map(
-          ({ item, key, props }) =>
-            item && (
-              <animated.div
-                style={props}
-                key={key}
-                className={styles.resultsLoader}
-              >
-                <Icon size={1.5} path={mdiLoading} spin color={"#fff"} />
-              </animated.div>
-            )
-        )}
       </div>
     );
   }

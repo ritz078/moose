@@ -3,7 +3,7 @@ import Icon from "@mdi/react";
 import { mdiFileDownload } from "@mdi/js";
 import styles from "./DropUI.module.scss";
 import cn from "classnames";
-import { useTransition, animated } from "react-spring";
+import { useTransition, animated, config } from "react-spring";
 
 interface IProps {
   isDragActive: boolean;
@@ -15,6 +15,7 @@ export const DropUI: React.FC<IProps> = memo(({ isDragActive }) => {
     enter: { opacity: 1 },
     leave: { opacity: 0, pointerEvents: "none" },
     initial: null,
+    config: config.stiff,
   });
 
   return (

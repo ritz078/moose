@@ -7,6 +7,7 @@ import getPort from "get-port";
 
 // import modules
 import "./modules/playOnVlc";
+import "./modules/progress";
 import { createServer, closeServer } from "./server";
 import client from "./utils/webtorrent";
 

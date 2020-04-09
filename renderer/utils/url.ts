@@ -1,6 +1,5 @@
 import axios, { CancelTokenSource } from "axios";
 import { IFile, ITorrentDetails, Subtitle } from "../../types/TorrentDetails";
-import { TorrentResult } from "../../types/TorrentResult";
 import { getSubtitlesFromTorrent } from "@utils/getSubtitlesFromTorrent";
 
 function getApiPort() {
@@ -40,14 +39,14 @@ export async function getSubtitles(
 }
 
 let torrentDetailsToken: CancelTokenSource;
-export async function getTorrentDetails(torrent) {
+export async function getTorrentDetails(infoHash: string) {
   if (torrentDetailsToken) {
     torrentDetailsToken.cancel();
   }
 
   torrentDetailsToken = axios.CancelToken.source();
 
-  const { data } = await instance.post("/details", torrent, {
+  const { data } = await instance.get(`/details/${infoHash}`, {
     timeout: 50000,
     cancelToken: torrentDetailsToken.token,
   });

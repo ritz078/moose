@@ -1,3 +1,5 @@
+import pt from "parse-torrent";
+
 export const sampleResults = [
   {
     title: "Big Buck Bunny",
@@ -45,3 +47,8 @@ export const sampleResults = [
     peers: 50,
   },
 ];
+
+export const sampleMagnets = sampleResults.map((sr) => {
+  const { name } = pt(sr.magnet);
+  return { magnet: sr.magnet, name };
+});

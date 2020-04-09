@@ -75,17 +75,3 @@ $buttonColor: rgba(255, 255, 255, 0.2);
     background-color: rgba(103, 58, 183, 0.33);
   }
 }
-
-.download {
-  grid-area: 1/12/2/13;
-  fill: #ffffff;
-  cursor: pointer;
-  transition: all 200ms;
-  padding: 5px;
-  border-radius: 50%;
-}
-
-.download:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  fill: lighten(#ffffff, 40);
-}

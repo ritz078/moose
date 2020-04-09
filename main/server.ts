@@ -17,7 +17,7 @@ export function createServer(port, cb) {
   app.get("/stream/:infoHash/:fileIndex/:name", stream);
   app.get("/subtitles/:infoHash/:fileIndex", subtitles);
   app.get("/description", description);
-  app.post("/details", details);
+  app.get("/details/:infoHash", details);
   server = app.listen(port, cb);
 }
 

@@ -6,12 +6,10 @@ import ParseTorrent from "parse-torrent";
 import electron from "electron";
 import MagnetUri from "magnet-uri";
 import { DropUI } from "@components/DropUI";
+import { Download } from "@components/Downloads";
 
 interface IProps {
-  onFileSelect: (torrentInfo: {
-    name: string | string[];
-    magnet: string;
-  }) => void;
+  onFileSelect: (torrentInfo: Download) => void;
 }
 
 export const DragAndDrop: React.FC<IProps> = memo(
@@ -21,8 +19,10 @@ export const DragAndDrop: React.FC<IProps> = memo(
         if (e.metaKey && e.code === "KeyV") {
           const magnetUri = electron.remote.clipboard.readText();
           try {
-            const { name }: MagnetUri.Instance = ParseTorrent(magnetUri);
-            onFileSelect({ name, magnet: magnetUri });
+            const { name, infoHash }: MagnetUri.Instance = ParseTorrent(
+              magnetUri
+            );
+            onFileSelect({ name: name as string, magnet: magnetUri, infoHash });
           } catch (e) {
             console.log(`${magnetUri} is an invalid magnet url.`);
           }
@@ -43,8 +43,9 @@ export const DragAndDrop: React.FC<IProps> = memo(
           const buffer = reader.result as ArrayBuffer;
           const parsed = ParseTorrent(Buffer.from(buffer));
           onFileSelect({
-            name: parsed.name,
+            name: parsed.name as string,
             magnet: ParseTorrent.toMagnetURI(parsed),
+            infoHash: parsed.infoHash,
           });
         };
 

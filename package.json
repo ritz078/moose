@@ -22,7 +22,9 @@
     "electron-store": "^5.1.1",
     "express": "^4.17.1",
     "mime": "^2.4.4",
-    "range-parser": "^1.2.1"
+    "pretty-time": "^1.1.0",
+    "range-parser": "^1.2.1",
+    "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "@mdi/js": "^5.0.45",

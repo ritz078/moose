@@ -67,3 +67,18 @@ export async function getTorrentDescription(torrentName: string) {
 
   return data;
 }
+
+let torrentDeleteToken: CancelTokenSource;
+export async function deleteTorrent(infoHash: string, deleteLocal: boolean) {
+  if (torrentDeleteToken) torrentDeleteToken.cancel();
+
+  torrentDeleteToken = axios.CancelToken.source();
+  const { data } = await instance.delete(`/delete/${infoHash}`, {
+    params: {
+      deleteLocal,
+    },
+    cancelToken: torrentDeleteToken.token,
+  });
+
+  return data;
+}

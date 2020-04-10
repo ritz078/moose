@@ -18,7 +18,7 @@ export default function () {
   );
 
   const onFileSelect = useCallback(
-    ({ name, magnet }) => {
+    ({ name, magnet, infoHash }) => {
       if (!!downloads.find((d) => d.magnet === magnet)) {
         remote.dialog.showMessageBoxSync({
           type: "info",
@@ -27,8 +27,19 @@ export default function () {
         return;
       }
 
-      store.set("torrents", [...downloads, { name, magnet }]);
-      setDownloads([...downloads, { name, magnet }]);
+      store.set("torrents", [...downloads, { name, magnet, infoHash }]);
+      setDownloads([...downloads, { name, magnet, infoHash }]);
+    },
+    [downloads]
+  );
+
+  const onTorrentDelete = useCallback(
+    (infoHash) => {
+      debugger;
+      const newTorrents = downloads.filter((d) => d.infoHash !== infoHash);
+
+      store.set("torrents", newTorrents);
+      setDownloads(newTorrents);
     },
     [downloads]
   );
@@ -37,7 +48,11 @@ export default function () {
     <div className={styles.pane}>
       <Header onSearchStatusChange={setIsLoadingResults} />
       <DragAndDrop onFileSelect={onFileSelect}>
-        <Downloads downloads={downloads} onTorrentSelect={setSelectedTorrent} />
+        <Downloads
+          onTorrentDelete={onTorrentDelete}
+          downloads={downloads}
+          onTorrentSelect={setSelectedTorrent}
+        />
 
         <TorrentDetails
           infoHash={selectedTorrent?.infoHash}

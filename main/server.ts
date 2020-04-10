@@ -6,6 +6,7 @@ import { subtitles } from "./controllers/subtitles";
 import { Server } from "http";
 import { details } from "./controllers/details";
 import { description } from "./controllers/description";
+import { deleteTorrent } from "./controllers/delete";
 
 const app = express();
 
@@ -18,6 +19,7 @@ export function createServer(port, cb) {
   app.get("/subtitles/:infoHash/:fileIndex", subtitles);
   app.get("/description", description);
   app.get("/details/:infoHash", details);
+  app.delete("/delete/:infoHash", deleteTorrent);
   server = app.listen(port, cb);
 }
 

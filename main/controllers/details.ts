@@ -42,7 +42,7 @@ function decorateTorrent({
         infoHash: infoHash,
         index: i,
         name: file.name,
-        size: prettyBytes(file.length),
+        size: file.length ? prettyBytes(file.length) : 0,
         type: getFileType(file),
         isMovieOrShow: _isMovieOrShow,
         path: filePath,

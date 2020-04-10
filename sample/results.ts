@@ -49,6 +49,6 @@ export const sampleResults = [
 ];
 
 export const sampleMagnets = sampleResults.map((sr) => {
-  const { name } = pt(sr.magnet);
-  return { magnet: sr.magnet, name };
+  const { name, infoHash } = pt(sr.magnet);
+  return { magnet: sr.magnet, name, infoHash };
 });

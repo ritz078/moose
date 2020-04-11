@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { parse } from "parse-torrent-title";
 import { isMovieOrShow } from "../utils/isMovieOrShow";
-import { OMDB } from "../helpers/OMDB";
+import { Description } from "../helpers/Description";
 import { sampleDescriptions } from "../../sample/descriptions";
 
-const tvdb = new OMDB();
+const tvdb = new Description();
 
 export async function description(req: Request, res: Response) {
   const { name } = req.query;

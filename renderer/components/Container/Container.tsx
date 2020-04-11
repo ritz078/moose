@@ -17,32 +17,35 @@ export default function () {
     store.get("torrents") as Download[]
   );
 
-  const onFileSelect = useCallback(
-    ({ name, magnet, infoHash }) => {
-      if (!!downloads.find((d) => d.magnet === magnet)) {
+  const onFileSelect = useCallback(({ name, magnet, infoHash }) => {
+    setDownloads((_downloads) => {
+      if (!!_downloads.find((d) => d.magnet === magnet)) {
         remote.dialog.showMessageBoxSync({
           type: "info",
           message: "This torrent is already added.",
         });
-        return;
+        return _downloads;
       }
 
       store.set("torrents", [...downloads, { name, magnet, infoHash }]);
-      setDownloads([...downloads, { name, magnet, infoHash }]);
-    },
-    [downloads]
-  );
+      return [...downloads, { name, magnet, infoHash }];
+    });
+  }, []);
 
-  const onTorrentDelete = useCallback(
-    (infoHash) => {
-      debugger;
-      const newTorrents = downloads.filter((d) => d.infoHash !== infoHash);
+  const onTorrentDelete = useCallback((infoHash) => {
+    setDownloads((_downloads) => {
+      const newTorrents = _downloads.filter(
+        (d) => d.infoHash && d.infoHash !== infoHash
+      );
 
       store.set("torrents", newTorrents);
-      setDownloads(newTorrents);
-    },
-    [downloads]
-  );
+      const descriptions = store.get("descriptions");
+      delete descriptions[infoHash];
+
+      store.set("descriptions", descriptions);
+      return newTorrents;
+    });
+  }, []);
 
   return (
     <div className={styles.pane}>

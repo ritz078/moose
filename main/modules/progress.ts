@@ -14,7 +14,7 @@ ipcMain.on("progress", (e, downloads) => {
     );
   });
 
-  e.returnValue = torrents.map((torrent) => {
+  e.returnValue = torrents.map((torrent, i) => {
     const {
       name,
       progress,
@@ -26,7 +26,7 @@ ipcMain.on("progress", (e, downloads) => {
       infoHash,
     } = client.get(torrent.infoHash) || torrent;
     return {
-      name,
+      name: name || downloads[i].name,
       infoHash,
       progress: `${Math.round(progress * 100)}%`,
       downloadSpeed: downloadSpeed ? `${prettyBytes(downloadSpeed)}/s` : 0,

@@ -9,7 +9,7 @@ interface MovieDetails {
   released: string;
 }
 
-export class OMDB {
+export class Description {
   instance: AxiosInstance;
   token: CancelTokenSource = null;
 
@@ -25,7 +25,7 @@ export class OMDB {
     return {
       title: data.title,
       description: data.overview,
-      poster: `https://image.tmdb.org/t/p/w200/${data.still_path}`,
+      poster: `https://image.tmdb.org/t/p/w200/${data.poster_path}`,
       released: data.release_date,
     };
   }
@@ -51,8 +51,7 @@ export class OMDB {
       },
       cancelToken: this.token.token,
     });
-
-    return OMDB.decorate(data?.results?.[0]);
+    return Description.decorate(data?.results?.[0]);
   }
 
   private async findEpisode(id: number, season: number, episode: number) {
@@ -90,7 +89,7 @@ export class OMDB {
       info.season,
       info.episode
     );
-    return OMDB.decorateTV(res, info.title, result?.poster_path);
+    return Description.decorateTV(res, info.title, result?.poster_path);
   }
 
   async find(info): Promise<MovieDetails | any> {

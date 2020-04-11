@@ -6,6 +6,7 @@ const store = new Store({
   name,
   defaults: {
     torrents: sampleMagnets,
+    descriptions: {},
   },
 });
 

@@ -7,6 +7,7 @@ import { ITorrentDescription } from "../../../types/TorrentDescription";
 import { MiniPlayer } from "@components/MiniPlayer";
 import { SelectedFileContext } from "@contexts/SelectedFileContext";
 import { FileType } from "@enums/FileType";
+import store from "@utils/store";
 
 interface IProps {
   name: string;
@@ -28,7 +29,15 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
 
     (async () => {
       setDescription(null);
-      const description = await getTorrentDescription(name);
+      let description = store.get("descriptions")[infoHash];
+
+      if (!description) {
+        description = await getTorrentDescription(name);
+        store.set("descriptions", {
+          ...store.get("descriptions"),
+          [infoHash]: description,
+        });
+      }
       setDescription(description);
     })();
   }, [infoHash, name]);

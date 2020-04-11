@@ -47,14 +47,11 @@ export const Downloads: React.FC<IProps> = memo(
 
     useEffect(() => {
       (async function () {
+        if (intervalId.current) clearInterval(intervalId.current);
         intervalId.current = window.setInterval(() => {
           const torrents = ipcRenderer.sendSync("progress", downloads);
           setData(torrents);
         }, 1000);
-
-        return () => {
-          clearInterval(intervalId.current);
-        };
       })();
     }, [downloads]);
 
@@ -84,6 +81,7 @@ export const Downloads: React.FC<IProps> = memo(
       },
       []
     );
+    console.log(data);
 
     return (
       <div className={styles.results}>

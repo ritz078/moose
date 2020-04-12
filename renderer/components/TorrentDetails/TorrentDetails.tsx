@@ -8,6 +8,8 @@ import { MiniPlayer } from "@components/MiniPlayer";
 import { SelectedFileContext } from "@contexts/SelectedFileContext";
 import { FileType } from "@enums/FileType";
 import store from "@utils/store";
+import { fadeIn } from "@utils/animations";
+import { animated } from "react-spring";
 
 interface IProps {
   name: string;
@@ -17,8 +19,10 @@ interface IProps {
 export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
   if (!infoHash) return null;
   const [torrentDetails, setTorrentDetails] = useState<ITorrentDetails>(null);
-  const [description, setDescription] = useState<ITorrentDescription>(null);
-  const { selectedFile, setSelectedFile } = useContext(SelectedFileContext);
+  const [description, setDescription] = useState<ITorrentDescription>(
+    undefined
+  );
+  const { selectedFile } = useContext(SelectedFileContext);
 
   useEffect(() => {
     (async () => {
@@ -28,7 +32,7 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
     })();
 
     (async () => {
-      setDescription(null);
+      setDescription(undefined);
       let description = store.get("descriptions")[infoHash];
 
       if (!description) {
@@ -49,19 +53,33 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
   return (
     <>
       <MiniPlayer file={selectedFile} />
-      <div className={styles.torrentDetails}>
-        <img
-          className={styles.poster}
-          src={description?.poster || (isMusic && "/music.png")}
-          alt={description?.title}
-        />
-        <div className={styles.title}>
-          <h4>{description?.title || name}</h4>
-          <span>{description?.description}</span>
-        </div>
+      {fadeIn(!!infoHash).map(
+        ({ item, props, key }) =>
+          item && (
+            <animated.div
+              style={props}
+              key={key}
+              className={styles.torrentDetails}
+            >
+              <img
+                className={styles.poster}
+                src={description?.poster || (isMusic && "/music.png")}
+                alt={description?.title}
+              />
+              <div className={styles.title}>
+                <h4>{description?.title || name}</h4>
+                <span>{description?.description}</span>
+              </div>
 
-        <FilesList torrentDetails={torrentDetails} />
-      </div>
+              {description !== undefined && (
+                <FilesList
+                  torrentDetails={torrentDetails}
+                  backdrop={description?.backdrop}
+                />
+              )}
+            </animated.div>
+          )
+      )}
     </>
   );
 };

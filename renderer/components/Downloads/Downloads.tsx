@@ -15,6 +15,8 @@ import { DownloadingTorrent } from "../../../types/DownloadingTorrent";
 import Icon from "@mdi/react";
 import { mdiDelete } from "@mdi/js";
 import { deleteTorrent } from "@utils/url";
+import { animated } from "react-spring";
+import { fadeIn } from "@utils/animations";
 
 export interface Download {
   magnet: string;
@@ -86,50 +88,61 @@ export const Downloads: React.FC<IProps> = memo(
       <div className={styles.results}>
         <SimpleBar className={styles.simplebar}>
           <div className={styles.resultsTableWrapper}>
-            <table {...getTableProps()} className={styles.resultsTable}>
-              <thead>
-                {headerGroups.map((headerGroup) => (
-                  <tr {...headerGroup.getHeaderGroupProps()}>
-                    {headerGroup.headers.map((column) => (
-                      <th
-                        className={styles.columnheader}
-                        {...column.getHeaderProps()}
-                      >
-                        {column.render("Header")}
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-              <tbody {...getTableBodyProps()}>
-                {rows.map((row) => {
-                  prepareRow(row);
-                  return (
-                    <tr
-                      onClick={() => onTorrentSelect(row.original)}
-                      className={styles.cell}
-                      {...row.getRowProps()}
-                    >
-                      {row.cells.map((cell) => (
-                        <td
-                          {...cell.getCellProps()}
-                          onClick={
-                            cell.column.id === "delete"
-                              ? (e) => _deleteTorrent(e, cell.row.original)
-                              : undefined
-                          }
-                        >
-                          {cell.column.id === "delete" && (
-                            <Icon path={mdiDelete} size={0.7} />
-                          )}
-                          {cell.column.Header && cell.render("Cell")}
-                        </td>
+            {fadeIn(!!data.length).map(
+              ({ item, props, key }) =>
+                item && (
+                  <animated.table
+                    style={props}
+                    key={key}
+                    {...getTableProps()}
+                    className={styles.resultsTable}
+                  >
+                    <thead>
+                      {headerGroups.map((headerGroup) => (
+                        <tr {...headerGroup.getHeaderGroupProps()}>
+                          {headerGroup.headers.map((column) => (
+                            <th
+                              className={styles.columnheader}
+                              {...column.getHeaderProps()}
+                            >
+                              {column.render("Header")}
+                            </th>
+                          ))}
+                        </tr>
                       ))}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                    </thead>
+                    <tbody {...getTableBodyProps()}>
+                      {rows.map((row) => {
+                        prepareRow(row);
+                        return (
+                          <tr
+                            onClick={() => onTorrentSelect(row.original)}
+                            className={styles.cell}
+                            {...row.getRowProps()}
+                          >
+                            {row.cells.map((cell) => (
+                              <td
+                                {...cell.getCellProps()}
+                                onClick={
+                                  cell.column.id === "delete"
+                                    ? (e) =>
+                                        _deleteTorrent(e, cell.row.original)
+                                    : undefined
+                                }
+                              >
+                                {cell.column.id === "delete" && (
+                                  <Icon path={mdiDelete} size={0.7} />
+                                )}
+                                {cell.column.Header && cell.render("Cell")}
+                              </td>
+                            ))}
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </animated.table>
+                )
+            )}
           </div>
         </SimpleBar>
       </div>

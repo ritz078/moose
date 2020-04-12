@@ -11,6 +11,7 @@
     right: 0;
     left: 0;
     bottom: 0;
+    transform: translateX(0);
   }
 }
 
@@ -27,6 +28,7 @@
   background-color: transparent;
   padding: 0;
   transition: all 200ms;
+  -webkit-app-region: no-drag;
 }
 
 .close:hover {

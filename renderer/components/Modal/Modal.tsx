@@ -5,6 +5,7 @@ import cn from "classnames";
 import styles from "./Modal.module.scss";
 import Icon from "@mdi/react";
 import { mdiClose } from "@mdi/js";
+import { fadeIn } from "@utils/animations";
 
 interface IProps {
   show: boolean;
@@ -48,11 +49,7 @@ export const Modal: React.FC<IProps> = ({
     };
   }, [show]);
 
-  const transitions = useTransition(show, null, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-  });
+  const transitions = fadeIn(show);
 
   return (
     isMounted &&

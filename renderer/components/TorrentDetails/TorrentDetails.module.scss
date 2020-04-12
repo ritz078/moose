@@ -1,15 +1,15 @@
 $buttonColor: rgba(255, 255, 255, 0.2);
 
 .torrentDetails {
-  height: 220px;
+  height: 300px;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.55);
   border-top: 1px solid #000;
   display: grid;
-  grid-template-columns: 138px repeat(10, 1fr) 30px;
+  grid-template-columns: 184px repeat(10, 1fr) 30px;
   grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
+  grid-column-gap: 0;
+  grid-row-gap: 0;
   padding: 15px;
   box-sizing: border-box;
   overflow: hidden;
@@ -35,7 +35,7 @@ $buttonColor: rgba(255, 255, 255, 0.2);
   span {
     font-size: 13px;
     line-height: 20px;
-    opacity: 0.8;
+    opacity: 0.7;
   }
 }
 .files {

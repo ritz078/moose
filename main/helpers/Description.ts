@@ -7,6 +7,7 @@ interface MovieDetails {
   description: string;
   poster: string;
   released: string;
+  backdrop: string | null;
 }
 
 export class Description {
@@ -27,6 +28,7 @@ export class Description {
       description: data.overview,
       poster: `https://image.tmdb.org/t/p/w200/${data.poster_path}`,
       released: data.release_date,
+      backdrop: `https://image.tmdb.org/t/p/w780/${data.backdrop_path}`,
     };
   }
 
@@ -51,7 +53,8 @@ export class Description {
       },
       cancelToken: this.token.token,
     });
-    return data ? Description.decorate(data?.results?.[0]) : null;
+    const result = data?.results?.[0];
+    return result ? Description.decorate(result) : null;
   }
 
   private async findEpisode(id: number, season: number, episode: number) {

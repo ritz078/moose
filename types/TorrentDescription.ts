@@ -8,4 +8,5 @@ export interface ITorrentDescription {
   runtime: string;
   genre: string;
   imdbID: string;
+  backdrop?: string;
 }

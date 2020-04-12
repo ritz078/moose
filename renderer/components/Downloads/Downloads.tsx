@@ -16,7 +16,8 @@ import Icon from "@mdi/react";
 import { mdiDelete } from "@mdi/js";
 import { deleteTorrent } from "@utils/url";
 import { animated } from "react-spring";
-import { fadeIn } from "@utils/animations";
+import { fadeInTranslateY } from "@utils/animations";
+import cn from "classnames";
 
 export interface Download {
   magnet: string;
@@ -88,7 +89,7 @@ export const Downloads: React.FC<IProps> = memo(
       <div className={styles.results}>
         <SimpleBar className={styles.simplebar}>
           <div className={styles.resultsTableWrapper}>
-            {fadeIn(!!data.length).map(
+            {fadeInTranslateY(!!data.length).map(
               ({ item, props, key }) =>
                 item && (
                   <animated.table
@@ -129,6 +130,9 @@ export const Downloads: React.FC<IProps> = memo(
                                         _deleteTorrent(e, cell.row.original)
                                     : undefined
                                 }
+                                className={cn({
+                                  [styles.tdIcon]: cell.column.id === "delete",
+                                })}
                               >
                                 {cell.column.id === "delete" && (
                                   <Icon path={mdiDelete} size={0.7} />

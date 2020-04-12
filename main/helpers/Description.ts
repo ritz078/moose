@@ -22,13 +22,17 @@ export class Description {
     });
   }
 
-  static decorate(data): MovieDetails {
+  static decorate(data, info): MovieDetails {
     return {
-      title: data.title,
-      description: data.overview,
-      poster: `https://image.tmdb.org/t/p/w200/${data.poster_path}`,
-      released: data.release_date,
-      backdrop: `https://image.tmdb.org/t/p/w780/${data.backdrop_path}`,
+      title: data?.title || info.title,
+      description: data?.overview,
+      poster: data?.poster_path
+        ? `https://image.tmdb.org/t/p/w200/${data.poster_path}`
+        : `/movie.jpg`,
+      released: data?.release_date,
+      backdrop: data?.backdrop_path
+        ? `https://image.tmdb.org/t/p/w780/${data.backdrop_path}`
+        : null,
     };
   }
 
@@ -54,7 +58,7 @@ export class Description {
       cancelToken: this.token.token,
     });
     const result = data?.results?.[0];
-    return result ? Description.decorate(result) : null;
+    return Description.decorate(result, info);
   }
 
   private async findEpisode(id: number, season: number, episode: number) {

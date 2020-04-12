@@ -8,7 +8,7 @@ import { MiniPlayer } from "@components/MiniPlayer";
 import { SelectedFileContext } from "@contexts/SelectedFileContext";
 import { FileType } from "@enums/FileType";
 import store from "@utils/store";
-import { fadeIn } from "@utils/animations";
+import { fadeIn, fadeInTranslateY } from "@utils/animations";
 import { animated } from "react-spring";
 
 interface IProps {
@@ -50,10 +50,20 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
     (file) => file.type === FileType.AUDIO
   );
 
+  const key = `${description?.title}-${torrentDetails?.infoHash}`;
+
+  const transitions = fadeInTranslateY(
+    description !== undefined,
+    undefined,
+    key
+  );
+
+  const imageTransitions = fadeIn(description !== undefined, key);
+
   return (
     <>
       <MiniPlayer file={selectedFile} />
-      {fadeIn(!!infoHash).map(
+      {fadeInTranslateY(!!infoHash).map(
         ({ item, props, key }) =>
           item && (
             <animated.div
@@ -61,21 +71,37 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
               key={key}
               className={styles.torrentDetails}
             >
-              <img
-                className={styles.poster}
-                src={description?.poster || (isMusic && "/music.png")}
-                alt={description?.title}
-              />
-              <div className={styles.title}>
-                <h4>{description?.title || name}</h4>
-                <span>{description?.description}</span>
-              </div>
+              {imageTransitions.map(
+                ({ item, props, key }) =>
+                  item && (
+                    <animated.img
+                      style={props}
+                      key={key}
+                      className={styles.poster}
+                      src={description?.poster || (isMusic && "/music.png")}
+                      alt={description?.title}
+                    />
+                  )
+              )}
 
-              {description !== undefined && (
-                <FilesList
-                  torrentDetails={torrentDetails}
-                  backdrop={description?.backdrop}
-                />
+              <h4 className={styles.title}>{description?.title || name}</h4>
+
+              {transitions.map(
+                ({ item, props, key }) =>
+                  item && (
+                    <animated.div
+                      style={props}
+                      key={key}
+                      className={styles.animatedWrapper}
+                    >
+                      <span>{description?.description}</span>
+
+                      <FilesList
+                        torrentDetails={torrentDetails}
+                        backdrop={description?.backdrop}
+                      />
+                    </animated.div>
+                  )
               )}
             </animated.div>
           )

@@ -7,7 +7,7 @@ $buttonColor: rgba(255, 255, 255, 0.2);
   border-top: 1px solid #000;
   display: grid;
   grid-template-columns: 184px repeat(10, 1fr) 30px;
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(9, 1fr);
   grid-column-gap: 0;
   grid-row-gap: 0;
   padding: 15px;
@@ -16,28 +16,31 @@ $buttonColor: rgba(255, 255, 255, 0.2);
 }
 
 .poster {
-  grid-area: 1 / 1 / 6 / 2;
+  grid-area: 1 / 1 / 10 / 2;
   height: 100%;
   border-radius: 2px;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.28);
 }
 .title {
-  grid-area: 1 / 2 / 2 / 13;
+  grid-area: 1 / 2 / 1 / 13;
   padding-left: 15px;
+  margin: 0 0 10px;
+  font-weight: normal;
+  font-size: 16px;
+}
 
-  h4 {
-    margin: 0 0 10px;
-    font-weight: normal;
-    font-size: 16px;
-  }
+.animatedWrapper {
+  grid-area: 2/2/10/13;
+  margin-left: 15px;
 
-  span {
+  & > span {
     font-size: 13px;
     line-height: 20px;
     opacity: 0.7;
   }
 }
+
 .files {
   grid-area: 2 / 2 / 6 / 13;
   margin-top: 15px;

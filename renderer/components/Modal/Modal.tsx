@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { animated, useTransition } from "react-spring";
+import { animated } from "react-spring";
 import ReactDom from "react-dom";
 import cn from "classnames";
 import styles from "./Modal.module.scss";
 import Icon from "@mdi/react";
 import { mdiClose } from "@mdi/js";
-import { fadeIn } from "@utils/animations";
+import { fadeInTranslateY } from "@utils/animations";
 
 interface IProps {
   show: boolean;
@@ -49,7 +49,7 @@ export const Modal: React.FC<IProps> = ({
     };
   }, [show]);
 
-  const transitions = fadeIn(show, "-50%");
+  const transitions = fadeInTranslateY(show, "-50%");
 
   return (
     isMounted &&

@@ -6,7 +6,10 @@ import { sampleDescriptions } from "../../sample/descriptions";
 
 const tvdb = new Description();
 
-export async function description(req: Request, res: Response) {
+export async function description(
+  req: Request<any, any, any, { name: string }>,
+  res: Response
+) {
   const { name } = req.query;
 
   const sample = sampleDescriptions.filter(

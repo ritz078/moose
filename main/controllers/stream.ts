@@ -20,14 +20,17 @@ export function stream(
     return res.end("404 Not Found");
   }
 
-  function onReady() {
+  async function onReady() {
     if (!torrent) return;
     const file = torrent.files[+fileIndex];
 
     res.setHeader("Accept-Ranges", "bytes");
+
+    const mimeType = mime.getType(file.name);
     res.setHeader(
       "Content-Type",
-      mime.getType(file.name) || "application/octet-stream"
+      (mimeType === "video/x-matroska" ? "video/mp4" : mimeType) ||
+        "application/octet-stream"
     );
 
     res.statusCode = 200;

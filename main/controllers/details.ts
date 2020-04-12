@@ -6,6 +6,7 @@ import { isMovieOrShow } from "../utils/isMovieOrShow";
 import prettyBytes from "pretty-bytes";
 import path from "path";
 import { FileType } from "../enums/FileType";
+import mime from "mime";
 
 export async function details(req: Request, res: Response) {
   try {
@@ -46,6 +47,7 @@ function decorateTorrent({
         type: getFileType(file),
         isMovieOrShow: _isMovieOrShow,
         path: filePath,
+        mime: mime.getType(file.name),
       };
     }),
   };
@@ -71,7 +73,7 @@ function isImage(file): FileType {
   );
 }
 
-function isVideo(file): FileType {
+export function isVideo(file): FileType {
   return (
     [
       ".avi",

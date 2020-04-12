@@ -1,5 +1,7 @@
+import prettyMs from "pretty-ms";
+
 export const columns = [
-  { Header: "#", accessor: "index" },
+  { Header: "#", accessor: "index", Cell: ({ value }) => value + 1 },
   {
     Header: "Name",
     accessor: "name",
@@ -20,10 +22,12 @@ export const columns = [
     Header: "Downloaded",
     accessor: "progress",
   },
-  // {
-  // 	Header: "Time Remaining",
-  // 	accessor: "timeRemaining",
-  // },
+  {
+    Header: "Time Remaining",
+    accessor: "timeRemaining",
+    Cell: ({ value }) =>
+      value && isFinite(value) ? prettyMs(value, { compact: true }) : value,
+  },
   {
     id: "delete",
   },

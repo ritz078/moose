@@ -9,6 +9,7 @@ export interface IFile {
   isMovieOrShow: boolean;
   path: string;
   infoHash: string;
+  mime: string;
 }
 
 export interface ITorrentDetails {

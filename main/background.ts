@@ -1,8 +1,6 @@
 import { BrowserWindow, app } from "electron";
 import serve from "electron-serve";
 import createWindow from "./helpers/createWindow";
-import path from "path";
-import os from "os";
 import getPort from "get-port";
 
 // import modules
@@ -10,6 +8,8 @@ import "./modules/playOnVlc";
 import "./modules/progress";
 import { createServer, closeServer } from "./server";
 import client from "./utils/webtorrent";
+
+app.commandLine.appendSwitch("enable-experimental-web-platform-features");
 
 const isProd: boolean = process.env.NODE_ENV === "production";
 
@@ -43,7 +43,7 @@ async function _createWindow() {
 
   createServer(apiPort, async () => {
     if (isProd) {
-      await win.loadURL(`app://./home.html`);
+      await win.loadURL(`app://./home.html?port=${apiPort}`);
     } else {
       const port = process.argv[2];
       await win.loadURL(`http://localhost:${port}/home?port=${apiPort}`);

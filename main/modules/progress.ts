@@ -26,6 +26,7 @@ ipcMain.on("progress", (e, downloads) => {
       infoHash,
     } = client.get(torrent.infoHash) || torrent;
     return {
+      index: i,
       name: name || downloads[i].name,
       infoHash,
       progress: `${Math.round(progress * 100)}%`,

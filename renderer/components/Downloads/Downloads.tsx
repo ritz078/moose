@@ -81,7 +81,6 @@ export const Downloads: React.FC<IProps> = memo(
       },
       []
     );
-    console.log(data);
 
     return (
       <div className={styles.results}>

@@ -31,6 +31,11 @@ const header = [
     accessor: "size",
   },
   {
+    Header: "Mime",
+    accessor: "mime",
+  },
+  {
+    Header: "",
     id: "play",
     accessor: "type",
     Cell: ({ cell }) => {
@@ -54,7 +59,7 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
   const { selectedFile, setSelectedFile } = useContext(SelectedFileContext);
 
   const { getTableProps, getTableBodyProps, rows, prepareRow } = useTable<
-    IFile
+    IFile & { [k: string]: any }
   >({
     columns: header,
     data: torrentDetails.files
@@ -147,7 +152,7 @@ export const FilesList: React.FC<IProps> = memo(({ torrentDetails }) => {
         show={selectedFile && selectedFile.type === FileType.VIDEO}
         fullScreen
       >
-        <Player file={selectedFile} />
+        <Player playOnVlc={playOnVLC} file={selectedFile} />
       </Modal>
     </>
   );

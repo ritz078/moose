@@ -51,7 +51,7 @@ export class Description {
       },
       cancelToken: this.token.token,
     });
-    return Description.decorate(data?.results?.[0]);
+    return data ? Description.decorate(data?.results?.[0]) : null;
   }
 
   private async findEpisode(id: number, season: number, episode: number) {
@@ -64,7 +64,6 @@ export class Description {
           },
         }
       );
-      console.log(id, data);
       return data;
     } catch (e) {}
   }
@@ -80,8 +79,6 @@ export class Description {
       },
       cancelToken: this.token.token,
     });
-
-    console.log(results);
 
     const result = results?.[0];
     const res = await this.findEpisode(

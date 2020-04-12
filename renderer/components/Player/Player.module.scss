@@ -3,3 +3,48 @@
   height: 100vh !important;
   outline: none;
 }
+
+.errorOverlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 9;
+}
+
+.error {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  background-color: #292929b8;
+  border-radius: 2px;
+  padding: 8px 8px 8px 14px;
+  font-size: 14px;
+  align-items: center;
+  min-width: 300px;
+  top: 50%;
+
+  & > div {
+    flex: 1;
+    padding-right: 15px;
+  }
+
+  & > button {
+    border: none;
+    border-radius: 2px;
+    margin-left: 8px;
+    background-color: #ffffff2e;
+    padding: 5px 8px;
+    cursor: pointer;
+    transition: all 200ms;
+  }
+
+  & > button:hover {
+    background-color: darken(#ffffff2e, 30);
+  }
+}

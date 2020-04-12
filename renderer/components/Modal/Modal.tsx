@@ -49,7 +49,7 @@ export const Modal: React.FC<IProps> = ({
     };
   }, [show]);
 
-  const transitions = fadeIn(show);
+  const transitions = fadeIn(show, "-50%");
 
   return (
     isMounted &&

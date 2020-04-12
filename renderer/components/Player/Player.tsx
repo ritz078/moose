@@ -4,7 +4,7 @@ import { IFile, Subtitle } from "../../../types/TorrentDetails";
 import { getStreamingUrl } from "@utils/url";
 import styles from "./Player.module.scss";
 import Icon from "@mdi/react";
-import { mdiContentCopy, mdiOpenInApp, mdiVlc } from "@mdi/js";
+import { mdiClose, mdiContentCopy, mdiOpenInApp, mdiVlc } from "@mdi/js";
 import { shell, remote } from "electron";
 
 interface IProps {

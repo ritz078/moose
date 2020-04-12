@@ -3,6 +3,8 @@ import { animated, useTransition } from "react-spring";
 import ReactDom from "react-dom";
 import cn from "classnames";
 import styles from "./Modal.module.scss";
+import Icon from "@mdi/react";
+import { mdiClose } from "@mdi/js";
 
 interface IProps {
   show: boolean;
@@ -65,6 +67,9 @@ export const Modal: React.FC<IProps> = ({
                 fullScreen,
               })}
             >
+              <button onClick={onCloseRequest} className={styles.close}>
+                <Icon path={mdiClose} size={1} color="#999" />
+              </button>
               {children}
             </animated.div>
           )

@@ -4,7 +4,7 @@ import { IFile, Subtitle } from "../../../types/TorrentDetails";
 import { getStreamingUrl } from "@utils/url";
 import styles from "./Player.module.scss";
 import Icon from "@mdi/react";
-import { mdiClose, mdiContentCopy, mdiOpenInApp, mdiVlc } from "@mdi/js";
+import { mdiContentCopy, mdiOpenInApp, mdiVlc } from "@mdi/js";
 import { shell, remote } from "electron";
 
 interface IProps {
@@ -49,7 +49,7 @@ export const Player: React.FC<IProps> = memo(
       if (!error || !plyr.current) return;
 
       plyr.current.pause();
-      plyr.current.toggleControls(true);
+      plyr.current.toggleControls(false);
     }, [error]);
 
     const onLoad = useCallback((e: React.SyntheticEvent<HTMLVideoElement>) => {
@@ -109,7 +109,7 @@ export const Player: React.FC<IProps> = memo(
             </div>
           </div>
         )}
-        <div>
+        <div className={error ? "player-error" : undefined}>
           <video
             poster={backdrop}
             autoPlay

@@ -38,6 +38,6 @@ export function fadeIn(item, keys) {
     },
     // @ts-ignore
     config: (_a, motion: State) =>
-      motion === "leave" ? { duration: 0.1 } : { duration: 100 },
+      motion === "leave" ? { duration: 0.1 } : { duration: 300 },
   });
 }

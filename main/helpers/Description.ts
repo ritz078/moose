@@ -28,7 +28,8 @@ export class Description {
       description: data?.overview,
       poster: data?.poster_path
         ? `https://image.tmdb.org/t/p/w200/${data.poster_path}`
-        : `/movie.jpg`,
+        : // todo
+          `/music.png`,
       released: data?.release_date,
       backdrop: data?.backdrop_path
         ? `https://image.tmdb.org/t/p/w780/${data.backdrop_path}`

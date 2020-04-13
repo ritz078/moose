@@ -12,7 +12,6 @@ export default function () {
   const [selectedTorrent, setSelectedTorrent] = useState<DownloadingTorrent>(
     null
   );
-  const [isLoadingResults, setIsLoadingResults] = useState(false);
   const [downloads, setDownloads] = useState<Download[]>(
     store.get("torrents") as Download[]
   );
@@ -49,7 +48,7 @@ export default function () {
 
   return (
     <div className={styles.pane}>
-      <Header onSearchStatusChange={setIsLoadingResults} />
+      <Header onFileSelect={onFileSelect} />
       <DragAndDrop onFileSelect={onFileSelect}>
         <Downloads
           onTorrentDelete={onTorrentDelete}

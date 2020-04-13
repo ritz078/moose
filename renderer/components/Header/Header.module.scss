@@ -15,50 +15,6 @@ $headerBackground: rgba(0, 0, 0, 0.45);
   justify-content: space-between;
 }
 
-.search {
-  display: flex;
-  align-items: center;
-  -webkit-app-region: no-drag;
-  position: relative;
-}
-
-.search:focus-within .searchIcon {
-  fill: $focus;
-}
-
-.search:focus-within .searchInput {
-  border-color: $focus;
-}
-
-.searchIcon {
-  position: absolute;
-  margin-left: 6px;
-  fill: $primary;
-}
-
-.closeIcon {
-  position: absolute;
-  fill: $primary;
-  right: 6px;
-  cursor: pointer;
-}
-
-.closeIcon:hover {
-  fill: white;
-}
-
-.searchInput {
-  width: 160px;
-  padding: 5px 10px 5px 28px;
-  background-color: #191919;
-  border: 1px solid $primary;
-  border-radius: 20px;
-  transition: all 200ms;
-  outline: none;
-  caret-color: white;
-  color: white;
-}
-
 .navbar {
   display: flex;
   flex-direction: row;

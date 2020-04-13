@@ -24,6 +24,11 @@ html {
   transform: scale(0.8);
   transform-origin: right;
   width: 75%;
+  transition: opacity 200ms;
+
+  &:hover {
+    opacity: 1;
+  }
 
   .plyr__controls {
     padding: 2px !important;

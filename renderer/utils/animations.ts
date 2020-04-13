@@ -41,3 +41,14 @@ export function fadeIn(item, keys) {
       motion === "leave" ? { duration: 0.1 } : { duration: 300 },
   });
 }
+
+export function scale(item) {
+  return useTransition(item, null, {
+    from: { transform: "scale(0.5)", opacity: 0 },
+    enter: { transform: "scale(1)", opacity: 1 },
+    leave: { transform: "scale(0.5)", opacity: 0 },
+    // @ts-ignore
+    config: (_a, motion: State) =>
+      motion === "leave" ? config.wobbly : { duration: 500 },
+  });
+}

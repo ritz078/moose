@@ -20,6 +20,7 @@ import { getStreamingUrl, getSubtitles } from "@utils/url";
 import { SelectedFileContext } from "@contexts/SelectedFileContext";
 import { Modal } from "@components/Modal";
 import { FileType } from "@enums/FileType";
+import { scale } from "@utils/animations";
 
 const header = [
   {
@@ -181,12 +182,7 @@ const LoaderModal: React.FC<{ show: boolean }> = ({ show }) => {
     };
   }, []);
 
-  const transitions = useTransition(show, null, {
-    from: { transform: "scale(0.5)", opacity: 0 },
-    enter: { transform: "scale(1)", opacity: 1 },
-    leave: { transform: "scale(0.5)", opacity: 0 },
-    config: config.wobbly,
-  });
+  const transitions = scale(show);
 
   return isMounted
     ? ReactDOM.createPortal(

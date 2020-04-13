@@ -19,6 +19,7 @@ enum Error {
   AUDIO = "Audio Codec isn't supported.",
   VIDEO = "Video Codec isn't supported.",
   BOTH = "Audio and Video Codecs aren't supported.",
+  NONE = "none",
 }
 
 export const Player: React.FC<IProps> = memo(
@@ -47,6 +48,10 @@ export const Player: React.FC<IProps> = memo(
 
     useEffect(() => {
       if (!error || !plyr.current) return;
+      if (error === Error.NONE) {
+        plyr.current.play();
+        return;
+      }
 
       plyr.current.pause();
       plyr.current.toggleControls(false);
@@ -67,11 +72,13 @@ export const Player: React.FC<IProps> = memo(
       if (!hasVideoTracks) {
         return setError(Error.VIDEO);
       }
+
+      setError(Error.NONE);
     }, []);
 
     return (
       <>
-        {error && (
+        {error && error !== Error.NONE && (
           <div className={styles.errorOverlay}>
             <div className={styles.error}>
               <div>{error}</div>
@@ -109,10 +116,11 @@ export const Player: React.FC<IProps> = memo(
             </div>
           </div>
         )}
-        <div className={error ? "player-error" : undefined}>
+        <div
+          className={error && error !== Error.NONE ? "player-error" : undefined}
+        >
           <video
             poster={backdrop}
-            autoPlay
             crossOrigin="anonymous"
             title={name}
             ref={playerRef}

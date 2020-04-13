@@ -33,8 +33,11 @@ $buttonColor: rgba(255, 255, 255, 0.2);
 .animatedWrapper {
   grid-area: 2/2/10/13;
   margin-left: 15px;
+  display: flex;
+  flex-direction: column;
 
   & > span {
+    display: flex;
     font-size: 13px;
     line-height: 20px;
     opacity: 0.7;
@@ -48,6 +51,7 @@ $buttonColor: rgba(255, 255, 255, 0.2);
   border-radius: 2px;
   overflow: auto;
   display: flex;
+  flex: 1;
 
   table {
     font-size: 12px;

@@ -2,6 +2,7 @@ import { ipcMain } from "electron";
 import client from "../utils/webtorrent";
 import download from "downloads-folder";
 import prettyBytes from "pretty-bytes";
+import { Torrent } from "webtorrent";
 
 ipcMain.on("progress", (e, downloads) => {
   const torrents = downloads.map(({ magnet }) => {
@@ -24,7 +25,8 @@ ipcMain.on("progress", (e, downloads) => {
       timeRemaining,
       length,
       infoHash,
-    } = client.get(torrent.infoHash) || torrent;
+      ready,
+    }: Torrent = client.get(torrent.infoHash) || torrent;
     return {
       index: i,
       name: name || downloads[i].name,
@@ -35,6 +37,7 @@ ipcMain.on("progress", (e, downloads) => {
       uploadSpeed,
       timeRemaining,
       size: length ? prettyBytes(length) : "-",
+      ready,
     };
   });
 });

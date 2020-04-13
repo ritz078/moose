@@ -118,7 +118,9 @@ export const Downloads: React.FC<IProps> = memo(
                         return (
                           <tr
                             onClick={() => onTorrentSelect(row.original)}
-                            className={styles.cell}
+                            className={cn(styles.cell, {
+                              [styles.trDisabled]: !row.original.ready,
+                            })}
                             {...row.getRowProps()}
                           >
                             {row.cells.map((cell) => (

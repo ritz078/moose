@@ -1,4 +1,5 @@
 $buttonColor: rgba(255, 255, 255, 0.2);
+$posterWidth: 184px;
 
 .torrentDetails {
   height: 300px;
@@ -6,7 +7,7 @@ $buttonColor: rgba(255, 255, 255, 0.2);
   background-color: rgba(0, 0, 0, 0.55);
   border-top: 1px solid #000;
   display: grid;
-  grid-template-columns: 184px repeat(10, 1fr) 30px;
+  grid-template-columns: $posterWidth repeat(10, 1fr) 30px;
   grid-template-rows: repeat(9, 1fr);
   grid-column-gap: 0;
   grid-row-gap: 0;
@@ -21,6 +22,7 @@ $buttonColor: rgba(255, 255, 255, 0.2);
   border-radius: 2px;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.28);
+  width: $posterWidth;
 }
 .title {
   grid-area: 1 / 2 / 1 / 13;

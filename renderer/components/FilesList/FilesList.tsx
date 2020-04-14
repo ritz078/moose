@@ -14,13 +14,15 @@ import { mdiFan, mdiVlc } from "@mdi/js";
 import SimpleBar from "simplebar-react";
 import { ipcRenderer, shell } from "electron";
 import ReactDOM from "react-dom";
-import { animated, config, useTransition } from "react-spring";
+import { animated } from "react-spring";
 import { Player } from "@components/Player";
 import { getStreamingUrl, getSubtitles } from "@utils/url";
 import { SelectedFileContext } from "@contexts/SelectedFileContext";
 import { Modal } from "@components/Modal";
 import { FileType } from "@enums/FileType";
 import { scale } from "@utils/animations";
+import { SelectedCastContext } from "@contexts/SelectedCast";
+import { Channels } from "../../../renderer/enums/Channels";
 
 const header = [
   {
@@ -62,6 +64,7 @@ export const FilesList: React.FC<IProps> = memo(
     if (!torrentDetails) return null;
     const [isFetchingCaption, setIsFetchingCaption] = useState(false);
     const { selectedFile, setSelectedFile } = useContext(SelectedFileContext);
+    const { selectedCast } = useContext(SelectedCastContext);
 
     const { getTableProps, getTableBodyProps, rows, prepareRow } = useTable<
       IFile & { [k: string]: any }
@@ -93,7 +96,23 @@ export const FilesList: React.FC<IProps> = memo(
     );
 
     const openFile = useCallback(
-      (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, file: IFile) =>
+      (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, file: IFile) => {
+        if (selectedCast) {
+          (async function () {
+            await new Promise((resolve) => {
+              ipcRenderer.send(
+                Channels.PLAY_ON_CAST,
+                selectedCast,
+                getStreamingUrl(file)
+              );
+              ipcRenderer.on(Channels.PLAY_ON_CAST_CALLBACK, (event) => {
+                resolve();
+              });
+            });
+          })();
+          return;
+        }
+
         (async function () {
           e.stopPropagation();
 
@@ -112,7 +131,8 @@ export const FilesList: React.FC<IProps> = memo(
           } else {
             await shell.openItem(file.path);
           }
-        })(),
+        })();
+      },
       [torrentDetails]
     );
 

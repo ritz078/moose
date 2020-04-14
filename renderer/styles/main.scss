@@ -24,7 +24,7 @@ html {
   transform: scale(0.8);
   transform-origin: right;
   width: 75%;
-  transition: opacity 200ms;
+  transition: all 200ms !important;
 
   &:hover {
     opacity: 1;

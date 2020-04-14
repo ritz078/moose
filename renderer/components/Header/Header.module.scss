@@ -29,7 +29,7 @@ $headerBackground: rgba(0, 0, 0, 0.45);
     border: 0;
     outline: none;
     border-right: 1px solid $headerBackground;
-    -webkit-app-region: no-drag;
+    //-webkit-app-region: no-drag;
 
     &:last-of-type {
       border-right: none;

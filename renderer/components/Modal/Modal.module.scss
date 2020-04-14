@@ -1,17 +1,17 @@
 .modal {
   position: absolute;
   display: flex;
-  top: 0;
+  top: 50px;
   left: 50%;
   border-radius: 2px;
   transform: translateX(-50%);
+}
 
-  &.fullScreen {
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-  }
+.fullScreen {
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
 }
 
 .close {
@@ -28,8 +28,9 @@
   padding: 0;
   transition: all 200ms;
   -webkit-app-region: no-drag;
+  border-radius: 2px;
 }
 
 .close:hover {
-  background-color: rgba(255, 255, 255, 0.06);
+  background-color: rgba(255, 255, 255, 0.2);
 }

@@ -6,6 +6,8 @@ import getPort from "get-port";
 // import modules
 import "./modules/playOnVlc";
 import "./modules/progress";
+import "./modules/dlnacasts";
+import "./modules/cast";
 import { createServer, closeServer } from "./server";
 import client from "./utils/webtorrent";
 
@@ -31,14 +33,20 @@ async function _createWindow() {
   });
 
   win = createWindow("main", {
-    width: 800,
-    minWidth: 500,
+    width: 900,
+    minWidth: 900,
+    minHeight: 640,
     webPreferences: {
       nodeIntegration: true,
     },
     vibrancy: "under-window",
     frame: false,
-    titleBarStyle: "hiddenInset",
+    titleBarStyle: "hidden",
+  });
+
+  win.setTrafficLightPosition({
+    x: 10,
+    y: 30,
   });
 
   createServer(apiPort, async () => {

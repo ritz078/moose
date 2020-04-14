@@ -1,0 +1,4 @@
+export enum Channels {
+  PLAY_ON_CAST = "PLAY_ON_CAST",
+  PLAY_ON_CAST_CALLBACK = "PLAY_ON_CAST_CALLBACK",
+}

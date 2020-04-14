@@ -1,0 +1,20 @@
+.wrapper {
+  width: 200px;
+  background-color: #000000cc;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 5px;
+  font-size: 14px;
+
+  & > div {
+    padding: 8px 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+
+  & > div:hover {
+    background-color: #000000;
+  }
+}

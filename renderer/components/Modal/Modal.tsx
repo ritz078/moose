@@ -49,7 +49,7 @@ export const Modal: React.FC<IProps> = ({
     };
   }, [show]);
 
-  const transitions = fadeInTranslateY(show, "-50%");
+  const transitions = fadeInTranslateY(show, fullScreen ? 0 : "-50%");
 
   return (
     isMounted &&
@@ -61,7 +61,7 @@ export const Modal: React.FC<IProps> = ({
               style={props}
               key={key}
               className={cn(styles.modal, {
-                fullScreen,
+                [styles.fullScreen]: fullScreen,
               })}
             >
               <button onClick={onCloseRequest} className={styles.close}>

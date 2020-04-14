@@ -1,7 +1,7 @@
 import React, { memo, useCallback } from "react";
 import styles from "./Header.module.scss";
 import Icon from "@mdi/react";
-import { mdiCast, mdiCog, mdiDelete, mdiPlus } from "@mdi/js";
+import { mdiCog, mdiDelete, mdiPlus } from "@mdi/js";
 import { Modal } from "@components/Modal";
 import { Preferences } from "@components/Preferences";
 import store from "@utils/store";
@@ -9,6 +9,7 @@ import { remote } from "electron";
 import fs from "fs";
 import { parseFileInfo } from "@utils/parseFileInfo";
 import { Download } from "@components/Downloads";
+import { Cast, StreamingDevice } from "@components/Cast/Cast";
 
 interface IProps {
   onFileSelect: (info: Download) => void;
@@ -26,16 +27,19 @@ export const Header: React.FC<IProps> = memo(({ onFileSelect }) => {
 const Navbar: React.FC<IProps> = memo(({ onFileSelect }) => {
   const loadFile = useCallback(() => {
     (async function () {
-      const { filePaths } = await remote.dialog.showOpenDialog({
-        properties: ["openFile"],
-        filters: [
-          {
-            name: "torrent",
-            extensions: ["torrent"],
-          },
-        ],
-        message: "Load Torrent File",
-      });
+      const { filePaths } = await remote.dialog.showOpenDialog(
+        remote.getCurrentWindow(),
+        {
+          properties: ["openFile"],
+          filters: [
+            {
+              name: "torrent",
+              extensions: ["torrent"],
+            },
+          ],
+          message: "Load Torrent File",
+        }
+      );
 
       if (filePaths.length) {
         const info = await parseFileInfo(fs.readFileSync(filePaths[0]));
@@ -48,11 +52,14 @@ const Navbar: React.FC<IProps> = memo(({ onFileSelect }) => {
   return (
     <div className={styles.navbar}>
       <button onClick={loadFile}>
-        <Icon path={mdiPlus} title="Settings" size={0.72} color="#fff" />
+        <Icon
+          path={mdiPlus}
+          title="Add Torrent File"
+          size={0.72}
+          color="#fff"
+        />
       </button>
-      <button>
-        <Icon path={mdiCast} title="Settings" size={0.72} color="#fff" />
-      </button>
+      <Cast type={StreamingDevice.CHROMECAST} />
       <button>
         <Icon path={mdiCog} title="Settings" size={0.72} color="#fff" />
       </button>

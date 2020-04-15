@@ -1,0 +1,61 @@
+.progressWrapper {
+  margin: 0 15px 0 8px;
+  position: relative;
+  display: flex;
+  flex: 1;
+}
+
+.progress {
+  -webkit-appearance: none;
+  background: 0 0;
+  border: 0;
+  border-radius: 100px;
+  height: 5px;
+  left: 0;
+  margin-top: -2.5px;
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+}
+
+.range {
+  -webkit-appearance: none;
+  background: 0 0;
+  border: 0;
+  border-radius: 26px;
+  color: #00b3ff;
+  display: block;
+  height: 19px;
+  margin: 0;
+  padding: 0;
+  transition: box-shadow 0.3s ease;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.player {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 75%;
+
+  span {
+    font-size: 14px;
+  }
+
+  svg {
+    cursor: pointer;
+    transition: all 200ms;
+  }
+
+  svg:hover {
+    transform: scale(1.2);
+  }
+}
+
+.duration {
+  display: inline-block;
+  margin-right: 15px;
+}

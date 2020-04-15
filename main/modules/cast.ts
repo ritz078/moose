@@ -5,8 +5,15 @@ import { Cast } from "../utils/Cast";
 
 const casts = new Cast();
 
+function throwError(message: string, reply: Function) {
+  reply("cast-error", message);
+}
+
 ipcMain.on(CastEvents.LIST_DEVICES, (e) => {
-  e.returnValue = casts.players;
+  e.returnValue = casts.players.map(({ name, host }) => ({
+    name,
+    host,
+  }));
 });
 
 ipcMain.on(CastEvents.SET_CAST_DEVICE, (e, id) => {
@@ -20,19 +27,54 @@ ipcMain.on(CastEvents.SET_CAST_DEVICE, (e, id) => {
 ipcMain.on(
   CastEvents.PLAY_ON_CAST,
   async (e, id: string, url: string, title) => {
-    const ip = await internalIp.v4();
-    await casts.play(url.replace("localhost", ip), {
-      title,
-    });
+    try {
+      const ip = await internalIp.v4();
+      await casts.play(url.replace("localhost", ip), {
+        title,
+      });
+    } catch (err) {
+      throwError(err.message, e.reply);
+    }
   }
 );
 
 ipcMain.on(CastEvents.SEEK, async (e, time) => {
-  console.log(time);
   try {
     await casts.seek(time);
-  } catch (e) {}
+  } catch (err) {
+    throwError(err.message, e.reply);
+  }
 });
 
-ipcMain.on(CastEvents.PAUSE, () => casts.pause());
-ipcMain.on(CastEvents.RESUME, () => casts.resume());
+ipcMain.on(CastEvents.PAUSE, async (e) => {
+  try {
+    await casts.pause();
+  } catch (err) {
+    throwError(err.message, e.reply);
+  }
+});
+
+ipcMain.on(CastEvents.STOP, async (e) => {
+  try {
+    await casts.stop();
+  } catch (err) {
+    throwError(err.message, e.reply);
+  }
+});
+
+ipcMain.on(CastEvents.RESUME, async (e) => {
+  try {
+    await casts.resume();
+  } catch (err) {
+    throwError(err.message, e.reply);
+  }
+});
+
+ipcMain.on(CastEvents.STATUS, async (e) => {
+  try {
+    const status = await casts.status();
+    e.reply("cast-progress", status);
+  } catch (err) {
+    throwError(err.message, e.reply);
+  }
+});

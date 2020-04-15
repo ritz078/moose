@@ -1,84 +1,126 @@
 import { fadeInTranslateY } from "@utils/animations";
-import { animated } from "react-spring";
-import styles from "@components/MiniPlayer/MiniPlayer.module.scss";
-import React, { memo, useCallback, useEffect, useRef } from "react";
+import { animated, config, State } from "react-spring";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { IFile } from "../../../types/TorrentDetails";
-import Plyr, { PlyrEvent } from "plyr";
-import cn from "classnames";
 import { CastEvents } from "../../../shared/constants/CastEvents";
 import { ipcRenderer } from "electron";
-
-const plyrOptions = {
-  keyboard: { focused: true, global: true },
-  hideControls: false,
-  settings: ["captions"],
-  volume: 0,
-  muted: true,
-  storage: {
-    enabled: false,
-  },
-  controls: [
-    "play", // Play/pause playback
-    "progress", // The progress bar and scrubber for playback and buffering
-    "current-time", // The current time of playback
-    "duration", // The full duration of the media
-  ],
-};
+import styles from "./CastControl.module.scss";
+import mStyles from "../MiniPlayer/MiniPlayer.module.scss";
+import Icon from "@mdi/react";
+import { mdiClose, mdiPause, mdiPlay } from "@mdi/js";
 
 interface IProps {
   file: IFile;
+  onCloseRequest: () => void;
 }
 
-export const CastControl: React.FC<IProps> = memo(({ file }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const playerRef = useRef<Plyr>(null);
+async function getVideoDuration(url: string): Promise<number> {
+  const video = document.createElement("video");
+  video.preload = "metadata";
+  return new Promise((resolve) => {
+    video.onloadedmetadata = function (metadata) {
+      // @ts-ignore
+      resolve(metadata?.path?.[0]?.duration);
+    };
 
-  const seek = useCallback((e: PlyrEvent) => {
-    ipcRenderer.send(CastEvents.SEEK, e.detail.plyr.currentTime);
-  }, []);
+    video.src = url;
+  });
+}
 
-  const pause = useCallback((e: PlyrEvent) => {
-    ipcRenderer.send(CastEvents.PAUSE);
-    playerRef.current.pause();
-  }, []);
+export const CastControl: React.FC<IProps> = memo(
+  ({ file, onCloseRequest }) => {
+    const [duration, setDuration] = useState<number>(0);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [playerState, setPlayerState] = useState(null);
 
-  const resume = useCallback((e: PlyrEvent) => {
-    (async () => {
-      if (e.detail.plyr.paused) {
-        await playerRef.current.play();
-        ipcRenderer.send(CastEvents.RESUME);
-      }
-    })();
-  }, []);
+    useEffect(() => {
+      ipcRenderer.on("cast-error", console.log);
+      return () => {
+        ipcRenderer.removeListener("cast-error", console.log);
+      };
+    });
 
-  useEffect(() => {
-    if (playerRef.current) playerRef.current?.destroy();
-    if (!file) return;
+    const toggle = useCallback(() => {
+      ipcRenderer.send(
+        playerState === "PLAYING" ? CastEvents.PAUSE : CastEvents.RESUME
+      );
+    }, [playerState]);
 
-    playerRef.current = new Plyr(videoRef.current, plyrOptions);
-    playerRef.current.on("seeking", seek);
-    playerRef.current.on("pause", pause);
-    playerRef.current.on("play", resume);
-  }, [file]);
+    const seek = useCallback((e: React.SyntheticEvent<HTMLInputElement>) => {
+      ipcRenderer.send(CastEvents.SEEK, e.currentTarget.value);
+    }, []);
 
-  const transitions = fadeInTranslateY(!!file);
-  console.log(transitions);
+    const destroy = useCallback(() => {
+      ipcRenderer.send(CastEvents.STOP);
+      onCloseRequest();
+    }, []);
 
-  return (
-    <>
-      {transitions.map(
-        ({ item, key, props }) =>
-          item && (
-            <animated.div
-              className={cn(styles.miniplayer, "castcontrol")}
-              key={key}
-              style={props}
-            >
-              <div>{file?.name}</div>
-              <video muted autoPlay ref={videoRef} src={file?.url} />
-            </animated.div>
-          )
-      )}
-    </>
-  );
-});
+    useEffect(() => {
+      if (!file) return;
+
+      (async () => {
+        const duration = await getVideoDuration(file.url);
+        setDuration(duration);
+      })();
+
+      const interval = setInterval(() => {
+        ipcRenderer.send(CastEvents.STATUS);
+        ipcRenderer.once("cast-progress", (e, { currentTime, playerState }) => {
+          setCurrentTime(currentTime);
+          setPlayerState(playerState);
+        });
+      }, 1000);
+      return () => {
+        clearInterval(interval);
+      };
+    }, [file]);
+
+    const transitions = fadeInTranslateY(!!file, 0, null, config.wobbly);
+
+    return (
+      <>
+        {transitions.map(
+          ({ item, key, props }) =>
+            item && (
+              <animated.div
+                className={mStyles.miniplayer}
+                key={key}
+                style={props}
+              >
+                <div>{file?.name}</div>
+                <div className={styles.player}>
+                  <Icon
+                    onClick={toggle}
+                    path={playerState === "PLAYING" ? mdiPause : mdiPlay}
+                    color="#fff"
+                    size={1}
+                  />
+                  <div className={styles.progressWrapper}>
+                    <input
+                      onChange={seek}
+                      className={styles.range}
+                      value={currentTime}
+                      max={duration}
+                      type="range"
+                    />
+                    <progress className={styles.progress} />
+                  </div>
+                  <span className={styles.duration}>
+                    {(currentTime / 60).toFixed(2).toString().replace(".", ":")}{" "}
+                    / {(duration / 60).toFixed(2).toString().replace(".", ":")}
+                  </span>
+
+                  <Icon
+                    onClick={destroy}
+                    path={mdiClose}
+                    color="#fff"
+                    size={0.9}
+                  />
+                </div>
+              </animated.div>
+            )
+        )}
+      </>
+    );
+  }
+);

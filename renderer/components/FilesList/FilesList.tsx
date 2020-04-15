@@ -103,7 +103,8 @@ export const FilesList: React.FC<IProps> = memo(
           ipcRenderer.send(
             CastEvents.PLAY_ON_CAST,
             selectedCast,
-            getStreamingUrl(file)
+            getStreamingUrl(file),
+            file.name
           );
           setSelectedFile(file);
           return;

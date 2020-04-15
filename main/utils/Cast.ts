@@ -11,11 +11,11 @@ interface Player {
   name: string;
   host: string;
   play: (url: string, opts: Options, cb: (err?: Error) => void) => void;
-  pause: (cb?: () => void) => void;
-  resume: (cb?: () => void) => void;
-  stop: (cb?: () => void) => void;
+  pause: (cb?: (err) => void) => void;
+  resume: (cb?: (err) => void) => void;
+  stop: (cb?: (err) => void) => void;
   seek: (seconds: number, cb?: (err) => void) => void;
-  status: (cb: () => void) => void;
+  status: (cb: (err, status) => void) => void;
 }
 
 export class Cast {
@@ -50,15 +50,27 @@ export class Cast {
   }
 
   async pause() {
-    return new Promise(this.selected?.pause);
+    return new Promise((resolve, reject) =>
+      this.selected?.pause((err) => {
+        err ? reject(err) : resolve();
+      })
+    );
   }
 
   async resume() {
-    return new Promise(this.selected?.resume);
+    return new Promise((resolve, reject) =>
+      this.selected?.resume((err) => {
+        err ? reject(err) : resolve();
+      })
+    );
   }
 
   async stop() {
-    return new Promise(this.selected?.resume);
+    return new Promise((resolve, reject) =>
+      this.selected?.stop((err) => {
+        err ? reject(err) : resolve();
+      })
+    );
   }
 
   async seek(seconds: number) {
@@ -71,7 +83,12 @@ export class Cast {
   }
 
   async status() {
-    return new Promise(this.selected?.resume);
+    return new Promise((resolve, reject) =>
+      this.selected?.status((err, status) => {
+        if (err) return reject(err);
+        resolve(status);
+      })
+    );
   }
 
   async play(url: string, opts: Options) {

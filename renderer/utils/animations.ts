@@ -1,4 +1,4 @@
-import { State, useTransition } from "react-spring";
+import { SpringConfig, State, useTransition } from "react-spring";
 
 export const config: any = (_a, motion: State) =>
   motion === "leave" ? { duration: 0.1 } : { duration: 200 };
@@ -6,7 +6,8 @@ export const config: any = (_a, motion: State) =>
 export function fadeInTranslateY(
   item: boolean,
   translateX: string | number = 0,
-  keys = null
+  keys = null,
+  config?
 ) {
   return useTransition(item, keys, {
     from: {

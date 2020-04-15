@@ -40,33 +40,3 @@ html {
     color: white !important;
   }
 }
-
-.castcontrol {
-  .plyr__controls {
-    padding: 0 !important;
-    height: 36px !important;
-    background: transparent !important;
-    position: static !important;
-    width: 100%;
-  }
-
-  .plyr__video-wrapper {
-    display: none;
-  }
-  .plyr--video {
-    background-color: transparent;
-    transform: scale(0.95);
-    opacity: 0.65;
-    width: 75%;
-    transition: all 200ms !important;
-    overflow: visible !important;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-
-  video {
-    background-color: transparent !important;
-  }
-}

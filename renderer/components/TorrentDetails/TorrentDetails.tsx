@@ -24,7 +24,7 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
   const [description, setDescription] = useState<ITorrentDescription>(
     undefined
   );
-  const { selectedFile } = useContext(SelectedFileContext);
+  const { selectedFile, setSelectedFile } = useContext(SelectedFileContext);
   const { selectedCast } = useContext(SelectedCastContext);
 
   useEffect(() => {
@@ -66,7 +66,12 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
   return (
     <>
       <MiniPlayer file={!selectedCast && selectedFile} />
-      <CastControl file={selectedCast && selectedFile} />
+      <CastControl
+        onCloseRequest={() => {
+          setSelectedFile(null);
+        }}
+        file={selectedCast && selectedFile}
+      />
       {fadeInTranslateY(!!infoHash).map(
         ({ item, props, key }) =>
           item && (

@@ -1,24 +1,38 @@
 import { ipcMain } from "electron";
 import internalIp from "internal-ip";
-import { Cast, CastDeviceType } from "../utils/Cast";
+import { CastEvents } from "../../shared/constants/CastEvents";
+import { Cast } from "../utils/Cast";
 
-const chromecast = new Cast(CastDeviceType.CHROMECAST);
+const casts = new Cast();
 
-ipcMain.on("listCastDevices", (e) => {
-  e.returnValue = chromecast.players;
+ipcMain.on(CastEvents.LIST_DEVICES, (e) => {
+  e.returnValue = casts.players;
 });
 
-ipcMain.on("SET_CAST_DEVICE", (e, id) => {
-  chromecast.selectedPlayer = chromecast.players.find(
-    (chromecast) => chromecast.host === id
-  );
+ipcMain.on(CastEvents.SET_CAST_DEVICE, (e, id) => {
+  casts.selectedPlayer = id
+    ? casts.players.find((cast) => cast.host === id)
+    : null;
 
-  e.returnValue = !!chromecast.selectedPlayer;
+  e.returnValue = !!casts.selectedPlayer;
 });
 
-ipcMain.on("PLAY_ON_CAST", async (e, id: string, url: string, title) => {
-  const ip = await internalIp.v4();
-  await chromecast.play(url.replace("localhost", ip), {
-    title,
-  });
+ipcMain.on(
+  CastEvents.PLAY_ON_CAST,
+  async (e, id: string, url: string, title) => {
+    const ip = await internalIp.v4();
+    await casts.play(url.replace("localhost", ip), {
+      title,
+    });
+  }
+);
+
+ipcMain.on(CastEvents.SEEK, async (e, time) => {
+  console.log(time);
+  try {
+    await casts.seek(time);
+  } catch (e) {}
 });
+
+ipcMain.on(CastEvents.PAUSE, () => casts.pause());
+ipcMain.on(CastEvents.RESUME, () => casts.resume());

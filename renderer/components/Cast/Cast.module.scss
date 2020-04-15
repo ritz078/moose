@@ -1,10 +1,12 @@
 .wrapper {
-  width: 200px;
+  width: 250px;
   background-color: #000000cc;
   border-radius: 2px;
   overflow: hidden;
   margin-top: 5px;
   font-size: 14px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 
   & > div {
     padding: 8px 10px;

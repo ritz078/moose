@@ -1,11 +1,6 @@
 import chromecasts from "chromecasts";
 import dlnacasts from "dlnacasts";
 
-export enum CastDeviceType {
-  DLNA = 1,
-  CHROMECAST,
-}
-
 interface Options {
   title?: string;
   type?: string;
@@ -19,12 +14,17 @@ interface Player {
   pause: (cb?: () => void) => void;
   resume: (cb?: () => void) => void;
   stop: (cb?: () => void) => void;
-  seek: (seconds: number, cb?: () => void) => void;
+  seek: (seconds: number, cb?: (err) => void) => void;
   status: (cb: () => void) => void;
 }
 
 export class Cast {
-  list: {
+  chromecasts: {
+    update: () => void;
+    on: (event: "update", player: Player) => void;
+    players: Player[];
+  };
+  dlna: {
     update: () => void;
     on: (event: "update", player: Player) => void;
     players: Player[];
@@ -32,13 +32,13 @@ export class Cast {
 
   selected: Player;
 
-  constructor(type: CastDeviceType) {
-    this.list =
-      type === CastDeviceType.CHROMECAST ? chromecasts() : dlnacasts();
+  constructor() {
+    this.chromecasts = chromecasts();
+    this.dlna = dlnacasts();
   }
 
   get players(): Player[] {
-    return this.list.players;
+    return [...this.chromecasts.players, ...this.dlna.players];
   }
 
   set selectedPlayer(player: Player) {
@@ -62,7 +62,12 @@ export class Cast {
   }
 
   async seek(seconds: number) {
-    return new Promise((resolve) => this.selected?.seek(seconds, resolve));
+    return new Promise((resolve, reject) =>
+      this.selected?.seek(seconds, (err) => {
+        if (err) return reject(err);
+        resolve();
+      })
+    );
   }
 
   async status() {
@@ -72,7 +77,7 @@ export class Cast {
   async play(url: string, opts: Options) {
     return new Promise((resolve, reject) => {
       this.selected?.play(url, opts, (err) => {
-        err ? reject(err) : resolve(err);
+        err ? reject(err) : resolve();
       });
     });
   }

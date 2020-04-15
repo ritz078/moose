@@ -2,9 +2,9 @@ import React, { memo, useEffect, useRef } from "react";
 import Plyr from "plyr";
 import styles from "./MiniPlayer.module.scss";
 import { IFile } from "../../../types/TorrentDetails";
-import { useTransition, animated } from "react-spring";
-import { getStreamingUrl } from "@utils/url";
+import { animated } from "react-spring";
 import { FileType } from "@enums/FileType";
+import { fadeInTranslateY } from "@utils/animations";
 
 interface IProps {
   file: IFile;
@@ -22,22 +22,14 @@ export const MiniPlayer: React.FC<IProps> = memo(({ file }) => {
     if (playerRef.current) {
       playerRef.current.source = {
         type: "audio",
-        sources: [{ src: getStreamingUrl(file) }],
+        sources: [{ src: file.url }],
       };
     } else if (file) {
       playerRef.current = new Plyr(audioRef.current);
     }
   }, [file]);
 
-  const transitions = useTransition(
-    !!file && file.type === FileType.AUDIO,
-    null,
-    {
-      from: { opacity: 0, transform: "translateY(20px)" },
-      enter: { opacity: 1, transform: "translateY(0)" },
-      leave: { opacity: 0, transform: "translateY(20px)" },
-    }
-  );
+  const transitions = fadeInTranslateY(!!file && file.type === FileType.AUDIO);
 
   return (
     <>

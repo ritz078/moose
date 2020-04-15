@@ -22,7 +22,7 @@ import { Modal } from "@components/Modal";
 import { FileType } from "@enums/FileType";
 import { scale } from "@utils/animations";
 import { SelectedCastContext } from "@contexts/SelectedCast";
-import { Channels } from "../../../renderer/enums/Channels";
+import { CastEvents } from "../../../shared/constants/CastEvents";
 
 const header = [
   {
@@ -76,6 +76,7 @@ export const FilesList: React.FC<IProps> = memo(
           ...file,
           url: getStreamingUrl(file),
         })),
+      getRowId: (originalRow) => originalRow.name,
     });
 
     const playOnVLC = useCallback(
@@ -97,25 +98,18 @@ export const FilesList: React.FC<IProps> = memo(
 
     const openFile = useCallback(
       (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, file: IFile) => {
+        e.stopPropagation();
         if (selectedCast) {
-          (async function () {
-            await new Promise((resolve) => {
-              ipcRenderer.send(
-                Channels.PLAY_ON_CAST,
-                selectedCast,
-                getStreamingUrl(file)
-              );
-              ipcRenderer.on(Channels.PLAY_ON_CAST_CALLBACK, (event) => {
-                resolve();
-              });
-            });
-          })();
+          ipcRenderer.send(
+            CastEvents.PLAY_ON_CAST,
+            selectedCast,
+            getStreamingUrl(file)
+          );
+          setSelectedFile(file);
           return;
         }
 
         (async function () {
-          e.stopPropagation();
-
           if (file.type === FileType.VIDEO) {
             setIsFetchingCaption(true);
             try {
@@ -174,7 +168,11 @@ export const FilesList: React.FC<IProps> = memo(
         <LoaderModal show={isFetchingCaption} />
         <Modal
           onCloseRequest={() => setSelectedFile(null)}
-          show={selectedFile && selectedFile.type === FileType.VIDEO}
+          show={
+            selectedFile &&
+            selectedFile.type === FileType.VIDEO &&
+            !selectedCast
+          }
           fullScreen
         >
           <Player

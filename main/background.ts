@@ -2,20 +2,24 @@ import { BrowserWindow, app } from "electron";
 import serve from "electron-serve";
 import createWindow from "./helpers/createWindow";
 import getPort from "get-port";
+import { name } from "../package.json";
+import { CAST_SUPPORT } from "../features";
 
 // import modules
 import "./modules/playOnVlc";
 import "./modules/progress";
 import "./modules/dlnacasts";
-import "./modules/cast";
+
 import { createServer, closeServer } from "./server";
 import client from "./utils/webtorrent";
+
+if (CAST_SUPPORT) require("./modules/cast");
 
 app.commandLine.appendSwitch("enable-experimental-web-platform-features");
 
 const isProd: boolean = process.env.NODE_ENV === "production";
 
-app.name = "Snape";
+app.name = name;
 
 let win: BrowserWindow;
 

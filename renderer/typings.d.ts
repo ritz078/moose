@@ -11,3 +11,4 @@ declare module "@mdi/react" {
 declare const BROWSER: boolean;
 declare const FETCH_SUBTITLES: boolean;
 declare const DEV: boolean;
+declare const CAST_SUPPORT: boolean;

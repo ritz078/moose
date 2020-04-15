@@ -10,6 +10,8 @@ import { FileType } from "@enums/FileType";
 import store from "@utils/store";
 import { fadeIn, fadeInTranslateY } from "@utils/animations";
 import { animated } from "react-spring";
+import { SelectedCastContext } from "@contexts/SelectedCast";
+import { CastControl } from "@components/CastControl";
 
 interface IProps {
   name: string;
@@ -23,6 +25,7 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
     undefined
   );
   const { selectedFile } = useContext(SelectedFileContext);
+  const { selectedCast } = useContext(SelectedCastContext);
 
   useEffect(() => {
     (async () => {
@@ -62,7 +65,8 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
 
   return (
     <>
-      <MiniPlayer file={selectedFile} />
+      <MiniPlayer file={!selectedCast && selectedFile} />
+      <CastControl file={selectedCast && selectedFile} />
       {fadeInTranslateY(!!infoHash).map(
         ({ item, props, key }) =>
           item && (

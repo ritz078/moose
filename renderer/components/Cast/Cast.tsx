@@ -5,6 +5,7 @@ import { ipcRenderer } from "electron";
 import styles from "./Cast.module.scss";
 import Popover from "react-tiny-popover";
 import { SelectedCastContext } from "@contexts/SelectedCast";
+import { CastEvents } from "../../../shared/constants/CastEvents";
 
 export enum StreamingDevice {
   DLNA = 1,
@@ -27,7 +28,7 @@ export const Cast: React.FC<IProps> = () => {
 
   const fetchAndOpen = useCallback(() => {
     (async function () {
-      const _devices = await ipcRenderer.sendSync("listCastDevices");
+      const _devices = await ipcRenderer.sendSync(CastEvents.LIST_DEVICES);
       console.log(_devices);
       setDevices(_devices);
       setShow(true);
@@ -45,7 +46,7 @@ export const Cast: React.FC<IProps> = () => {
             <div
               onClick={() => {
                 const res = ipcRenderer.sendSync(
-                  "SET_CAST_DEVICE",
+                  CastEvents.SET_CAST_DEVICE,
                   device.host
                 );
                 if (res) {

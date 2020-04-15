@@ -98,4 +98,8 @@ export class Cast {
       });
     });
   }
+
+  destroy() {
+    this.stop();
+  }
 }

@@ -78,3 +78,7 @@ ipcMain.on(CastEvents.STATUS, async (e) => {
     throwError(err.message, e.reply);
   }
 });
+
+export default {
+  cleanup: casts.destroy,
+};

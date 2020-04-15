@@ -7,7 +7,7 @@ export function fadeInTranslateY(
   item: boolean,
   translateX: string | number = 0,
   keys = null,
-  config?
+  _config = config
 ) {
   return useTransition(item, keys, {
     from: {

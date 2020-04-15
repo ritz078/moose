@@ -13,7 +13,7 @@ import "./modules/dlnacasts";
 import { createServer, closeServer } from "./server";
 import client from "./utils/webtorrent";
 
-if (CAST_SUPPORT) require("./modules/cast");
+const cast = CAST_SUPPORT && require("./modules/cast");
 
 app.commandLine.appendSwitch("enable-experimental-web-platform-features");
 
@@ -88,6 +88,7 @@ app.on("ready", _createWindow);
 app.on("will-quit", () => {
   closeServer();
   client.destroy();
+  cast?.cleanup();
 });
 
 app.on("window-all-closed", () => {

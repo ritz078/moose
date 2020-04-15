@@ -79,6 +79,6 @@ ipcMain.on(CastEvents.STATUS, async (e) => {
   }
 });
 
-export default {
-  cleanup: casts.destroy,
-};
+export function cleanup() {
+  casts.destroy();
+}

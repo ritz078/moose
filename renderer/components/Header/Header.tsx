@@ -59,7 +59,7 @@ const Navbar: React.FC<IProps> = memo(({ onFileSelect }) => {
           color="#fff"
         />
       </button>
-      {CAST_SUPPORT && <Cast type={StreamingDevice.CHROMECAST} />}
+      <Cast type={StreamingDevice.CHROMECAST} />
       <button>
         <Icon path={mdiCog} title="Settings" size={0.72} color="#fff" />
       </button>

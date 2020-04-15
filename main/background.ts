@@ -3,7 +3,6 @@ import serve from "electron-serve";
 import createWindow from "./helpers/createWindow";
 import getPort from "get-port";
 import { name } from "../package.json";
-import { CAST_SUPPORT } from "../features";
 
 // import modules
 import "./modules/playOnVlc";
@@ -12,8 +11,7 @@ import "./modules/dlnacasts";
 
 import { createServer, closeServer } from "./server";
 import client from "./utils/webtorrent";
-
-const cast = CAST_SUPPORT && require("./modules/cast");
+import { cleanup } from "./modules/cast";
 
 app.commandLine.appendSwitch("enable-experimental-web-platform-features");
 
@@ -88,7 +86,7 @@ app.on("ready", _createWindow);
 app.on("will-quit", () => {
   closeServer();
   client.destroy();
-  cast?.cleanup();
+  cleanup();
 });
 
 app.on("window-all-closed", () => {

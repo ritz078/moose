@@ -104,7 +104,7 @@ export const FilesList: React.FC<IProps> = memo(
             CastEvents.PLAY_ON_CAST,
             selectedCast,
             getStreamingUrl(file),
-            file.name
+            { title: file.name, type: file.mime }
           );
           setSelectedFile(file);
           return;

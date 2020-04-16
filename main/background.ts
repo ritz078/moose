@@ -12,6 +12,9 @@ import "./modules/dlnacasts";
 import { createServer, closeServer } from "./server";
 import client from "./utils/webtorrent";
 import { cleanup } from "./modules/cast";
+import { EventEmitter } from "events";
+
+EventEmitter.defaultMaxListeners = 0;
 
 app.commandLine.appendSwitch("enable-experimental-web-platform-features");
 

@@ -8,4 +8,11 @@
   padding: 0 15px;
   justify-content: space-between;
   height: 37px;
+
+  & > div:first-of-type {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-right: 15px;
+  }
 }

@@ -1,12 +1,12 @@
 import { Header } from "../Header";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./Container.module.css";
 import { Download, Downloads } from "@components/Downloads";
 import { DragAndDrop } from "@components/DragAndDrop";
 import { TorrentDetails } from "@components/TorrentDetails";
 import store from "@utils/store";
 import { DownloadingTorrent } from "../../../types/DownloadingTorrent";
-import { remote } from "electron";
+import { remote, ipcRenderer } from "electron";
 
 export default function () {
   const [selectedTorrent, setSelectedTorrent] = useState<DownloadingTorrent>(
@@ -15,6 +15,16 @@ export default function () {
   const [downloads, setDownloads] = useState<Download[]>(
     store.get("torrents") as Download[]
   );
+
+  const [color, setColor] = useState(store.get("color"));
+
+  useEffect(() => {
+    ipcRenderer.on("preferences-changed", (e, { color }) => {
+      console.log(color);
+      setColor(color);
+      store.set("color", color);
+    });
+  }, []);
 
   const onFileSelect = useCallback(({ name, magnet, infoHash }) => {
     setDownloads((_downloads) => {
@@ -47,7 +57,12 @@ export default function () {
   }, []);
 
   return (
-    <div className={styles.pane}>
+    <div
+      className={styles.pane}
+      style={{
+        background: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`,
+      }}
+    >
       <Header onFileSelect={onFileSelect} />
       <DragAndDrop onFileSelect={onFileSelect}>
         <Downloads

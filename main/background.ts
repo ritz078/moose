@@ -5,6 +5,7 @@ import getPort from "get-port";
 import { name } from "../package.json";
 
 // import modules
+import { setMenu } from "./modules/menu";
 import "./modules/playOnVlc";
 import "./modules/progress";
 import "./modules/dlnacasts";
@@ -13,6 +14,7 @@ import { createServer, closeServer } from "./server";
 import client from "./utils/webtorrent";
 import { cleanup } from "./modules/cast";
 import { EventEmitter } from "events";
+import { enforceMacOSAppLocation } from "electron-util";
 
 EventEmitter.defaultMaxListeners = 0;
 
@@ -32,6 +34,8 @@ if (isProd) {
 
 async function _createWindow() {
   await app.whenReady();
+
+  enforceMacOSAppLocation();
 
   const apiPort = await getPort({
     port: getPort.makeRange(3000, 3010),
@@ -63,6 +67,8 @@ async function _createWindow() {
       win.webContents.openDevTools();
     }
   });
+
+  await setMenu(process.argv[2], win);
 }
 
 const gotTheLock = app.requestSingleInstanceLock();

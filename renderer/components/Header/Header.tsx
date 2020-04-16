@@ -64,7 +64,12 @@ const Navbar: React.FC<IProps> = memo(({ onFileSelect }) => {
         <Icon path={mdiCog} title="Settings" size={0.72} color="#fff" />
       </button>
       {DEV && (
-        <button onClick={() => store.clear()}>
+        <button
+          onClick={() => {
+            store.clear();
+            window.location.reload();
+          }}
+        >
           <Icon
             path={mdiDelete}
             title="Clear storage"

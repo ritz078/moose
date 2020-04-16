@@ -1,0 +1,45 @@
+.header {
+  -webkit-app-region: drag;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+
+.swatch {
+  padding: 2px;
+  background: #ffffff;
+  border-radius: 1px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.popover {
+  z-index: 2;
+  position: absolute;
+}
+
+.color {
+  width: 30px;
+  height: 14px;
+  border-radius: 2px;
+}
+
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+}
+
+.pane {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin: 10px 10px 0;
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: 10px;
+  font-size: 14px;
+  align-items: center;
+  border-radius: 2px;
+}

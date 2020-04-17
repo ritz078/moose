@@ -20,9 +20,7 @@ export default function () {
 
   useEffect(() => {
     ipcRenderer.on("preferences-changed", (e, { color }) => {
-      console.log(color);
       setColor(color);
-      store.set("color", color);
     });
   }, []);
 
@@ -55,6 +53,12 @@ export default function () {
       return newTorrents;
     });
   }, []);
+
+  useEffect(() => {
+    if (!downloads?.find((d) => d.infoHash === selectedTorrent?.infoHash)) {
+      setSelectedTorrent(null);
+    }
+  }, [downloads, selectedTorrent]);
 
   return (
     <div

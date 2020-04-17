@@ -14,19 +14,18 @@ import { createServer, closeServer } from "./server";
 import client from "./utils/webtorrent";
 import { cleanup } from "./modules/cast";
 import { EventEmitter } from "events";
-import { enforceMacOSAppLocation } from "electron-util";
+import { enforceMacOSAppLocation, is } from "electron-util";
 
 EventEmitter.defaultMaxListeners = 0;
 
 app.commandLine.appendSwitch("enable-experimental-web-platform-features");
 
-const isProd: boolean = process.env.NODE_ENV === "production";
-
 app.name = name;
-
 let win: BrowserWindow;
 
-if (isProd) {
+if (!is.development) {
+  process.on("uncaughtException", console.log);
+
   serve({ directory: "app" });
 } else {
   app.setPath("userData", `${app.getPath("userData")} (development)`);
@@ -45,6 +44,7 @@ async function _createWindow() {
     width: 900,
     minWidth: 900,
     minHeight: 640,
+    height: 640,
     webPreferences: {
       nodeIntegration: true,
     },
@@ -59,7 +59,7 @@ async function _createWindow() {
   });
 
   createServer(apiPort, async () => {
-    if (isProd) {
+    if (!is.development) {
       await win.loadURL(`app://./home.html?port=${apiPort}`);
     } else {
       const port = process.argv[2];

@@ -1,6 +1,7 @@
 import { FileType } from "../main/enums/FileType";
 
 export interface IFile {
+  id: string;
   name: string;
   url?: string;
   size: string;

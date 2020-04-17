@@ -1,22 +1,33 @@
 .wrapper {
   width: 250px;
-  background-color: #000000cc;
+  background-color: rgba(0, 0, 0, 0.8);
   border-radius: 2px;
   overflow: hidden;
   margin-top: 5px;
   font-size: 14px;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
 
-  & > div {
-    padding: 8px 10px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-  }
+.list {
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
 
-  & > div:hover {
+  &:hover {
     background-color: #000000;
+  }
+}
+
+.noCast {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  align-items: center;
+
+  & > span {
+    margin-top: 10px;
   }
 }

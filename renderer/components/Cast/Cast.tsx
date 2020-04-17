@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useState } from "react";
 import Icon from "@mdi/react";
-import { mdiCast, mdiCastConnected, mdiCheck } from "@mdi/js";
+import { mdiCast, mdiCastConnected, mdiCastOff, mdiCheck } from "@mdi/js";
 import { ipcRenderer } from "electron";
 import styles from "./Cast.module.scss";
 import Popover from "react-tiny-popover";
@@ -27,12 +27,16 @@ export const Cast: React.FC<IProps> = () => {
   const { setSelectedCast, selectedCast } = useContext(SelectedCastContext);
 
   const fetchAndOpen = useCallback(() => {
+    if (show) {
+      setShow(false);
+      return;
+    }
     (async function () {
       const _devices = await ipcRenderer.sendSync(CastEvents.LIST_DEVICES);
       setDevices(_devices);
       setShow(true);
     })();
-  }, []);
+  }, [show]);
 
   return (
     <>
@@ -42,33 +46,40 @@ export const Cast: React.FC<IProps> = () => {
         onClickOutside={() => setShow(false)}
         content={() => (
           <div className={styles.wrapper}>
-            {devices?.map((device) => (
-              <div
-                onClick={() => {
-                  const res = ipcRenderer.sendSync(
-                    CastEvents.SET_CAST_DEVICE,
-                    device.host
-                  );
-                  if (res) {
-                    setSelectedCast(device.host);
-                    setShow(false);
-                  }
-                }}
-                key={device.host}
-              >
-                {device.name}{" "}
-                {selectedCast === device.host && (
-                  <Icon path={mdiCheck} size={0.8} color="#8bc34a" />
-                )}
+            {devices?.length ? (
+              devices.map((device) => (
+                <div
+                  className={styles.list}
+                  onClick={() => {
+                    const res = ipcRenderer.sendSync(
+                      CastEvents.SET_CAST_DEVICE,
+                      device.host
+                    );
+                    if (res) {
+                      setSelectedCast(device.host);
+                      setShow(false);
+                    }
+                  }}
+                  key={device.host}
+                >
+                  {device.name}{" "}
+                  {selectedCast === device.host && (
+                    <Icon path={mdiCheck} size={0.8} color="#8bc34a" />
+                  )}
+                </div>
+              ))
+            ) : (
+              <div className={styles.noCast}>
+                <Icon path={mdiCastOff} size={1} />
+                <span>No cast devices found.</span>
               </div>
-            ))}
+            )}
           </div>
         )}
       >
-        <button onClick={fetchAndOpen}>
+        <button onClick={fetchAndOpen} title="Cast">
           <Icon
             path={selectedCast ? mdiCastConnected : mdiCast}
-            title="Cast"
             size={0.72}
             color={selectedCast ? "#8edcff" : "#fff"}
           />

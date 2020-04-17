@@ -1,7 +1,7 @@
 import React, { memo, useCallback } from "react";
 import styles from "./Header.module.scss";
 import Icon from "@mdi/react";
-import { mdiCog, mdiDelete, mdiPlus } from "@mdi/js";
+import { mdiAlertCircleOutline, mdiDelete, mdiPlus } from "@mdi/js";
 import { Modal } from "@components/Modal";
 import { Preferences } from "@components/Preferences";
 import store from "@utils/store";
@@ -10,6 +10,7 @@ import fs from "fs";
 import { parseFileInfo } from "@utils/parseFileInfo";
 import { Download } from "@components/Downloads";
 import { Cast, StreamingDevice } from "@components/Cast/Cast";
+import { is, openNewGitHubIssue } from "electron-util";
 
 interface IProps {
   onFileSelect: (info: Download) => void;
@@ -18,7 +19,7 @@ interface IProps {
 export const Header: React.FC<IProps> = memo(({ onFileSelect }) => {
   return (
     <div className={styles.header}>
-      <div></div>
+      <div />
       <Navbar onFileSelect={onFileSelect} />
     </div>
   );
@@ -43,7 +44,6 @@ const Navbar: React.FC<IProps> = memo(({ onFileSelect }) => {
 
       if (filePaths.length) {
         const info = await parseFileInfo(fs.readFileSync(filePaths[0]));
-        console.log(info);
         onFileSelect(info);
       }
     })();
@@ -51,31 +51,30 @@ const Navbar: React.FC<IProps> = memo(({ onFileSelect }) => {
 
   return (
     <div className={styles.navbar}>
-      <button onClick={loadFile}>
-        <Icon
-          path={mdiPlus}
-          title="Add Torrent File"
-          size={0.72}
-          color="#fff"
-        />
+      <button onClick={loadFile} title="Add Torrent File">
+        <Icon path={mdiPlus} size={0.72} color="#fff" />
       </button>
       <Cast type={StreamingDevice.CHROMECAST} />
-      <button>
-        <Icon path={mdiCog} title="Settings" size={0.72} color="#fff" />
+      <button
+        onClick={() =>
+          openNewGitHubIssue({
+            user: "ritz078",
+            repo: remote.app.name,
+          })
+        }
+        title="Open GitHub Issue"
+      >
+        <Icon path={mdiAlertCircleOutline} size={0.72} color="#fff" />
       </button>
-      {DEV && (
+      {is.development && (
         <button
           onClick={() => {
             store.clear();
             window.location.reload();
           }}
+          title="Clear storage"
         >
-          <Icon
-            path={mdiDelete}
-            title="Clear storage"
-            size={0.72}
-            color="#fff"
-          />
+          <Icon path={mdiDelete} size={0.72} color="#fff" />
         </button>
       )}
       <Modal show={false} onCloseRequest={console.log}>

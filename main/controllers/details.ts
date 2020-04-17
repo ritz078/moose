@@ -7,6 +7,7 @@ import prettyBytes from "pretty-bytes";
 import path from "path";
 import { FileType } from "../enums/FileType";
 import mime from "mime";
+import { getUniqueString } from "../utils/temp";
 
 export async function details(req: Request, res: Response) {
   try {
@@ -40,6 +41,7 @@ function decorateTorrent({
       const _isMovieOrShow = isMovieOrShow(file.name);
       const filePath = `${torrentPath}/${file.path}`;
       return {
+        id: getUniqueString(),
         infoHash: infoHash,
         index: i,
         name: file.name,

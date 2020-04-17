@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "body-parser": "^1.19.0",
-    "chromecast-api": "^0.3.1",
     "chromecasts": "^1.9.1",
     "cors": "^2.8.5",
     "dlnacasts": "^0.1.0",
@@ -26,8 +25,7 @@
     "express": "^4.17.1",
     "internal-ip": "^6.0.0",
     "mime": "^2.4.4",
-    "range-parser": "^1.2.1",
-    "rimraf": "^3.0.2"
+    "range-parser": "^1.2.1"
   },
   "devDependencies": {
     "@mdi/js": "^5.0.45",
@@ -42,7 +40,6 @@
     "babel-loader": "^8.1.0",
     "buffer": "^5.5.0",
     "classnames": "^2.2.6",
-    "devtron": "^1.4.0",
     "electron": "^8.2.0",
     "electron-builder": "^22.4.1",
     "get-port": "^5.1.1",
@@ -60,7 +57,6 @@
     "pump": "^3.0.0",
     "react": "16.13.1",
     "react-color": "^2.18.0",
-    "react-content-loader": "^5.0.2",
     "react-dom": "16.13.1",
     "react-dropzone": "^10.2.1",
     "react-spring": "^8.0.27",
@@ -70,8 +66,6 @@
     "sass": "^1.26.3",
     "simplebar-react": "^2.1.0",
     "srt-webvtt": "^1.0.1",
-    "tempy": "^0.5.0",
-    "time-ago": "^0.2.1",
     "tmdb": "^2.5.1",
     "typescript": "3.9.0-dev.20200325",
     "vlc-command": "^1.2.0",

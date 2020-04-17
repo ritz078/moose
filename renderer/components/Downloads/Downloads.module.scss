@@ -37,6 +37,9 @@
 .cell td,
 .columnheader {
   padding: 8px 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .tdIcon {

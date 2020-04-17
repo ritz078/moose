@@ -9,8 +9,8 @@ export default function () {
   const [color, setColor] = useState(store.get("color"));
 
   useEffect(() => {
-    console.log("called");
-    ipcRenderer.send("preferences-changed-source", color);
+    store.set("color", color);
+    ipcRenderer.send("preferences-changed-source", { color });
   }, [color]);
 
   return (
@@ -47,6 +47,18 @@ export default function () {
           </div>
         </Popover>
       </div>
+
+      {/*<div className={styles.pane}>*/}
+      {/*  Download Folder*/}
+
+      {/*  <input type="file"/>*/}
+      {/*</div>*/}
+
+      {/*<div className={styles.pane}>*/}
+      {/*  Fetch Subtitle from opensubtitles.com*/}
+
+      {/*  <input type="checkbox"/>*/}
+      {/*</div>*/}
     </div>
   );
 }

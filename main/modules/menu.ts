@@ -6,7 +6,6 @@ export async function setMenu(port, mainWin: BrowserWindow) {
     appMenu([
       {
         label: "Preferences…",
-        accelerator: "Command+,",
         click: async function () {
           const settingsWindow = new BrowserWindow({
             width: 500,
@@ -27,14 +26,18 @@ export async function setMenu(port, mainWin: BrowserWindow) {
             settingsWindow.webContents.openDevTools();
           }
 
-          ipcMain.on("preferences-changed-source", (e, color) => {
-            mainWin.webContents.send("preferences-changed", {
-              color,
-            });
+          ipcMain.on("preferences-changed-source", (e, settings) => {
+            mainWin.webContents.send("preferences-changed", settings);
           });
         },
       },
     ]),
+    {
+      role: "editMenu",
+    },
+    {
+      role: "viewMenu",
+    },
   ]);
 
   Menu.setApplicationMenu(menu);

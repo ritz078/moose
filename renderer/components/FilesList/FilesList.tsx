@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -10,7 +11,7 @@ import { useTable } from "react-table";
 import { IFile, ITorrentDetails } from "../../../types/TorrentDetails";
 import styles from "./FilesList.module.scss";
 import Icon from "@mdi/react";
-import { mdiFan, mdiVlc } from "@mdi/js";
+import { mdiFan, mdiPlay, mdiVlc } from "@mdi/js";
 import SimpleBar from "simplebar-react";
 import { ipcRenderer, shell } from "electron";
 import ReactDOM from "react-dom";
@@ -24,36 +25,6 @@ import { scale } from "@utils/animations";
 import { SelectedCastContext } from "@contexts/SelectedCast";
 import { CastEvents } from "../../../shared/constants/CastEvents";
 
-const header = [
-  {
-    Header: "Name",
-    accessor: "name",
-  },
-  {
-    Header: "Size",
-    accessor: "size",
-  },
-  {
-    Header: "",
-    id: "play",
-    accessor: "type",
-    Cell: ({ cell }) => {
-      if (cell.column.id === "play" && cell.value === FileType.VIDEO) {
-        return (
-          <Icon
-            path={mdiVlc}
-            color="orange"
-            size={0.6}
-            style={{ margin: "0 4px" }}
-            title="Play in VLC"
-          />
-        );
-      }
-      return null;
-    },
-  },
-];
-
 interface IProps {
   torrentDetails: ITorrentDetails;
   backdrop?: string;
@@ -65,6 +36,51 @@ export const FilesList: React.FC<IProps> = memo(
     const [isFetchingCaption, setIsFetchingCaption] = useState(false);
     const { selectedFile, setSelectedFile } = useContext(SelectedFileContext);
     const { selectedCast } = useContext(SelectedCastContext);
+
+    const header = useMemo(
+      () => [
+        {
+          Header: "Name",
+          accessor: "name",
+          Cell: ({ cell }) => {
+            return (
+              <>
+                {(cell.row.original.type === FileType.AUDIO ||
+                  cell.row.original.type === FileType.VIDEO) &&
+                  selectedFile?.index === cell.row.original.index && (
+                    <span className={styles.playIcon}>►</span>
+                  )}
+                {cell.value}
+              </>
+            );
+          },
+        },
+        {
+          Header: "Size",
+          accessor: "size",
+        },
+        {
+          Header: "",
+          id: "play",
+          accessor: "type",
+          Cell: ({ cell }) => {
+            if (cell.column.id === "play" && cell.value === FileType.VIDEO) {
+              return (
+                <Icon
+                  path={mdiVlc}
+                  color="orange"
+                  size={0.6}
+                  className={styles.vlcIcon}
+                  title="Play in VLC"
+                />
+              );
+            }
+            return null;
+          },
+        },
+      ],
+      [selectedFile]
+    );
 
     const { getTableProps, getTableBodyProps, rows, prepareRow } = useTable<
       IFile & { [k: string]: any }
@@ -99,6 +115,8 @@ export const FilesList: React.FC<IProps> = memo(
     const openFile = useCallback(
       (e: React.MouseEvent<HTMLTableRowElement, MouseEvent>, file: IFile) => {
         e.stopPropagation();
+        if (selectedFile && file.id === selectedFile.id) return;
+
         if (selectedCast) {
           ipcRenderer.send(
             CastEvents.PLAY_ON_CAST,
@@ -128,7 +146,7 @@ export const FilesList: React.FC<IProps> = memo(
           }
         })();
       },
-      [torrentDetails]
+      [torrentDetails, selectedFile]
     );
 
     return (

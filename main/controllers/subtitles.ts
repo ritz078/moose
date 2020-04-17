@@ -4,7 +4,7 @@ import OS from "opensubtitles-api";
 import { flatten } from "lodash";
 import { Subtitle } from "../../types/TorrentDetails";
 import axios from "axios";
-import tempy from "tempy";
+import { writeTemp } from "../utils/temp";
 
 const OpenSubtitles = new OS({
   useragent: "TemporaryUserAgent",
@@ -72,7 +72,7 @@ export async function subtitles(
 
     const subtitleContent = await Promise.all(subTitlePromise);
     const response = subtitleContent
-      .map((s) => tempy.writeSync(s.data))
+      .map((s) => writeTemp(s.data, ".srt"))
       .map((s, i) => ({
         ...subTitles?.[i],
         srtPath: s,

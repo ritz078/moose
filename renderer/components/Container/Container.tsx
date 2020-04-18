@@ -1,5 +1,5 @@
 import { Header } from "../Header";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import styles from "./Container.module.css";
 import { Download, Downloads } from "@components/Downloads";
 import { DragAndDrop } from "@components/DragAndDrop";
@@ -7,6 +7,9 @@ import { TorrentDetails } from "@components/TorrentDetails";
 import store from "@utils/store";
 import { DownloadingTorrent } from "../../../types/DownloadingTorrent";
 import { remote, ipcRenderer } from "electron";
+import { Message } from "@components/Message";
+import { SelectedCastContext } from "@contexts/SelectedCast";
+import { Toast } from "@components/Toast";
 
 export default function () {
   const [selectedTorrent, setSelectedTorrent] = useState<DownloadingTorrent>(
@@ -17,6 +20,7 @@ export default function () {
   );
 
   const [color, setColor] = useState(store.get("color"));
+  const { selectedCast } = useContext(SelectedCastContext);
 
   useEffect(() => {
     ipcRenderer.on("preferences-changed", (e, { color }) => {
@@ -68,6 +72,9 @@ export default function () {
       }}
     >
       <Header onFileSelect={onFileSelect} />
+      <Message show={!!selectedCast?.host}>
+        You are connected to {selectedCast?.name}
+      </Message>
       <DragAndDrop onFileSelect={onFileSelect}>
         <Downloads
           onTorrentDelete={onTorrentDelete}
@@ -80,6 +87,8 @@ export default function () {
           name={selectedTorrent?.name}
         />
       </DragAndDrop>
+
+      <Toast />
     </div>
   );
 }

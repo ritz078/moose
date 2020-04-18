@@ -55,11 +55,9 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
 
   const key = `${description?.title}-${torrentDetails?.infoHash}`;
 
-  const transitions = fadeInTranslateY(
-    description !== undefined,
-    undefined,
-    key
-  );
+  const transitions = fadeInTranslateY(description !== undefined, {
+    keys: key,
+  });
 
   const imageTransitions = fadeIn(description !== undefined, key);
 

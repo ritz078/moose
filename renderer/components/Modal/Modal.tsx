@@ -49,7 +49,9 @@ export const Modal: React.FC<IProps> = ({
     };
   }, [show]);
 
-  const transitions = fadeInTranslateY(show, fullScreen ? 0 : "-50%");
+  const transitions = fadeInTranslateY(show, {
+    translateX: fullScreen ? 0 : "-50%",
+  });
 
   return (
     isMounted &&

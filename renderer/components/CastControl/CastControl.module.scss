@@ -40,6 +40,12 @@
   flex-direction: row;
   align-items: center;
   width: 75%;
+  opacity: 0.6;
+  transition: all 200ms;
+
+  &:hover {
+    opacity: 1;
+  }
 
   span {
     font-size: 14px;

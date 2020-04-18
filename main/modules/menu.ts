@@ -1,4 +1,4 @@
-import { Menu, BrowserWindow, ipcMain, app } from "electron";
+import { Menu, BrowserWindow, ipcMain } from "electron";
 import { appMenu, is } from "electron-util";
 
 export async function setMenu(port, mainWin: BrowserWindow) {

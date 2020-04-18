@@ -8,6 +8,7 @@ import styles from "./CastControl.module.scss";
 import mStyles from "../MiniPlayer/MiniPlayer.module.scss";
 import Icon from "@mdi/react";
 import { mdiClose, mdiPause, mdiPlay } from "@mdi/js";
+import { showToast } from "@components/Toast";
 
 interface IProps {
   file: IFile;
@@ -34,11 +35,15 @@ export const CastControl: React.FC<IProps> = memo(
     const [playerState, setPlayerState] = useState(null);
 
     useEffect(() => {
-      ipcRenderer.on("cast-error", console.log);
+      function cb(e, msg) {
+        showToast(msg);
+      }
+
+      ipcRenderer.on("cast-error", cb);
       return () => {
-        ipcRenderer.removeListener("cast-error", console.log);
+        ipcRenderer.removeListener("cast-error", cb);
       };
-    });
+    }, []);
 
     const toggle = useCallback(() => {
       ipcRenderer.send(
@@ -75,7 +80,7 @@ export const CastControl: React.FC<IProps> = memo(
       };
     }, [file]);
 
-    const transitions = fadeInTranslateY(!!file, 0, null, config.wobbly);
+    const transitions = fadeInTranslateY(!!file, { config: config.wobbly });
 
     return (
       <>

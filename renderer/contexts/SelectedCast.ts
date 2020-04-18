@@ -1,7 +1,8 @@
 import React from "react";
+import { CastDevice } from "@components/Cast/Cast";
 
 interface Context {
-  selectedCast: string;
+  selectedCast: CastDevice;
   setSelectedCast: (file: Context["selectedCast"]) => void;
 }
 

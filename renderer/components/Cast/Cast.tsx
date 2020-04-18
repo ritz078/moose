@@ -16,7 +16,7 @@ interface IProps {
   type: StreamingDevice;
 }
 
-interface CastDevice {
+export interface CastDevice {
   name: string;
   host: string;
 }
@@ -51,19 +51,20 @@ export const Cast: React.FC<IProps> = () => {
                 <div
                   className={styles.list}
                   onClick={() => {
+                    const deselect = device.host === selectedCast?.host;
                     const res = ipcRenderer.sendSync(
                       CastEvents.SET_CAST_DEVICE,
-                      device.host
+                      deselect ? null : device.host
                     );
                     if (res) {
-                      setSelectedCast(device.host);
+                      setSelectedCast(deselect ? null : device);
                       setShow(false);
                     }
                   }}
                   key={device.host}
                 >
                   {device.name}{" "}
-                  {selectedCast === device.host && (
+                  {selectedCast?.host === device.host && (
                     <Icon path={mdiCheck} size={0.8} color="#8bc34a" />
                   )}
                 </div>

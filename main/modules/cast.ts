@@ -17,11 +17,16 @@ ipcMain.on(CastEvents.LIST_DEVICES, (e) => {
 });
 
 ipcMain.on(CastEvents.SET_CAST_DEVICE, (e, id) => {
-  cast.selectedPlayer = id
-    ? cast.players.find((cast) => cast.host === id)
-    : null;
+  try {
+    cast.selectedPlayer = id
+      ? cast.players.find((cast) => cast.host === id)
+      : null;
 
-  e.returnValue = !!cast.selectedPlayer;
+    e.returnValue = true;
+  } catch (e) {
+    throwError("This device could not be selected", e);
+    e.returnValue = false;
+  }
 });
 
 ipcMain.on(
@@ -40,7 +45,7 @@ ipcMain.on(CastEvents.SEEK, async (e, time) => {
   try {
     await cast.seek(time);
   } catch (err) {
-    throwError(err.message, e.reply);
+    throwError(`This device does not support seeking.`, e.reply);
   }
 });
 
@@ -48,7 +53,7 @@ ipcMain.on(CastEvents.PAUSE, async (e) => {
   try {
     await cast.pause();
   } catch (err) {
-    throwError(err.message, e.reply);
+    throwError(`Unable to pause the media file.`, e.reply);
   }
 });
 
@@ -56,7 +61,7 @@ ipcMain.on(CastEvents.STOP, async (e) => {
   try {
     await cast.stop();
   } catch (err) {
-    throwError(err.message, e.reply);
+    throwError(`Unable to resume the media file.`, e.reply);
   }
 });
 
@@ -64,7 +69,7 @@ ipcMain.on(CastEvents.RESUME, async (e) => {
   try {
     await cast.resume();
   } catch (err) {
-    throwError(err.message, e.reply);
+    throwError(`Unable to resume the media file.`, e.reply);
   }
 });
 

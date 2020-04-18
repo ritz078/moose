@@ -31,13 +31,24 @@ export class Cast {
   };
 
   selected: Player;
+  intervalId: number;
 
   constructor() {
     this.chromecasts = chromecasts();
     this.dlna = dlnacasts();
+
+    // @ts-ignore
+    this.intervalId = setInterval(this.fetchUpdatedPlayers, 10000);
   }
 
-  get players(): Player[] {
+  private async fetchUpdatedPlayers() {
+    this.chromecasts.update();
+    this.dlna.update();
+  }
+
+  get players() {
+    this.chromecasts.update();
+    this.dlna.update();
     return [...this.chromecasts.players, ...this.dlna.players];
   }
 
@@ -101,5 +112,8 @@ export class Cast {
 
   destroy() {
     this.stop();
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 }

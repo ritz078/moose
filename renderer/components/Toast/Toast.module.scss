@@ -1,0 +1,23 @@
+.toast {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: #ff000099;
+  padding: 4px 10px;
+  border-radius: 2px;
+  min-width: 200px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  & > svg {
+    cursor: pointer;
+    pointer-events: all;
+    transition: all 200ms;
+  }
+
+  & > svg:hover {
+    transform: scale(1.1);
+  }
+}

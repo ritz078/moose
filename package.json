@@ -45,6 +45,7 @@
     "get-port": "^5.1.1",
     "husky": "^4.2.3",
     "lodash": "^4.17.15",
+    "mitt": "^1.2.0",
     "next": "^9.3.2",
     "nextron": "^5.14.5",
     "opensubtitles-api": "^5.1.0",

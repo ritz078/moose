@@ -1,18 +1,35 @@
-import { SpringConfig, State, useTransition } from "react-spring";
+import { State, useTransition } from "react-spring";
+import { config } from "react-spring";
 
-export const config: any = (_a, motion: State) =>
+export const _config: any = (_a, motion: State) =>
   motion === "leave" ? { duration: 0.1 } : { duration: 200 };
 
 export function fadeInTranslateY(
   item: boolean,
-  translateX: string | number = 0,
-  keys = null,
-  _config = config
+  opts?: {
+    translateX?: string | number;
+    keys?: any;
+    config?: any;
+    reverse?: boolean;
+    onDestroyed?: any;
+  }
 ) {
+  const { config, keys, translateX, reverse, onDestroyed } = {
+    ...{
+      config: _config,
+      keys: null,
+      translateX: 0,
+      reverse: false,
+      onDestroyed: () => {},
+    },
+    ...opts,
+  };
+
+  const translateY = `${reverse ? -5 : 5}px`;
   return useTransition(item, keys, {
     from: {
       opacity: 0,
-      transform: `translateY(5px) translateX(${translateX})`,
+      transform: `translateY(${translateY}) translateX(${translateX})`,
     },
     enter: {
       opacity: 1,
@@ -20,8 +37,9 @@ export function fadeInTranslateY(
     },
     leave: {
       opacity: 0,
-      transform: `translateY(5px) translateX(${translateX})`,
+      transform: `translateY(${translateY}) translateX(${translateX})`,
     },
+    onDestroyed,
     config,
   });
 }

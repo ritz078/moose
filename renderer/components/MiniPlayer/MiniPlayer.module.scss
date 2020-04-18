@@ -9,6 +9,13 @@
   justify-content: space-between;
   height: 37px;
 
+  opacity: 0.6;
+  transition: all 200ms;
+
+  &:hover {
+    opacity: 1;
+  }
+
   & > div:first-of-type {
     text-overflow: ellipsis;
     white-space: nowrap;

@@ -68,7 +68,7 @@ export default function () {
     <div
       className={styles.pane}
       style={{
-        background: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`,
+        background: color,
       }}
     >
       <Header onFileSelect={onFileSelect} />

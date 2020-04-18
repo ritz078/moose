@@ -1,16 +1,15 @@
-import { ipcMain } from "electron";
+import { ipcMain, app } from "electron";
 import client from "../utils/webtorrent";
-import download from "downloads-folder";
 import prettyBytes from "pretty-bytes";
 import { Torrent } from "webtorrent";
 
-ipcMain.on("progress", (e, downloads) => {
+ipcMain.on("progress", (e, downloads, path) => {
   const torrents = downloads.map(({ magnet }) => {
     const decodedMagnet = magnet;
     return (
       client.get(decodedMagnet) ||
       client.add(decodedMagnet, {
-        path: download(),
+        path,
       })
     );
   });

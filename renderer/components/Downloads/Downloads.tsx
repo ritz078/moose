@@ -18,6 +18,7 @@ import { deleteTorrent } from "@utils/url";
 import { animated } from "react-spring";
 import { fadeInTranslateY } from "@utils/animations";
 import cn from "classnames";
+import store from "@utils/store";
 
 export interface Download {
   magnet: string;
@@ -52,7 +53,11 @@ export const Downloads: React.FC<IProps> = memo(
       (async function () {
         if (intervalId.current) clearInterval(intervalId.current);
         intervalId.current = window.setInterval(() => {
-          const torrents = ipcRenderer.sendSync("progress", downloads);
+          const torrents = ipcRenderer.sendSync(
+            "progress",
+            downloads,
+            store.get("downloadDirectory")
+          );
           setData(torrents);
         }, 1000);
       })();

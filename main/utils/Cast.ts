@@ -38,12 +38,10 @@ export class Cast {
     this.dlna = dlnacasts();
 
     // @ts-ignore
-    this.intervalId = setInterval(this.fetchUpdatedPlayers, 10000);
-  }
-
-  private async fetchUpdatedPlayers() {
-    this.chromecasts.update();
-    this.dlna.update();
+    this.intervalId = setInterval(() => {
+      this.chromecasts.update();
+      this.dlna.update();
+    }, 10000);
   }
 
   get players() {

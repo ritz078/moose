@@ -43,3 +43,13 @@
   align-items: center;
   border-radius: 2px;
 }
+
+.value {
+  opacity: 0.8;
+  transition: all 200ms;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+}

@@ -7,9 +7,7 @@ function getApiPort() {
   return searchParams.get("port");
 }
 
-const baseURL = `${window.location.protocol}//${
-  window.location.hostname
-}:${getApiPort()}/`;
+const baseURL = `http://localhost:${getApiPort()}/`;
 
 const instance = axios.create({
   baseURL,

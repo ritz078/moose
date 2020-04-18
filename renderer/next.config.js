@@ -1,6 +1,5 @@
 const webpack = require("webpack");
-const req = require("require-yml");
-const _config = req("./config.yml");
+require("dotenv").config();
 
 module.exports = {
   webpack: (config, { isServer, dev }) => {
@@ -9,7 +8,7 @@ module.exports = {
     config.plugins.push(
       new webpack.DefinePlugin({
         BROWSER: !isServer,
-        FETCH_SUBTITLES: _config.FETCH_SUBTITLES,
+        FETCH_SUBTITLES: process.env.FETCH_SUBTITLES,
         DEV: dev,
       })
     );

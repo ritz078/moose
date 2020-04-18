@@ -1,8 +1,7 @@
 const webpack = require("webpack");
-const req = require("require-yml");
+require("dotenv").config();
 const path = require("path");
 
-const config = req("./config.yml");
 const cwd = process.cwd();
 
 module.exports = {
@@ -29,8 +28,7 @@ module.exports = {
       plugins: [
         ...defaultConfig.plugins,
         new webpack.DefinePlugin({
-          OMDB_API: `"${config.OMDB_API}"`,
-          TMDB_API: `"${config.TMDB_API}"`,
+          TMDB_API: `"${process.env.TMDB_API}"`,
         }),
       ],
     }),

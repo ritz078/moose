@@ -14,6 +14,7 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "chromecasts": "^1.9.1",
     "cors": "^2.8.5",
@@ -22,9 +23,12 @@
     "electron-store": "^5.1.1",
     "electron-util": "^0.14.1",
     "express": "^4.17.1",
+    "get-port": "^5.1.1",
     "internal-ip": "^6.0.0",
     "mime": "^2.4.4",
-    "range-parser": "^1.2.1"
+    "range-parser": "^1.2.1",
+    "vlc-command": "^1.2.0",
+    "webtorrent": "0.108.1"
   },
   "devDependencies": {
     "@mdi/js": "^5.1.45",
@@ -35,17 +39,16 @@
     "@types/react": "^16.9.25",
     "@types/react-table": "^7.0.12",
     "@types/webtorrent": "^0.107.1",
-    "axios": "^0.19.2",
     "babel-loader": "^8.1.0",
     "buffer": "^5.6.0",
     "classnames": "^2.2.6",
+    "dotenv": "^8.2.0",
     "electron": "^8.2.3",
     "electron-builder": "^22.5.1",
-    "get-port": "^5.1.1",
     "husky": "^4.2.3",
     "lodash": "^4.17.15",
     "mitt": "^1.2.0",
-    "next": "^9.3.5",
+    "next": "9.3.2",
     "nextron": "^5.14.5",
     "opensubtitles-api": "^5.1.0",
     "parse-torrent-title": "^1.2.0",
@@ -62,14 +65,11 @@
     "react-spring": "^8.0.27",
     "react-table": "^7.0.0",
     "react-tiny-popover": "^4.0.0",
-    "require-yml": "^2.0.0",
     "sass": "^1.26.3",
     "simplebar-react": "^2.1.0",
     "srt-webvtt": "^1.0.1",
     "typescript": "3.9.0-dev.20200325",
-    "vlc-command": "^1.2.0",
-    "webpack": "^4.42.0",
-    "webtorrent": "0.108.1"
+    "webpack": "^4.42.0"
   },
   "husky": {
     "hooks": {

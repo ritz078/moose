@@ -18,6 +18,7 @@ export interface ITorrentDetails {
   name: string;
   infoHash: string;
   size: string;
+  isMovieOrShow: boolean;
 }
 
 export interface Subtitle {

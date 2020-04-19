@@ -11,7 +11,7 @@ import { useTable } from "react-table";
 import { IFile, ITorrentDetails } from "../../../types/TorrentDetails";
 import styles from "./FilesList.module.scss";
 import Icon from "@mdi/react";
-import { mdiFan, mdiPlay, mdiVlc } from "@mdi/js";
+import { mdiLoading, mdiVlc } from "@mdi/js";
 import SimpleBar from "simplebar-react";
 import { ipcRenderer, shell } from "electron";
 import ReactDOM from "react-dom";
@@ -43,11 +43,11 @@ export const FilesList: React.FC<IProps> = memo(
           Header: "Name",
           accessor: "name",
           Cell: ({ cell }) => {
+            const { type, index } = cell.row.original;
             return (
               <>
-                {(cell.row.original.type === FileType.AUDIO ||
-                  cell.row.original.type === FileType.VIDEO) &&
-                  selectedFile?.index === cell.row.original.index && (
+                {(type === FileType.AUDIO || type === FileType.VIDEO) &&
+                  selectedFile?.index === index && (
                     <span className={styles.playIcon}>►</span>
                   )}
                 {cell.value}
@@ -231,7 +231,7 @@ const LoaderModal: React.FC<{ show: boolean }> = ({ show }) => {
                 key={key}
                 className={styles.loaderModal}
               >
-                <Icon path={mdiFan} size={3} spin color={"white"} />
+                <Icon path={mdiLoading} size={1} spin color={"white"} />
                 Searching for Subtitles
               </animated.div>
             )

@@ -24,12 +24,23 @@ $posterWidth: 184px;
   background-color: rgba(0, 0, 0, 0.28);
   width: $posterWidth;
 }
-.title {
+.header {
   grid-area: 1 / 2 / 1 / 13;
   padding-left: 15px;
   margin: 0 0 10px;
   font-weight: normal;
   font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.subtitle {
+  cursor: pointer;
+  opacity: 0.3;
+}
+
+.subtitlePresent {
+  opacity: 1;
 }
 
 .animatedWrapper {
@@ -83,4 +94,10 @@ $posterWidth: 184px;
   tbody tr:hover {
     background-color: rgba(103, 58, 183, 0.33);
   }
+}
+
+.sub {
+  margin-bottom: 6px;
+  font-size: 14px;
+  opacity: 0.85;
 }

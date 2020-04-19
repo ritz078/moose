@@ -29,6 +29,7 @@ module.exports = {
         ...defaultConfig.plugins,
         new webpack.DefinePlugin({
           TMDB_API: `"${process.env.TMDB_API}"`,
+          SUBTITLES: `"${process.env.SUBTITLES}"`,
         }),
       ],
     }),

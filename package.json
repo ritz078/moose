@@ -68,7 +68,7 @@
     "sass": "^1.26.3",
     "simplebar-react": "^2.1.0",
     "srt-webvtt": "^1.0.1",
-    "typescript": "3.9.0-dev.20200325",
+    "typescript": "3.8.2",
     "webpack": "^4.42.0"
   },
   "husky": {

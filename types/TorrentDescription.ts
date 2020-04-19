@@ -9,4 +9,7 @@ export interface ITorrentDescription {
   genre: string;
   imdbID: string;
   backdrop?: string;
+  name?: string;
+  season?: number;
+  episode?: number;
 }

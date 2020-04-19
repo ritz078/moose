@@ -62,7 +62,7 @@ const Navbar: React.FC<IProps> = memo(({ onFileSelect }) => {
             repo: remote.app.name,
           })
         }
-        title="Open GitHub Issue"
+        title="Create a new GitHub Issue"
       >
         <Icon path={mdiAlertCircleOutline} size={0.72} color="#fff" />
       </button>

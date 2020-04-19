@@ -12,6 +12,9 @@ import { fadeIn, fadeInTranslateY } from "@utils/animations";
 import { animated } from "react-spring";
 import { SelectedCastContext } from "@contexts/SelectedCast";
 import { CastControl } from "@components/CastControl";
+import Icon from "@mdi/react";
+import { mdiSubtitles } from "@mdi/js";
+import cn from "classnames";
 
 interface IProps {
   name: string;
@@ -91,7 +94,21 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
                   )
               )}
 
-              <h4 className={styles.title}>{description?.title || name}</h4>
+              <h4 className={styles.header}>
+                {description?.title || name}
+
+                <Icon
+                  path={mdiSubtitles}
+                  color="#fff"
+                  size={0.9}
+                  className={cn(styles.subtitle, {
+                    [styles.subtitlePresent]: torrentDetails?.files.some(
+                      (file) =>
+                        file.name.endsWith(".srt") || file.name.endsWith(".vtt")
+                    ),
+                  })}
+                />
+              </h4>
 
               {transitions.map(
                 ({ item, props, key }) =>
@@ -101,6 +118,13 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
                       key={key}
                       className={styles.animatedWrapper}
                     >
+                      {description?.season && (
+                        <div className={styles.sub}>
+                          {description?.name} &middot;{" "}
+                          {`Season ${description?.season}`} &middot;{" "}
+                          {`Episode ${description?.episode}`}
+                        </div>
+                      )}
                       <span>{description?.description}</span>
 
                       <FilesList

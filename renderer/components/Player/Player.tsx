@@ -32,7 +32,6 @@ export const Player: React.FC<IProps> = memo(
       if (!file) return;
       setError(null);
       plyr.current = new Plyr(playerRef.current, {
-        hideControls: false,
         captions: {
           active: true,
           language: "auto",

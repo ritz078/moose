@@ -33,10 +33,13 @@ function decorateTorrent({
   length,
   path: torrentPath,
 }: Torrent): ITorrentDetails {
+  const isTorrentMovieOrShow = files.some((file) => isMovieOrShow(file.name));
+
   return {
     name,
     infoHash,
     size: prettyBytes(length),
+    isMovieOrShow: isTorrentMovieOrShow,
     files: files.map((file, i) => {
       const _isMovieOrShow = isMovieOrShow(file.name);
       const filePath = `${torrentPath}/${file.path}`;

@@ -11,7 +11,7 @@ const baseURL = `http://localhost:${getApiPort()}/`;
 
 const instance = axios.create({
   baseURL,
-  timeout: 50000,
+  timeout: 5000,
 });
 
 export function getStreamingUrl({ index, infoHash, name }: IFile) {

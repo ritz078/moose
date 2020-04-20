@@ -12,6 +12,8 @@
 /.next/
 /out/
 /renderer/.next/*
+/website/.next
+/website/node_modules
 
 # production
 /build

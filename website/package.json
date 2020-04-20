@@ -1,0 +1,15 @@
+{
+  "name": "snape-www",
+  "version": "2.0.0",
+  "main": "index.js",
+  "author": "Ritesh Kumar",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev"
+  },
+  "dependencies": {
+    "next": "^9.3.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}

@@ -3,14 +3,7 @@ import { IParticlesParams } from "react-particles-js";
 import { useTransition, animated } from "react-spring";
 import dynamic from "next/dynamic";
 import Icon from "@mdi/react";
-import {
-  mdiApple,
-  mdiDownload,
-  mdiGithub,
-  mdiHeart,
-  mdiLinux,
-  mdiMicrosoftWindows,
-} from "@mdi/js";
+import { mdiApple, mdiGithub, mdiLinux, mdiMicrosoftWindows } from "@mdi/js";
 
 const Particles = dynamic(() => import("react-particles-js"), {
   ssr: false,

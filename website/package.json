@@ -5,7 +5,8 @@
   "author": "Ritesh Kumar",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev"
+    "dev": "next dev",
+    "build": "next build && next export"
   },
   "dependencies": {
     "@mdi/js": "^5.1.45",

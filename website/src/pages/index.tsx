@@ -1,6 +1,5 @@
 import React from "react";
 import { IParticlesParams } from "react-particles-js";
-import { useTransition, animated } from "react-spring";
 import dynamic from "next/dynamic";
 import Icon from "@mdi/react";
 import { mdiApple, mdiGithub, mdiLinux, mdiMicrosoftWindows } from "@mdi/js";
@@ -26,11 +25,6 @@ const params: IParticlesParams = {
 };
 
 export default () => {
-  const transitions = useTransition(true, null, {
-    from: { opacity: 0, transform: "translateY(100px)" },
-    enter: { opacity: 1, transform: "translateY(0)" },
-  });
-
   return (
     <div className="wrapper">
       <Particles className={"particles"} params={params} />
@@ -59,10 +53,7 @@ export default () => {
           </div>
         </div>
         <div className="demo-wrapper">
-          {transitions.map(
-            ({ item, props, key }) =>
-              item && <animated.div style={props} key={key} className="demo" />
-          )}
+          <div className="demo" />
         </div>
       </div>
 

@@ -1,5 +1,7 @@
 ![](./banner.png)
 
+--- 
+
 A torrent client to download, stream and cast torrents.
 
 ### Features

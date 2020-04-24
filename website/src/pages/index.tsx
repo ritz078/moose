@@ -3,6 +3,7 @@ import { IParticlesParams } from "react-particles-js";
 import dynamic from "next/dynamic";
 import Icon from "@mdi/react";
 import { mdiApple, mdiGithub, mdiLinux, mdiMicrosoftWindows } from "@mdi/js";
+import Head from "next/head";
 
 const Particles = dynamic(() => import("react-particles-js"), {
   ssr: false,
@@ -27,6 +28,14 @@ const params: IParticlesParams = {
 export default () => {
   return (
     <div className="wrapper">
+      <Head>
+        <title>Snape</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta
+          name="description"
+          content="A torrent client to download, stream and cast torrents."
+        />
+      </Head>
       <Particles className={"particles"} params={params} />
 
       <div className="banner">

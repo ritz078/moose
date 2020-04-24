@@ -9,6 +9,10 @@ A torrent client to download, stream and cast torrents.
 - **VLC**: You can open any video file in the VLC as soon as it starts downloading.
 - **Open files in External apps**: All the files can be opened in the default app on your device.
 
+### Logo Credits
+
+The logo has been designed by [Philip Glen](https://thenounproject.com/pglenn/)
+
 ### License
 
 MIT

@@ -47,16 +47,16 @@ export default () => {
 
             <div className="downloads">
               <div className="download-button">
-                <Icon path={mdiApple} size={1.5}></Icon>
+                <Icon path={mdiApple} size={1.2}></Icon>
               </div>
               <div className="download-button">
-                <Icon path={mdiMicrosoftWindows} size={1.5}></Icon>
+                <Icon path={mdiMicrosoftWindows} size={1.2}></Icon>
               </div>
               <div className="download-button">
-                <Icon path={mdiLinux} size={1.5}></Icon>
+                <Icon path={mdiLinux} size={1.2}></Icon>
               </div>
               <div className="download-button">
-                <Icon path={mdiGithub} size={1.5}></Icon>
+                <Icon path={mdiGithub} size={1.2}></Icon>
               </div>
             </div>
           </div>

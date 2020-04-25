@@ -9,8 +9,10 @@
   "main": "app/background.js",
   "scripts": {
     "dev": "nextron",
-    "build": "nextron build",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "build:mac": "nextron build --mac --x64",
+    "build:win": "nextron build --win --x64",
+    "build:linux": "nextron build --linux"
   },
   "dependencies": {
     "axios": "^0.19.2",

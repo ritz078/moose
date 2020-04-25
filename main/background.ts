@@ -15,6 +15,7 @@ import client from "./utils/webtorrent";
 import { cleanup } from "./modules/cast";
 import { EventEmitter } from "events";
 import { enforceMacOSAppLocation, is } from "electron-util";
+import { checkForUpdate } from "./utils/checkForUpdate";
 
 EventEmitter.defaultMaxListeners = 0;
 
@@ -35,6 +36,8 @@ async function _createWindow() {
   await app.whenReady();
 
   enforceMacOSAppLocation();
+
+  await checkForUpdate();
 
   const apiPort = await getPort({
     port: getPort.makeRange(3000, 3010),

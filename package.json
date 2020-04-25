@@ -26,6 +26,7 @@
     "internal-ip": "^6.0.0",
     "mime": "^2.4.4",
     "range-parser": "^1.2.1",
+    "semver": "^7.3.2",
     "vlc-command": "^1.2.0",
     "webtorrent": "0.108.1"
   },

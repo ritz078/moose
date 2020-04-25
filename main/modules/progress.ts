@@ -14,6 +14,8 @@ ipcMain.on("progress", (e, downloads, path) => {
     );
   });
 
+  app.dock.setBadge(`${prettyBytes(client.downloadSpeed)}/s`);
+
   e.returnValue = torrents.map((torrent, i) => {
     const {
       name,

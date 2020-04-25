@@ -1,30 +1,23 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
+![](./banner.png)
 
-## Getting Started
+---
 
-First, run the development server:
+A torrent client to download, stream and cast torrents.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Stream**: 👁 No need to wait for the torrent to download. You can stream the videos inside the app as soon as the torrent starts downloading.
+- **Subtitles**: 📖 Automatically load the subtitles if they are present in the torrent.
+- **VLC**: You can open any video file in the VLC as soon as it starts downloading.
+- **External apps**: All the files can be opened in the default app on your device.
+- **Theme**: 🎨 You can select any color in the preferences panel and the UI will look good in most of them because the whole UI has been designed using opacities.
+- **Cast**: 📺 You can cast the video or audio to any chromecast or DLNA enabled device.
+- **Music**: 🎶 You can play audio inside the app itself.
 
-You can start editing the page by modifying `pages/home.tsx`. The page auto-updates as you edit the file.
+### Logo Credits
 
-## Learn More
+The logo has been designed by [Philip Glen](https://thenounproject.com/pglenn/)
 
-To learn more about Next.js, take a look at the following resources:
+### License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/zeit/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on ZEIT Now
-
-The easiest way to deploy your Next.js app is to use the [ZEIT Now Platform](https://zeit.co/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+MIT

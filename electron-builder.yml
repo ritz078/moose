@@ -12,4 +12,4 @@ publish: null
 mac:
   identity: null
   target: dmg
-  icon: assets/snape.icns
+  icon: assets/moose.icns

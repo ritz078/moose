@@ -1,7 +1,7 @@
 {
-  "name": "snape",
+  "name": "moose",
   "description": "A torrent client to stream and download torrents. Play music, view images and stream videos.",
-  "version": "2.0.0",
+  "version": "0.1.0",
   "author": {
     "name": "Ritesh Kumar"
   },
@@ -45,7 +45,6 @@
     "dotenv": "^8.2.0",
     "electron": "^8.2.3",
     "electron-builder": "^22.5.1",
-    "electron-packager": "^14.2.1",
     "husky": "^4.2.3",
     "imagemin-lint-staged": "^0.4.0",
     "lint-staged": "^10.1.7",

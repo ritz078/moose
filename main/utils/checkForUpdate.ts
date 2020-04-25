@@ -16,6 +16,8 @@ export async function checkForUpdate() {
         title: "Update Available",
         buttons: ["Download now", "Remind me later"],
         message: `A new version of Snape is available. Please update to the latest release.`,
+        defaultId: 0,
+        cancelId: 1,
       });
 
       if (response === 0) {

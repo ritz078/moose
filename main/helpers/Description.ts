@@ -28,8 +28,7 @@ export class Description {
       description: data?.overview,
       poster: data?.poster_path
         ? `https://image.tmdb.org/t/p/w200/${data.poster_path}`
-        : // todo
-          `/music.png`,
+        : `/cover-video.png`,
       released: data?.release_date,
       backdrop: data?.backdrop_path
         ? `https://image.tmdb.org/t/p/w780/${data.backdrop_path}`
@@ -42,7 +41,9 @@ export class Description {
       title,
       name: data.name,
       description: data.overview,
-      poster: `https://image.tmdb.org/t/p/w200/${poster}`,
+      poster: poster
+        ? `https://image.tmdb.org/t/p/w200/${poster}`
+        : `/cover-video.png`,
       released: data.release_date,
       season: data.season_number,
       episode: data.episode_number,

@@ -14,7 +14,6 @@ import { createServer, closeServer } from "./server";
 import client from "./utils/webtorrent";
 import { cleanup } from "./modules/cast";
 import { EventEmitter } from "events";
-import { enforceMacOSAppLocation, is } from "electron-util";
 import { checkForUpdate } from "./utils/checkForUpdate";
 
 EventEmitter.defaultMaxListeners = 0;
@@ -24,7 +23,7 @@ app.commandLine.appendSwitch("enable-experimental-web-platform-features");
 app.name = name;
 let win: BrowserWindow;
 
-if (!is.development) {
+if (app.isPackaged) {
   process.on("uncaughtException", console.log);
 
   serve({ directory: "app" });
@@ -34,8 +33,6 @@ if (!is.development) {
 
 async function _createWindow() {
   await app.whenReady();
-
-  enforceMacOSAppLocation();
 
   await checkForUpdate();
 
@@ -62,7 +59,7 @@ async function _createWindow() {
   });
 
   createServer(apiPort, async () => {
-    if (!is.development) {
+    if (app.isPackaged) {
       await win.loadURL(`app://./home.html?port=${apiPort}`);
     } else {
       const port = process.argv[2];

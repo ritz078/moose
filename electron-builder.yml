@@ -9,3 +9,7 @@ files:
       - package.json
       - app
 publish: null
+mac:
+  identity: null
+  target: dmg
+  icon: assets/snape.icns

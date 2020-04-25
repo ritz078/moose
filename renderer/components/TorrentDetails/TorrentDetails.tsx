@@ -88,7 +88,11 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
                       style={props}
                       key={key}
                       className={styles.poster}
-                      src={description?.poster || (isMusic && "/music.png")}
+                      src={
+                        description?.poster ||
+                        (isMusic && "/cover-music.png") ||
+                        "/cover-unknown-png"
+                      }
                       alt={description?.title}
                     />
                   )

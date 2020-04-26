@@ -9,7 +9,9 @@ files:
     filter:
       - package.json
       - app
-publish: github
+publish:
+  - github
+  - bintray
 mac:
   target: dmg
   icon: resources/moose.icns

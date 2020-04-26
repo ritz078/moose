@@ -31,3 +31,4 @@ jobs:
           APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
           CSC_LINK: ${{ secrets.CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+          BT_TOKEN: ${{ secrets.BT_TOKEN }}

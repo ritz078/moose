@@ -1,5 +1,5 @@
-appId: com.riteshkr.snape
-productName: Snape
+appId: com.riteshkr.moose
+productName: moose
 directories:
   output: dist
   buildResources: resources
@@ -8,7 +8,7 @@ files:
     filter:
       - package.json
       - app
-publish: null
+publish: github
 mac:
   identity: null
   target: dmg

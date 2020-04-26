@@ -5,9 +5,9 @@ name: Moose
 
 on:
   push:
-    branches: [next]
+    branches: [master]
   pull_request:
-    branches: [next]
+    branches: [master]
 
 jobs:
   build_on_mac:

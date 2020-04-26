@@ -9,10 +9,8 @@ files:
     filter:
       - package.json
       - app
-publish:
-  - github
+publish: github
 mac:
-  target: dmg
   icon: resources/moose.icns
   hardenedRuntime: true
   gatekeeperAssess: false

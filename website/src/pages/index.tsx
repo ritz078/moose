@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Icon from "@mdi/react";
 import { mdiApple, mdiGithub, mdiLinux, mdiMicrosoftWindows } from "@mdi/js";
 import Head from "next/head";
+import ProgressiveImage from "react-progressive-image";
 
 const Particles = dynamic(() => import("react-particles-js"), {
   ssr: false,
@@ -62,7 +63,16 @@ export default () => {
           </div>
         </div>
         <div className="demo-wrapper">
-          <div className="demo" />
+          <ProgressiveImage src="/demo.png" placeholder="/demo-small.png">
+            {(src) => (
+              <div
+                className="demo"
+                style={{
+                  backgroundImage: `url(${src})`,
+                }}
+              />
+            )}
+          </ProgressiveImage>
         </div>
       </div>
 

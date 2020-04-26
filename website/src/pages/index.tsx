@@ -48,7 +48,10 @@ export default () => {
             <span>A torrent client to download, stream and cast torrents.</span>
 
             <div className="downloads">
-              <a href="https://github.com/ritz078/moose" target="_blank">
+              <a
+                href="https://drive.google.com/file/d/1wQABp8qRGPaLMFN_iKiU-8Jz_NkmcAY5/view?usp=sharing"
+                target="_blank"
+              >
                 <button className="download-button">
                   <Icon path={mdiApple} size={1.2} />
                 </button>

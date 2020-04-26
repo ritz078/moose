@@ -1,5 +1,6 @@
 appId: com.riteshkr.moose
 productName: moose
+afterSign: scripts/notarize.js
 directories:
   output: dist
   buildResources: resources
@@ -10,8 +11,14 @@ files:
       - app
 publish: github
 mac:
-  identity: null
   target: dmg
-  icon: assets/moose.icns
+  icon: resources/moose.icns
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: resources/entitlements.mac.plist
+  entitlementsInherit: resources/entitlements.mac.plist
 fileAssociations:
   ext: torrent
+dmg:
+#  https://kilianvalkhof:com/2019/electron/notarizing-your-electron-application/:
+  sign: false

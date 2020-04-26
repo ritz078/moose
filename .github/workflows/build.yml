@@ -27,7 +27,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           FETCH_SUBTITLES: ${{ secrets.FETCH_SUBTITLES }}
           TMDB_API: ${{ secrets.TMDB_API }}
-          APPLEID: $(( secrets.APPLEID }}
-          APPLEIDPASS: $(( secrets.APPLEIDPASS }}
-          CSC_LINK: $(( secrets.CSC_LINK }}
+          APPLEID: ${{ secrets.APPLEID }}
+          APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
+          CSC_LINK: ${{ secrets.CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}

@@ -3,6 +3,7 @@ import serve from "electron-serve";
 import createWindow from "./helpers/createWindow";
 import getPort from "get-port";
 import { name } from "../package.json";
+const { autoUpdater } = require("electron-updater");
 
 // import modules
 import { setMenu } from "./modules/menu";
@@ -14,7 +15,6 @@ import { createServer, closeServer } from "./server";
 import client from "./utils/webtorrent";
 import { cleanup } from "./modules/cast";
 import { EventEmitter } from "events";
-import { checkForUpdate } from "./utils/checkForUpdate";
 
 EventEmitter.defaultMaxListeners = 0;
 
@@ -33,8 +33,7 @@ if (app.isPackaged) {
 
 async function _createWindow() {
   await app.whenReady();
-
-  await checkForUpdate();
+  await autoUpdater.checkForUpdatesAndNotify();
 
   const apiPort = await getPort({
     port: getPort.makeRange(3000, 3010),

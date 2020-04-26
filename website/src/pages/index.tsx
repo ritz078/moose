@@ -67,18 +67,19 @@ export default () => {
             </div>
           </div>
         </div>
-        <div className="demo-wrapper">
-          <ProgressiveImage src="/demo.png" placeholder="/demo-small.png">
-            {(src) => (
+
+        <ProgressiveImage src="/demo.png" placeholder="/demo-small.png">
+          {(src) => (
+            <div className="demo-wrapper">
               <div
                 className="demo"
                 style={{
                   backgroundImage: `url(${src})`,
                 }}
               />
-            )}
-          </ProgressiveImage>
-        </div>
+            </div>
+          )}
+        </ProgressiveImage>
       </div>
 
       <footer>

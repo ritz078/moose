@@ -28,7 +28,6 @@
     "internal-ip": "^6.0.0",
     "mime": "^2.4.4",
     "range-parser": "^1.2.1",
-    "semver": "^7.3.2",
     "vlc-command": "^1.2.0",
     "webtorrent": "0.108.1"
   },
@@ -48,6 +47,7 @@
     "electron": "^8.2.3",
     "electron-builder": "^22.5.1",
     "electron-notarize": "^0.3.0",
+    "electron-updater": "^4.2.5",
     "husky": "^4.2.3",
     "imagemin-lint-staged": "^0.4.0",
     "lint-staged": "^10.1.7",

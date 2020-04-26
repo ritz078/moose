@@ -48,18 +48,22 @@ export default () => {
             <span>A torrent client to download, stream and cast torrents.</span>
 
             <div className="downloads">
-              <div className="download-button">
-                <Icon path={mdiApple} size={1.2} />
-              </div>
-              <div className="download-button">
+              <a href="https://github.com/ritz078/moose" target="_blank">
+                <button className="download-button">
+                  <Icon path={mdiApple} size={1.2} />
+                </button>
+              </a>
+              <button title="Coming soon" disabled className="download-button">
                 <Icon path={mdiMicrosoftWindows} size={1.2} />
-              </div>
-              <div className="download-button">
+              </button>
+              <button title="Coming soon" disabled className="download-button">
                 <Icon path={mdiLinux} size={1.2} />
-              </div>
-              <div className="download-button">
-                <Icon path={mdiGithub} size={1.2} />
-              </div>
+              </button>
+              <a href="https://github.com/ritz078/moose" target="_blank">
+                <button className="download-button">
+                  <Icon path={mdiGithub} size={1.2} />
+                </button>
+              </a>
             </div>
           </div>
         </div>

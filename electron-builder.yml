@@ -13,3 +13,5 @@ mac:
   identity: null
   target: dmg
   icon: assets/moose.icns
+fileAssociations:
+  ext: torrent

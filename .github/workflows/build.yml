@@ -29,3 +29,5 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           FETCH_SUBTITLES: ${{ secrets.FETCH_SUBTITLES }}
           TMDB_API: ${{ secrets.TMDB_API }}
+          APPLEID: $(( secrets.APPLEID }}
+          APPLEIDPASS: $(( secrets.APPLEIDPASS }}

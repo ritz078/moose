@@ -5,6 +5,7 @@ import Icon from "@mdi/react";
 import { mdiApple, mdiGithub, mdiLinux, mdiMicrosoftWindows } from "@mdi/js";
 import Head from "next/head";
 import ProgressiveImage from "react-progressive-image";
+import { version } from "../../../package.json";
 
 const Particles = dynamic(() => import("react-particles-js"), {
   ssr: false,
@@ -49,7 +50,7 @@ export default () => {
 
             <div className="downloads">
               <a
-                href="https://drive.google.com/file/d/1wQABp8qRGPaLMFN_iKiU-8Jz_NkmcAY5/view?usp=sharing"
+                href={`https://github.com/ritz078/moose/releases/download/v${version}/moose-${version}.dmg`}
                 target="_blank"
               >
                 <button className="download-button">

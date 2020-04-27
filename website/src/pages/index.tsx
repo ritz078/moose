@@ -5,7 +5,7 @@ import Icon from "@mdi/react";
 import { mdiApple, mdiGithub, mdiLinux, mdiMicrosoftWindows } from "@mdi/js";
 import Head from "next/head";
 import ProgressiveImage from "react-progressive-image";
-import { version } from "../../../package.json";
+import { version } from "../../package.json";
 
 const Particles = dynamic(() => import("react-particles-js"), {
   ssr: false,

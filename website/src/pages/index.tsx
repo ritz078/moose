@@ -46,7 +46,7 @@ export default () => {
           property="og:description"
           content="A torrent client to download, stream and cast torrents."
         />
-        <meta property="og:image" content="/banner.png" />
+        <meta property="og:image" content="https://getmoose.in/favicon.png" />
       </Head>
       <Particles className={"particles"} params={params} />
 

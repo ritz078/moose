@@ -38,6 +38,15 @@ export default () => {
           name="description"
           content="A torrent client to download, stream and cast torrents."
         />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:creator" content="@ritz078" />
+        <meta property="og:url" content="https://getmoose.in" />
+        <meta property="og:title" content="moose" />
+        <meta
+          property="og:description"
+          content="A torrent client to download, stream and cast torrents."
+        />
+        <meta property="og:image" content="/banner.png" />
       </Head>
       <Particles className={"particles"} params={params} />
 

@@ -1,6 +1,5 @@
 {
   "name": "moose-www",
-  "version": "0.4.0",
   "main": "index.js",
   "author": "Ritesh Kumar",
   "license": "MIT",

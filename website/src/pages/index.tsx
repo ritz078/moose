@@ -6,6 +6,7 @@ import { mdiApple, mdiGithub, mdiLinux, mdiMicrosoftWindows } from "@mdi/js";
 import Head from "next/head";
 import ProgressiveImage from "react-progressive-image";
 import { version } from "../../package.json";
+import axios from "axios";
 
 const Particles = dynamic(() => import("react-particles-js"), {
   ssr: false,
@@ -27,7 +28,20 @@ const params: IParticlesParams = {
   },
 };
 
-export default () => {
+export async function getStaticProps() {
+  const { data } = await axios.get(
+    "https://api.github.com/repos/ritz078/moose/releases/latest"
+  );
+  return {
+    props: {
+      macUrl: data.assets.find(
+        (assets) => assets.content_type === "application/octet-stream"
+      ).browser_download_url,
+    },
+  };
+}
+
+export default ({ macUrl }) => {
   return (
     <div className="wrapper">
       <Head>
@@ -58,10 +72,7 @@ export default () => {
             <span>A torrent client to download, stream and cast torrents.</span>
 
             <div className="downloads">
-              <a
-                href={`https://github.com/ritz078/moose/releases/download/v${version}/moose-${version}.dmg`}
-                target="_blank"
-              >
+              <a href={macUrl} target="_blank">
                 <button className="download-button">
                   <Icon path={mdiApple} size={1.2} />
                 </button>

@@ -1,7 +1,7 @@
-import React, { memo, useCallback } from "react";
+import React, { memo, useCallback, useRef, useState } from "react";
 import styles from "./Header.module.scss";
 import Icon from "@mdi/react";
-import { mdiAlertCircleOutline, mdiDelete, mdiPlus } from "@mdi/js";
+import { mdiAlertCircleOutline, mdiDelete, mdiMagnet, mdiPlus } from "@mdi/js";
 import { Modal } from "@components/Modal";
 import { Preferences } from "@components/Preferences";
 import store from "@utils/store";
@@ -11,6 +11,9 @@ import { parseFileInfo } from "@utils/parseFileInfo";
 import { Download } from "@components/Downloads";
 import { Cast, StreamingDevice } from "@components/Cast/Cast";
 import { is, openNewGitHubIssue } from "electron-util";
+import parseTorrent from "parse-torrent";
+import { showToast, Toast } from "@components/Toast";
+import MagnetUri from "magnet-uri";
 
 interface IProps {
   onFileSelect: (info: Download) => void;
@@ -26,6 +29,9 @@ export const Header: React.FC<IProps> = memo(({ onFileSelect }) => {
 });
 
 const Navbar: React.FC<IProps> = memo(({ onFileSelect }) => {
+  const [show, setShow] = useState(false);
+  const inputRef = useRef(null);
+
   const loadFile = useCallback(() => {
     (async function () {
       const { filePaths } = await remote.dialog.showOpenDialog(
@@ -54,6 +60,11 @@ const Navbar: React.FC<IProps> = memo(({ onFileSelect }) => {
       <button onClick={loadFile} title="Add Torrent File">
         <Icon path={mdiPlus} size={0.72} color="#fff" />
       </button>
+
+      <button onClick={() => setShow(true)} title="Add Torrent File">
+        <Icon path={mdiMagnet} size={0.72} color="#fff" />
+      </button>
+
       <Cast type={StreamingDevice.CHROMECAST} />
       <button
         onClick={() =>
@@ -79,6 +90,43 @@ const Navbar: React.FC<IProps> = memo(({ onFileSelect }) => {
       )}
       <Modal show={false} onCloseRequest={console.log}>
         <Preferences />
+      </Modal>
+
+      <Modal show={show} onCloseRequest={() => setShow(false)}>
+        <div className={styles.addMagnet}>
+          <h4>Enter Magnet URL</h4>
+          <div>
+            <input
+              autoFocus
+              ref={inputRef}
+              type="text"
+              onKeyDown={(e) => {
+                e.stopPropagation();
+                e.nativeEvent.stopImmediatePropagation();
+              }}
+            />
+            <button
+              onClick={() => {
+                const magnet = inputRef.current.value;
+                try {
+                  const { name, infoHash }: MagnetUri.Instance = parseTorrent(
+                    magnet
+                  );
+                  onFileSelect({
+                    name: name as string,
+                    infoHash,
+                    magnet,
+                  });
+                  setShow(false);
+                } catch (e) {
+                  showToast(`"${e.message}" is an invalid magnet url.`);
+                }
+              }}
+            >
+              Load
+            </button>
+          </div>
+        </div>
       </Modal>
     </div>
   );

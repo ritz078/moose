@@ -54,3 +54,47 @@ $headerBackground: rgba(0, 0, 0, 0.45);
     fill: #ffffff;
   }
 }
+
+.addMagnet {
+  padding: 14px;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding-top: 0;
+
+  & > div {
+    display: flex;
+    flex-direction: row;
+  }
+
+  h4 {
+    font-size: 14px;
+    font-weight: normal;
+    margin: 12px 0;
+  }
+
+  input {
+    padding: 4px 8px;
+    background-color: rgba(78, 78, 78, 0.75);
+    border-radius: 2px 0 0 2px;
+    border: 1px solid #797979;
+    width: 400px;
+    font-family: inherit;
+    font-size: 13px;
+    border-right: 0;
+    outline: none;
+    color: #fff;
+  }
+
+  button {
+    padding: 7px 15px;
+    font-size: 14px;
+    border-radius: 0 2px 2px 0;
+    border:0;
+    border-left: 1px solid #ffffff;
+    cursor: pointer;
+    outline: none;
+
+    &:hover {
+      background-color: lighten(#fff, 0.8);
+    }
+  }
+}

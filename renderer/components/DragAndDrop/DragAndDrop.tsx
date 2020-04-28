@@ -16,6 +16,7 @@ export const DragAndDrop: React.FC<IProps> = memo(
   ({ children, onFileSelect }) => {
     useEffect(() => {
       function handlePress(e: KeyboardEvent) {
+        debugger;
         if (e.metaKey && e.code === "KeyV") {
           const magnetUri = electron.remote.clipboard.readText();
           try {

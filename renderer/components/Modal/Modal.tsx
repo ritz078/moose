@@ -67,7 +67,7 @@ export const Modal: React.FC<IProps> = ({
               })}
             >
               <button onClick={onCloseRequest} className={styles.close}>
-                <Icon path={mdiClose} size={1} color="#999" />
+                <Icon path={mdiClose} size={0.8} color="#999" />
               </button>
               {children}
             </animated.div>

@@ -1,4 +1,4 @@
-import { BrowserWindow, app } from "electron";
+import { BrowserWindow, app, dialog } from "electron";
 import serve from "electron-serve";
 import createWindow from "./helpers/createWindow";
 import getPort from "get-port";
@@ -24,8 +24,6 @@ app.name = name;
 let win: BrowserWindow;
 
 if (app.isPackaged) {
-  process.on("uncaughtException", console.log);
-
   serve({ directory: "app" });
 } else {
   app.setPath("userData", `${app.getPath("userData")} (development)`);
@@ -56,7 +54,6 @@ async function _createWindow() {
     x: 10,
     y: 30,
   });
-
   createServer(apiPort, async () => {
     if (app.isPackaged) {
       await win.loadURL(`app://./home.html?port=${apiPort}`);

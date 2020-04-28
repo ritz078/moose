@@ -1,11 +1,13 @@
 import Store from "electron-store";
-import { name } from "../../package.json";
+import { name, version } from "../../package.json";
 import { sampleMagnets } from "../../sample/results";
 import { remote, app } from "electron";
 import { getDefaultColor } from "@utils/theme";
 
 const store: Store = new Store({
   name,
+  // @ts-ignore
+  projectVersion: version,
   defaults: {
     torrents: sampleMagnets,
     descriptions: {},
@@ -14,7 +16,7 @@ const store: Store = new Store({
     wasDarkMode: remote.nativeTheme.shouldUseDarkColors,
   },
   migrations: {
-    "0.4.1": (store) => store.reset("color"),
+    "0.4.0": (store) => store.reset("color"),
   },
 });
 

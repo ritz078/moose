@@ -10,6 +10,7 @@ import { remote, ipcRenderer } from "electron";
 import { Message } from "@components/Message";
 import { SelectedCastContext } from "@contexts/SelectedCast";
 import { Toast } from "@components/Toast";
+import { getDefaultColor } from "@utils/theme";
 
 export default function () {
   const [selectedTorrent, setSelectedTorrent] = useState<DownloadingTorrent>(
@@ -26,6 +27,23 @@ export default function () {
     ipcRenderer.on("preferences-changed", (e, { color }) => {
       setColor(color);
     });
+  }, []);
+
+  useEffect(() => {
+    function updateTheme() {
+      store.set("color", getDefaultColor());
+      store.set("wasDarkMode", remote.nativeTheme.shouldUseDarkColors);
+      setColor(getDefaultColor());
+    }
+
+    if (store.get("wasDarkMode") !== remote.nativeTheme.shouldUseDarkColors) {
+      updateTheme();
+    }
+
+    remote.nativeTheme.addListener("updated", updateTheme);
+    return () => {
+      remote.nativeTheme.removeListener("updated", updateTheme);
+    };
   }, []);
 
   const onFileSelect = useCallback(({ name, magnet, infoHash }) => {

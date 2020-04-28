@@ -1,7 +1,7 @@
 {
   "name": "moose",
   "description": "A torrent client to stream and download torrents. Play music, view images and stream videos.",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "author": {
     "name": "Ritesh Kumar"
   },

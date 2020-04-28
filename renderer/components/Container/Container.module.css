@@ -4,9 +4,3 @@
   flex-direction: column;
   height: 100vh;
 }
-
-@media (prefers-color-scheme: light) {
-  .pane {
-    background-color: #3e3e3e;
-  }
-}

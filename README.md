@@ -32,12 +32,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://riteshkr.com"><img src="https://avatars3.githubusercontent.com/u/5389035?v=4" width="100px;" alt=""/><br /><sub><b>Ritesh Kumar</b></sub></a><br /><a href="https://github.com/ritz078/moose/commits?author=ritz078" title="Code">💻</a> <a href="#design-ritz078" title="Design">🎨</a> <a href="#ideas-ritz078" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-ritz078" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    <td align="center"><a href="http://www.ateev.in"><img src="https://avatars0.githubusercontent.com/u/2234088?v=4" width="100px;" alt=""/><br /><sub><b>Ateev</b></sub></a><br /><a href="https://github.com/ritz078/moose/commits?author=ateev" title="Code">💻</a></td>
   </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

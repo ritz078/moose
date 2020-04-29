@@ -3,8 +3,7 @@ import serve from "electron-serve";
 import createWindow from "./helpers/createWindow";
 import getPort from "get-port";
 import { name } from "../package.json";
-const { autoUpdater } = require("electron-updater");
-
+import { updateApp } from "./utils/autoUpdate";
 // import modules
 import { setMenu } from "./modules/menu";
 import "./modules/playOnVlc";
@@ -15,6 +14,7 @@ import { createServer, closeServer } from "./server";
 import client from "./utils/webtorrent";
 import { cleanup } from "./modules/cast";
 import { EventEmitter } from "events";
+import unhandled from "electron-unhandled";
 
 EventEmitter.defaultMaxListeners = 0;
 
@@ -24,6 +24,8 @@ app.name = name;
 let win: BrowserWindow;
 
 if (app.isPackaged) {
+  unhandled();
+
   serve({ directory: "app" });
 } else {
   app.setPath("userData", `${app.getPath("userData")} (development)`);
@@ -31,7 +33,7 @@ if (app.isPackaged) {
 
 async function _createWindow() {
   await app.whenReady();
-  await autoUpdater.checkForUpdatesAndNotify();
+  await updateApp();
 
   const apiPort = await getPort({
     port: getPort.makeRange(3000, 3010),

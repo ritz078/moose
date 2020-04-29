@@ -9,7 +9,10 @@ files:
     filter:
       - package.json
       - app
-publish: github
+publish:
+  provider: github
+  owner: ritz078
+  repo: moose
 mac:
   icon: resources/moose.icns
   hardenedRuntime: true

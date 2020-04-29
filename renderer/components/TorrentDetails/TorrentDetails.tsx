@@ -91,7 +91,7 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
                       src={
                         description?.poster ||
                         (isMusic && "/cover-music.png") ||
-                        "/cover-unknown-png"
+                        "/cover-unknown.png"
                       }
                       alt={description?.title}
                     />

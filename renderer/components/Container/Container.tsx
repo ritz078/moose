@@ -6,7 +6,7 @@ import { DragAndDrop } from "@components/DragAndDrop";
 import { TorrentDetails } from "@components/TorrentDetails";
 import store from "@utils/store";
 import { DownloadingTorrent } from "../../../types/DownloadingTorrent";
-import { remote, ipcRenderer } from "electron";
+import { ipcRenderer, remote } from "electron";
 import { Message } from "@components/Message";
 import { SelectedCastContext } from "@contexts/SelectedCast";
 import { Toast } from "@components/Toast";
@@ -24,9 +24,15 @@ export default function () {
   const { selectedCast } = useContext(SelectedCastContext);
 
   useEffect(() => {
-    ipcRenderer.on("preferences-changed", (e, { color }) => {
+    function changePreferences(e, { color }) {
       setColor(color);
-    });
+    }
+
+    ipcRenderer.on("preferences-changed", changePreferences);
+
+    return () => {
+      ipcRenderer.off("preferences-changed", changePreferences);
+    };
   }, []);
 
   useEffect(() => {
@@ -46,35 +52,37 @@ export default function () {
     };
   }, []);
 
-  const onFileSelect = useCallback(({ name, magnet, infoHash }) => {
-    setDownloads((_downloads) => {
-      if (!!_downloads.find((d) => d.magnet === magnet)) {
-        remote.dialog.showMessageBoxSync({
-          type: "info",
-          message: "This torrent is already added.",
-        });
-        return _downloads;
-      }
+  const onFileSelect = useCallback(
+    ({ name, magnet, infoHash }) => {
+      setDownloads((_downloads) => {
+        if (!!_downloads.find((d) => d.magnet === magnet)) {
+          remote.dialog.showMessageBoxSync({
+            type: "info",
+            message: "This torrent is already added.",
+          });
+          return _downloads;
+        }
 
-      store.set("torrents", [...downloads, { name, magnet, infoHash }]);
-      return [...downloads, { name, magnet, infoHash }];
-    });
-  }, []);
+        return [..._downloads, { name, magnet, infoHash }];
+      });
+    },
+    [store]
+  );
 
-  const onTorrentDelete = useCallback((infoHash) => {
-    setDownloads((_downloads) => {
-      const newTorrents = _downloads.filter(
-        (d) => d.infoHash && d.infoHash !== infoHash
+  useEffect(() => {
+    store.set("torrents", downloads);
+  }, [store, downloads]);
+
+  const onTorrentDelete = useCallback(
+    (infoHash) => {
+      store.delete(`descriptions.${infoHash}`);
+
+      setDownloads((_downloads) =>
+        _downloads.filter((d) => d.infoHash && d.infoHash !== infoHash)
       );
-
-      store.set("torrents", newTorrents);
-      const descriptions = store.get("descriptions");
-      delete descriptions[infoHash];
-
-      store.set("descriptions", descriptions);
-      return newTorrents;
-    });
-  }, []);
+    },
+    [store]
+  );
 
   useEffect(() => {
     if (!downloads?.find((d) => d.infoHash === selectedTorrent?.infoHash)) {

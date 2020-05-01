@@ -7,6 +7,7 @@ import MagnetUri from "magnet-uri";
 import { DropUI } from "@components/DropUI";
 import { Download } from "@components/Downloads";
 import { parseFileInfo } from "@utils/parseFileInfo";
+import { showToast } from "@components/Toast";
 
 interface IProps {
   onFileSelect: (torrentInfo: Download) => void;
@@ -16,7 +17,6 @@ export const DragAndDrop: React.FC<IProps> = memo(
   ({ children, onFileSelect }) => {
     useEffect(() => {
       function handlePress(e: KeyboardEvent) {
-        debugger;
         if (e.metaKey && e.code === "KeyV") {
           const magnetUri = electron.remote.clipboard.readText();
           try {
@@ -25,7 +25,7 @@ export const DragAndDrop: React.FC<IProps> = memo(
             );
             onFileSelect({ name: name as string, magnet: magnetUri, infoHash });
           } catch (e) {
-            console.log(`${magnetUri} is an invalid magnet url.`);
+            showToast(`${magnetUri} is an invalid magnet url.`);
           }
         }
       }

@@ -30,6 +30,7 @@ module.exports = {
         new webpack.DefinePlugin({
           TMDB_API: `"${process.env.TMDB_API}"`,
           SUBTITLES: `"${process.env.SUBTITLES}"`,
+          UA_ID: `"${process.env.UA_ID}"`,
         }),
       ],
     }),

@@ -1,4 +1,4 @@
-import { BrowserWindow, app, dialog } from "electron";
+import { BrowserWindow, app } from "electron";
 import serve from "electron-serve";
 import createWindow from "./helpers/createWindow";
 import getPort from "get-port";
@@ -15,6 +15,7 @@ import client from "./utils/webtorrent";
 import { cleanup } from "./modules/cast";
 import { EventEmitter } from "events";
 import unhandled from "electron-unhandled";
+import "./utils/analytics";
 
 EventEmitter.defaultMaxListeners = 0;
 

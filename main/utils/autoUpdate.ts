@@ -1,10 +1,9 @@
 import { autoUpdater } from "electron-updater";
-import log from "electron-log";
 import { dialog, app } from "electron";
 import { name } from "../../package.json";
+import { logger } from "./logger";
 
-log.transports.file.level = "info";
-autoUpdater.logger = log;
+autoUpdater.logger = logger;
 
 export async function updateApp() {
   autoUpdater.on("update-downloaded", async ({ version }) => {

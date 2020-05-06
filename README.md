@@ -14,6 +14,21 @@ A torrent client to download, stream and cast torrents.
 - **Cast**: 📺 You can cast the video or audio to any chromecast or DLNA enabled device.
 - **Music**: 🎶 You can play audio inside the app itself.
 
+## Development
+
+- Clone the repo
+- Run `yarn` && `yarn dev` to start development. This will open a dev build of the app.
+- This project uses [nextron](https://github.com/saltyshiomix/nextron) so everything mentioned there applies on this project.
+- You can build this project using `yarn build:mac`. Make sure you turn off signing in `electron-builder.yml` by setting `mac.identity` to `null`
+
+```diff
+mac:
++ identity: null
+  icon: resources/moose.icns
+```
+
+In case you are trying to build for some other platform, you will have to add a script to the `package.json` file. The scripts can be found [here](https://github.com/saltyshiomix/nextron#build-options)
+
 ### Logo Credits
 
 The logo has been designed by [Philip Glen](https://thenounproject.com/pglenn/)

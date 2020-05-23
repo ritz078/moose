@@ -11,6 +11,7 @@ import { Message } from "@components/Message";
 import { SelectedCastContext } from "@contexts/SelectedCast";
 import { Toast } from "@components/Toast";
 import { getDefaultColor } from "@utils/theme";
+import useSound from "use-sound";
 
 export default function () {
   const [selectedTorrent, setSelectedTorrent] = useState<DownloadingTorrent>(
@@ -19,6 +20,9 @@ export default function () {
   const [downloads, setDownloads] = useState<Download[]>(
     store.get("torrents") as Download[]
   );
+  const [play] = useSound("/sounds/game-gold.mp3", {
+    volume: 0.2,
+  });
 
   const [color, setColor] = useState(store.get("color"));
   const { selectedCast } = useContext(SelectedCastContext);
@@ -71,7 +75,8 @@ export default function () {
 
   useEffect(() => {
     store.set("torrents", downloads);
-  }, [store, downloads]);
+    play();
+  }, [store, downloads, play]);
 
   const onTorrentDelete = useCallback(
     (infoHash) => {

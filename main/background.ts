@@ -24,6 +24,7 @@ app.commandLine.appendSwitch("enable-experimental-web-platform-features");
 app.name = name;
 let win: BrowserWindow;
 let path: string;
+let magnetUri: string;
 
 if (app.isPackaged) {
   unhandled();
@@ -66,6 +67,9 @@ async function _createWindow() {
     params.append("port", apiPort.toString(10));
     if (path) {
       params.append("path", encodeURI(path));
+    }
+    if (magnetUri) {
+      params.append("magnet", encodeURI(magnetUri));
     }
     const query = params.toString();
 
@@ -117,5 +121,14 @@ app.on("open-file", (_e, _path) => {
     win.webContents.send("file-opened", _path);
   } else {
     path = _path;
+  }
+});
+
+app.setAsDefaultProtocolClient("magnet");
+app.on("open-url", (e, url) => {
+  if (app.isReady()) {
+    win.webContents.send("magnet-opened", url);
+  } else {
+    magnetUri = url;
   }
 });

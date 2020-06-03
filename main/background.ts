@@ -49,6 +49,7 @@ async function _createWindow() {
     minHeight: 640,
     height: 640,
     webPreferences: {
+      enableRemoteModule: true,
       nodeIntegration: true,
     },
     vibrancy: "under-window",

@@ -56,17 +56,20 @@ export default function () {
             />
           )}
         >
-          <div
-            className={styles.swatch}
-            onClick={() => setDisplayColorPicker(true)}
-          >
+          {(ref) => (
             <div
-              className={styles.color}
-              style={{
-                background: color,
-              }}
-            />
-          </div>
+              ref={ref}
+              className={styles.swatch}
+              onClick={() => setDisplayColorPicker(true)}
+            >
+              <div
+                className={styles.color}
+                style={{
+                  background: color,
+                }}
+              />
+            </div>
+          )}
         </Popover>
       </div>
 

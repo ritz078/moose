@@ -21,6 +21,7 @@ mac:
   entitlementsInherit: resources/entitlements.mac.plist
 fileAssociations:
   ext: torrent
+  icon: resources/file-moose.icns
 dmg:
 #  https://kilianvalkhof:com/2019/electron/notarizing-your-electron-application/:
   sign: false

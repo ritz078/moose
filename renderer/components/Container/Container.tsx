@@ -9,13 +9,16 @@ import { DownloadingTorrent } from "../../../types/DownloadingTorrent";
 import { ipcRenderer, remote } from "electron";
 import { Message } from "@components/Message";
 import { SelectedCastContext } from "@contexts/SelectedCast";
-import { Toast } from "@components/Toast";
+import { showToast, Toast } from "@components/Toast";
 import { getDefaultColor } from "@utils/theme";
 import { parseFileInfo } from "@utils/parseFileInfo";
 import fs from "fs";
+import MagnetUri from "magnet-uri";
+import ParseTorrent from "parse-torrent";
 
 const { searchParams } = new URL(window.location.href);
 const path = decodeURI(searchParams.get("path"));
+const magnetUri = decodeURI(searchParams.get("magnet"));
 
 export default function () {
   const [selectedTorrent, setSelectedTorrent] = useState<DownloadingTorrent>(
@@ -74,15 +77,15 @@ export default function () {
     [store]
   );
 
-  const loadFile = useCallback((path: string) => {
-    if (!path) return;
-    fs.readFile(path, async (err, data) => {
-      if (err) return;
-      onFileSelect(await parseFileInfo(data));
-    });
-  }, []);
-
   useEffect(() => {
+    function loadFile(path: string) {
+      if (!path) return;
+      fs.readFile(path, async (err, data) => {
+        if (err) return;
+        onFileSelect(await parseFileInfo(data));
+      });
+    }
+
     loadFile(path);
 
     function loadFileWhenAppIsOpen(e, path: string) {
@@ -93,7 +96,29 @@ export default function () {
     return () => {
       ipcRenderer.off("file-opened", loadFileWhenAppIsOpen);
     };
-  }, [loadFile]);
+  }, []);
+
+  useEffect(() => {
+    function loadMagnetUri(_magnetUri: string) {
+      if (!_magnetUri) return;
+      try {
+        const { name, infoHash }: MagnetUri.Instance = ParseTorrent(_magnetUri);
+        onFileSelect({ name: name as string, magnet: _magnetUri, infoHash });
+      } catch (e) {
+        showToast(`${_magnetUri} is an invalid magnet url.`);
+      }
+    }
+
+    loadMagnetUri(magnetUri);
+    function loadMagnetWhenAppIsOpen(e, url: string) {
+      loadMagnetUri(url);
+    }
+    ipcRenderer.on("magnet-opened", loadMagnetWhenAppIsOpen);
+
+    return () => {
+      ipcRenderer.off("magnet-opened", loadMagnetWhenAppIsOpen);
+    };
+  }, []);
 
   useEffect(() => {
     store.set("torrents", downloads);

@@ -22,6 +22,10 @@ mac:
 fileAssociations:
   ext: torrent
   icon: resources/file-moose.icns
+protocols:
+  name: open-magnet
+  schemes:
+    - magnet
 dmg:
 #  https://kilianvalkhof:com/2019/electron/notarizing-your-electron-application/:
   sign: false

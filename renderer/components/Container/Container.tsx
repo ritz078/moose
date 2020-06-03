@@ -17,8 +17,10 @@ import MagnetUri from "magnet-uri";
 import ParseTorrent from "parse-torrent";
 
 const { searchParams } = new URL(window.location.href);
-const path = decodeURI(searchParams.get("path"));
-const magnetUri = decodeURI(searchParams.get("magnet"));
+
+const path = searchParams.get("path") && decodeURI(searchParams.get("path"));
+const magnetUri =
+  searchParams.get("magnet") && decodeURI(searchParams.get("magnet"));
 
 export default function () {
   const [selectedTorrent, setSelectedTorrent] = useState<DownloadingTorrent>(
@@ -100,6 +102,7 @@ export default function () {
 
   useEffect(() => {
     function loadMagnetUri(_magnetUri: string) {
+      debugger;
       if (!_magnetUri) return;
       try {
         const { name, infoHash }: MagnetUri.Instance = ParseTorrent(_magnetUri);

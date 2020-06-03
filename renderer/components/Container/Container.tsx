@@ -11,6 +11,11 @@ import { Message } from "@components/Message";
 import { SelectedCastContext } from "@contexts/SelectedCast";
 import { Toast } from "@components/Toast";
 import { getDefaultColor } from "@utils/theme";
+import { parseFileInfo } from "@utils/parseFileInfo";
+import fs from "fs";
+
+const { searchParams } = new URL(window.location.href);
+const path = decodeURI(searchParams.get("path"));
 
 export default function () {
   const [selectedTorrent, setSelectedTorrent] = useState<DownloadingTorrent>(
@@ -68,6 +73,27 @@ export default function () {
     },
     [store]
   );
+
+  const loadFile = useCallback((path: string) => {
+    if (!path) return;
+    fs.readFile(path, async (err, data) => {
+      if (err) return;
+      onFileSelect(await parseFileInfo(data));
+    });
+  }, []);
+
+  useEffect(() => {
+    loadFile(path);
+
+    function loadFileWhenAppIsOpen(e, path: string) {
+      loadFile(path);
+    }
+    ipcRenderer.on("file-opened", loadFileWhenAppIsOpen);
+
+    return () => {
+      ipcRenderer.off("file-opened", loadFileWhenAppIsOpen);
+    };
+  }, [loadFile]);
 
   useEffect(() => {
     store.set("torrents", downloads);

@@ -90,7 +90,7 @@ export const Player: React.FC<IProps> = memo(
                   size={0.8}
                 />
               </button>
-              <button onClick={() => shell.openItem(file.path)}>
+              <button onClick={() => shell.openPath(file.path)}>
                 <Icon
                   path={mdiOpenInApp}
                   title="Open in Default App"

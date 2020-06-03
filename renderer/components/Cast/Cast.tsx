@@ -78,13 +78,15 @@ export const Cast: React.FC<IProps> = () => {
           </div>
         )}
       >
-        <button onClick={fetchAndOpen} title="Cast">
-          <Icon
-            path={selectedCast ? mdiCastConnected : mdiCast}
-            size={0.72}
-            color={selectedCast ? "#8edcff" : "#fff"}
-          />
-        </button>
+        {(ref) => (
+          <button ref={ref} onClick={fetchAndOpen} title="Cast">
+            <Icon
+              path={selectedCast ? mdiCastConnected : mdiCast}
+              size={0.72}
+              color={selectedCast ? "#8edcff" : "#fff"}
+            />
+          </button>
+        )}
       </Popover>
     </>
   );

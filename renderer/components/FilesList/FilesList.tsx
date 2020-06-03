@@ -142,7 +142,7 @@ export const FilesList: React.FC<IProps> = memo(
           } else if (file.type === FileType.AUDIO) {
             setSelectedFile(file);
           } else {
-            await shell.openItem(file.path);
+            await shell.openPath(file.path);
           }
         })();
       },

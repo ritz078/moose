@@ -1,4 +1,4 @@
-import { BrowserWindow, app } from "electron";
+import { BrowserWindow, app, dialog } from "electron";
 import serve from "electron-serve";
 import createWindow from "./helpers/createWindow";
 import getPort from "get-port";
@@ -23,6 +23,7 @@ app.commandLine.appendSwitch("enable-experimental-web-platform-features");
 
 app.name = name;
 let win: BrowserWindow;
+let path: string;
 
 if (app.isPackaged) {
   unhandled();
@@ -31,6 +32,8 @@ if (app.isPackaged) {
 } else {
   app.setPath("userData", `${app.getPath("userData")} (development)`);
 }
+
+async function addTorrent() {}
 
 async function _createWindow() {
   await app.whenReady();
@@ -59,11 +62,18 @@ async function _createWindow() {
     y: 30,
   });
   createServer(apiPort, async () => {
+    const params = new URLSearchParams();
+    params.append("port", apiPort.toString(10));
+    if (path) {
+      params.append("path", encodeURI(path));
+    }
+    const query = params.toString();
+
     if (app.isPackaged) {
-      await win.loadURL(`app://./home.html?port=${apiPort}`);
+      await win.loadURL(`app://./home.html?${query}`);
     } else {
       const port = process.argv[2];
-      await win.loadURL(`http://localhost:${port}/home?port=${apiPort}`);
+      await win.loadURL(`http://localhost:${port}/home?${query}`);
       win.webContents.openDevTools();
     }
   });
@@ -100,4 +110,12 @@ app.on("will-quit", () => {
 
 app.on("window-all-closed", () => {
   app.quit();
+});
+
+app.on("open-file", (_e, _path) => {
+  if (app.isReady()) {
+    win.webContents.send("file-opened", _path);
+  } else {
+    path = _path;
+  }
 });

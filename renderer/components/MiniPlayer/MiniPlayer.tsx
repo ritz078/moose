@@ -15,18 +15,17 @@ export const MiniPlayer: React.FC<IProps> = memo(({ file }) => {
   const playerRef = useRef<Plyr>(null);
 
   useEffect(() => {
-    if (!file || file.type !== FileType.AUDIO) {
+    return () => {
       playerRef.current?.destroy();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!file || file.type !== FileType.AUDIO) {
       return;
     }
-    if (playerRef.current) {
-      playerRef.current.source = {
-        type: "audio",
-        sources: [{ src: file.url }],
-      };
-    } else if (file) {
-      playerRef.current = new Plyr(audioRef.current);
-    }
+
+    playerRef.current = new Plyr(audioRef.current);
   }, [file]);
 
   const transitions = fadeInTranslateY(!!file && file.type === FileType.AUDIO);

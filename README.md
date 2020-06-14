@@ -2,6 +2,8 @@
 
 ---
 
+<a href="https://www.producthunt.com/posts/moose-2?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-moose-2" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=206297&theme=light" alt="moose - A torrent client to download, stream and cast torrents. | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px" /></a>
+
 A torrent client to download, stream and cast torrents.
 
 ### Features

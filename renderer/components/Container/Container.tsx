@@ -102,7 +102,6 @@ export default function () {
 
   useEffect(() => {
     function loadMagnetUri(_magnetUri: string) {
-      debugger;
       if (!_magnetUri) return;
       try {
         const { name, infoHash }: MagnetUri.Instance = ParseTorrent(_magnetUri);

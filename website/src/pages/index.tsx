@@ -33,10 +33,12 @@ export async function getStaticProps() {
   );
   return {
     props: {
-      macUrl: data.assets.find((assets) => assets.name.endsWith(".dmg"))
-        ?.browser_download_url,
-      linuxUrl: data.assets.find((assets) => assets.name.endsWith(".AppImage"))
-        ?.browser_download_url,
+      macUrl:
+        data.assets.find((assets) => assets.name.endsWith(".dmg"))
+          ?.browser_download_url || "",
+      linuxUrl:
+        data.assets.find((assets) => assets.name.endsWith(".AppImage"))
+          ?.browser_download_url || "",
     },
   };
 }

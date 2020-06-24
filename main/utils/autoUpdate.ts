@@ -20,10 +20,12 @@ export async function updateApp() {
   });
 
   autoUpdater.on("error", async (err) => {
-    await dialog.showMessageBox({
-      type: "error",
-      message: err.message,
-    });
+    if (!err.message.includes("HttpError: 404 Not Found")) {
+      await dialog.showMessageBox({
+        type: "error",
+        message: err.message,
+      });
+    }
   });
 
   await autoUpdater.checkForUpdates();

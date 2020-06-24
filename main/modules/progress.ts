@@ -2,6 +2,7 @@ import { ipcMain, app } from "electron";
 import client from "../utils/webtorrent";
 import prettyBytes from "pretty-bytes";
 import { Torrent } from "webtorrent";
+import { is } from "electron-util";
 
 ipcMain.on("progress", (e, downloads, path) => {
   const torrents = downloads.map(({ magnet }) => {
@@ -14,7 +15,9 @@ ipcMain.on("progress", (e, downloads, path) => {
     );
   });
 
-  app.dock.setBadge(`${prettyBytes(client.downloadSpeed)}/s`);
+  if (is.macos) {
+    app.dock.setBadge(`${prettyBytes(client.downloadSpeed)}/s`);
+  }
 
   e.returnValue = torrents.map((torrent, i) => {
     const {

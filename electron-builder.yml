@@ -29,3 +29,9 @@ protocols:
 dmg:
 #  https://kilianvalkhof:com/2019/electron/notarizing-your-electron-application/:
   sign: false
+linux:
+  target: appImage
+  category: AudioVideo
+  mimeTypes:
+    - application/x-bittorrent
+

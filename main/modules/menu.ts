@@ -15,7 +15,7 @@ export async function setMenu(port, mainWin: BrowserWindow) {
               nodeIntegration: true,
             },
             vibrancy: "under-window",
-            frame: false,
+            frame: !is.macos,
             titleBarStyle: "hiddenInset",
           });
 

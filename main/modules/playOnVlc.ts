@@ -1,12 +1,17 @@
 import { ipcMain } from "electron";
 import vlcCommand from "vlc-command";
 import { spawn } from "child_process";
-import { app } from "electron";
+import { app, dialog } from "electron";
 
 let proc;
 ipcMain.handle("playOnVlc", async (e, url, caption) => {
   kill();
   vlcCommand(function (err, path) {
+    if (err) {
+      dialog.showErrorBox("VLC Error", err.message);
+      return;
+    }
+
     const args = [
       "--quiet",
       `--meta-title=${JSON.stringify(

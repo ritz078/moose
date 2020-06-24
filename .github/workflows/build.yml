@@ -8,7 +8,7 @@ on:
     branches: [master]
 
 jobs:
-  build_on_mac:
+  build:
     runs-on: macOS-latest
 
     strategy:
@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm i -g yarn && yarn install --frozen-lockfile && npm run build:mac --if-present
+      - run: npm i -g yarn && yarn install --frozen-lockfile && npm run build:mac && npm run build:linux
         env:
           CI: true
           GH_TOKEN: ${{ secrets.GH_TOKEN }}

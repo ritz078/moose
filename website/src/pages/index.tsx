@@ -33,14 +33,17 @@ export async function getStaticProps() {
   );
   return {
     props: {
-      macUrl: data.assets.find(
-        (assets) => assets.content_type === "application/octet-stream"
-      ).browser_download_url,
+      macUrl:
+        data.assets.find((assets) => assets.name.endsWith(".dmg"))
+          ?.browser_download_url || "",
+      linuxUrl:
+        data.assets.find((assets) => assets.name.endsWith(".AppImage"))
+          ?.browser_download_url || "",
     },
   };
 }
 
-export default ({ macUrl }) => {
+export default ({ macUrl, linuxUrl }) => {
   return (
     <div className="wrapper">
       <Head>
@@ -79,9 +82,11 @@ export default ({ macUrl }) => {
               <button title="Coming soon" disabled className="download-button">
                 <Icon path={mdiMicrosoftWindows} size={1.2} />
               </button>
-              <button title="Coming soon" disabled className="download-button">
-                <Icon path={mdiLinux} size={1.2} />
-              </button>
+              <a href={linuxUrl} target="_blank">
+                <button className="download-button">
+                  <Icon path={mdiLinux} size={1.2} />
+                </button>
+              </a>
               <a href="https://github.com/ritz078/moose" target="_blank">
                 <button className="download-button">
                   <Icon path={mdiGithub} size={1.2} />

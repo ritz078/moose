@@ -8,7 +8,6 @@ import { updateApp } from "./utils/autoUpdate";
 import { setMenu } from "./modules/menu";
 import "./modules/playOnVlc";
 import "./modules/progress";
-import "./modules/dlnacasts";
 
 import { createServer, closeServer } from "./server";
 import client from "./utils/webtorrent";
@@ -16,6 +15,7 @@ import { cleanup } from "./modules/cast";
 import { EventEmitter } from "events";
 import unhandled from "electron-unhandled";
 import "./utils/analytics";
+import { is } from "electron-util";
 
 EventEmitter.defaultMaxListeners = 0;
 
@@ -34,11 +34,14 @@ if (app.isPackaged) {
   app.setPath("userData", `${app.getPath("userData")} (development)`);
 }
 
-async function addTorrent() {}
-
 async function _createWindow() {
   await app.whenReady();
-  await updateApp();
+
+  try {
+    await updateApp();
+  } catch (e) {
+    console.log(e.message);
+  }
 
   const apiPort = await getPort({
     port: getPort.makeRange(3000, 3010),
@@ -54,14 +57,17 @@ async function _createWindow() {
       nodeIntegration: true,
     },
     vibrancy: "under-window",
-    frame: false,
-    titleBarStyle: "hidden",
+    frame: !is.macos,
+    titleBarStyle: is.macos ? "hidden" : "default",
   });
 
-  win.setTrafficLightPosition({
-    x: 10,
-    y: 30,
-  });
+  if (is.macos) {
+    win.setTrafficLightPosition({
+      x: 10,
+      y: 30,
+    });
+  }
+
   createServer(apiPort, async () => {
     const params = new URLSearchParams();
     params.append("port", apiPort.toString(10));

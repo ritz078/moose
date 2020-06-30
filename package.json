@@ -20,7 +20,7 @@
     "chromecasts": "^1.9.1",
     "cors": "^2.8.5",
     "dlnacasts": "^0.1.0",
-    "electron-log": "^4.2.0",
+    "electron-log": "^4.2.2",
     "electron-serve": "^1.0.0",
     "electron-store": "^5.2.0",
     "electron-unhandled": "^3.0.2",

@@ -24,7 +24,7 @@
     "electron-serve": "^1.0.0",
     "electron-store": "^5.2.0",
     "electron-unhandled": "^3.0.2",
-    "electron-util": "^0.14.1",
+    "electron-util": "^0.14.2",
     "express": "^4.17.1",
     "get-port": "^5.1.1",
     "internal-ip": "^6.0.0",

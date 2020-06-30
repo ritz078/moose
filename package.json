@@ -74,7 +74,7 @@
     "react-table": "^7.2.1",
     "react-tiny-popover": "^5.1.0",
     "sass": "^1.26.8",
-    "simplebar-react": "^2.2.0",
+    "simplebar-react": "^2.2.1",
     "srt-webvtt": "^1.0.1",
     "typescript": "3.9.5",
     "webpack": "^4.43.0"

@@ -71,12 +71,12 @@
     "react-dom": "16.13.1",
     "react-dropzone": "^11.0.1",
     "react-spring": "^8.0.27",
-    "react-table": "^7.2.1",
+    "react-table": "^7.2.2",
     "react-tiny-popover": "^5.1.0",
     "sass": "^1.26.9",
-    "simplebar-react": "^2.2.0",
+    "simplebar-react": "^2.2.1",
     "srt-webvtt": "^1.0.1",
-    "typescript": "3.9.5",
+    "typescript": "3.9.6",
     "webpack": "^4.43.0"
   },
   "husky": {

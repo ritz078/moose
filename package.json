@@ -30,7 +30,7 @@
     "internal-ip": "^6.0.0",
     "mime": "^2.4.5",
     "range-parser": "^1.2.1",
-    "universal-analytics": "^0.4.20",
+    "universal-analytics": "^0.4.22",
     "uuid": "^8.2.0",
     "vlc-command": "^1.2.0",
     "webtorrent": "0.108.6"

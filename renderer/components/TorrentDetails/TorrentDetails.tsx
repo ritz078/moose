@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import styles from "./TorrentDetails.module.scss";
 import { ITorrentDetails } from "../../../types/TorrentDetails";
 import { FilesList } from "@components/FilesList";
@@ -21,7 +21,7 @@ interface IProps {
   infoHash: string;
 }
 
-export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
+export const TorrentDetails: React.FC<IProps> = memo(({ infoHash, name }) => {
   if (!infoHash) return null;
   const [torrentDetails, setTorrentDetails] = useState<ITorrentDetails>(null);
   const [description, setDescription] = useState<ITorrentDescription>(
@@ -44,7 +44,7 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
       if (!description) {
         description = await getTorrentDescription(name);
         store.set("descriptions", {
-          ...store.get("descriptions"),
+          ...(store.get("descriptions") as Object),
           [infoHash]: description,
         });
       }
@@ -143,4 +143,4 @@ export const TorrentDetails: React.FC<IProps> = ({ infoHash, name }) => {
       )}
     </>
   );
-};
+});

@@ -7,6 +7,6 @@ const Container =
     ssr: false,
   });
 
-export default () => {
+export default function Settings() {
   return Container ? <Container /> : <div />;
-};
+}

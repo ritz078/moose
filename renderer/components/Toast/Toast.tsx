@@ -6,9 +6,9 @@ import Icon from "@mdi/react";
 import { mdiClose } from "@mdi/js";
 import mitt from "mitt";
 
-const emitter: mitt.Emitter = mitt();
+const emitter = mitt();
 
-export const Toast = () => {
+export const Toast = memo(() => {
   const [show, setShow] = useState(false);
   const [message, setMessage] = useState(null);
 
@@ -45,7 +45,7 @@ export const Toast = () => {
       )}
     </>
   );
-};
+});
 
 export const showToast = (msg: string) => {
   emitter.emit("SHOW_TOAST", msg);

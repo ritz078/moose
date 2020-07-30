@@ -3,12 +3,32 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@utils/*": ["utils/*"],
-      "@components/*": ["components/*"],
-      "@styles/*": ["styles/*"],
-      "@contexts/*": ["contexts/*"],
-      "@enums/*": ["enums/*"],
-      "@hooks/*": ["hooks/*"]
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@styles/*": [
+        "styles/*"
+      ],
+      "@contexts/*": [
+        "contexts/*"
+      ],
+      "@enums/*": [
+        "enums/*"
+      ],
+      "@hooks/*": [
+        "hooks/*"
+      ]
     }
-  }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

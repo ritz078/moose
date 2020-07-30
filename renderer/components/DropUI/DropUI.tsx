@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import Icon from "@mdi/react";
-import { mdiFileDownload } from "@mdi/js";
+import { mdiFilePlus } from "@mdi/js";
 import styles from "./DropUI.module.scss";
 import cn from "classnames";
 import { useTransition, animated, config } from "react-spring";
@@ -32,7 +32,7 @@ export const DropUI: React.FC<IProps> = memo(({ isDragActive }) => {
               style={props}
             >
               <Icon
-                path={mdiFileDownload}
+                path={mdiFilePlus}
                 size={3}
                 title="Drag and drop torrent file"
               />

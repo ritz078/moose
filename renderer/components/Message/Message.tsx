@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { fadeInTranslateY } from "@utils/animations";
 import { animated, useTransition } from "react-spring";
 import styles from "./Message.module.scss";
@@ -8,7 +8,7 @@ interface IProps {
   message?: string;
 }
 
-export const Message: React.FC<IProps> = ({ show, message, children }) => {
+export const Message: React.FC<IProps> = memo(({ show, message, children }) => {
   const transitions = fadeInTranslateY(show);
 
   return (
@@ -23,4 +23,4 @@ export const Message: React.FC<IProps> = ({ show, message, children }) => {
       )}
     </>
   );
-};
+});

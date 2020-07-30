@@ -15,8 +15,4 @@ module.exports = {
 
     return config;
   },
-
-  experimental: {
-    jsconfigPaths: true,
-  },
 };

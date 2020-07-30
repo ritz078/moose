@@ -9,7 +9,7 @@ const Container =
     ssr: false,
   });
 
-export default () => {
+export default function Home() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedCast, setSelectedCast] = useState(null);
 
@@ -25,4 +25,4 @@ export default () => {
       </SelectedCastContext.Provider>
     </SelectedFileContext.Provider>
   );
-};
+}

@@ -22,7 +22,7 @@ const path = searchParams.get("path") && decodeURI(searchParams.get("path"));
 const magnetUri =
   searchParams.get("magnet") && decodeURI(searchParams.get("magnet"));
 
-export default function () {
+export default React.memo(function Container() {
   const [selectedTorrent, setSelectedTorrent] = useState<DownloadingTorrent>(
     null
   );
@@ -30,7 +30,7 @@ export default function () {
     store.get("torrents") as Download[]
   );
 
-  const [color, setColor] = useState(store.get("color"));
+  const [color, setColor] = useState(store.get("color") as string);
   const { selectedCast } = useContext(SelectedCastContext);
 
   useEffect(() => {
@@ -128,6 +128,7 @@ export default function () {
 
   const onTorrentDelete = useCallback(
     (infoHash) => {
+      // @ts-ignore
       store.delete(`descriptions.${infoHash}`);
 
       setDownloads((_downloads) =>
@@ -170,4 +171,4 @@ export default function () {
       <Toast />
     </div>
   );
-}
+});

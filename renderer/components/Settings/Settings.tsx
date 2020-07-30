@@ -6,9 +6,9 @@ import { ipcRenderer, remote } from "electron";
 import store from "@utils/store";
 import { activeWindow } from "electron-util";
 
-export default function () {
+export default React.memo(function Settings() {
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
-  const [color, setColor] = useState(store.get("color"));
+  const [color, setColor] = useState(store.get("color") as string);
   const [downloadDir, setDownloadDir] = useState(
     store.get("downloadDirectory")
   );
@@ -87,4 +87,4 @@ export default function () {
       {/*</div>*/}
     </div>
   );
-}
+});

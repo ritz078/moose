@@ -21,7 +21,7 @@ export interface CastDevice {
   host: string;
 }
 
-export const Cast: React.FC<IProps> = () => {
+export const Cast: React.FC<IProps> = React.memo(() => {
   const [devices, setDevices] = useState<CastDevice[]>(null);
   const [show, setShow] = useState(false);
   const { setSelectedCast, selectedCast } = useContext(SelectedCastContext);
@@ -90,4 +90,4 @@ export const Cast: React.FC<IProps> = () => {
       </Popover>
     </>
   );
-};
+});

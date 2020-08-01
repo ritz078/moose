@@ -1,0 +1,31 @@
+.empty {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+  line-height: 22px;
+}
+
+.emptyInner {
+  background-color: #17171730;
+  padding: 20px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.button {
+  all: unset;
+  border: 2px dashed #ffffff50;
+  border-radius: 5px;
+  padding: 30px;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: all 200ms;
+
+  &:hover {
+    border-color: #ffffff;
+  }
+}

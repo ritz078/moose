@@ -12,7 +12,11 @@ export async function description(
   const { name } = req.query;
 
   const info = parse(name);
-  const response = isMovieOrShow(name) ? await tvdb.find(info) : null;
+  try {
+    const response = isMovieOrShow(name) ? await tvdb.find(info) : null;
 
-  res.json(response);
+    res.json(response);
+  } catch (e) {
+    res.json(null);
+  }
 }

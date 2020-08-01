@@ -79,7 +79,7 @@ export const Cast: React.FC<IProps> = React.memo(() => {
         )}
       >
         {(ref) => (
-          <button ref={ref} onClick={fetchAndOpen} title="Cast">
+          <button ref={ref} onClick={fetchAndOpen} title="Cast / DLNA">
             <Icon
               path={selectedCast ? mdiCastConnected : mdiCast}
               size={0.72}

@@ -1,6 +1,6 @@
 import { Header } from "../Header";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import styles from "./Container.module.css";
+import styles from "./Container.module.scss";
 import { Download, Downloads } from "@components/Downloads";
 import { DragAndDrop } from "@components/DragAndDrop";
 import { TorrentDetails } from "@components/TorrentDetails";
@@ -15,6 +15,9 @@ import { parseFileInfo } from "@utils/parseFileInfo";
 import fs from "fs";
 import MagnetUri from "magnet-uri";
 import ParseTorrent from "parse-torrent";
+import Icon from "@mdi/react";
+import { mdiFilePlus } from "@mdi/js";
+import { Empty } from "@components/Empty";
 
 const { searchParams } = new URL(window.location.href);
 
@@ -156,16 +159,22 @@ export default React.memo(function Container() {
         You are connected to {selectedCast?.name}
       </Message>
       <DragAndDrop onFileSelect={onFileSelect}>
-        <Downloads
-          onTorrentDelete={onTorrentDelete}
-          downloads={downloads}
-          onTorrentSelect={setSelectedTorrent}
-        />
+        {!downloads?.length ? (
+          <Empty onFileSelect={onFileSelect} />
+        ) : (
+          <>
+            <Downloads
+              onTorrentDelete={onTorrentDelete}
+              downloads={downloads}
+              onTorrentSelect={setSelectedTorrent}
+            />
 
-        <TorrentDetails
-          infoHash={selectedTorrent?.infoHash}
-          name={selectedTorrent?.name}
-        />
+            <TorrentDetails
+              infoHash={selectedTorrent?.infoHash}
+              name={selectedTorrent?.name}
+            />
+          </>
+        )}
       </DragAndDrop>
 
       <Toast />

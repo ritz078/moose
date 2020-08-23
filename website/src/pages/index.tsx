@@ -1,5 +1,5 @@
 import React from "react";
-import { IParticlesParams } from "react-particles-js";
+import { IParticlesParams, OutMode } from "react-tsparticles";
 import dynamic from "next/dynamic";
 import Icon from "@mdi/react";
 import { mdiApple, mdiGithub, mdiLinux, mdiMicrosoftWindows } from "@mdi/js";
@@ -7,20 +7,30 @@ import Head from "next/head";
 import ProgressiveImage from "react-progressive-image";
 import axios from "axios";
 
-const Particles = dynamic(() => import("react-particles-js"), {
+const Particles = dynamic(() => import("react-tsparticles"), {
   ssr: false,
 });
 
 const params: IParticlesParams = {
   detectRetina: true,
   particles: {
+    collisions: {
+      enable: true,
+    },
     opacity: {
       value: 0.1,
     },
     number: {
       value: 100,
     },
-    lineLinked: { enable: false },
+    links: {
+      enable: false,
+    },
+    move: {
+      enable: true,
+      speed: 3,
+      outMode: OutMode.bounce,
+    },
     size: {
       value: 5,
     },
@@ -64,7 +74,7 @@ export default ({ macUrl, linuxUrl }) => {
         />
         <meta property="og:image" content="https://getmoose.in/favicon.png" />
       </Head>
-      <Particles className={"particles"} params={params} />
+      <Particles className={"particles"} options={params} />
 
       <div className="banner">
         <div className="top-section">

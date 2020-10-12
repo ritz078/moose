@@ -8371,10 +8371,10 @@ react-spring@^8.0.27:
     "@babel/runtime" "^7.3.1"
     prop-types "^15.5.8"
 
-react-table@^7.3.0:
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.3.0.tgz#f9c78f3a6c7ba5efdea3414b8e5dc54a3cf69466"
-  integrity sha512-VQlVgvKItkpO+tAtWf/xdn9a8RU8gVqG25Ymrw9PczyBrM2Cr+HivHVQ2VsYWy8SieL0bcCNk3C++mbtWgXLfQ==
+react-table@^7.6.0:
+  version "7.6.0"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.6.0.tgz#83d765b96505b5332d108a2e0c27ab653f5a78c3"
+  integrity sha512-16kRTypBWz9ZwLnPWA8hc3eIC64POzO9GaMBiKaCcVM+0QOQzt0G7ebzGUM8SW0CYUpVM+glv1kMXrWj9tr3Sw==
 
 react-tiny-popover@^5.1.0:
   version "5.1.0"

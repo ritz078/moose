@@ -1279,10 +1279,10 @@
   resolved "https://registry.yarnpkg.com/@icons/material/-/material-0.2.4.tgz#e90c9f71768b3736e76d7dd6783fc6c2afa88bc8"
   integrity sha512-QPcGmICAPbGLGb6F/yNf/KzKqvFx8z5qx3D1yFqVAjoFmXK35EgyW+cJ57Te3CNsmzblwtzakLGFqHPqrfb4Tw==
 
-"@mdi/js@^5.2.45":
-  version "5.3.45"
-  resolved "https://registry.yarnpkg.com/@mdi/js/-/js-5.3.45.tgz#c6f523311bf77e339051e24aaa3eddabf565a027"
-  integrity sha512-r05JoeUhokSERwW6yYi3WcKCBePHHqBvIikOD0X/dWyaZb6gIRth5Lya7VVTItvGo1qlpp8LpMJKmE6o49+G+Q==
+"@mdi/js@^5.7.55":
+  version "5.7.55"
+  resolved "https://registry.yarnpkg.com/@mdi/js/-/js-5.7.55.tgz#c3b487131755c726df1802a10ef72096b2de4c2f"
+  integrity sha512-fxOEaPPn4hTlNpUG7VzmleYiK8lilON8dw1g8U42OAILtIu2+knfEjguspfVNtS5aJu1zP+DBeoxbsGhIUZcEw==
 
 "@mdi/react@^1.3.0":
   version "1.4.0"

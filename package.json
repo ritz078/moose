@@ -71,7 +71,7 @@
     "react-dom": "16.13.1",
     "react-dropzone": "^11.0.2",
     "react-spring": "^8.0.27",
-    "react-table": "^7.3.0",
+    "react-table": "^7.6.1",
     "react-tiny-popover": "^5.1.0",
     "sass": "^1.26.10",
     "simplebar-react": "^2.2.1",

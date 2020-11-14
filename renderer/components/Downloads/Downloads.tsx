@@ -123,9 +123,7 @@ export const Downloads: React.FC<IProps> = memo(
                         return (
                           <tr
                             onClick={() => onTorrentSelect(row.original)}
-                            className={cn(styles.cell, {
-                              [styles.trDisabled]: !row.original.ready,
-                            })}
+                            className={styles.cell}
                             {...row.getRowProps()}
                           >
                             {row.cells.map((cell) => (
@@ -139,6 +137,9 @@ export const Downloads: React.FC<IProps> = memo(
                                 }
                                 className={cn({
                                   [styles.tdIcon]: cell.column.id === "delete",
+                                  [styles.tdDisabled]:
+                                    !row.original.ready &&
+                                    cell.column.id !== "delete",
                                 })}
                               >
                                 {cell.column.id === "delete" && (

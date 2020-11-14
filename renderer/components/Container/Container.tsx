@@ -30,7 +30,7 @@ export default function () {
     store.get("torrents") as Download[]
   );
 
-  const [color, setColor] = useState(store.get("color"));
+  const [color, setColor] = useState<string>(store.get("color") as string);
   const { selectedCast } = useContext(SelectedCastContext);
 
   useEffect(() => {

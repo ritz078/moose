@@ -58,7 +58,7 @@
     "lodash": "^4.17.19",
     "mitt": "^2.1.0",
     "next": "9.4.4",
-    "nextron": "^5.15.0",
+    "nextron": "^6.0.1",
     "opensubtitles-api": "^5.1.2",
     "parse-torrent-title": "^1.3.0",
     "plyr": "^3.6.2",

@@ -27,7 +27,7 @@
     "electron-util": "^0.14.2",
     "express": "^4.17.1",
     "get-port": "^5.1.1",
-    "internal-ip": "^6.0.0",
+    "internal-ip": "^6.2.0",
     "mime": "^2.4.5",
     "range-parser": "^1.2.1",
     "universal-analytics": "^0.4.23",

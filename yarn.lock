@@ -1557,10 +1557,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/webtorrent@^0.107.1":
-  version "0.107.2"
-  resolved "https://registry.yarnpkg.com/@types/webtorrent/-/webtorrent-0.107.2.tgz#f8d6dba86ef11dfd5087dc82288a3137a03a0523"
-  integrity sha512-Jd8NzoF2FqQSo3Y7vPfJDW/vKCv8VDs+22yhzib4YdYEi4q5CfS+1wLZLvL5OpdpVnaxsVmXoVvTZTgrO7y6Qw==
+"@types/webtorrent@^0.109.0":
+  version "0.109.0"
+  resolved "https://registry.yarnpkg.com/@types/webtorrent/-/webtorrent-0.109.0.tgz#dd377691caf360317738f67fa0c3bce48623df57"
+  integrity sha512-c6EgbuFRZqhM4TMnloRuLAcR45j/Qn0kQ6CKWMppXXHfaQpspB1ZeeYx2Bpc22MAgCc3pjlAakTRS2h15stW2A==
   dependencies:
     "@types/bittorrent-protocol" "*"
     "@types/node" "*"

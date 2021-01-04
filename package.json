@@ -77,7 +77,7 @@
     "simplebar-react": "^2.2.1",
     "srt-webvtt": "^1.0.1",
     "typescript": "3.9.7",
-    "webpack": "^4.43.0"
+    "webpack": "^5.11.1"
   },
   "husky": {
     "hooks": {

@@ -69,7 +69,7 @@
     "react": "16.13.1",
     "react-color": "^2.18.1",
     "react-dom": "16.13.1",
-    "react-dropzone": "^11.0.2",
+    "react-dropzone": "^11.2.4",
     "react-spring": "^8.0.27",
     "react-table": "^7.3.0",
     "react-tiny-popover": "^5.1.0",

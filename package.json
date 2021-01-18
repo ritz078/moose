@@ -52,7 +52,7 @@
     "electron-builder": "^22.6.1",
     "electron-notarize": "^1.0.0",
     "electron-updater": "^4.3.1",
-    "husky": "^4.2.3",
+    "husky": "^4.3.8",
     "imagemin-lint-staged": "^0.4.0",
     "lint-staged": "^10.2.11",
     "lodash": "^4.17.19",

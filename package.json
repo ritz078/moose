@@ -73,7 +73,7 @@
     "react-spring": "^8.0.27",
     "react-table": "^7.3.0",
     "react-tiny-popover": "^5.1.0",
-    "sass": "^1.26.10",
+    "sass": "^1.32.5",
     "simplebar-react": "^2.2.1",
     "srt-webvtt": "^1.0.1",
     "typescript": "3.9.7",

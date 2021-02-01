@@ -21,7 +21,7 @@
     "cors": "^2.8.5",
     "dlnacasts": "^0.1.0",
     "electron-log": "^4.2.2",
-    "electron-serve": "^1.0.0",
+    "electron-serve": "^1.1.0",
     "electron-store": "^6.0.0",
     "electron-unhandled": "^3.0.2",
     "electron-util": "^0.14.2",

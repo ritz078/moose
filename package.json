@@ -45,7 +45,7 @@
     "@types/react-table": "^7.0.19",
     "@types/webtorrent": "^0.107.1",
     "babel-loader": "^8.1.0",
-    "buffer": "^5.6.0",
+    "buffer": "^6.0.3",
     "classnames": "^2.2.6",
     "dotenv": "^8.2.0",
     "electron": "^9.0.5",

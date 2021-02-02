@@ -1,7 +1,7 @@
 import React from "react";
 import { CastDevice } from "@components/Cast/Cast";
 
-interface Context {
+export interface Context {
   selectedCast: CastDevice;
   setSelectedCast: (file: Context["selectedCast"]) => void;
 }

@@ -2,9 +2,16 @@ import React from "react";
 import { IParticlesParams } from "react-particles-js";
 import dynamic from "next/dynamic";
 import Icon from "@mdi/react";
-import { mdiApple, mdiGithub, mdiLinux, mdiMicrosoftWindows } from "@mdi/js";
+import {
+  mdiApple,
+  mdiConsoleNetworkOutline,
+  mdiGithub,
+  mdiLinux,
+  mdiMicrosoftWindows,
+} from "@mdi/js";
 import Head from "next/head";
 import ProgressiveImage from "react-progressive-image";
+import platform from "platform";
 import axios from "axios";
 
 const Particles = dynamic(() => import("react-particles-js"), {
@@ -44,6 +51,29 @@ export async function getStaticProps() {
 }
 
 export default ({ macUrl, linuxUrl }) => {
+  // Download-button React Component
+  function DownloadButton(props) {
+    return !props.disabled ? (
+      <a href={props.url} target="_blank">
+        <button className="download-button">
+          <Icon path={props.logo} size={1.2} />
+        </button>
+      </a>
+    ) : (
+      <button title="Coming soon" disabled className="download-button">
+        <Icon path={props.logo} size={1.2} />
+      </button>
+    );
+  }
+
+  var platformOs = platform.os.toString();
+  // Client OS is other than Windows, Mac and Linux
+  var flag =
+    !platformOs.match(/Mac OS/i) &&
+    !platformOs.match(/Win/i) &&
+    !platformOs.match(/Linux/i);
+  console.log(flag);
+
   return (
     <div className="wrapper">
       <Head>
@@ -74,24 +104,42 @@ export default ({ macUrl, linuxUrl }) => {
             <span>A torrent client to download, stream and cast torrents.</span>
 
             <div className="downloads">
-              <a href={macUrl} target="_blank">
-                <button className="download-button">
-                  <Icon path={mdiApple} size={1.2} />
-                </button>
-              </a>
-              <button title="Coming soon" disabled className="download-button">
-                <Icon path={mdiMicrosoftWindows} size={1.2} />
-              </button>
-              <a href={linuxUrl} target="_blank">
-                <button className="download-button">
-                  <Icon path={mdiLinux} size={1.2} />
-                </button>
-              </a>
-              <a href="https://github.com/ritz078/moose" target="_blank">
-                <button className="download-button">
-                  <Icon path={mdiGithub} size={1.2} />
-                </button>
-              </a>
+              {/* Display appropriate Download-button for the client */}
+              {platformOs.match(/Mac OS/i) && (
+                <DownloadButton url={macUrl} logo={mdiApple} disabled={false} />
+              )}
+              {platformOs.match(/Win/i) && (
+                <DownloadButton logo={mdiMicrosoftWindows} disabled={true} />
+              )}
+              {platformOs.match(/Linux/i) && (
+                <DownloadButton
+                  url={linuxUrl}
+                  logo={mdiLinux}
+                  disabled={false}
+                />
+              )}
+
+              {/* If the OS doesn't match any of the three, display all the buttons */}
+              {flag && (
+                <DownloadButton url={macUrl} logo={mdiApple} disabled={false} />
+              )}
+              {flag && (
+                <DownloadButton logo={mdiMicrosoftWindows} disabled={true} />
+              )}
+              {flag && (
+                <DownloadButton
+                  url={linuxUrl}
+                  logo={mdiLinux}
+                  disabled={false}
+                />
+              )}
+              {
+                <DownloadButton
+                  url="https://github.com/ritz078/moose"
+                  logo={mdiGithub}
+                  disabled={false}
+                />
+              }
             </div>
           </div>
         </div>

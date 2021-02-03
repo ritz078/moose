@@ -8,7 +8,10 @@ import store from "@utils/store";
 import { DownloadingTorrent } from "../../../types/DownloadingTorrent";
 import { ipcRenderer, remote } from "electron";
 import { Message } from "@components/Message";
-import { SelectedCastContext } from "@contexts/SelectedCast";
+import {
+  SelectedCastContext,
+  Context as castContext,
+} from "@contexts/SelectedCast";
 import { showToast, Toast } from "@components/Toast";
 import { getDefaultColor } from "@utils/theme";
 import { parseFileInfo } from "@utils/parseFileInfo";
@@ -31,7 +34,9 @@ export default function () {
   );
 
   const [color, setColor] = useState<string>(store.get("color") as string);
-  const { selectedCast } = useContext(SelectedCastContext);
+  const { selectedCast, setSelectedCast } = useContext(
+    SelectedCastContext
+  ) as castContext;
 
   useEffect(() => {
     function changePreferences(e, { color }) {
@@ -152,7 +157,15 @@ export default function () {
     >
       <Header onFileSelect={onFileSelect} />
       <Message show={!!selectedCast?.host}>
-        You are connected to {selectedCast?.name}
+        <div className={styles.castMessageContainer}>
+          You are connected to {selectedCast?.name}
+          <text
+            className={styles.disconnectLink}
+            onClick={() => setSelectedCast(null)}
+          >
+            Disconnect
+          </text>
+        </div>
       </Message>
       <DragAndDrop onFileSelect={onFileSelect}>
         <Downloads

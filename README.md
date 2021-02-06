@@ -47,6 +47,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://riteshkr.com"><img src="https://avatars3.githubusercontent.com/u/5389035?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ritesh Kumar</b></sub></a><br /><a href="https://github.com/ritz078/moose/commits?author=ritz078" title="Code">💻</a> <a href="#design-ritz078" title="Design">🎨</a> <a href="#ideas-ritz078" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-ritz078" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     <td align="center"><a href="http://www.ateev.in"><img src="https://avatars0.githubusercontent.com/u/2234088?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ateev</b></sub></a><br /><a href="https://github.com/ritz078/moose/commits?author=ateev" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/vinodf2f"><img src="https://avatars.githubusercontent.com/u/41716058?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Vinod Yevatikar</b></sub></a><br /><a href="https://github.com/ritz078/moose/commits?author=vinodf2f" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/hierror"><img src="https://avatars.githubusercontent.com/u/13907494?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Hierro Duarte</b></sub></a><br /><a href="https://github.com/ritz078/moose/commits?author=hierror" title="Code">💻</a></td>
   </tr>
 </table>
 

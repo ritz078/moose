@@ -92,7 +92,7 @@ export const Downloads: React.FC<IProps> = memo(
 
     return (
       <div className={styles.results}>
-        <SimpleBar className={styles.simplebar}>
+        <SimpleBar>
           <div className={styles.resultsTableWrapper}>
             {fadeInTranslateY(!!data.length).map(
               ({ item, props, key }) =>

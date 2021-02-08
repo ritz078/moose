@@ -67,7 +67,7 @@
     "pretty-ms": "^7.0.0",
     "pump": "^3.0.0",
     "react": "16.13.1",
-    "react-color": "^2.18.1",
+    "react-color": "^2.19.3",
     "react-dom": "16.13.1",
     "react-dropzone": "^11.0.2",
     "react-spring": "^8.0.27",

@@ -33,7 +33,7 @@
     "universal-analytics": "^0.4.23",
     "uuid": "^8.2.0",
     "vlc-command": "^1.2.0",
-    "webtorrent": "0.108.6"
+    "webtorrent": "^0.114.1"
   },
   "devDependencies": {
     "@mdi/js": "^5.2.45",

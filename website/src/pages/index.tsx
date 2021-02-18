@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IParticlesParams } from "react-particles-js";
 import dynamic from "next/dynamic";
 import Icon from "@mdi/react";
@@ -53,26 +53,91 @@ export async function getStaticProps() {
 export default ({ macUrl, linuxUrl }) => {
   // Download-button React Component
   function DownloadButton(props) {
-    return !props.disabled ? (
-      <a href={props.url} target="_blank">
-        <button className="download-button">
+    if (props.type === "box-button") {
+      return !props.disabled ? (
+        <a className="downloads" href={props.url} target="_blank">
+          <button className="download-button">
+            Download moose for&nbsp;<b>{props.name}</b>
+          </button>
+        </a>
+      ) : (
+        <a className="downloads">
+          <button key={props.key} title="Coming soon" disabled>
+            Download moose for&nbsp;<b>{props.name}</b>
+          </button>
+        </a>
+      );
+    } else if (props.type == "icon-button") {
+      return !props.disabled ? (
+        <a key={props.key} href={props.url} target="_blank">
+          <button className="download-button">
+            <Icon path={props.logo} size={1.2} />
+          </button>
+        </a>
+      ) : (
+        <button
+          key={props.key}
+          title="Coming soon"
+          disabled
+          className="download-button"
+        >
           <Icon path={props.logo} size={1.2} />
         </button>
-      </a>
+      );
+    }
+  }
+
+  function DownloadAll(props) {
+    const [clicked, setClicked] = useState(false);
+
+    return clicked ? (
+      <>
+        <DownloadButton
+          key={"OS X_"}
+          url={macUrl}
+          logo={mdiApple}
+          disabled={false}
+          type="icon-button"
+        />
+        <DownloadButton
+          key={"Windows_"}
+          logo={mdiMicrosoftWindows}
+          disabled={true}
+          type="icon-button"
+        />
+        <DownloadButton
+          key={"Linux_"}
+          url={linuxUrl}
+          logo={mdiLinux}
+          disabled={false}
+          type="icon-button"
+        />
+        <DownloadButton
+          key={"Github"}
+          url="https://github.com/ritz078/moose"
+          logo={mdiGithub}
+          disabled={false}
+          type="icon-button"
+        />
+      </>
     ) : (
-      <button title="Coming soon" disabled className="download-button">
-        <Icon path={props.logo} size={1.2} />
-      </button>
+      <a
+        className="downloads-all-link"
+        onClick={() => {
+          setClicked(true);
+        }}
+      >
+        Download for other platforms
+      </a>
     );
   }
 
-  var platformOs = platform.os.toString();
-  // Client OS is other than Windows, Mac and Linux
+  console.log(`family: ${platform.os.family}`);
+
   var flag =
-    !platformOs.match(/Mac OS/i) &&
-    !platformOs.match(/Win/i) &&
-    !platformOs.match(/Linux/i);
-  console.log(flag);
+    platform.os.family.match(/Win/i) ||
+    platform.os.family.match(/OS X/i) ||
+    platform.os.family.match(/Linux/i);
 
   return (
     <div className="wrapper">
@@ -103,43 +168,36 @@ export default ({ macUrl, linuxUrl }) => {
 
             <span>A torrent client to download, stream and cast torrents.</span>
 
-            <div className="downloads">
-              {/* Display appropriate Download-button for the client */}
-              {platformOs.match(/Mac OS/i) && (
-                <DownloadButton url={macUrl} logo={mdiApple} disabled={false} />
-              )}
-              {platformOs.match(/Win/i) && (
-                <DownloadButton logo={mdiMicrosoftWindows} disabled={true} />
-              )}
-              {platformOs.match(/Linux/i) && (
-                <DownloadButton
-                  url={linuxUrl}
-                  logo={mdiLinux}
-                  disabled={false}
-                />
-              )}
-
+            {flag && (
+              <>
+                {platform.os.family.match(/OS X/i) && (
+                  <DownloadButton
+                    name="Mac OS"
+                    disabled={false}
+                    url={macUrl}
+                    type="box-button"
+                  />
+                )}
+                {platform.os.family.match(/Win/i) && (
+                  <DownloadButton
+                    name="Windows"
+                    disabled={true}
+                    type="box-button"
+                  />
+                )}
+                {platform.os.family.match(/Linux/i) && (
+                  <DownloadButton
+                    name="Linux"
+                    disabled={false}
+                    url={linuxUrl}
+                    type="box-button"
+                  />
+                )}
+              </>
+            )}
+            <div className="downloads-all">
               {/* If the OS doesn't match any of the three, display all the buttons */}
-              {flag && (
-                <DownloadButton url={macUrl} logo={mdiApple} disabled={false} />
-              )}
-              {flag && (
-                <DownloadButton logo={mdiMicrosoftWindows} disabled={true} />
-              )}
-              {flag && (
-                <DownloadButton
-                  url={linuxUrl}
-                  logo={mdiLinux}
-                  disabled={false}
-                />
-              )}
-              {
-                <DownloadButton
-                  url="https://github.com/ritz078/moose"
-                  logo={mdiGithub}
-                  disabled={false}
-                />
-              }
+              <DownloadAll />
             </div>
           </div>
         </div>

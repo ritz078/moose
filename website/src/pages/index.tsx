@@ -91,35 +91,39 @@ export default ({ macUrl, linuxUrl }) => {
     const [clicked, setClicked] = useState(false);
 
     return clicked ? (
-      <>
-        <DownloadButton
-          key={"OS X_"}
-          url={macUrl}
-          logo={mdiApple}
-          disabled={false}
-          type="icon-button"
-        />
-        <DownloadButton
-          key={"Windows_"}
-          logo={mdiMicrosoftWindows}
-          disabled={true}
-          type="icon-button"
-        />
-        <DownloadButton
-          key={"Linux_"}
-          url={linuxUrl}
-          logo={mdiLinux}
-          disabled={false}
-          type="icon-button"
-        />
-        <DownloadButton
-          key={"Github"}
-          url="https://github.com/ritz078/moose"
-          logo={mdiGithub}
-          disabled={false}
-          type="icon-button"
-        />
-      </>
+      <ul className="downloads-all">
+        <li key={"OS X_"}>
+          <DownloadButton
+            url={macUrl}
+            logo={mdiApple}
+            disabled={false}
+            type="icon-button"
+          />
+        </li>
+        <li key={"Windows_"}>
+          <DownloadButton
+            logo={mdiMicrosoftWindows}
+            disabled={true}
+            type="icon-button"
+          />
+        </li>
+        <li key={"Linux_"}>
+          <DownloadButton
+            url={linuxUrl}
+            logo={mdiLinux}
+            disabled={false}
+            type="icon-button"
+          />
+        </li>
+        <li key={"Github"}>
+          <DownloadButton
+            url="https://github.com/ritz078/moose"
+            logo={mdiGithub}
+            disabled={false}
+            type="icon-button"
+          />
+        </li>
+      </ul>
     ) : (
       <a
         className="downloads-all-link"
@@ -170,18 +174,18 @@ export default ({ macUrl, linuxUrl }) => {
 
             {flag && (
               <>
+                {platform.os.family.match(/Win/i) && (
+                  <DownloadButton
+                    name="Windows"
+                    disabled={true}
+                    type="box-button"
+                  />
+                )}
                 {platform.os.family.match(/OS X/i) && (
                   <DownloadButton
                     name="Mac OS"
                     disabled={false}
                     url={macUrl}
-                    type="box-button"
-                  />
-                )}
-                {platform.os.family.match(/Win/i) && (
-                  <DownloadButton
-                    name="Windows"
-                    disabled={true}
                     type="box-button"
                   />
                 )}
@@ -195,10 +199,8 @@ export default ({ macUrl, linuxUrl }) => {
                 )}
               </>
             )}
-            <div className="downloads-all">
-              {/* If the OS doesn't match any of the three, display all the buttons */}
-              <DownloadAll />
-            </div>
+            {/* If the OS doesn't match any of the three, display all the buttons */}
+            <DownloadAll />
           </div>
         </div>
 
